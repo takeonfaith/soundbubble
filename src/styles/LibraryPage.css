@@ -1,0 +1,121 @@
+
+.LibraryPage .SongItem{
+ color:#fff;
+}
+
+.playLists{
+	position: relative;
+	width: 100%;
+	height: 270px;
+	padding: 35px;
+	justify-content: flex-start;
+	box-sizing: border-box;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	background: var(--playlistsColor);
+	border-radius: var(--standartBorderRadius0);
+}
+.playlistItem{
+	width: 200px;
+	height: 200px;
+	border-radius: var(--standartBorderRadius);
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	color:#fff;
+	margin: 0 10px;
+	transition: .1s;
+}
+
+.playlistItem button{
+	position: absolute;
+	bottom: 15px;
+	right: 15px;
+	color:var(--lightBlue);
+	width: 40px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: transparent;
+	padding: 0;
+	opacity: 0;
+	transition: .15s;
+	transform: scale(1.2);
+}
+
+.playlistItem button svg{
+	background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(105,131,240,1) 50%);
+	border-radius: 100%;
+	width: 35px;
+	height: 35px;
+}
+
+.playlistItem button:hover{
+	color: var(--blue);
+}
+
+.playlistItem:hover button{
+	opacity: 1;
+	transform: scale(1);
+}
+
+.playlistItem:hover{
+	transform: scale(.95);
+}
+
+.playlistItem:first-of-type{
+	margin-left: 0;
+}
+
+.playlistItem img{
+	width: 100%;
+}
+
+.playlistItem h2{
+	margin: 0;
+	position: absolute;
+	bottom: 20px;
+	left: 20px;
+}
+
+.playlistsBackground{
+	position: absolute;
+	top: 2150px;
+	left: 0;
+	width: 300%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: flex-end;
+}
+
+.playlistsBackground img{
+	width: 100%;
+	animation: bgWave 10s linear infinite;
+}
+
+@keyframes bgWave{
+	0%{
+		transform: translateX(0%);
+	}
+	100%{
+		transform: translateX(-50%);
+	}
+}
+
+.yourSongsList{
+	margin-top: 10px;
+	padding:10px 15px;
+	border-radius: var(--standartBorderRadius);
+	background: #2a2a2a;
+	display: flex;
+	flex-direction: column;
+}
+
+.yourSongsList .SongItem{
+	margin: 5px 0;
+}

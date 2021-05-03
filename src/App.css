@@ -1,38 +1,1047 @@
-.App {
-  text-align: center;
+*{
+  font-family: 'Montserrat', sans-serif;
+  scroll-behavior: smooth;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+a{
+  text-decoration: none;
+  color:#fff;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+a:hover{
+  text-decoration: underline;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+:root{
+  --themeColor:rgb(0, 102, 255);
+  --themeColor2:rgb(65, 141, 255);
+  --pink:#cf6b99;
+  --red:#f4546a;
+  --blue:rgb(71, 102, 243);
+  --lightBlue:rgb(105, 131, 248);
+  --reallyLightBlue:#94a8ff;
+  --leftSideBarColor:rgb(39, 39, 39);
+  --navItemColor:rgb(53, 53, 53);
+  --playlistsColor:rgb(31, 31, 31);
+  --chatsColor:rgb(44, 44, 44);
+  --standartBorderRadius0:35px; 
+  --standartBorderRadius:15px; 
+  --standartBorderRadius2:11px; 
+  --standartBorderRadius3:7px; 
+  --pinkAndPurpleGrad:linear-gradient(120deg, #d87ce2 0%, #c73e51 100%);
+  --inputRange:100%;
+  --themeColorTransparent:rgba(65, 141, 255, 0.37);
+  --transparentWhite:rgba(255, 255, 255, 0.336);
+}
+
+button{
+  outline: none;
+  border:none;
+  cursor: pointer;
+  transition: .2s transform;
+}
+
+button:active{
+  transform: scale(.95);
+}
+
+body{
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+ 
+  background: rgba(255, 255, 255, 0.555);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(255, 255, 255);
+}
+
+.Content{
+  padding:30px;
+	box-sizing: border-box;
+	width: 100%;
+	max-height: 100vh;
+	height: 100vh;
+	overflow-y: auto;
+  color:#fff;
+  z-index: 0;
+  position: relative;
+}
+
+input[type=range] {
+  -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+  width: 100%; /* Specific width is required for Firefox. */
+  height: 6px;
+  background: linear-gradient(to right, var(--themeColor2) var(--inputRange), #fff var(--inputRange)); /* Otherwise white in Chrome */
+  margin-bottom: 5px;
+  
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 15px;
+  width: 15px;
+  display: block;
+  border-radius: 15px;
+  cursor: pointer;
+  background: var(--themeColor);
+  transition: .3s;
+}
+
+input[type=range]::-webkit-slider-thumb:hover{
+  filter:brightness(1.2);
+}
+
+input[type=range]:focus {
+  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+input[type=range]::-ms-track {
+  width: 100%;
+  cursor: pointer;
+
+  /* Hides the slider so custom styles can be added */
+  background: transparent; 
+  border-color: transparent;
+  color: transparent;
+}
+
+.bg{
+  background:linear-gradient(-135deg, var(--themeColor2), black);
+  transition:.4s;
+  width: 100%;
+  height: 100vh;
+  top: 100%;
+  left: 0;
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.closeFullScreen{
+  position: absolute;
+  left: 30px;
+  top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 50px;
+  background: transparent;
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+.closeFullScreen svg{
+  width: 50px;
+  height: 50px;
+  color:#fff;
+}
+
+.FullScreenPlayer{
+  width: 100%;
+  display: flex;
+  padding: 50px 0;
+  justify-content: space-around;
+  align-items: center;
+  height: 100vh;
+  box-sizing: border-box;
+  /* backdrop-filter: blur(200px); */
+  color:#fff;
+  overflow: hidden;
+}
+
+.leftSide{
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: start;
+  transition: .3s;
+  width: 55%;
+}
+
+.player{
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  max-width: 300px;
 }
 
-.App-link {
-  color: #61dafb;
+.playerUpperSide{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.nameAndAuthors{
+  text-align: center;
+}
+
+.leftSide .songCover{
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 0 50px var(--themeColorTransparent);
+  margin-bottom: 10px;
+}
+
+.leftSide img{
+  width: 100%;
+  
+}
+
+
+.leftSide h2{
+  margin: 2px 0;
+  color:var(--themeColor);
+  max-width: 300px;
+  overflow: hidden;
+}
+
+.leftSide h3{
+  color:var(--themeColor2);
+  margin: 0px 0;
+  max-width: 300px;
+  overflow: hidden;
+}
+
+.leftSide h3 a{
+  color:var(--themeColor2);
+}
+
+.controlPanel{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  position: relative;
+}
+
+.controlPanel input{
+  width: 100%;
+}
+
+.startAndEndTime{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.btns{
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  align-items: center;
+  position: relative;
+}
+
+.btns button{
+  width: 80px;
+  height: 80px;
+  background: transparent;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: .2s;
+}
+
+.btns button svg{
+  color:#fff;
+  width: 30px;
+  height: 30px;
+}
+
+.btns .shuffleBtn, .btns .repeatBtn{
+  width: 45px;
+  height: auto;
+  border-radius: 100px;
+}
+
+.repeatBtn{
+  position: relative;
+}
+
+.repeatBtn span{
+  width: 7px;
+  height: 7px;
+  display: block;
+  background: var(--themeColor);
+  border-radius: 15px;
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  opacity: 0;
+}
+
+.btns .shuffleBtn svg, .btns .repeatBtn svg{
+  width: 23px;
+  height: 23px;
+}
+
+.btns .shuffleBtn:hover, .btns .repeatBtn:hover{
+  background: var(--transparentWhite);
+}
+
+.lyricsBlock{
+  width: 500px;
+  transition: .3s;
+}
+
+.lyricsBlock p{
+  transition: .4s transform, .4s opacity, .2s background;
+  padding: 10px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  white-space:initial;
+  user-select: none;
+}
+
+.lyricsBlock:active{
+  transform: scale(.94);
+}
+
+.lyricsBlock p:hover{
+  background: rgba(255, 255, 255, 0.411);
+}
+
+.lyricsBlock:last-child{
+  margin-bottom: 50%;
+}
+
+.Loading{
+  width: 100%;
+  cursor: pointer;
+  padding: 20px 10px;
+  transition: .2s;
+  border-radius: 10px;
+}
+
+.Loading:hover{
+  background: rgba(255, 255, 255, 0.411);
+  
+}
+
+.outer{
+  width: 100px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.493);
+  overflow: hidden;
+  height: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.inner{
+  background: #fff;
+  height: 100%;
+  border-radius: 7px;
+  transition: .6s;
+}
+
+.lyricsAuthors{
+  padding: 10px;
+  width: 500px;
+}
+
+.lyricsAuthors a{
+  color:#fff;
+}
+
+.lyricsAuthors::before{
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 0%;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  background: linear-gradient(45deg, var(--themeColor2), var(--themeColor)) ;
+  background-size: 400% 400%;
+  opacity: 0;
+  animation: gradientMove 4s linear infinite;
+  transition: .4s;
+  border-radius: 10px;
+}
+
+.lyricsAuthors.active::before{
+  opacity: 1;
+  height: 100%;
+}
+
+@keyframes gradientMove {
+  0%{background-position:0% 50%; box-shadow: 0 0 30px var(--themeColor2);}
+  50%{background-position:100% 50%; box-shadow: 0 0 30px var(--themeColor);}
+  100%{background-position:0% 50%; box-shadow: 0 0 30px var(--themeColor2);}
+}
+
+.ColorCircles{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: .2s;
+}
+
+.ColorCircles span{
+  width: 25%;
+  height: 80%;
+  display: block;
+  z-index: 1;
+  background: var(--themeColorTransparent);
+  position: absolute;
+  border-radius: 53% 47% 61% 39% / 50% 43% 57% 50%  ;
+  transition: .2s background;
+}
+
+
+.ColorCircles span:nth-child(1){
+  animation: rotation 10s infinite linear;
+  animation-delay: 0s;
+}
+.ColorCircles span:nth-child(2){
+  animation: rotation 11s infinite linear;
+  animation-delay: 10s;
+}
+.ColorCircles span:nth-child(3){
+  animation: rotation 20s infinite linear;
+  animation-delay: 2s;
+  box-shadow: 0 0 30px var(--themeColor2);
+}
+
+@keyframes rotation {
+  0%{
+    transform: rotate(0deg) scale(1);
   }
-  to {
-    transform: rotate(360deg);
+  50%{
+    transform: rotate(180deg) scale(.9);
+  }
+  100%{
+    transform: rotate(360deg) scale(1);
   }
 }
+
+.menuBtn{
+  position: absolute;
+  left: 0;
+  top: 0px;
+  padding: 5px;
+  border-radius: 20px;
+  background: transparent;
+  transition: .2s;
+}
+
+.menuBtn svg{
+  width: 35px;
+  height: 35px;
+  color:#fff;
+
+}
+
+.showHoverTime{
+  position: absolute;
+  background: var(--themeColor);
+  top: -30px;
+  padding: 5px 10px;
+  font-size: .8em;
+  border-radius: 10px;
+}
+
+@keyframes outSideText {
+  0%{
+    transform: translateX(0);
+  }
+  70%{
+    transform: translateX(0);
+  }
+  80%{
+    transform: translateX(-50%);
+  }
+  100%{
+    transform: translateX(0%);
+  }
+}
+
+.rightSideWrapper{
+  font-size: 1.4em;
+  width: 50%;
+  transition: .3s;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.rightSide{
+  width: 100%;
+  padding: 0 20px;
+  overflow-y: scroll;
+  height: 85vh;
+  overflow-x: hidden;
+  scroll-padding-top: 20%;
+  border-radius: 15px;
+  margin: 0 12px;
+}
+
+.rightSideControl{
+  padding: 3px;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.164);
+  border-radius: 15px;
+  
+}
+
+.controlIcon{
+  border-radius:13px;
+  transition: .2s background;
+  cursor: pointer;
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+}
+
+.controlIcon:hover{
+  background: rgba(255, 255, 255, 0.432);
+}
+
+.rightSideControl svg{
+  width: 20px;
+  transition: .2s color;
+  height: 20px;
+  margin: 15px;
+}
+
+.SongItem{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 13px;
+  margin: 15px 0;
+  cursor: pointer;
+  padding: 3px;
+  font-size: 1.3em;
+  position: relative;
+}
+
+.songItemMenuWindow{
+  position: absolute;
+  right: 0px;
+  width: 200px;
+  padding: 2.5px 5px;
+  box-sizing: border-box;
+  background: var(--playlistsColor);
+  visibility: visible;
+  z-index: 10;
+  border-radius: var(--standartBorderRadius);
+  display: flex;
+  flex-direction: column;
+  animation: openSongMoreMenu .2s forwards;
+}
+
+.songItemMenuWindow.inner{
+  left: calc(-100% - 10px);
+  top: 0;
+  display: none;
+}
+
+.songItemMenuWindowItemImgWrapper{
+  width: 20px;
+  height: 20px;
+  border-radius: 30px;
+  margin-right: 5px;
+  overflow: hidden;
+}
+
+.songItemMenuWindowItemImgWrapper img{
+  width: 100%;
+}
+
+.songItemMenuWindowItem{
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: var(--standartBorderRadius2);
+  margin: 2.5px 0;
+  font-size: .8em;
+  display: flex;
+  align-items: center;
+  animation: fadeIn .4s forwards;
+  position: relative;
+}
+
+.songItemMenuWindowItem:hover .songItemMenuWindow.inner{
+  display: flex;
+}
+
+.newSongMarker{
+  background: var(--red);
+  border-radius: 10px;
+  color:#fff;
+  opacity: 1;
+  padding: 2px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes openSongMoreMenu {
+  0%{
+    height: 0;
+    opacity: 0;
+  }
+  100%{
+    height: auto;
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  0%{
+    height: 0;
+    opacity: 0;
+  }
+  100%{
+    height: 100%;
+    opacity: 1;
+  }
+}
+
+.songItemMenuWindowItem span{
+  display: flex;
+  align-items: center;
+}
+
+.songItemMenuWindowItem svg{
+  margin-right: 7px;
+  min-width: 17px;
+  min-height: 17px;
+}
+
+.songItemMenuWindowItem:hover{
+  background: var(--transparentWhite);
+}
+
+.songItemImageAndName{
+  display: flex;
+  align-items: center;
+}
+
+.songItemMoreBtn{
+  opacity: 0;
+  display: flex;
+  align-items: center;
+}
+
+.songItemMoreBtn button{
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--standartBorderRadius2);
+  background: transparent;
+  color:#fff;
+}
+
+.songItemMoreBtn button svg{
+  width: 20px;
+  height: 20px;
+}
+
+.rightSide .SongItem{
+  font-size: 1em;
+}
+
+.SongItem.playingNow{
+  background: rgba(255, 255, 255, 0.514);
+}
+
+.SongItem:hover{
+  background: rgba(255, 255, 255, 0.342);
+}
+
+.SongItem:hover .songItemMoreBtn{
+  opacity: 1;
+}
+
+.SongItem .songItemImage{
+  width: 45px;
+  height: 45px;
+  border-radius:10px;
+  overflow: hidden;
+  margin-right: 8px;
+  position: relative;
+}
+
+.SongItem .songItemImage img{
+  width: 100%;
+}
+
+.songItemName{
+  font-size:.8em;
+  font-weight: 600;
+}
+
+.songItemAuthor{
+  font-size:.7em;
+  color:rgba(255, 255, 255, 0.685);
+}
+
+.songItemAuthor a{
+  color:rgba(255, 255, 255, 0.685);
+}
+
+.playingAnimation{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.575);
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 0 7px;
+  box-sizing: border-box;
+  visibility: hidden;
+  opacity: 0;
+  transition: .2s;
+  pointer-events: none;
+}
+
+.playingAnimation svg{
+  z-index: 2;
+}
+
+.playingAnimation span{
+  width: 30px;
+  height: 30px;
+}
+
+.playingAnimation span:first-child{
+  background: var(--themeColor2);
+}
+
+.playingAnimation span:nth-child(2){
+  animation-delay: .2s;
+}
+.playingAnimation span:nth-child(3){
+  animation-delay: .5s;
+}
+
+@keyframes playing{
+  0%{
+    transform: scaleY(0.7);
+  }
+  50%{
+    transform: scaleY(1);
+  }
+  100%{
+    transform: scaleY(0.7);
+  }
+}
+
+.songItemPlayOrPause{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: .1s;
+  background: rgba(0, 0, 0, 0.459);
+  z-index: 2;
+}
+
+.SongItem:hover .songItemPlayOrPause{
+  opacity: 1;
+}
+
+.Options{
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items: left;
+  height: 100%;
+}
+
+.OptionItem{
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  cursor: pointer;
+  width: 300px;
+  padding: 10px;
+  border-radius: 15px;
+  margin-left: 30%;
+}
+
+.OptionItem svg{
+  width: 25px;
+  height: 25px;
+  margin-right: 7px;
+}
+
+.OptionItem:hover{
+  background: var(--transparentWhite);
+}
+
+.Queue, .Options, .Share, .Lyrics{
+  animation: zoomIn .2s forwards;
+}
+
+.Queue .queueNowIsPlaying{
+  position: relative;
+}
+
+.Queue .queueNowIsPlaying::after{
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background: var(--transparentWhite);
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -10px;
+}
+
+.Queue .queueNowIsPlaying .queueImage{
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  border-radius: var(--standartBorderRadius2);
+  margin-right: 7px;
+}
+
+.Queue .queueNowIsPlaying .queueImage img{
+  width: 100%;
+}
+
+.Queue .queueNowIsPlaying h5{
+  display: flex;
+  align-items: center;
+
+}
+
+.Queue .queueNowIsPlaying h5 a span{
+  margin-right: 8px;
+}
+
+.Queue .queueNowIsPlaying h5 a{
+  padding:4px;
+  color:#fff;
+  background: var(--transparentWhite);
+  border-radius: var(--standartBorderRadius);
+}
+
+.Queue .queueNowIsPlaying .queueAlbumName{
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  
+}
+
+@keyframes zoomIn {
+  0%{
+    transform: scale(0.98);
+    opacity: 0;
+  }
+  100%{
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.Share{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.Share .shareCopyLink{
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.Share .shareOnSocial, .Share .shareCopyLink, .Share .sharePeopleShort, .Share .shareSearch, .shareBtn{
+  width: 100%;
+  max-width: 360px;
+  min-height: 50px;
+  border-radius: 12px;
+  background: var(--transparentWhite);
+  color:#fff;
+  margin: 8px 0;
+}
+
+.Share .shareCopyLink svg{
+  width: 22px;
+  height: 22px;
+  margin-right: 5px;
+}
+
+.Share .shareOnSocial{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.shareSocialIcon{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+.shareSocialIcon:hover{
+  background: rgba(255, 255, 255, 0.432);
+}
+
+.sharePeopleShort{
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 2.5px;
+  transition: .2s;
+}
+
+.shareFriendItem{
+  overflow: hidden;
+  padding: 4px;
+  box-sizing: border-box;
+  width: calc(50% - 5px);
+  background: rgba(255, 255, 255, 0.425);
+  margin: 2.5px;
+  border-radius: 10px;
+  display: flex;
+  font-weight: 600;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
+
+.friendItemImage{
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  border-radius: 8px;
+  margin-right: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shareFriendItem img{
+  width: 100%;
+}
+
+.Share .shareSearch{
+  position: relative;
+}
+
+.shareSearch input{
+  outline:none;
+  border: none;
+  width: 100%;
+  height: 100%;
+  padding-left: 15px;
+  background: transparent;
+  box-sizing: border-box;
+  font-weight: bold;
+  color:#fff;
+}
+
+.Share .shareSearch input::placeholder{
+  color:rgba(255, 255, 255, 0.352);
+}
+
+.Share .shareSearch svg{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 15px;
+  opacity: .6;
+}
+
+.shareBtn{
+  background: var(--themeColor2);
+  font-weight: bold;
+}
+
+.shareBtn:hover{
+  filter: brightness(.9);
+}
+
+.isInShareList{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.726);
+  opacity: 0;
+}
+
+.isInShareList svg{
+  color:var(--themeColor);
+}
+
+.SmallImages{
+  display: flex;
+  width: fit-content;
+  margin-right: 8px;
+}
+
+.smallImgContainer{
+  height: 25px;
+  width: 25px;
+  margin: 2px;
+  overflow: hidden;
+  border-radius: 20px;
+  border: 3px solid #fff;
+}
+
+.SmallImages img{
+  width: 100%;
+}
+

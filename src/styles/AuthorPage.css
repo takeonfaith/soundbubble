@@ -1,0 +1,289 @@
+.Header{
+	width: 100%;
+	height: 300px;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	padding: 0 65px;
+	box-sizing: border-box;
+	border-radius: var(--standartBorderRadius0);
+	position: relative;
+	animation: zoomIn .3s ease-out;
+}
+
+.headerBtns{
+	top: 30px;
+	right: 30px;
+	display: flex;
+	justify-content: flex-end;
+	padding: 2px;
+	box-sizing: border-box;
+	position: absolute;
+	background: var(--blue);
+	border-radius: var(--standartBorderRadius);
+	filter: brightness(.9);
+}
+
+.headerBtns button{
+	height: 30px;
+	width: 45px;
+	border-radius: var(--standartBorderRadius2);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color:#fff;
+	background: transparent;
+	margin: 2px;
+}
+
+.headerBtns button:hover{
+	background: var(--transparentWhite);
+}
+
+.headerBtns button svg{
+	width: 17px;
+	height: 17px;
+}
+
+.Header .headerAuthorsImage{
+	width: 180px;
+	height: 180px;
+	border-radius: var(--standartBorderRadius0);
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-right: 20px;
+}
+
+@keyframes floatingBorderRadius {
+	0%{
+		border-radius: 41% 59% 56% 44% / 39% 47% 53% 61%;
+	}
+	33.3%{
+		border-radius: 60% 40% 56% 44% / 39% 62% 38% 61%  ;
+	}
+	50%
+	{
+		border-radius: 60% 40% 69% 31% / 39% 68% 32% 61%   ;
+	}
+	66.6%
+	{
+		border-radius: 60% 40% 68% 32% / 28% 47% 53% 72%    ;
+	}
+	83.3%
+	{
+		border-radius: 60% 40% 56% 44% / 28% 47% 53% 72%     ;
+	}
+	100%{
+		border-radius: 41% 59% 56% 44% / 39% 47% 53% 61%;
+	}
+}
+
+.Header .headerAuthorsImage img{
+	width: 100%;
+	transform: scale(1.1);
+}
+
+.headerAuthorInfo{
+	width: 50%;
+}
+
+.headerAuthorsName{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.headerAuthorsName h5{
+	margin: 0;
+	opacity: .5;
+	font-weight: 600;
+}
+
+.headerAuthorsName h1{
+	margin: 0;
+}
+
+.headerAuthorsName svg{
+	margin-left: 10px;
+	width: 20px;
+	height: 20px;
+}
+
+.headerListenersAndSubs{
+	display: flex;
+	justify-content: flex-start;
+	min-width: 200px;
+	max-width: 350px;
+	margin-top:20px;
+}
+
+.headerListenersAndSubsItem{
+	display: flex;
+	align-items: center;
+	min-width: 100px;
+	font-weight: bold;
+	position: relative;
+}
+
+.headerListenersAndSubsItem::after{
+	content: "";
+	position: absolute;
+	display: block;
+	height: 100%;
+	width: 1.5px;
+	background: rgba(255, 255, 255, 0.493);
+	top: 0;
+	right: 30%;
+}
+
+.headerListenersAndSubsItem:last-child::after{
+	display: none;
+}
+
+.headerListenersAndSubsItem svg{
+	margin: 0 7px;
+}
+
+.TopSongs{
+	width: 100%;
+	/* overflow-y: auto; */
+	padding: 5px 0;
+}
+
+/* .topSongsWrapper{
+	max-height: 400px;
+	overflow-y: auto;
+} */
+
+.topSongItem{
+	display: flex;
+	align-items: center;
+	width: 100%;
+	margin: 10px 0;
+}
+
+.topSongItem .SongItem{
+	margin: 0;
+	width: 100%;
+}
+
+.topSongItem h3{
+	margin: 0;
+	width: 10px;
+	margin-right: 8px;
+}
+
+.AuthorPage .playLists{
+	border-radius: 0;
+	padding: 0;
+	background: transparent;
+	justify-content: flex-start;
+	align-items: flex-start;
+	flex-direction: column;
+	height: auto;
+}
+
+.playlistsWrapper{
+	display: flex;
+	flex-wrap: wrap;
+	max-height: 520px;
+	overflow-y: auto;
+}
+
+.AuthorPage .playlistsWrapper a{
+	margin-right: 10px;
+	margin-bottom: 10px;
+	text-decoration: none;
+	color:#fff;
+	max-width: 200px;
+}
+
+.AuthorPage .playlistsWrapper h4, .AuthorPage .playlistsWrapper h5{
+	margin: 5px 0;
+}
+
+.playlistItem h5{
+	font-weight: 600;
+	opacity: .5;
+}
+
+.AuthorPage .playlistsWrapper .playlistItem{
+	margin: 0;
+}
+
+/* .AuthorPage .playlistsWrapper .playlistItem */
+
+.topTitle{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.TopSongs .topTitle h2{
+	margin-bottom: 5px;
+}
+
+.topTitle .MoreBtn button{
+	transition: .1s background;
+	background: var(--blue);
+	color:#fff;
+	padding: 5px 20px;
+	border-radius: var(--standartBorderRadius3);
+	font-weight: 600;
+}
+
+.headerAuthors{
+	margin-left: 4px;
+}
+
+.headerAuthors a{
+	text-decoration: none;
+	color:#fff;
+}
+
+.headerAuthorsImagesAndNames{
+	display: flex;
+	align-items: center;
+	height: 40px;
+}
+
+.artistsWrapper{
+	display: flex;
+}
+
+.AuthorItemBig{
+	width: 180px;
+	margin-right: 20px;
+	margin-bottom: 20px;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	color:#fff;
+	text-decoration: none;
+	padding: 5px;
+	border-radius: var(--standartBorderRadius0);
+	transition: background .2s;
+}
+
+.AuthorItemBig h3{
+	margin-bottom: 0;
+}
+
+.AuthorItemBigImage{
+	width: 180px;
+	height: 180px;
+	border-radius: 100px;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: border-radius .2s;
+}
+
+.AuthorItemBigImage img{
+	width: 100%;
+}
+

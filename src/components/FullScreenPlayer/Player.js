@@ -24,20 +24,21 @@ export const Player = ({textLimit = 18, inputRef}) => {
 		nextSong, 
 		setShuffleMode, 
 		shuffleMode, 
-		displayAuthors} = useSong()
-		const {name, authors, cover} = songs['allSongs'][currentSong]
+		displayAuthors,
+		name, 
+		authors, 
+		cover} = useSong()
 	return (
 		<div className="player">
 			<div className="playerUpperSide">
 				<div className="songCover">
-					<ColorExtractor src={cover} getColors={colors => setImgColors(colors)} />
 					<img src={cover} alt="" />
 				</div>
 				<div className = "nameAndAuthors">
 					<h2 title={name.length > textLimit ? name : null} style={{ overflow: 'hidden' }}>
 						<div style={name.length > textLimit ? { animation: 'outSideText 17s infinite', whiteSpace: 'nowrap' } : {}}>{name}</div>
 					</h2>
-					<h3 title={authors.map((el) => ' ' + el)} style={{ overflow: 'hidden' }}>
+					<h3 title={authors.map((el) => ' ' + el.displayName)} style={{ overflow: 'hidden' }}>
 						<div style={findLen() > textLimit ? { animation: 'outSideText 17s infinite', whiteSpace: 'nowrap' } : {}}>{displayAuthors()}</div>
 					</h3>
 				</div>

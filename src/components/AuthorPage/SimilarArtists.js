@@ -8,9 +8,9 @@ export const SimilarArtists = ({ data }) => {
 	const [similarArtists, setSimilarArtists] = useState([])
 
 	useEffect(() => {
-		findSimilarArtists(data.name, setSimilarArtists)
+		findSimilarArtists(data, setSimilarArtists)
 	}, [data])
-	return (
+	return similarArtists.length?(
 		<div className="SimilarArtists">
 			<h2>Similar Authors</h2>
 			<div className="artistsWrapper">
@@ -25,4 +25,6 @@ export const SimilarArtists = ({ data }) => {
 			</div>
 		</div>
 	)
+	:null
+	
 }

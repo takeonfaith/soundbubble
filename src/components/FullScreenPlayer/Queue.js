@@ -8,7 +8,7 @@ import { SongItem } from './SongItem'
 export const Queue = () => {
 	const { currentSongQueue, currentSongPlaylistSource, setOpenFullScreenPlayer } = useSong()
 	function findRightLink() {
-		return `/${currentSongPlaylistSource.source}` + (currentSongPlaylistSource.source === 'library' || currentSongPlaylistSource.source === 'search' ? "" : `/${normalizeString(currentSongPlaylistSource.name)}`)
+		return currentSongPlaylistSource.source
 	}
 	return (
 		<div className="Queue">

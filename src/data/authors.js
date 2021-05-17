@@ -126,7 +126,7 @@ export const authors = [
 	},
 	{
 		id:8, 
-		name:'Qontrast', 
+		name:'QONTRAST', 
 		image:qontrast,
 		isVerified:true,
 		numberOfListenersPerMonth: 71,
@@ -138,7 +138,7 @@ export const authors = [
 	},
 	{
 		id:9, 
-		name:'Хиро', 
+		name:'Hiro', 
 		image:"https://is2-ssl.mzstatic.com/image/thumb/Features114/v4/8f/24/99/8f249900-47f1-4942-4749-713973f58dde/pr_source.png/190x190cc-60.jpg",
 		isVerified:true,
 		numberOfListenersPerMonth: 25,
@@ -402,7 +402,7 @@ export const authors = [
 	},
 	{
 		id:31, 
-		name:'Maga Khalikov', 
+		name:'Lil Magnum', 
 		image:'https://sun9-59.userapi.com/impg/ABnwxJFpZUNHG9-dbMnKEH-cT8YGWdpZ5DvSbA/Vr_Dkiu--VQ.jpg?size=1620x2160&quality=96&sign=7685b9ae04fed10f41f56729c93e6d89&type=album',
 		isVerified:false,
 		numberOfListenersPerMonth: 40,
@@ -414,7 +414,7 @@ export const authors = [
 	},
 	{
 		id:32, 
-		name:'DJ Khaled', 
+		name:'Dj Khaled', 
 		image:'https://cdn.smehost.net/2020sonymusiccouk-ukprod/wp-content/uploads/2017/05/c16367f4d6cf286d282eaffd0d3b9928-1040x1040.jpg',
 		isVerified:true,
 		numberOfListenersPerMonth: 40,
@@ -642,7 +642,7 @@ export const authors = [
 	},
 	{
 		id:51, 
-		name:'Dave hodgman', 
+		name:'Dave Hodgman', 
 		image:'https://i.pinimg.com/originals/fb/ab/f0/fbabf08ce7d0f8ed467a737d88ef2433.jpg',
 		isVerified:false,
 		numberOfListenersPerMonth: 40,

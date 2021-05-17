@@ -63,7 +63,7 @@ export const Home = () => {
 	}, [recommendationAuthors])
 	return (
 		<div style={{ animation: 'zoomIn .2s forwards' }} className="HomePage">
-			{recommendationAuthors.length?<MainBanner person = {recommendationAuthors[0]}/>:null}
+			{/* {recommendationAuthors.length?<MainBanner person = {recommendationAuthors[0]}/>:null}
 			<h2>Recommended Authors</h2>
 			<div className="artistsWrapper">
 				{recommendationAuthors.map((author, index) => {
@@ -77,18 +77,7 @@ export const Home = () => {
 				{recentSongs.map((song, index)=>{
 					return <SongItem song = {song} localIndex = {index} isNewSong = {true}/>
 				})}
-			</div>
-			{/* <p>Идеи для этой страницы:</p>
-			<ol>
-				<li>Новые песни авторов, на которых ты подписан</li>
-				<li>Песни, которые добавили твои друзья</li>
-				<li>Топ песни недели</li>
-				<li>Баннер, показывающий основную статистику: самый популярный артист площадки, самая популярная песня, альбом и прочее</li>
-				<li>Рекомендации на основе того, что слушали люди с теми же треками, что добавлены и у тебя
-				То есть, например, ты добавил песню "Rich Love" от OneRepublic. Страница должна выдавать песни,
-				которые слушают люди, тоже добвлявшие OneRepublic
-				</li>
-			</ol> */}
+			</div> */}
 		</div>
 	)
 }

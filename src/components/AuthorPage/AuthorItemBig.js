@@ -4,12 +4,12 @@ import normalizeString from '../../functions/normalizeString'
 
 export const AuthorItemBig = ({data}) => {
 	return (
-		<Link to = {`/authors/${normalizeString(data.name)}`} className = "AuthorItemBig">
+		<Link to = {`/authors/${data.uid}`} className = "AuthorItemBig">
 			<div >
 				<div className = "AuthorItemBigImage">
-					<img src={data.image} alt=""/>
+					<img src={data.photoURL} alt=""/>
 				</div>
-				<h3>{data.name}</h3>
+				<h3>{data.displayName}</h3>
 			</div>
 		</Link>
 	)

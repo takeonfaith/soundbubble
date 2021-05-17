@@ -287,3 +287,147 @@
 	width: 100%;
 }
 
+.AddSong{
+	width: 100%;
+	margin-top:20px;
+}
+
+.AddSong .openAddSongWindowBtn{
+	width: 100%;
+	height: 50px;
+	background: var(--green);
+	color:#fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: var(--standartBorderRadius2);
+}
+
+.AddSong .openAddSongWindowBtn svg{
+	width: 40px;
+	height: 40px;
+	transition: .1s;
+}
+
+.addSongWindow{
+	margin-top: 10px;
+	display: none;
+	flex-direction: column;
+	padding: 20px;
+	border-radius: var(--standartBorderRadius);
+	background: var(--playlistsColor);
+}
+
+.addSongWindow form{
+	width: 100%;
+}
+
+.addSongWindow form h3{
+	margin: 10px 0;
+}
+
+.chosenAuthorsList{
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	margin-bottom:0px ;
+}
+
+.chosenAuthorItem{
+	align-items: center;
+	display: flex;
+	background: var(--lightBlue);
+	padding: 5px 10px;
+	border-radius: var(--standartBorderRadius2);
+	width: fit-content;
+	margin-right: 5px;
+}
+
+.chosenAuthorItem svg{
+	margin-left: 5px;
+	cursor: pointer;
+}
+
+.addSongWindow .downloadFile .downloadPhoto{
+	margin-bottom: 0px;
+	margin-top: 10px;
+}
+
+.addSongWindow label textarea{
+	width: 100%;
+	box-sizing: border-box;
+	margin-top: 10px;
+	resize:none;
+	max-height: 500px;
+	height: 300px;
+	overflow-y: auto;
+	border-radius: var(--standartBorderRadius2);
+	background: var(--leftSideBarColor);
+	border:none;
+	outline: none;
+	padding: 20px;
+	color:#fff;
+}
+
+.addSongBtn{
+	font-weight: bold;
+	width: 100%;
+	margin: 10px auto;
+	padding: 10px 30px;
+	background: var(--darkGreen);
+	color:#fff;
+	border-radius: var(--standartBorderRadius2);
+}
+
+@media (max-width:1000px) {
+	.Header{
+		flex-direction: column;
+		height: 420px;
+		justify-content: center;
+
+	}
+
+	.Header .headerAuthorsImage{
+		margin-right: 0;
+	}
+
+	.Header .headerAuthorInfo{
+		width: 100%;
+		justify-content: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;	
+		margin-top: 20px;
+	}
+
+	.Header .headerAuthorsName h5{
+		text-align: center;
+		
+	}
+
+	.Header .headerAuthorsName{
+		position: relative;
+	}
+
+	.Header .headerAuthorsName svg{
+		position: absolute;
+		right: -30px;
+	}
+
+	.Header .headerListenersAndSubs{
+		justify-content: space-between;
+		width: calc(100% - 50px);
+	}
+
+	.Header .headerListenersAndSubsItem{
+		min-width: auto;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.Header .headerListenersAndSubsItem::after{
+		right: 0%;
+	}
+}

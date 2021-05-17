@@ -1,44 +1,64 @@
 import React, { useState, useEffect } from 'react'
 import { songs } from '../../data/songs'
+import { firestore } from '../../firebase'
+import { useAuth } from '../../functionality/AuthContext'
 import { useSong } from '../../functionality/SongPlay/SongContext'
 import findIfSongIsNew from '../../functions/findIfSongIsNew'
 import { MoreBtn } from '../Basic/MoreBtn'
 import { SongItem } from '../FullScreenPlayer/SongItem'
-export const TopSongs = ({author, authorsData, headerColors }) => {
+export const TopSongs = ({ authorId, authorsData, headerColors }) => {
 	const [popularSongs, setPopularSongs] = useState([])
 	const { setCurrentSongQueue, setCurrentSongPlaylistSource } = useSong()
 	const [openAllSongs, setOpenAllSongs] = useState(false)
 	const [newSongs, setNewSongs] = useState([])
-
+	const {currentUser} = useAuth()
 	useEffect(() => {
 		setNewSongs([])
-	}, [author])
+		
+	}, [authorId])
+
+	async function findAuthorsSongs() {
+		setPopularSongs([])
+		const tempArray = []
+		if(authorsData.ownSongs !== undefined && authorsData.ownSongs.length !== 0){
+			const response = firestore.collection("songs")
+				.where("id", "in", authorsData.ownSongs)
+			const data = await response.get();
+			data.docs.forEach(item => {
+				tempArray.push(item.data())
+				if(findIfSongIsNew(item.data()) && !newSongs.includes(item.data())) setNewSongs(prevSongs=>[...prevSongs,item.data()])
+			})
+		}
+		tempArray.sort((a, b)=> b.listens - a.listens)
+		setPopularSongs(tempArray)
+	}
 
 	useEffect(() => {
-		let tempArray = []
-		songs['allSongs'].forEach((song, i) => {
-			if (song.authors.includes(authorsData.name)) {
-				tempArray.push(song)
-				if(findIfSongIsNew(song) && !newSongs.includes(song)) setNewSongs(prevSongs=>[...prevSongs,song])
-			}
-		})
-		tempArray.sort((a, b) => b.listens - a.listens)
-		setPopularSongs(tempArray)
-	}, [authorsData])
+		findAuthorsSongs()
+	}, [authorsData.ownSongs])
 
 	function setQueueInAuthor(songList) {
+		const source = { source: `/authors/${authorsData.uid}`, name: authorsData.displayName, image: authorsData.photoURL, songsList: popularSongs }
 		setCurrentSongQueue(songList)
-		setCurrentSongPlaylistSource({ source: 'authors', name: authorsData.name, image: authorsData.image, songsList:popularSongs })
+		setCurrentSongPlaylistSource(source)
+		firestore.collection('users').doc(currentUser.uid).update({
+			lastQueue:{
+				image:source.image,
+				name:source.name,
+				songsList:source.songsList,
+				source:source.source
+			}
+		})
 	}
 	return (
 		<div className="TopSongs">
-			<div onClick = {()=>setQueueInAuthor(newSongs)}>
-				{newSongs.map((song, index)=>{
-					return <SongItem song = {song} localIndex = {index} key = {index} isNewSong = {true}/>
+			<div onClick={() => setQueueInAuthor(newSongs)}>
+				{newSongs.map((song, index) => {
+					return <SongItem song={song} localIndex={index} key={index} isNewSong={true} />
 				})}
 			</div>
 			<div className="topTitle">
-				<h2 style = {newSongs.length?{marginTop:'0'}:{}}>Popular songs</h2>
+				<h2 style={newSongs.length ? { marginTop: '0' } : {}}>Popular songs</h2>
 				<MoreBtn func={() => setOpenAllSongs(!openAllSongs)} boolVal={openAllSongs} lenOfList={popularSongs.length} />
 			</div>
 			<div className="topSongsWrapper">
@@ -46,9 +66,9 @@ export const TopSongs = ({author, authorsData, headerColors }) => {
 					if (!openAllSongs) {
 						if (index < 5) {
 							return (
-								<div className="topSongItem" key={index} onClick={()=>setQueueInAuthor(popularSongs)}>
+								<div className="topSongItem" key={index} onClick={() => setQueueInAuthor(popularSongs)}>
 									<h3 style={{ color: headerColors[3] }}>{index + 1}</h3>
-									<SongItem song = {song} localIndex = {index} showListens={true} listens={song.listens} />
+									<SongItem song={song} localIndex={index} showListens={true} listens={song.listens} />
 								</div>
 							)
 						}
@@ -57,7 +77,7 @@ export const TopSongs = ({author, authorsData, headerColors }) => {
 						return (
 							<div className="topSongItem" key={index} onClick={setQueueInAuthor}>
 								<h3 style={{ color: headerColors[3] }}>{index + 1}</h3>
-								<SongItem song = {song} localIndex = {index} showListens={true} listens={song.listens} />
+								<SongItem song={song} localIndex={index} showListens={true} listens={song.listens} />
 							</div>
 						)
 					}

@@ -7,14 +7,23 @@
 	position: relative;
 	width: 100%;
 	height: 270px;
-	padding: 35px;
+	padding: 15px;
 	justify-content: flex-start;
+	flex-direction: column;
 	box-sizing: border-box;
 	overflow: hidden;
 	display: flex;
-	align-items: center;
 	background: var(--playlistsColor);
 	border-radius: var(--standartBorderRadius0);
+}
+
+.playLists .Slider{
+	z-index: 3;
+	max-height: 50px;
+}
+
+.playlistContent{
+	z-index: 3;
 }
 .playlistItem{
 	width: 200px;

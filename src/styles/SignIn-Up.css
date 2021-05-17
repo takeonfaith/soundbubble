@@ -14,7 +14,7 @@
 	border-radius: 20px;
 	max-width: 500px;
 	width: 400px;
-	height: 45%;
+	min-height: 45%;
 	background: rgb(66, 66, 66);
 	padding: 3%;
 	position: relative;
@@ -214,8 +214,8 @@
 	width: 100%;
 }
 
-.In-Up-Container .input {
-	width: calc(100% - 10px);
+form input {
+	width: 100%;
 	outline: none;
 	border: none;
 	border-radius: 10px;
@@ -224,17 +224,18 @@
 	color: #fff;
 	padding-left: 10px;
 	margin-bottom: 15px;
+	box-sizing: border-box;
 }
 
-.In-Up-Container input::placeholder {
+form input::placeholder {
 	color: rgb(155, 155, 155);
 	display: block;
 	margin-left: 10px;
 }
 
-.In-Up-Container button {
+.In-Up-Container button{
 	float: left;
-	width: 100%;
+	width: calc(50% - 5px);
 	height: 40px;
 	font-weight: 700;
 	font-size: .8em;
@@ -245,6 +246,14 @@
 	color:#fff;
 }
 
+.In-Up-Container .inAndUpBtns a{
+	width: calc(50% - 5px);
+}
+
+.In-Up-Container .inAndUpBtns a .inBtn{
+	width:100%;
+}
+
 .upBtn {
 	background: var(--blue);
 }
@@ -253,7 +262,7 @@
 	background-image: var(--pinkAndPurpleGrad);
 }
 
-.In-Up-Container button:hover {
+.In-Up-Container button:hover, .downloadPhoto:hover {
 	opacity: 0.8;
 	transform: scale(.99);
 }
@@ -264,6 +273,84 @@
 	justify-content: space-between;
 	font-size: 1em;
 }
+
+.downloadFile input[type = "file"]{
+	display: none;
+}
+
+.downloadPhoto{
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: var(--purple);
+	padding: 10px 0;
+	box-sizing: border-box;
+	margin-bottom:15px;
+	border-radius: var(--standartBorderRadius);
+	color:#fff;
+	font-weight: bold;
+	cursor: pointer;
+	position: relative;
+	overflow: hidden;
+}
+
+.downloadPhoto svg{
+	margin-right: 5px;
+}
+
+.downloadBtnText{
+	z-index: 1;
+	display: flex;
+	align-items: center;
+}
+
+.photoLoadLine{
+	display: block;
+	height: 100%;
+	width: 0;
+	background: var(--green);
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 0;
+	transition: .2s;
+}
+
+.RadioBtn{
+	display: flex;
+	align-items: center;
+	margin-right: 10px;
+	cursor: pointer;
+}
+
+.RadioBtn .radioCircle{
+	width: 18px;
+	height: 18px;
+	display: block;
+	border-radius: 100px;
+	border:4px solid var(--lightBlue);
+
+	transition: .1s;
+	margin-left: 5px;
+}
+
+.RadioBtn .radioLabel{
+	opacity: .7;
+	color:#fff;
+}
+
+.Alert{
+	width: 100%;
+	padding: 20px;
+	margin: 10px 0;
+	background: var(--red);
+	color:#fff;
+	box-sizing: border-box;
+	border-radius: var(--standartBorderRadius);
+}
+
+
 
 @media screen and (max-width: 767px) {
 	.CentralPlate {

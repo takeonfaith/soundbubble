@@ -1,0 +1,125 @@
+.BottomControlBar{
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+	padding: 0 20px;
+	background: var(--playlistsColor);
+}
+
+.MobileControlBarItem{
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 10px 0;
+	color:#fff;
+	transition: .4s;
+}
+
+.MobileControlBarItem:active{
+	background: var(--transparentWhite);
+}
+
+.MobileControlBarItem p{
+	margin-top:5px ;
+	margin-bottom: 0;
+}
+
+.MobileControlBarItem svg{
+	width: 23px;
+	height: 23px;
+}
+
+.FullBottomSide .player{
+	display: flex;
+	flex-direction: row;
+	max-width: 100%;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 20px;
+	background: var(--playlistsColor);
+	border-bottom: 1px solid rgb(65, 65, 65);
+	position: relative;
+}
+
+.FullBottomSide .player::before{
+	content: "";
+	display: block;
+	position: absolute;
+	width: var(--inputRange);
+	height: 1px;
+	background: var(--themeColor2);
+	bottom: 0;
+	left: 0;
+}
+
+.FullBottomSide .player .playerUpperSide{
+	display: flex;
+	flex-direction: row;
+}
+
+.FullBottomSide .player .playerUpperSide .nameAndAuthors{
+	text-align: left;
+	font-size: .6em;
+}
+
+.FullBottomSide .player .playerUpperSide .nameAndAuthors h2, .FullBottomSide .player .playerUpperSide .nameAndAuthors h3{
+	margin: 0;
+}
+
+.FullBottomSide .player .playerUpperSide .nameAndAuthors h2{
+	color:var(--themeColor)
+}
+
+.FullBottomSide .player .playerUpperSide .nameAndAuthors h3{
+	color:var(--themeColor2)
+} 
+
+.FullBottomSide .player .playerUpperSide .nameAndAuthors a{
+	color:var(--themeColor2)
+} 
+
+.FullBottomSide .player .songCover{
+	width: 35px;
+	height: 35px;
+	border-radius: var(--standartBorderRadius3);
+	overflow: hidden;
+	margin-right: 8px;
+}
+
+.FullBottomSide .player .songCover img{
+	width: 100%;
+}
+
+.FullBottomSide .player .controlPanel{
+	width: auto;
+	margin-top: 0;
+}
+
+.FullBottomSide .player .controlPanel input, 
+.FullBottomSide .player .controlPanel .startAndEndTime{
+	display: none;
+}
+
+.FullBottomSide .player .controlPanel .btns{
+	width: auto;
+}
+
+.FullBottomSide .player .controlPanel .btns svg{
+	width: 20px;
+	height: 20px;
+}
+
+.FullBottomSide .player .controlPanel .btns button{
+	width: 35px;
+	height: 35px;
+}
+
+.FullBottomSide .player .controlPanel .btns .shuffleBtn, 
+.FullBottomSide .player .controlPanel .btns .repeatBtn{
+	display: none;
+}
+
+

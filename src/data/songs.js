@@ -24,47 +24,53 @@ import noVacancyImg from '../images/No-vacancy.jpg'
 import mainChickImg from '../images/Main-chick.jpg'
 import revolverImg from '../images/revolver.jpg'
 import yamakasiImg from '../images/Yamakasi.jpeg'
+import roxanneImg from '../images/roxanne.png'
 import iCanFuckingTellImg from '../images/I-can-fucking-tell.png'
 import leckImg from '../images/Leck.jpg'
 import needSomebodyImg from '../images/Need-somebody.jpg'
 import tasm2Ost from '../images/tasm2Ost.jpg'
+import earthImg from '../images/Earth.png'
+import novayaVolnaImg from '../images/Новая-волна.jpg'
+import canWeKissForeverImg from '../images/Can-we-kiss-forever.jpg'
+import drinkingProblemImg from '../images/Drinking-problem.jpeg'
+import drunkInLoveImg from '../images/Drunk-in-love.jpg'
 
 import dadadaSong from '../music/Da da da.mp3'
-import shapeofyouSong from '../music/Shape-of-You.mp3'
+import shapeofyouSong from '../music/Shape of You.mp3'
 import cadillacSong from '../music/Cadillac.mp3'
 import ayoSong from '../music/Ayo.mp3'
 import movieSong from '../music/Movie.mp3'
 import comingHomeSong from '../music/Coming Home.mp3'
 import boulevardSong from '../music/Boulevard of broken dreams.mp3'
 import gipnozSong from '../music/Гипноз.mp3'
-import hitmyphoneSong from '../music/Hit-my-phone.mp3'
-import cloutCobainSong from '../music/Clout Cobain.mp3'
+import hitmyphoneSong from '../music/Hit My Phone.mp3'
+import cloutCobainSong from '../music/CLOUT COBAIN  CLOUT CO13A1N.mp3'
 import moodSong from '../music/Mood.mp3'
-import tiGorishKakOgonSong from '../music/Ты горишь как огонь.mp3'
+import tiGorishKakOgonSong from '../music/ТЫ ГОРИШЬ КАК ОГОНЬ.mp3'
 import lbtdSong from '../music/лбтд.mp3'
-import onMyOwnSong from '../music/On-my-own.mp3'
+import onMyOwnSong from '../music/On My Own.mp3'
 import angelSong from '../music/Angel.mp3'
 import loyalSong from '../music/Loyal.mp3'
-import freakyFridaySong from '../music/Freaky-friday.mp3'
-import dontCheckOnMeSong from '../music/Dont-check-on-me.mp3'
+import freakyFridaySong from '../music/Freaky Friday.mp3'
+import dontCheckOnMeSong from '../music/Don\'t check on me.mp3'
 import intentionsSong from '../music/Intentions.mp3'
-import imTheOneSong from '../music/Im-the-one.mp3'
+import imTheOneSong from '../music/I\'m the one.mp3'
 import yummySong from '../music/Yummy.mp3'
-import holdOnSong from '../music/Hold-on.mp3'
+import holdOnSong from '../music/Hold On.mp3'
 import richLoveSong from '../music/Rich Love.mp3'
 import noVacancySong from '../music/No Vacancy.mp3'
-import mainChickSong from '../music/Main-chick.mp3'
-import bestLoveSongSong from '../music/Best-love-song.mp3'
+import mainChickSong from '../music/Main Chick.mp3'
+import bestLoveSongSong from '../music/Best Love Song.mp3'
 import tantraSong from '../music/Tantra.mp3'
-import drunkInLoveSong from '../music/Drunk-in-love.mp3'
+import drunkInLoveSong from '../music/Drunk In Love.mp3'
 import roxanneSong from '../music/Roxanne.mp3'
-import drinkingProblemSong from '../music/Drinking-problem.mp3'
-import iCanFuckingTellSong from '../music/I can fucking tell.mp3'
+import drinkingProblemSong from '../music/Drinking Problem.mp3'
+import iCanFuckingTellSong from '../music/I Can Fvcking Tell.mp3'
 import canWeKissForeverSong from '../music/Can we kiss forever.mp3'
 import leckSong from '../music/Leck.mp3'
-import needSomebodySong from '../music/Need somebody.mp3'
-import iChoseYouSong from '../music/I chose you.mp3'
-import imMovingToEnglandSong from '../music/Im moving to england.mp3'
+import needSomebodySong from '../music/Need Somebody.mp3'
+import iChoseYouSong from '../music/I Chose You.mp3'
+import imMovingToEnglandSong from '../music/I\'m Moving To England.mp3'
 import earthSong from '../music/Earth.mp3'
 export const songs = {
 	"allSongs":[
@@ -77,6 +83,7 @@ export const songs = {
 				"Элджей"
 			],
 			cover: cadillacImg,
+			img:'Cadillac.jpg',
 			listens:130,
 			releaseDate:'June 9, 2020',
 			lyrics: [
@@ -316,6 +323,7 @@ export const songs = {
 			songSrc: shapeofyouSong,
 			authors: ["Ed Sheeran"],
 			cover: shapeofyouImg,
+			img:'Shape-of-you.jpg',
 			listens:110,
 			releaseDate:'March 3, 2017',
 			lyrics: [
@@ -423,6 +431,7 @@ export const songs = {
 					startTime: 71,
 					text: "Every day discovering something brand new"
 				},
+
 				{
 					startTime: 74,
 					text: "I'm in love with your body"
@@ -455,6 +464,7 @@ export const songs = {
 					startTime: 91,
 					text: "Every day discovering something brand new"
 				},
+
 				{
 					startTime: 94,
 					text: "I'm in love with the shape of you"
@@ -559,6 +569,7 @@ export const songs = {
 					startTime: 151,
 					text: "Every day discovering something brand new"
 				},
+
 				{
 					startTime: 154,
 					text: "I'm in love with your body"
@@ -591,6 +602,7 @@ export const songs = {
 					startTime: 171,
 					text: "Every day discovering something brand new"
 				},
+
 				{
 					startTime: 174,
 					text: "I'm in love with the shape of you"
@@ -627,6 +639,7 @@ export const songs = {
 					startTime: 212,
 					text: "Every day discovering something brand new"
 				},
+
 				{
 					startTime: 215,
 					text: "I'm in love with your body"
@@ -671,6 +684,7 @@ export const songs = {
 					startTime: 232,
 					text: "Every day discovering something brand new"
 				},
+
 				{
 					startTime: 235,
 					text: "I'm in love with the shape of you"
@@ -687,6 +701,7 @@ export const songs = {
 			songSrc: dadadaSong,
 			authors: ["Tanir", "Tyomcha"],
 			cover: dadadaImg,
+			img:'da-da-da.jpg',
 			listens:120,
 			releaseDate:'August 17, 2019',
 			lyrics: [
@@ -879,6 +894,7 @@ export const songs = {
 			songSrc: ayoSong,
 			authors: ["Chris Brown", "Tyga"],
 			cover: ayoImg,
+			img:'ayo.jpg',
 			listens:92,
 			releaseDate:'February 20, 2015',
 			lyrics: [
@@ -1235,6 +1251,7 @@ export const songs = {
 			songSrc: movieSong,
 			authors: ["Nate Good", "Bluelake", "Johny Koch"],
 			cover: movieImg,
+			img:'movie.jpg',
 			listens:53,
 			releaseDate:'June 29, 2018',
 			lyrics: [
@@ -1523,6 +1540,7 @@ export const songs = {
 			songSrc: comingHomeSong,
 			authors: ["Diddy", "Dirty Money"],
 			cover: comingHomeImg,
+			img:'coming-home.jpg',
 			listens:51,
 			releaseDate:'January 1, 2010',
 			lyrics: [
@@ -1883,6 +1901,7 @@ export const songs = {
 			songSrc: boulevardSong,
 			authors: ["Greenday"],
 			cover: boulevardImg,
+			img:'boulevard-of-broken-dreams.png',
 			listens:23,
 			releaseDate:'September 21, 2004',
 			lyrics: [
@@ -2097,8 +2116,9 @@ export const songs = {
 			id: 7,
 			name: "Гипноз",
 			songSrc: gipnozSong,
-			authors: ["Andro", "Qontrast", "Хиро"],
+			authors: ["Andro", "QONTRAST", "Hiro"],
 			cover: gipnozImg,
+			img:'Гипноз.jpg',
 			listens:92,
 			releaseDate:'October 6, 2020',
 			lyrics: [
@@ -2430,6 +2450,7 @@ export const songs = {
 			songSrc: hitmyphoneSong,
 			authors: ["Yvng Swag"],
 			cover: hitmyphoneImg,
+			img:'hitmyphone.jpg',
 			listens:57,
 			releaseDate:'September 15, 2017',
 			lyrics: [
@@ -2633,10 +2654,11 @@ export const songs = {
 		},
 		{
 			id: 9,
-			name: "CLOUT COBAIN | CLOUT CO13A1N",
+			name: "CLOUT COBAIN  CLOUT CO13A1N",
 			songSrc: cloutCobainSong,
 			authors: ["Denzel Curry"],
 			cover: cloutCobainImg,
+			img:'Clout-cobain.png',
 			listens:103,
 			releaseDate:'April 25, 2021',
 			lyrics: [
@@ -2892,6 +2914,7 @@ export const songs = {
 			songSrc: moodSong,
 			authors: ["Nate Good"],
 			cover: moodImg,
+			img:'Mood.jpg',
 			listens:122,
 			releaseDate:'May 22, 2018',
 			lyrics: [
@@ -3331,6 +3354,7 @@ export const songs = {
 			songSrc: tiGorishKakOgonSong,
 			authors: ["Slava Marlow"],
 			cover: tiGorishKakOgonImg,
+			img:'Ты_горишь_как_огонь.jpg',
 			listens:24,
 			releaseDate:'February 19, 2021',
 			lyrics: [
@@ -3502,6 +3526,7 @@ export const songs = {
 			songSrc: lbtdSong,
 			authors: ["кис-кис"],
 			cover: lbtdImg,
+			img:'лбтд.jpg',
 			listens:43,
 			releaseDate:'August 16, 2019',
 			lyrics: [
@@ -3693,6 +3718,7 @@ export const songs = {
 			songSrc: onMyOwnSong,
 			authors: ["Jaden", "Kid Cudi"],
 			cover: onMyOwnImg,
+			img:'On-my-own.png',
 			listens:72,
 			releaseDate:'July 5, 2019',
 			lyrics: [
@@ -4004,6 +4030,7 @@ export const songs = {
 			songSrc: angelSong,
 			authors: ["Miyagi"],
 			cover: angelImg,
+			img:'Buster-Keaton.jpeg',
 			listens:81,
 			releaseDate:'June 21, 2019',
 			lyrics: [
@@ -4279,6 +4306,7 @@ export const songs = {
 			songSrc: loyalSong,
 			authors: ["Chris Brown", "Lil Wayne", "Tyga"],
 			cover: loyalImg,
+			img:'loyal.png',
 			listens:54,
 			releaseDate:'September 16, 2014',
 			lyrics: [
@@ -4682,6 +4710,7 @@ export const songs = {
 			songSrc: freakyFridaySong,
 			authors: ["Chris Brown", "Lil Dicky"],
 			cover: freakyFridayImg,
+			img:'freaky-friday.jpg',
 			listens:72,
 			releaseDate:'February 27, 2018',
 			lyrics: [
@@ -4957,6 +4986,7 @@ export const songs = {
 			songSrc: dontCheckOnMeSong,
 			authors: ["Chris Brown", "Justin Bieber"],
 			cover: dontCheckOnMeImg,
+			img:'Dont-check-on-me.jpg',
 			listens:105,
 			releaseDate:'June  28, 2019',
 			lyrics: [
@@ -5232,6 +5262,7 @@ export const songs = {
 			songSrc: intentionsSong,
 			authors: ["Justin Bieber", "Quavo"],
 			cover: changesImg,
+			img:'changes.jpg',
 			listens:111,
 			releaseDate:'February 14, 2020',
 			lyrics: []
@@ -5240,8 +5271,9 @@ export const songs = {
 			id: 19,
 			name: "I'm the one",
 			songSrc: imTheOneSong,
-			authors: ["Justin Bieber", "DJ Khaled", "Quavo", "Chance the Rapper", "Lil Wayne"],
+			authors: ["Justin Bieber", "Dj Khaled", "Quavo", "Chance the Rapper", "Lil Wayne"],
 			cover: imTheOneImg,
+			img:'im-the-one.jpg',
 			listens:103,
 			releaseDate:'June 23, 2017',
 			lyrics: []
@@ -5252,6 +5284,7 @@ export const songs = {
 			songSrc: yummySong,
 			authors: ["Justin Bieber"],
 			cover: changesImg,
+			img:'changes.jpg',
 			listens:87,
 			releaseDate:'February 14, 2020',
 			lyrics: []
@@ -5262,6 +5295,7 @@ export const songs = {
 			songSrc: holdOnSong,
 			authors: ["Justin Bieber"],
 			cover: justiceImg,
+			img:'justin-bieber.png',
 			listens:65,
 			releaseDate:'April 24, 2021',
 			lyrics: []
@@ -5272,6 +5306,7 @@ export const songs = {
 			songSrc: richLoveSong,
 			authors: ["OneRepublic", "Seeb"],
 			cover: richLoveImg,
+			img:'Rich-love.jpg',
 			listens:150,
 			releaseDate:'March 19, 2021',
 			lyrics: []
@@ -5282,6 +5317,7 @@ export const songs = {
 			songSrc: noVacancySong,
 			authors: ["OneRepublic"],
 			cover: noVacancyImg,
+			img:'No-vacancy.jpg',
 			listens:140,
 			releaseDate:'March 19, 2021',
 			lyrics: []
@@ -5292,6 +5328,7 @@ export const songs = {
 			songSrc: mainChickSong,
 			authors: ["Chris Brown", "Kid Ink"],
 			cover: mainChickImg,
+			img:'Main-chick.jpg',
 			listens:93,
 			releaseDate:'March 19, 2021',
 			lyrics: []
@@ -5302,6 +5339,7 @@ export const songs = {
 			songSrc: bestLoveSongSong,
 			authors: ["Chris Brown", "T-Pain"],
 			cover: revolverImg,
+			img:'revolver.jpg',
 			listens:45,
 			releaseDate:'March 19, 2021',
 			lyrics: []
@@ -5312,306 +5350,128 @@ export const songs = {
 			songSrc: tantraSong,
 			authors: ["Miyagi", "Andy Panda"],
 			cover: yamakasiImg,
+			img:'Yamakasi.jpeg',
 			listens:56,
 			releaseDate:'March 19, 2021',
 			lyrics: []
 		},
 		{
 			id: 27,
-			name: "Buy you a drink",
-			songSrc: tantraSong,
-			authors: ["T-Pain", "B.O.B"],
-			cover: "https://upload.wikimedia.org/wikipedia/ru/2/2f/T-Pain_Epiphany.jpg",
-			listens:104,
+			name: "Drunk In Love",
+			songSrc: drunkInLoveSong,
+			authors: ["27CLUB"],
+			cover: drunkInLoveImg,
+			img:'Drunk-in-love.jpg',
+			listens:32,
 			releaseDate:'March 19, 2021',
 			lyrics: []
 		},
 		{
 			id: 28,
-			name: "Up Down",
-			songSrc: tantraSong,
-			authors: ["T-Pain"],
-			cover: "https://i1.sndcdn.com/artworks-000067521784-2qgp7v-t500x500.jpg",
-			listens:104,
+			name: "Drinking Problem",
+			songSrc: drinkingProblemSong,
+			authors: ["Arizona Zervas", "27CLUB"],
+			cover: drinkingProblemImg,
+			img:'Drinking-problem.jpeg',
+			listens:32,
 			releaseDate:'March 19, 2021',
 			lyrics: []
 		},
 		{
 			id: 29,
-			name: "Bartender",
-			songSrc: tantraSong,
-			authors: ["T-Pain"],
-			cover: "https://img.discogs.com/lhnpZD-lFBLXznTkC_TRbv3qOU8=/fit-in/600x573/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-6485967-1420372387-6866.jpeg.jpg",
-			listens:104,
+			name: "Roxanne",
+			songSrc: roxanneSong,
+			authors: ["Arizona Zervas"],
+			cover: roxanneImg,
+			img:'roxanne.png',
+			listens:122,
 			releaseDate:'March 19, 2021',
 			lyrics: []
 		},
 		{
 			id: 30,
-			name: "One",
-			songSrc: tantraSong,
-			authors: ["Ed Sheeran"],
-			cover: "https://upload.wikimedia.org/wikipedia/ru/a/ad/X_cover.png",
-			listens:66,
+			name: "I Can Fvcking Tell",
+			songSrc: iCanFuckingTellSong,
+			authors: ["SAINt JHN"],
+			cover: iCanFuckingTellImg,
+			img:'I-can-fucking-tell.png',
+			listens:122,
 			releaseDate:'March 19, 2021',
 			lyrics: []
 		},
 		{
 			id: 31,
-			name: "I'm a Mess",
-			songSrc: tantraSong,
-			authors: ["Ed Sheeran"],
-			cover: "https://upload.wikimedia.org/wikipedia/ru/a/ad/X_cover.png",
-			listens:61,
-			releaseDate:'March 19, 2021',
-			lyrics: []
-		},
-		{
-			id: 32,
-			name: "Sing",
-			songSrc: tantraSong,
-			authors: ["Ed Sheeran"],
-			cover: "https://upload.wikimedia.org/wikipedia/ru/a/ad/X_cover.png",
-			listens:34,
-			releaseDate:'March 19, 2021',
-			lyrics: []
-		},
-		{
-			id: 33,
-			name: "Don't",
-			songSrc: tantraSong,
-			authors: ["Ed Sheeran"],
-			cover: "https://upload.wikimedia.org/wikipedia/ru/a/ad/X_cover.png",
-			listens:94,
-			releaseDate:'March 19, 2021',
-			lyrics: []
-		},
-		{
-			id: 34,
-			name: "Nina",
-			songSrc: tantraSong,
-			authors: ["Ed Sheeran"],
-			cover: "https://upload.wikimedia.org/wikipedia/ru/a/ad/X_cover.png",
-			listens:89,
-			releaseDate:'March 19, 2021',
-			lyrics: []
-		},
-		{
-			id: 35,
-			name: "Photograph",
-			songSrc: tantraSong,
-			authors: ["Ed Sheeran"],
-			cover: "https://upload.wikimedia.org/wikipedia/ru/a/ad/X_cover.png",
-			listens:86,
-			releaseDate:'March 19, 2021',
-			lyrics: []
-		},
-		{
-			id: 36,
-			name: "Bloodstream",
-			songSrc: tantraSong,
-			authors: ["Ed Sheeran"],
-			cover: "https://upload.wikimedia.org/wikipedia/ru/a/ad/X_cover.png",
-			listens:73,
-			releaseDate:'March 19, 2021',
-			lyrics: []
-		},
-		{
-			id: 37,
-			name: "Tenerife Sea",
-			songSrc: tantraSong,
-			authors: ["Ed Sheeran"],
-			cover: "https://upload.wikimedia.org/wikipedia/ru/a/ad/X_cover.png",
-			listens:3,
-			releaseDate:'March 19, 2021',
-			lyrics: []
-		},
-		{
-			id: 38,
-			name: "Runaway",
-			songSrc: tantraSong,
-			authors: ["Ed Sheeran"],
-			cover: "https://upload.wikimedia.org/wikipedia/ru/a/ad/X_cover.png",
-			listens:15,
-			releaseDate:'March 19, 2021',
-			lyrics: []
-		},
-		{
-			id: 39,
-			name: "The man",
-			songSrc: tantraSong,
-			authors: ["Ed Sheeran"],
-			cover: "https://upload.wikimedia.org/wikipedia/ru/a/ad/X_cover.png",
-			listens:48,
-			releaseDate:'March 19, 2021',
-			lyrics: []
-		},
-		{
-			id: 40,
-			name: "Thinking out Loud",
-			songSrc: tantraSong,
-			authors: ["Ed Sheeran"],
-			cover: "https://upload.wikimedia.org/wikipedia/ru/a/ad/X_cover.png",
-			listens:63,
-			releaseDate:'March 19, 2021',
-			lyrics: []
-		},
-		{
-			id: 41,
-			name: "Afire Love",
-			songSrc: tantraSong,
-			authors: ["Ed Sheeran"],
-			cover: "https://upload.wikimedia.org/wikipedia/ru/a/ad/X_cover.png",
-			listens:81,
-			releaseDate:'March 19, 2021',
-			lyrics: []
-		},
-		{
-			id: 42,
-			name: "Take it Back",
-			songSrc: tantraSong,
-			authors: ["Ed Sheeran"],
-			cover: "https://upload.wikimedia.org/wikipedia/ru/a/ad/X_cover.png",
-			listens:16,
-			releaseDate:'March 19, 2021',
-			lyrics: []
-		},
-		{
-			id: 43,
-			name: "Shirtleeves",
-			songSrc: tantraSong,
-			authors: ["Ed Sheeran"],
-			cover: "https://upload.wikimedia.org/wikipedia/ru/a/ad/X_cover.png",
-			listens:72,
-			releaseDate:'March 19, 2021',
-			lyrics: []
-		},
-		{
-			id: 44,
-			name: "Even My Dad Does Sometimes",
-			songSrc: tantraSong,
-			authors: ["Ed Sheeran"],
-			cover: "https://upload.wikimedia.org/wikipedia/ru/a/ad/X_cover.png",
-			listens:12,
-			releaseDate:'March 19, 2021',
-			lyrics: []
-		},
-		{
-			id: 45,
-			name: "I See Fire",
-			songSrc: tantraSong,
-			authors: ["Ed Sheeran"],
-			cover: "https://upload.wikimedia.org/wikipedia/ru/a/ad/X_cover.png",
-			listens:52,
-			releaseDate:'March 19, 2021',
-			lyrics: []
-		},
-		{
-			id: 46,
-			name: "Drunk In Love",
-			songSrc: drunkInLoveSong,
-			authors: ["27CLUB"],
-			cover: "https://i1.sndcdn.com/artworks-000334601283-97ul24-t500x500.jpg",
-			listens:32,
-			releaseDate:'March 19, 2021',
-			lyrics: []
-		},
-		{
-			id: 47,
-			name: "Drinking Problem",
-			songSrc: drinkingProblemSong,
-			authors: ["Arizona Zervas", "27CLUB"],
-			cover: "https://is1-ssl.mzstatic.com/image/thumb/Features124/v4/90/cd/0c/90cd0c42-7c7c-0d6c-17be-d5f7aaa40ad4/pr_source.png/800x800bb.jpeg",
-			listens:32,
-			releaseDate:'March 19, 2021',
-			lyrics: []
-		},
-		{
-			id: 48,
-			name: "Roxanne",
-			songSrc: roxanneSong,
-			authors: ["Arizona Zervas"],
-			cover: "https://upload.wikimedia.org/wikipedia/en/3/39/Arizona_Zervas_-_Roxanne.png",
-			listens:122,
-			releaseDate:'March 19, 2021',
-			lyrics: []
-		},
-		{
-			id: 49,
-			name: "I Can Fvcking Tell",
-			songSrc: iCanFuckingTellSong,
-			authors: ["SAINt JHN"],
-			cover: iCanFuckingTellImg,
-			listens:122,
-			releaseDate:'March 19, 2021',
-			lyrics: []
-		},
-		{
-			id: 50,
 			name: "Can We Kiss Forever?",
 			songSrc: canWeKissForeverSong,
 			authors: ["Kina", "Adriana Proenza"],
-			cover: "https://i1.sndcdn.com/artworks-000397499232-ejrkbr-t500x500.jpg",
+			cover: canWeKissForeverImg,
+			img:'Can-we-kiss-forever.jpg',
 			listens:131,
 			releaseDate:'March 19, 2021',
 			lyrics: []
 		},
 		{
-			id: 51,
+			id: 32,
 			name: "Leck",
 			songSrc: leckSong,
 			authors: ["MORGENSHTERN", "Imanbek", "Fetty Wap", "KDDK"],
 			cover: leckImg,
+			img:'Leck.jpg',
 			listens:10,
 			releaseDate:'April 30, 2021',
 			lyrics: []
 		},
 		{
-			id: 52,
+			id: 33,
 			name: "Новая волна",
 			songSrc: leckSong,
 			authors: ["MORGENSHTERN", "DJ Smash"],
-			cover: "https://images.genius.com/b1fb704f22b9519d0867ef199777031e.568x568x1.jpg",
+			cover: novayaVolnaImg,
+			img:'Новая-волна.jpg',
 			listens:3,
 			releaseDate:'April 2, 2021',
 			lyrics: []
 		},
 		{
-			id: 53,
+			id: 34,
 			name: "Need Somebody",
 			songSrc: needSomebodySong,
 			authors: ["XUITCASECITY"],
 			cover: needSomebodyImg,
+			img:'Need-somebody.jpg',
 			listens:3,
 			releaseDate:'April 2, 2021',
 			lyrics: []
 		},
 		{
-			id: 54,
+			id: 35,
 			name: "I Chose You",
 			songSrc: iChoseYouSong,
 			authors: ["Hanz Zimmer", "The Magnificent Six", "Pharrell Williams", "Johny Marr"],
 			cover: tasm2Ost,
+			img:'tasm2Ost.jpg',
 			listens:3,
 			releaseDate:'April 2, 2021',
 			lyrics: []
 		},
 		{
-			id: 55,
+			id: 36,
 			name: "I'm Moving To England",
 			songSrc: imMovingToEnglandSong,
 			authors: ["Hanz Zimmer", "The Magnificent Six", "Pharrell Williams", "Johny Marr"],
 			cover: tasm2Ost,
+			img:'tasm2Ost.jpg',
 			listens:3,
 			releaseDate:'April 2, 2021',
 			lyrics: []
 		},
 		{
-			id: 56,
+			id: 37,
 			name: "Earth",
 			songSrc: earthSong,
 			authors: ["Lil Dicky"],
-			cover: "https://upload.wikimedia.org/wikipedia/en/7/73/Lil_Dicky_-_Earth.png",
+			cover: earthImg,
+			img:'Earth.png',
 			listens:67,
 			releaseDate:'April 2, 2021',
 			lyrics: []
@@ -5619,42 +5479,6 @@ export const songs = {
 	],
 	"Kostya Doloz":
 	[
-		45, 0, 1, 2, 18, 17, 15, 16, 22, 23, 9
+		0, 1, 2, 18, 17, 15, 16, 22, 23, 9
 	]
-}
-
-export const testSongs = {
-	"allSongs":{
-		"19":
-		{
-			id: 19,
-			name: "I'm the one",
-			songSrc: imTheOneSong,
-			authors: ["Justin Bieber", "DJ Khaled", "Quavo", "Chance the Rapper", "Lil Wayne"],
-			cover: imTheOneImg,
-			listens:103,
-			lyrics: []
-		},
-		"20":
-		{
-			id: 20,
-			name: "Yummy",
-			songSrc: yummySong,
-			authors: ["Justin Bieber"],
-			cover: changesImg,
-			listens:87,
-			lyrics: []
-		},
-		"21":
-		{
-			id: 21,
-			name: "Hold On",
-			songSrc: holdOnSong,
-			authors: ["Justin Bieber"],
-			cover: justiceImg,
-			listens:65,
-			lyrics: []
-		}
-	}
-		
 }

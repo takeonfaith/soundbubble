@@ -11,33 +11,41 @@ import { chat } from '../../data/chat'
 import { useSong } from '../../functionality/SongPlay/SongContext'
 import { useOutsideClick } from '../../hooks/useOutsideClick'
 import { BackBtn } from '../Basic/BackBtn'
-import { SongItem } from '../FullScreenPlayer/SongItem'
+import { SearchSongWithChoice } from '../Basic/SearchSongWithChoice'
+import { SongItemChoice } from '../Basic/SongItemChoice'
 
-export const ChatInput = ({ chatId, sendMessage }) => {
+export const ChatInput = ({ chatId, sendMessage, attachedSongs, setAttachedSongs }) => {
 	const [openAttachWindow, setOpenAttachWindow] = useState(false)
 	const [searchValue, setSearchValue] = useState("")
+	const [allFoundSongs, setAllFoundSongs] = useState([])
+	const [searchSongList, setSearchSongList] = useState([])
 	const attachWindowRef = useRef(null)
 	useOutsideClick(attachWindowRef, setOpenAttachWindow)
 	const { yourSongs } = useSong()
-
-	// useEffect(() => {
-	// 	console.log("rewrwe")
-	// }, [chat[chatId].messages.length])
+	useEffect(() => {
+		if(searchValue === ''){
+			setSearchSongList(yourSongs)
+		}
+		else{
+			setSearchSongList(allFoundSongs)
+		}
+	}, [searchValue])
 	return (
 		<div className="chatInput" style={openAttachWindow ? { borderRadius: "0 0 var(--standartBorderRadius) var(--standartBorderRadius)", transition: ".2s" } : {}}>
 			<div className="attachWindow" style={openAttachWindow ? { height: "400px", opacity: '1' } : {}} ref={attachWindowRef}>
 				{openAttachWindow ?
 					<div style = {openAttachWindow ?{maxHeight:'100%'}:{display:'none'}}>
-						<div className="searchBar">
-							<div className="searchBarElement">
-								<BackBtn />
-								<span onClick={() => searchValue.length ? setSearchValue("") : null}>{searchValue.length ? <FiX /> : <FiSearch />}</span>
-							</div>
-							<input type="text" value={searchValue} onChange={(e) => setSearchValue(e.target.value)} placeholder="Search for something" />
-						</div>
+						<SearchSongWithChoice 
+							value = {searchValue} 
+							setValue = {setSearchValue}
+							chosenSongs = {attachedSongs} 
+							setChosenSongs = {setAttachedSongs}
+							allFoundSongs = {allFoundSongs}
+							setAllFoundSongs = {setAllFoundSongs}
+						/>
 						<div className="attachWindowContent">
-							{yourSongs.map((song, index) => {
-								return <SongItem song={song} localIndex={index} key={index} />
+							{searchSongList.map((song, index) => {
+								return <SongItemChoice listOfSongs = {attachedSongs} setListOfSongs = {setAttachedSongs} song={song} localIndex={index} key={index} />
 							})}
 						</div>
 					</div> :
@@ -50,6 +58,7 @@ export const ChatInput = ({ chatId, sendMessage }) => {
 						<ImAttachment />
 					</button>
 				</div>
+				<input type="text" style = {{background:'var(--lightGrey)', border:'none', outline:'none', minHeight:'100%'}}/>
 				<div className="emojis">
 					<div className="emojiItem">
 						<FcLike />

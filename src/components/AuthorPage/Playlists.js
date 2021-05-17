@@ -1,17 +1,32 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { playlists } from '../../data/playlists'
+import { firestore } from '../../firebase'
 import { MoreBtn } from '../Basic/MoreBtn'
 import { PlaylistItem } from './PlaylistItem'
 
 export const Playlists = ({ authorsData }) => {
 	const [authorsPlaylists, setAuthorsPlaylists] = useState([])
 	const [openAllPlaylists, setOpenAllPlaylists] = useState(false)
-	useEffect(() => {
-		if (playlists[authorsData.name] === undefined) return setAuthorsPlaylists([])
 
-		setAuthorsPlaylists(playlists["allPlaylists"].filter(el => playlists[authorsData.name].includes(el.id)))
-	}, [authorsData])
+	async function findAuthorsAlbums() {
+		setAuthorsPlaylists([])
+		const tempArray = []
+		if(authorsData.ownPlaylists !== undefined && authorsData.ownPlaylists.length !== 0){
+			const response = firestore.collection("playlists")
+				.where("id", "in", authorsData.ownPlaylists)
+			const data = await response.get();
+			data.docs.forEach(item => {
+				tempArray.push(item.data())
+			})
+		}
+		tempArray.sort((a, b)=> new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime())
+		setAuthorsPlaylists(tempArray)
+	}
+
+	useEffect(() => {
+		findAuthorsAlbums()
+	}, [authorsData.ownPlaylists])
 
 	return authorsPlaylists.length ?
 		(

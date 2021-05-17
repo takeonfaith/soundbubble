@@ -7,18 +7,29 @@ import { useSong } from '../../functionality/SongPlay/SongContext'
 import displayDate from '../../functions/displayDate'
 import { BackBtn } from '../Basic/BackBtn'
 import { SmallImages } from './SmallImages'
+import {useAuth} from '../../functionality/AuthContext'
+import {IoMdExit } from 'react-icons/io'
+import { firestore } from '../../firebase'
 export const Header = ({data, headerColors, setHeaderColors}) => {
 	const {displayAuthors} = useSong()
 	const [albumAuthors, setAlbumAuthors] = useState([])
 	const [authorsImages, setAuthorsImages] = useState([])
-	useEffect(() => {
+	const {currentUser, logout} = useAuth()
+	async function fetchAuthorsData() {
 		if(data.authors !== undefined && !albumAuthors.length){
-			const tempArr = authors.filter(author=>data.authors.includes(author.id))
-			tempArr.forEach((a)=>{
-				setAlbumAuthors(prev=>[...prev, a.name])
-				setAuthorsImages(prev=>[...prev, a.image])
+			const ids = data.authors.map(author=>author.uid)
+			const response = firestore.collection("users").where("uid", "in", ids)
+			const authrorsData = await response.get();
+			console.log(authrorsData.docs)
+			authrorsData.docs.forEach((a)=>{
+				console.log(a.data())
+				setAlbumAuthors(prev=>[...prev, a.data()])
+				setAuthorsImages(prev=>[...prev, a.data().photoURL])
 			})
 		}
+	}
+	useEffect(() => {
+		fetchAuthorsData()
 	}, [data])
 
 	function displayCreationDateIfExists(){
@@ -36,7 +47,7 @@ export const Header = ({data, headerColors, setHeaderColors}) => {
 	function showCreatorsIfExist(){
 		return data.authors !== undefined?
 		<div className = "headerAuthorsImagesAndNames">
-			<SmallImages imagesList = {authorsImages} borderColor = {headerColors[1]}/>
+			<SmallImages imagesList = {authorsImages} borderColor = {headerColors[0]}/>
 			<div className = "headerAuthors">{displayAuthors(albumAuthors, ", ")}</div>
 		</div>:
 		null
@@ -45,9 +56,10 @@ export const Header = ({data, headerColors, setHeaderColors}) => {
 	function findIfIsVerified(){
 		return data.isVerified?<ImCheckmark style = {{color:headerColors[2]}}/>:null
 	}
+
 	return (
-		<div className = "Header" style = {{background:`linear-gradient(45deg, ${headerColors[3]}, ${headerColors[0]})`}}>
-			<div className = "headerBtns" style = {{background:headerColors[3]}}>
+		<div className = "Header" style = {{background:`linear-gradient(45deg, ${headerColors[2]}, ${headerColors[0]})`}}>
+			<div className = "headerBtns" style = {{background:headerColors[2]}}>
 				<BackBtn/>
 				<div className="headerBackBtn">
 					<button>
@@ -59,26 +71,32 @@ export const Header = ({data, headerColors, setHeaderColors}) => {
 						<FiMoreVertical/>
 					</button>
 				</div>
+				{
+					currentUser.uid === data.uid?
+					<button onClick = {logout} >
+						<IoMdExit />
+					</button>:
+					null
+				}
 			</div>
 			<div className = "headerAuthorsImage" style = {data.authors === undefined?{animation: "floatingBorderRadius 10s infinite ease-in-out"}:{}}>
-				<ColorExtractor src = {data.image} getColors={colors => setHeaderColors(colors)}/>
-				<img src={data.image} alt=""/>
+				<img src={data.photoURL || data.image} alt=""/>
 			</div>
 			<div className = "headerAuthorInfo">
 				<div className="headerAuthorsName">
 					{isAlbumOrIsAuthor()}
 					<div style = {{display:'flex', alignItems:'center', margin: "2px 0 10px 0"}}>
-						<h1>{data.name}</h1>
+						<h1>{data.displayName || data.name}</h1>
 						{findIfIsVerified()}
 					</div>
 				</div>
 				{showCreatorsIfExist()}
 				<div className = "headerListenersAndSubs">
-					<div className = "headerListenersAndSubsItem">
-						<span>{data.numberOfListenersPerMonth || data.listens}</span>
+					<div className = "headerListenersAndSubsItem" title = {(data.listens ?? data.numberOfListenersPerMonth) + ' listeners per month'}>
+						<span>{data.listens ?? data.numberOfListenersPerMonth}</span>
 						<FiHeadphones/>
 					</div>
-					<div className = "headerListenersAndSubsItem">
+					<div className = "headerListenersAndSubsItem" title = {data.subscribers + ' subscribers'}>
 						<span>{data.subscribers}</span>
 						<FiUserPlus/>
 					</div>

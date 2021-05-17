@@ -1,28 +1,44 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { SongItem } from '../components/FullScreenPlayer/SongItem'
 import "../styles/LibraryPage.css"
 import { useSong } from '../functionality/SongPlay/SongContext'
 import wave from '../images/wave2.svg'
 import { PlaylistItem } from '../components/AuthorPage/PlaylistItem'
 import shuffleSongs from '../functions/shuffleSongs'
+import { useAuth } from '../functionality/AuthContext'
+import { firestore } from '../firebase'
+import { Slider } from '../components/Tools/Slider'
 export const LibraryPage = () => {
 	const {yourSongs, yourPlaylists, setCurrentSongQueue, setCurrentSongPlaylistSource } = useSong()
+	const {currentUser} = useAuth()
+	const [currentPage, setCurrentPage] = useState(0)
 	function setQueueInLibrary(){
 		setCurrentSongQueue(yourSongs)
-		setCurrentSongPlaylistSource({ source: 'library', name: "Your Library", image: "https://sun9-66.userapi.com/impf/c636628/v636628089/46fc5/jZmb1Eadwqs.jpg?size=960x1280&quality=96&sign=ee424378e70207bd5f8ab2aa5a669b81&type=album", songsList: yourSongs})
+		setCurrentSongPlaylistSource({ source: '/library', name: "Your Library", image: currentUser.photoURL, songsList: yourSongs})
 		shuffleSongs(yourSongs)
+		firestore.collection('users').doc(currentUser.uid).update({
+			lastQueue:{
+				image:currentUser.photoURL,
+				name:"Your Library",
+				songsList:yourSongs,
+				source:'/library'
+			}
+		})
 	}
 	return (
 		<div className="LibraryPage" style = {{animation:'zoomIn .2s forwards'}}>
 			<div className="playLists">
+				<Slider pages = {['Main', "Playlists", "Authors"]} currentPage = {currentPage} setCurrentPage = {setCurrentPage}/>
+				<div className="playlistContent">
+					{yourPlaylists.map((p, index) => {
+						return (
+							<PlaylistItem playlist = {p} key = {index}/>
+						)
+					})}
+				</div>
 				<div className="playlistsBackground">
 					<img src={wave} alt="erwerrnjeqjweqwqeqwewerbjfrwjfbewjerbh"/>
 				</div>
-				{yourPlaylists.map((p, index) => {
-					return (
-						<PlaylistItem playlist = {p} key = {index}/>
-					)
-				})}
 			</div>
 			<div className="yourSongsList" onClick = {setQueueInLibrary}>
 				{yourSongs.map((song, index) => {

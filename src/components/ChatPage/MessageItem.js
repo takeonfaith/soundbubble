@@ -1,30 +1,58 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { AiFillFire, AiFillLike } from 'react-icons/ai'
 import { FcLike } from 'react-icons/fc'
 import { authors } from '../../data/authors'
 import { chat } from '../../data/chat'
 import { playlists } from '../../data/playlists'
 import { songs } from '../../data/songs'
+import { firestore } from '../../firebase'
+import { useAuth } from '../../functionality/AuthContext'
 import displayDate from '../../functions/displayDate'
 import { AuthorItemBig } from '../AuthorPage/AuthorItemBig'
 import { PlaylistItem } from '../AuthorPage/PlaylistItem'
 import { SongItem } from '../FullScreenPlayer/SongItem'
 
-export const MessageItem = ({ messageData, chatId, scrollToMessageRef, setScrollToMessageId, scrollToMessageId }) => {
+export const MessageItem = ({ messageData, chatId, scrollToMessageRef, setScrollToMessageId, scrollToMessageId, showPhoto = true}) => {
+	const {currentUser} = useAuth()
 	const {message, attachedAlbums, attachedSongs, attachedAuthors, sender, inResponseToMessage, id, sentTime} = messageData
-	const image = authors[sender].image
+	const [userThatSentMessage, setUserThatSentMessage] = useState({})
+	const [attachedSongsData, setAttachedSongsData] = useState([])
+	const image = ""
 	function findWhatToWriteInResponseToItem(referedMessage){
 		return referedMessage.attachedSongs.length ? "Audio":
 		referedMessage.attachedAlbums.length? "Album":
 		referedMessage.attachedAuthors.length?"Author":""
 	}
+
+	async function fetchSentMessageUser(){
+		const user = (await firestore.collection('users').doc(messageData.sender).get()).data()
+		setUserThatSentMessage(user)
+	}
+
+	function findAttachedSongs() {
+		return attachedSongs.forEach(async (songId, index) => {
+			let song = (await firestore.collection('songs').doc(songId).get()).data()
+			setAttachedSongsData(prev=>[...prev, song])
+		})
+	}
+
+	useEffect(() => {
+		fetchSentMessageUser()
+		findAttachedSongs()
+	}, [])
+
+
 	const emojis = [<FcLike />,<AiFillFire/>, <AiFillLike />]
 	return (
-		<div className={"MessageItem " + (sender === 30?'your':'')}  ref = {id === scrollToMessageId?scrollToMessageRef:null}>
+		<div className={"MessageItem " + (sender === currentUser.uid?'your':'')}  ref = {id === scrollToMessageId?scrollToMessageRef:null} style = {showPhoto?{paddingBottom:'15px'}:{}}>
 			<div className = "messageItemImage">
-				<img src={image} alt=""/>
+				{showPhoto?
+					<img src={userThatSentMessage.photoURL} alt=""/>:
+					null
+				}
+				
 			</div>
-			<div className="messageItemBody" style = {id === scrollToMessageId?{animation:'showResponseMessage .5s forwards'}:{}}>	
+			<div className="messageItemBody" style = {id === scrollToMessageId?{animation:'showResponseMessage .5s forwards'}:showPhoto?{borderRadius:'var(--standartBorderRadius2) var(--standartBorderRadius) var(--standartBorderRadius) 5px'}:{}}>	
 				{inResponseToMessage !== null?
 					<div className = "responseItem" onClick = {()=>setScrollToMessageId(inResponseToMessage)}>
 						<h5>{authors[chat[chatId].messages[inResponseToMessage].sender].name}</h5>
@@ -38,9 +66,8 @@ export const MessageItem = ({ messageData, chatId, scrollToMessageRef, setScroll
 				}
 				<div>	
 					<p>{emojis[message]}</p>
-					{attachedSongs.map((songId, index) => {
-						let song = songs['allSongs'][songId]
-						return <SongItem song={song} localIndex={index} key={index} />
+					{attachedSongsData.map((song, key)=>{
+						return <SongItem song = {song} localIndex = {key} key = {key}/>
 					})}
 					{attachedAlbums.map((albumId, index) => {
 						let album = playlists['allPlaylists'][albumId]
@@ -51,7 +78,7 @@ export const MessageItem = ({ messageData, chatId, scrollToMessageRef, setScroll
 						return <AuthorItemBig data={author} key={index} />
 					})}
 				</div>
-				<div style = {{width:'100%', display:'flex', justifyContent:'flex-end', fontSize:'.7em', opacity:'.8'}}>{displayDate(sentTime, 2)}</div>
+				<div style = {{fontSize:'.7em', opacity:'.8', position:'absolute', top:'9px', right:'9px'}}>{displayDate(sentTime, 2)}</div>
 			</div>
 		</div>
 	)

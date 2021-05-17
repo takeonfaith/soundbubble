@@ -8,6 +8,7 @@
 
 .LeftsideBar>*{
 	margin: 9px 0;
+	text-decoration: none;
 }
 
 .leftSideBarContainer{
@@ -29,10 +30,48 @@
 	display: flex;
 	align-items: center;
 	cursor: pointer;
+	position: relative;
+}
+
+.leftSideBarContainer a {
+	text-decoration: none;
 }
 
 .person:hover{
 	background: rgb(85, 85, 85);
+}
+
+.person:hover .personBtns{
+	opacity: 1;
+	background: rgb(85, 85, 85);
+}
+
+.personBtns{
+	position: absolute;
+	display: flex;
+	right: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+	align-items: center;
+	z-index: 10;
+	opacity: 0;
+	padding-left: 4px;
+}
+
+.personBtns button{
+	background: rgba(216, 216, 216, 0);
+	height: 30px;
+	width: 30px;
+	display: flex;
+	align-items: center;	
+	justify-content: center;
+	color:rgb(255, 255, 255);
+	border-radius: var(--standartBorderRadius2);
+	z-index: 10;
+}
+
+.personBtns button:hover{
+	background: var(--transparentWhite);
 }
 
 .LeftsideBar .logo{

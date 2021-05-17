@@ -280,7 +280,7 @@ export const playlists = {
 			name:'The Amazing Spider Man 2 OST', 
 			image:tasm2Ost,
 			songs:[
-			   54, 55
+			   35, 36
 			],
 			creationDate:'May 2, 2021', 
 			authors:[53],

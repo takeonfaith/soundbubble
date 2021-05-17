@@ -15,23 +15,24 @@ export default function FullScreenPlayer() {
     rightSideCurrentPage, 
     setRightSideCurrentPage,
     openFullScreenPlayer,
-    setOpenFullScreenPlayer
+    setOpenFullScreenPlayer,
+    name, 
+    lyrics
   } = useSong()
-  const { name, lyrics } = songs['allSongs'][currentSong]
   const [openMenu, setOpenMenu] = useState(false)
   const lyricsRef = useRef(null)
   
 
   useEffect(() => {
-    document.documentElement.style.setProperty('--themeColor', imgColors[1]);
-    document.documentElement.style.setProperty('--themeColor2', imgColors[0]);
-    document.documentElement.style.setProperty('--themeColorTransparent', imgColors[0] + '6e');
+    if(imgColors.length !== 0){
+      document.documentElement.style.setProperty('--themeColor', imgColors[1]);
+      document.documentElement.style.setProperty('--themeColor2', imgColors[0]);
+      document.documentElement.style.setProperty('--themeColor3', imgColors[2]);
+      document.documentElement.style.setProperty('--themeColor4', imgColors[5]);
+      document.documentElement.style.setProperty('--themeColorTransparent', imgColors[0] + '6e');
+    }
   }, [imgColors])
 
-
-  useEffect(() => {
-    document.title = name
-  }, [currentSong])
 
   function rightSideContent(currentPage) {
     let RightSidePage = rightSide[currentPage].component
@@ -63,7 +64,7 @@ export default function FullScreenPlayer() {
           <div className="rightSideControl">
             {rightSide.map((el, i) => {
               return (
-                <div className="controlIcon" key={el.id} style={el.id === rightSideCurrentPage && openMenu ? { background: "var(--themeColor2)" } :el.id === 2 && noLyrics()?{opacity:.4}:{}} onClick={()=>changeRightSidePage(el)}>
+                <div className="controlIcon" key={el.id} style={el.id === rightSideCurrentPage && openMenu ? { background: "var(--themeColor)" } :el.id === 2 && noLyrics()?{opacity:.4}:{}} onClick={()=>changeRightSidePage(el)}>
                   {el.icon}
                 </div>
               )

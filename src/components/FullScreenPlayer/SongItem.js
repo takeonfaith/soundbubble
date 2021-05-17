@@ -11,15 +11,21 @@ import { MdPlaylistAdd } from 'react-icons/md'
 import { friends } from '../../data/friends'
 import { authors } from '../../data/authors'
 import shareWithOneFriend from '../../functions/shareWithOneFriend'
+import { useAuth } from '../../functionality/AuthContext'
+import { firestore } from '../../firebase'
 export const SongItem = ({ song, localIndex, showListens = false, listens = 0, isNewSong = false }) => {
-	const { setCurrentSong, currentSong, displayAuthors, play, songRef, setPlay, setYourSongs, yourPlaylists, currentSongQueue, setCurrentSongInQueue } = useSong()
+	const { setCurrentSong, currentSong, displayAuthors, play, songRef, setPlay, setYourSongs, yourPlaylists, currentSongQueue, setCurrentSongInQueue, fetchYourSongs } = useSong()
 	const [openMoreWindow, setOpenMoreWindow] = useState(false)
 	const [moreWindowPosRelativeToViewport, setMoreWindowPosRelativeToViewport] = useState(0)
 	const currentItemRef = useRef(null)
+	const {currentUser} = useAuth()
 	useOutsideClick(currentItemRef, setOpenMoreWindow)
 
 	function chooseSongItem() {
 		setCurrentSong(song.id)
+		firestore.collection('users').doc(currentUser.uid).update({
+			lastSongPlayed:song.id
+		})
 		setCurrentSongInQueue(localIndex)
 		if (song.id === currentSong && play) {
 			songRef.current.pause();
@@ -38,18 +44,22 @@ export const SongItem = ({ song, localIndex, showListens = false, listens = 0, i
 
 	function addOrDeleteSongToLibrary(e) {
 		e.stopPropagation()
-		if (songs['Kostya Doloz'].includes(song.id)) {
-			let newList = songs['Kostya Doloz'].filter(songNum => songNum !== song.id)
-			setYourSongs(songs["allSongs"].filter(el => newList.includes(el.id)))
-			songs['Kostya Doloz'] = newList
+		if (currentUser.addedSongs.includes(song.id)) {
+			let newList = currentUser.addedSongs.filter(songNum => songNum !== song.id)
+			firestore.collection('users').doc(currentUser.uid).update({
+				addedSongs:newList
+			})
+			fetchYourSongs()
 			setOpenMoreWindow(false)
 			return
 		}
 
-		let newList = songs["allSongs"].filter(el => songs['Kostya Doloz'].includes(el.id))
-		newList.push(songs["allSongs"].find(el => el.id === song.id))
-		setYourSongs(newList)
-		songs['Kostya Doloz'].push(song.id)
+		let newList = currentUser.addedSongs
+		newList.push(song.id)
+		firestore.collection('users').doc(currentUser.uid).update({
+			addedSongs:newList
+		})
+		fetchYourSongs()
 	}
 
 	function addOrDeleteSongToPlaylist(e) {
@@ -98,7 +108,7 @@ export const SongItem = ({ song, localIndex, showListens = false, listens = 0, i
 			</div>
 			<div className="songItemMoreBtn" onClick={openSongItemMoreWindow}>
 				<button onClick={addOrDeleteSongToLibrary}>
-					{!songs['Kostya Doloz'].includes(song.id) ? <FiPlusCircle /> : <FiCheck />}
+					{!currentUser.addedSongs.includes(song.id) ? <FiPlusCircle /> : <FiCheck />}
 				</button>
 				<button>
 					<FiMoreVertical />
@@ -107,7 +117,7 @@ export const SongItem = ({ song, localIndex, showListens = false, listens = 0, i
 			{openMoreWindow ?
 				(
 					<div className="songItemMenuWindow" style={moreWindowPosRelativeToViewport > (window.innerHeight / 2) + 100 ? { top: 'auto', bottom: '110%' } : { top: '110%', bottom: 'auto' }} onClick={e => e.stopPropagation()}>
-						<div className="songItemMenuWindowItem" onClick={addOrDeleteSongToLibrary}>{songs['Kostya Doloz'].includes(song.id) ? <span><FiTrash2 />Delete</span> : <span><FiPlusCircle />Add</span>}</div>
+						<div className="songItemMenuWindowItem" onClick={addOrDeleteSongToLibrary}>{currentUser.addedSongs.includes(song.id) ? <span><FiTrash2 />Delete</span> : <span><FiPlusCircle />Add</span>}</div>
 						<div className="songItemMenuWindowItem">
 							<div className="songItemMenuWindow inner">
 								{yourPlaylists.map((playlist, key) => {

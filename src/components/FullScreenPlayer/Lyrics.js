@@ -3,8 +3,7 @@ import { Loading } from './Loading'
 import { useSong } from '../../functionality/SongPlay/SongContext'
 import { songs } from '../../data/songs'
 export const Lyrics = () => {
-	const { isThereKaraoke, currentParagraph, displayAuthors, changeCurrentTime, play, currentTime, currentParagraphRef, currentSong } = useSong()
-	const { lyrics } = songs['allSongs'][currentSong]
+	const { isThereKaraoke, currentParagraph, displayAuthors, changeCurrentTime, play, currentTime, currentParagraphRef, currentSong, lyrics } = useSong()
 	return (
 		<div className="Lyrics">
 			{

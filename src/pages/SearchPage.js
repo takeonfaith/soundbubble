@@ -13,6 +13,8 @@ import { useSong } from '../functionality/SongPlay/SongContext'
 import { BackBtn } from '../components/Basic/BackBtn'
 import { FiSearch, FiX } from 'react-icons/fi'
 import { TitleWithMoreBtn } from '../components/Basic/TitleWithMoreBtn'
+import { firestore } from '../firebase'
+import { LoadingCircle } from '../components/Basic/LoadingCircle'
 export const SearchPage = () => {
 	const { setCurrentSongQueue, setCurrentSongPlaylistSource } = useSong()
 	const [searchValue, setSearchValue] = useState("")
@@ -26,6 +28,8 @@ export const SearchPage = () => {
 	const [showAllAuthors, setShowAllAuthors] = useState(false)
 	const [showAllUsers, setShowAllUsers] = useState(false)
 	const [showAllAlbums, setShowAllAlbums] = useState(false)
+	const [testSongList, setTestSongList] = useState([])
+	const [loading, setLoading] = useState(true)
 	function findTop(list, criterion, setTop, amountOfTopElements = 5) {
 		let tempArr = []
 		list.forEach((el) => {
@@ -71,7 +75,7 @@ export const SearchPage = () => {
 
 	function findColorSrc() {
 
-		if (resultSongList.length !== 0) return resultSongList[0].cover
+		if (resultSongList.length !== 0) return resultAuthorList[0].image
 		if (resultAuthorList.length !== 0) return resultAuthorList[0].image
 		if (resultAlbumList.length !== 0) return resultAlbumList[0].image
 		if (resultUserList.length !== 0) return resultUserList[0].image
@@ -83,21 +87,45 @@ export const SearchPage = () => {
 	}, [resultSongList])
 
 	function setQueueInSearch() {
-		setCurrentSongQueue(resultSongList)
-		setCurrentSongPlaylistSource({ source: 'search', name: "Search", image: "https://lh3.googleusercontent.com/proxy/PJSN5iZPJhIuQKV-efbS0KD_HoL9nu4cyDmwOfWatZdeOyLBsEtosSWHTw4aK9ZKhrTEW2LGZCGxmH9vYFYx_PT16PIrETeNqijSxA", songsList:resultSongList })
+		setCurrentSongQueue(testSongList)
+		setCurrentSongPlaylistSource({ source: '/search', name: "Search", image: "https://lh3.googleusercontent.com/proxy/PJSN5iZPJhIuQKV-efbS0KD_HoL9nu4cyDmwOfWatZdeOyLBsEtosSWHTw4aK9ZKhrTEW2LGZCGxmH9vYFYx_PT16PIrETeNqijSxA", songsList:testSongList })
 	}
+
+	async function fetchSongs(){
+		const response=firestore.collection("songs")
+		.orderBy("listens", "desc")
+		const data= await response.get();
+		data.docs.forEach(item=>{
+		 setTestSongList(prev=>[...prev, item.data()])
+		})
+		setLoading(false)
+	}
+
+	useEffect(() => {
+		fetchSongs()
+	}, [])
 	return (
 		<div className="SearchPage" style={{ animation: 'zoomIn .2s forwards' }}>
-
-			<ColorExtractor src={shadowColor} getColors={colors => setFirstSongColors(colors)} />
 			<div className="searchBar">
 				<div className="searchBarElement">
-					<BackBtn color={firstSongColors[0]} />
+					<BackBtn color={testSongList[0]&&testSongList[0].imageColors[0]} />
 					<span onClick={() => searchValue.length ? setSearchValue("") : null}>{searchValue.length ? <FiX /> : <FiSearch />}</span>
 				</div>
 				<input type="text" value={searchValue} onChange={(e) => setSearchValue(e.target.value)} placeholder="Search for something" />
 			</div>
-			<div className="results" >
+			{loading?
+				<LoadingCircle/>:
+				<>
+					<div className="results" onClick={setQueueInSearch}>
+						{testSongList.map((song, index)=>{
+							return (
+								<SongItem song = {song} localIndex = {index} showListens = {true} listens = {song.listens}/>
+							)
+						})}
+					</div>
+				</>
+			}
+			{/* <div className="results" >
 				<div className="songsResult" style={!resultSongList.length ? { display: 'none' } : {}} onClick={setQueueInSearch}>
 					<TitleWithMoreBtn title = {searchValue.length ? "Songs" : <span>Top songs<AiFillFire /></span>} func = {()=>setShowAllSongs(!showAllSongs)} boolVal = {showAllSongs} lenOfList = {resultSongList.length}/>
 					{resultSongList.map((song, index) => {
@@ -210,9 +238,9 @@ export const SearchPage = () => {
 						})}
 					</div>
 				</div>
-			</div>
+			</div> */}
 			{findColorSrc() === "" ? <h2>No result for {searchValue}</h2> : null}
-			<div className="colorfullShadow" style={shadowColor ? { background: firstSongColors[0] + "a6" } : {}}></div>
+			<div className="colorfullShadow" style={shadowColor ? { background: testSongList[0]&&testSongList[0].imageColors[0] + "a6" } : {}}></div>
 
 		</div>
 	)

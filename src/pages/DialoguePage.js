@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { createRef } from 'react'
 import { useState } from 'react'
 import { Redirect, useRouteMatch } from 'react-router'
 import { ChatHeader } from '../components/ChatPage/ChatHeader'
@@ -8,8 +8,14 @@ import { useOutsideClick } from '../hooks/useOutsideClick'
 import { useRef } from 'react'
 import { ChatInput } from '../components/AuthorPage/ChatInput'
 import { useEffect } from 'react'
+import { firestore } from '../firebase'
+import { useAuth } from '../functionality/AuthContext'
+import { LoadingCircle } from '../components/Basic/LoadingCircle'
+import firebase from 'firebase'
+import displayDate from '../functions/displayDate'
 export const DialoguePage = () => {
 	const match = useRouteMatch('/chat/:chatId')
+	const { currentUser } = useAuth()
 	// const [playlistsSong, setPlaylistsSong] = useState([])
 	// const [headerColors, setHeaderColors] = useState([])
 	const { chatId } = match.params
@@ -17,63 +23,119 @@ export const DialoguePage = () => {
 	const scrollToBottomElementRef = useRef(null)
 	const messagesWindowRef = useRef(null)
 	const scrollToMessageRef = useRef(null)
+	const [attachedSongs, setAttachedSongs] = useState([])
+	const [loading, setLoading] = useState(true)
 	const [scrollToMessageId, setScrollToMessageId] = useState(-1)
+	async function fetchChatData() {
+		const chat = (await firestore.collection('chats').doc(chatId).get()).data()
+		setChatData(chat)
+		setLoading(false)
+	}
 	useEffect(() => {
-		setChatData(chat[chatId])
-	}, [chat[chatId]])
+		fetchChatData()
+	}, [chatId])
 
 	const scrollToMyRef = () => {
-		const scroll = messagesWindowRef.current.scrollHeight -messagesWindowRef.current.clientHeight;
-		messagesWindowRef.current.scrollTo(0, scroll);
-	 };
+		if (!loading) {
+			const scroll = messagesWindowRef.current.scrollHeight - messagesWindowRef.current.clientHeight;
+			messagesWindowRef.current.scrollTo(0, scroll);
+		}
+	};
 
 	useEffect(() => {
-		scrollToMyRef()
-	}, [chat[chatId].messages.length])
+		if (chatData !== undefined) {
+			if (!chatData.participants.includes(currentUser.uid)) return <Redirect to='/chat' />
+		}
+	}, [chatData])
 
 	useEffect(() => {
-		if(scrollToMessageId !== -1){
-			messagesWindowRef.current.scrollTo(0, scrollToMessageRef.current.offsetTop-65)
-			setTimeout(()=>{
+		if (!loading) {
+			scrollToMyRef()
+		}
+	}, [loading, chatData])
+
+	useEffect(() => {
+		if (scrollToMessageId !== -1) {
+			messagesWindowRef.current.scrollTo(0, scrollToMessageRef.current.offsetTop - 65)
+			setTimeout(() => {
 				setScrollToMessageId(-1)
 			}, 500)
 		}
 	}, [scrollToMessageId])
 
-	if (!chatData.participants.includes(30)) return <Redirect to='/chat' />
-	function sendMessage(){
-		chat[chatId].messages.push({
-			id:chat[chatId].messages.length,
-			sender:30,
-			message:'0',
-			sentTime:new Date(),
-			inResponseToMessage:0,
-			attachedSongs:[23],
-			attachedAlbums:[],
-			attachedAuthors:[],
+
+	function sendMessage() {
+		const tempMessages = chatData.messages
+
+		tempMessages.push({
+			id: chatData.messages.length,
+			sender: currentUser.uid,
+			message: '0',
+			sentTime: new Date(),
+			inResponseToMessage: null,
+			attachedSongs: attachedSongs,
+			attachedAlbums: [],
+			attachedAuthors: [],
+		})
+		setAttachedSongs([])
+		setChatData(prev => { return { ...prev, messages: tempMessages } })
+
+		firestore.collection('chats').doc(chatId).update({
+			messages: tempMessages
+		})
+	}
+
+	function shouldShowPhoto(index, currentDate) {
+		
+	}
+
+	function displayChatMessages() {
+		let currentDate = chatData.messages[0].sentTime
+		return chatData.messages.map((message, index) => {
+			let showPhoto = false
+			let showDate = false
+
+			if (index === chatData.messages.length - 1) showPhoto = true
+			else if (chatData.messages[index + 1].sender !== chatData.messages[index].sender) showPhoto = true
+			else if (displayDate(chatData.messages[index + 1].sentTime) !== displayDate(currentDate)) showPhoto = true
+
+			if (index === 0) showDate = true
+			else if (displayDate(chatData.messages[index].sentTime) !== displayDate(currentDate)) {
+				showDate = true
+				currentDate = message.sentTime
+			}
+			return (
+				<>
+					<div style={showDate ? { width: '100%', display: 'flex', justifyContent: 'center', alignItems: "center", padding: "10px 0" } : { display: 'none' }}>{displayDate(message.sentTime)}</div>
+					<MessageItem
+						messageData={message}
+						chatId={chatId}
+						key={index}
+						scrollToMessageRef={scrollToMessageRef}
+						scrollToMessageId={scrollToMessageId}
+						setScrollToMessageId={setScrollToMessageId}
+						showPhoto={showPhoto}
+					/>
+				</>
+			)
 		})
 	}
 	return (
 		<div className="DialoguePage">
-			<ChatHeader data={chatData} />
-			<div className="chatMessagesWindow" ref = {messagesWindowRef}>
-				{
-					chatData.messages.map((message, index) => {
-						return (
-							<MessageItem 
-								messageData={message} 
-								chatId = {chatId} 
-								key={index}  
-								scrollToMessageRef = {scrollToMessageRef} 
-								scrollToMessageId = {scrollToMessageId}
-								setScrollToMessageId = {setScrollToMessageId}
-							/>
-						)
-					})
-				}
-				<span className = "scrollToBottomElement" ref = {scrollToBottomElementRef}></span>
-			</div>
-			<ChatInput chatId = {chatId} sendMessage = {sendMessage}/>
+			{
+				loading ?
+					<LoadingCircle /> :
+					<>
+						<ChatHeader data={chatData} />
+						<div className="chatMessagesWindow" ref={messagesWindowRef}>
+							{
+								displayChatMessages()
+							}
+							<span className="scrollToBottomElement" ref={scrollToBottomElementRef}></span>
+						</div>
+						<ChatInput chatId={chatId} sendMessage={sendMessage} setAttachedSongs={setAttachedSongs} attachedSongs={attachedSongs} />
+					</>
+			}
 		</div>
 	)
 }

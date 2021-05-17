@@ -102,7 +102,11 @@
 	scroll-behavior: auto;
 }
 
-.ChatHeader .BackBtn button{
+.ChatMoreBtn{
+	position: relative;
+}
+
+.ChatHeader .BackBtn button, .ChatMoreBtn button{
 	height: 35px;
 	width: 35px;
 	display: flex;	
@@ -111,6 +115,43 @@
 	background: var(--transparentWhite);
 	color:#fff;
 	border-radius: 100px;
+}
+
+.ChatMoreBtn button svg{
+	width: 20px;
+	height: 20px;
+}
+
+.chatHeaderMenuWindow{
+	position: absolute;
+	right: 0%;
+	top: 40px;
+	width: 200px;
+	border-radius: var(--standartBorderRadius2);
+	padding: 0 5px;
+	background: var(--playlistsColor);
+	z-index: 10;
+	animation: openSongMoreMenu .2s forwards;
+}
+
+.chatHeaderMenuWindow .chatHeaderMenuWindowItem{
+	margin: 5px 0;
+	z-index: 2;
+	padding: 8px;
+	border-radius: var(--standartBorderRadius3);
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+}
+
+.chatHeaderMenuWindow .chatHeaderMenuWindowItem svg{
+	margin-right: 6px;
+	width: 20px;
+	height: 20px;
+}
+
+.chatHeaderMenuWindowItem:hover{
+	background: var(--transparentWhite);
 }
 
 /* End Chat Header */
@@ -122,7 +163,8 @@
 	width: 100%;
 	display: flex;
 	justify-content: flex-start;
-	padding: 3px 0;
+	align-items: flex-end;
+	padding: 2px 0;
 	animation: zoomIn .5s forwards;
 }
 
@@ -131,11 +173,16 @@
 }
 
 .messageItemBody{
-	padding: 10px 20px;
-	border-radius: var(--standartBorderRadius);
+	padding: 9px;
+	border-radius: var(--standartBorderRadius2);
 	min-width: 150px;
 	max-width: 40%;
 	background: var(--leftSideBarColor);
+	position: relative;
+}
+
+.messageItemBody .SongItem{
+	margin: 0;
 }
 
 .MessageItem a .playlistItem{
@@ -144,6 +191,11 @@
 	height: 180px;
 	border-radius: var(--standartBorderRadius);
 	overflow: hidden;
+}
+
+.MessageItem p{
+	padding: 0;
+	margin: 0;
 }
 
 .MessageItem a .playlistItem img{
@@ -198,7 +250,7 @@
 	justify-content: space-between;
 	background: var(--playlistsColor);
 	border-radius: var(--standartBorderRadius);
-	padding: 0 10px;
+	padding: 0 7px;
 	box-sizing: border-box;
 	z-index: 2;
 	position: relative;
@@ -210,6 +262,20 @@
 	display: flex;
 	align-items: center;
 	z-index: 2;
+	width: 100%;
+}
+
+.attachAndEmojis input{
+	background: var(--lightGrey);
+	border: none;
+	outline: none;
+	min-height: 30px;
+	width: 80%;
+	border-radius: var(--standartBorderRadius2);
+	margin-left: 6px;
+	padding: 7px 10px;
+	box-sizing: border-box;
+	color: #fff;
 }
 
 .attachBtn button, .sendBtn{

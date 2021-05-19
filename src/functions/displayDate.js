@@ -11,7 +11,7 @@ function toDateTime(secs) {
 
 export default function displayDate(stringDate, displayMode = 0){
 	const Months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-	let newDate = toDateTime(stringDate.seconds + 10800)
+	let newDate = !isNaN(stringDate)?toDateTime(stringDate.seconds + 10800):new Date(stringDate)
 	if(displayMode === 0){
 		return Months[newDate.getMonth()] + " " + newDate.getDate() + ", " + newDate.getFullYear() 
 	}

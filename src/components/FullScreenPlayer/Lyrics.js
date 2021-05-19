@@ -4,6 +4,7 @@ import { useSong } from '../../functionality/SongPlay/SongContext'
 import { songs } from '../../data/songs'
 export const Lyrics = () => {
 	const { isThereKaraoke, currentParagraph, displayAuthors, changeCurrentTime, play, currentTime, currentParagraphRef, currentSong, lyrics } = useSong()
+
 	return (
 		<div className="Lyrics">
 			{
@@ -17,7 +18,12 @@ export const Lyrics = () => {
 										:
 										el.text === "@end" ? <></>
 											:
-											<p key={i} style={currentParagraph === i ? {} : Math.abs(currentParagraph - i) < 2 ? { transform: 'scale(.8) translateX(-58px)' } : { transform: 'scale(.75) translateX(-78px)' }}>{el.text}</p>
+											<p key={i} style={currentParagraph === i ? 
+												{} : window.innerWidth > 1000?
+												Math.abs(currentParagraph - i) < 2 ? 
+												{ transform: 'scale(.8) translateX(-58px)' } : { transform: 'scale(.75) translateX(-78px)' }:
+												Math.abs(currentParagraph - i) < 2 ? 
+												{ transform: 'scale(.8) translateX(-11.5%)' } : { transform: 'scale(.75) translateX(-15.6%)' }}>{el.text}</p>
 								}
 
 							</div>
@@ -35,7 +41,7 @@ export const Lyrics = () => {
 						)
 					})
 			}
-			<h6 style={{ transform: 'translateX(10px)' }} className={"lyricsAuthors " + (currentParagraph === lyrics.length - 1 ? "active" : "")}>Authors:  {displayAuthors()}</h6>
+			<h6 className={"lyricsAuthors " + (currentParagraph === lyrics.length - 1 ? "active" : "")}>Authors:  {displayAuthors()}</h6>
 		</div>
 	)
 }

@@ -19,6 +19,7 @@ export const AddPlaylist = () => {
 	const [allSongs, setAllSongs] = useState([])
 	const [chosenSongs, setChosenSongs] = useState([])
 	const [playlistStatus, setPlaylistStatus] = useState(0)
+	const [isPlaylistPrivate, setIsPlaylistPrivate] = useState(0)
 	const [loadingAuthors, setLoadingAuthors] = useState(false)
 	const [loadingSongs, setLoadingSongs] = useState(false)
 	const [imageLocalPath, setImageLocalPath] = useState('')
@@ -97,7 +98,8 @@ export const AddPlaylist = () => {
 				creationDate: releaseDate, 
 				subscribers:0,
 				isAlbum:!playlistStatus,
-				imageColors:imageColors
+				imageColors:imageColors,
+				isPrivate:isPlaylistPrivate === true
 			}
 		).then(() => {
 			setAllAuthors([])
@@ -108,6 +110,7 @@ export const AddPlaylist = () => {
 			setReleaseDate('')
 			setSongsSearch('')
 			setChosenSongs([])
+			setIsPlaylistPrivate(0)
 		}).catch(err => {
 			console.log(err)
 		})
@@ -194,6 +197,11 @@ export const AddPlaylist = () => {
 				<div style={{ display: 'flex', justifyContent: 'flex-start', margin: '15px 0' }}>
 					<RadioBtn label="Album" onClick={() => setPlaylistStatus(0)} currentActive={playlistStatus} id={0} />
 					<RadioBtn label="Playlist" onClick={() => setPlaylistStatus(1)} currentActive={playlistStatus} id={1} />
+				</div>
+
+				<div style={{ display: 'flex', justifyContent: 'flex-start', margin: '15px 0' }}>
+					<RadioBtn label="Not Private" onClick={() => setIsPlaylistPrivate(0)} currentActive={isPlaylistPrivate} id={0} />
+					<RadioBtn label="Private" onClick={() => setIsPlaylistPrivate(1)} currentActive={isPlaylistPrivate} id={1} />
 				</div>
 
 				<label>

@@ -49,19 +49,20 @@
 .personBtns{
 	position: absolute;
 	display: flex;
-	right: 10px;
-	top: 50%;
-	transform: translateY(-50%);
+	height: 100%;
 	align-items: center;
+	justify-content: space-around;
 	z-index: 10;
 	opacity: 0;
-	padding-left: 4px;
+	right: 10px;
+	width: calc(100% - 60px);
+	border-radius: var(--standartBorderRadius2);
 }
 
 .personBtns button{
 	background: rgba(216, 216, 216, 0);
 	height: 30px;
-	width: 30px;
+	width: 40px;
 	display: flex;
 	align-items: center;	
 	justify-content: center;
@@ -69,6 +70,7 @@
 	border-radius: var(--standartBorderRadius2);
 	z-index: 10;
 }
+
 
 .personBtns button:hover{
 	background: var(--transparentWhite);

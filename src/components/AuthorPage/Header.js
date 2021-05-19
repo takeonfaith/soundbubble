@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { ColorExtractor } from 'react-color-extractor'
 import { FiHeadphones, FiMoreVertical, FiPlusCircle, FiUserPlus } from 'react-icons/fi'
 import { ImCheckmark } from 'react-icons/im'
-import { authors } from '../../data/authors'
+
 import { useSong } from '../../functionality/SongPlay/SongContext'
 import displayDate from '../../functions/displayDate'
 import { BackBtn } from '../Basic/BackBtn'

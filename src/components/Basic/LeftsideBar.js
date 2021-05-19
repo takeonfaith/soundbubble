@@ -13,7 +13,7 @@ import { authors } from '../../data/authors'
 import shareWithOneFriend from '../../functions/shareWithOneFriend'
 import { useAuth } from '../../functionality/AuthContext'
 import { firestore } from '../../firebase'
-import { FiUser } from 'react-icons/fi'
+import { FiMessageCircle, FiUser } from 'react-icons/fi'
 export const LeftsideBar = () => {
 	const {currentUser} = useAuth()
 	const {
@@ -22,6 +22,7 @@ export const LeftsideBar = () => {
 		currentSong,
 		yourFriends
 	} = useSong()
+	const [friendChatId, setFriendChatId] = useState(0)
 	const [currentPage, setCurrentPage] = useState(
 		() => {
 			let page = leftSideBar.find((el, i) => {
@@ -34,6 +35,18 @@ export const LeftsideBar = () => {
 			return page === undefined?0:page.id 
 		}
 	)
+
+	 function findChatURL(friendId){
+		if(currentUser.chats){
+			currentUser.chats.forEach(async yourChatsId=>{
+				const chatInfo = (await firestore.collection('chats').doc(yourChatsId).get()).data()
+				
+				if(chatInfo.participants.includes(friendId)){
+					setFriendChatId(chatInfo.id)
+				}
+			})
+		}
+	}
 	
 	return (
 		<div className="LeftsideBar">
@@ -62,10 +75,14 @@ export const LeftsideBar = () => {
 			</div>
 			<div className="leftSideBarContainer">
 				{yourFriends.map((friend, index) => {
+					findChatURL(friend.uid)
 					if (index <= 2) {
 						return (
 							<div className="person" key={index} id = {friend.uid} >
 								<div className="personBtns">
+									<Link to = {`/chat/${friendChatId}`}>
+										<button><FiMessageCircle/></button>
+									</Link>
 									<Link to = {`/authors/${friend.uid}`}>
 										<button><FiUser/></button>
 									</Link>

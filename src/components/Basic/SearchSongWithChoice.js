@@ -7,7 +7,6 @@ import { SongItemChoice } from './SongItemChoice'
 
 export const SearchSongWithChoice = ({value, setValue, chosenSongs, setChosenSongs, allFoundSongs, setAllFoundSongs}) => {
 	const [loading, setLoading] = useState(false)
-	const [songsNames, setSongsNames] = useState([])
 	let typingTimeout
 	async function findSongs(e) {
 		setLoading(true)
@@ -32,17 +31,6 @@ export const SearchSongWithChoice = ({value, setValue, chosenSongs, setChosenSon
 		clearTimeout(typingTimeout)
 		setTimeout(func, 1000)
 	}
-
-	function fetchSongNameById() {
-		chosenSongs.forEach(async songId=>{
-			const songData = (await firestore.collection('songs').doc(songId).get()).data()
-			setSongsNames(prev=>[...prev, songData.name])
-		})
-	}
-
-	useEffect(() => {
-		fetchSongNameById()
-	}, [chosenSongs])
 	
 	return (
 		<div> 
@@ -51,7 +39,7 @@ export const SearchSongWithChoice = ({value, setValue, chosenSongs, setChosenSon
 					<BackBtn color={allFoundSongs ?? allFoundSongs[0].imageColors} />
 					<span onClick={() => value.length ? setValue("") : null}>{value.length ? <FiX /> : <FiSearch />}</span>
 				</div>
-				<input type="text" placeholder="Search for songs" value={value} onChange={(e) => setValue(e.target.value)} onKeyDown={findSongs} onKeyUp={() => timerUpFunc(findSongs)} onKeyDown={() => clearTimeout(typingTimeout) } />
+				<input type="text" placeholder="Search for songs" value={value} onChange={(e) => setValue(e.target.value)} onKeyUp={() => timerUpFunc(findSongs)} onKeyDown={() => clearTimeout(typingTimeout) } />
 			</div>
 			
 			<div className="chosenAuthorsList">

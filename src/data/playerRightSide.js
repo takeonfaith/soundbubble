@@ -10,21 +10,25 @@ export const rightSide = [
 	{
 		id:0, 
 		icon:<BiShare/>,
+		title:'Share',
 		component:Share
 	},
 	{
 		id:1, 
 		icon:<BiDotsVerticalRounded/>,
+		title:'More',
 		component:Options
 	},
 	{
 		id:2, 
 		icon:<TiDocumentText/>,
+		title:'Lyrics',
 		component:Lyrics
 	},
 	{
 		id:3, 
 		icon:<RiPlayListFill/>,
+		title:'Queue',
 		component:Queue
 	},
 ]

@@ -13,7 +13,7 @@ export const TopSongs = ({ authorId, authorsData, headerColors }) => {
 	const [newSongs, setNewSongs] = useState([])
 	const {currentUser} = useAuth()
 	useEffect(() => {
-		setNewSongs([])
+		
 		
 	}, [authorId])
 
@@ -35,6 +35,7 @@ export const TopSongs = ({ authorId, authorsData, headerColors }) => {
 
 	useEffect(() => {
 		findAuthorsSongs()
+		setNewSongs([])
 	}, [authorsData.ownSongs])
 
 	function setQueueInAuthor(songList) {

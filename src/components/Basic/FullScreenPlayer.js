@@ -1,30 +1,110 @@
 import '../../App.css';
 import React, { useState, useRef, useEffect } from 'react'
-import { songs } from '../../data/songs'
 import { BiChevronLeft } from 'react-icons/bi'
 import { rightSide } from '../../data/playerRightSide'
 import { Player } from '../FullScreenPlayer/Player';
 import { HiChevronDown } from 'react-icons/hi';
 import { useSong } from '../../functionality/SongPlay/SongContext';
+import { FiMinus } from 'react-icons/fi';
+import { useSwipeable } from 'react-swipeable';
+import checkNumber from '../../functions/checkNumber';
+import { useOutsideClick } from '../../hooks/useOutsideClick';
 
 export default function FullScreenPlayer() {
   const {
-    imgColors, 
-    currentSong, 
-    inputRef, 
-    rightSideCurrentPage, 
+    imgColors,
+    inputRef,
+    rightSideCurrentPage,
     setRightSideCurrentPage,
     openFullScreenPlayer,
     setOpenFullScreenPlayer,
-    name, 
-    lyrics
+    lyrics,
+    openMenu,
+    setOpenMenu
   } = useSong()
-  const [openMenu, setOpenMenu] = useState(false)
+  
   const lyricsRef = useRef(null)
+  const [transformTransition, setTransformTransition] = useState(0.05)
+  const [mobileMenuTransition, setMobileMenuTransition] = useState(0)
+  // const [swipeDown, setSwipeDown] = useState(false)
+  const [deltaY, setDeltaY] = useState(0)
+  const [deltaYMobileMenu, setDeltaYMobileMenu] = useState(0)
+  const mobileContentScroll = useRef()
+  // setup ref for your usage
+  const mobileMenuRef = React.useRef();
+  useOutsideClick(mobileMenuRef, setOpenMenu)
+  const handlers = useSwipeable({
+    // onSwiped: (eventData) => {setSwipeDown(eventData.dir === 'Down')},
+    onSwiping: (event) => { if (event.deltaY > 0) setDeltaY(event.deltaY); }
+  })
+
+  // setup ref for your usage
+  const bgRef = React.useRef();
+
+  const handlersForMobileMenu = useSwipeable({
+    onSwiping: (event) => {event.event.stopPropagation();if (openMenu && mobileContentScroll.current.scrollTop === 0 &&  event.deltaY > 0) setDeltaYMobileMenu(event.deltaY); else if (!openMenu && event.deltaY < 0) setDeltaYMobileMenu(event.deltaY) },
+    onSwipedLeft:()=> {setRightSideCurrentPage(checkNumber(rightSideCurrentPage+1, 3))},
+    onSwipedRight:()=> {setRightSideCurrentPage(checkNumber(rightSideCurrentPage-1, 3))}
+  })
   
 
+  function returnToInitialMobileMenu() {
+    var dropDelta
+    clearTimeout(dropDelta)
+    setMobileMenuTransition(0)
+    dropDelta = setTimeout(() => {
+      setMobileMenuTransition(0.2)
+      setDeltaYMobileMenu(0)
+    }, 300)
+    
+  }
+
   useEffect(() => {
-    if(imgColors.length !== 0){
+    if (deltaY > 150) {
+      setOpenFullScreenPlayer(false)
+    }
+  }, [deltaY])
+
+  useEffect(() => {
+    if (!openMenu && deltaYMobileMenu < -100) {
+      setOpenMenu(true)
+      setDeltaYMobileMenu(0)
+      setMobileMenuTransition(0.2)
+    }
+    else if (openMenu && deltaYMobileMenu > 150) {
+      setOpenMenu(false)
+      setDeltaYMobileMenu(0)
+      setMobileMenuTransition(0.2)
+    }
+    else {
+      returnToInitialMobileMenu()
+    }
+  }, [deltaYMobileMenu])
+
+  
+
+  function returnToInitial() {
+    var dropDelta
+    clearTimeout(dropDelta)
+    setTransformTransition(0.2)
+    dropDelta = setTimeout(() => {
+      setDeltaY(0)
+      setTransformTransition(0)
+    }, 100)
+  }
+
+  const refPassthroughBg = (el) => {
+    handlers.ref(el);
+    bgRef.current = el;
+  }
+
+  const refPassthroughMobileMenu = (el) => {
+    handlersForMobileMenu.ref(el);
+    mobileMenuRef.current = el;
+  }
+
+  useEffect(() => {
+    if (imgColors.length !== 0) {
       document.documentElement.style.setProperty('--themeColor', imgColors[1]);
       document.documentElement.style.setProperty('--themeColor2', imgColors[0]);
       document.documentElement.style.setProperty('--themeColor3', imgColors[2]);
@@ -36,45 +116,96 @@ export default function FullScreenPlayer() {
 
   function rightSideContent(currentPage) {
     let RightSidePage = rightSide[currentPage].component
-    return (<RightSidePage/>)
+    return (<RightSidePage />)
   }
 
-  function noLyrics(){
+  function noLyrics() {
     return lyrics.length === 0
   }
 
-  function changeRightSidePage(el){
-    if(el.id === 2 && noLyrics()) return null
-
-    setRightSideCurrentPage(el.id); 
-    setOpenMenu(true) 
+  function changeRightSidePage(el) {
+    if (el.id === 2 && noLyrics()) return null
+    setMobileMenuTransition(0.2)
+    setRightSideCurrentPage(el.id);
+    setOpenMenu(true)
   }
   return (
-    <div className="bg" style = {openFullScreenPlayer?{top:0, opacity:1, visibility:'visible', zIndex:10}:{}}>
-      <div className = "closeFullScreen" onClick={()=>{setOpenFullScreenPlayer(false)}}>
-        <HiChevronDown/>
+    <div className="bg"
+      style={
+        openFullScreenPlayer ?
+          {
+            top: 0,
+            opacity: 1,
+            visibility: 'visible',
+            zIndex: 10,
+            transform: `translateY(${deltaY}px)`,
+            borderRadius: `${deltaY < 20 ? deltaY : 20}px ${deltaY < 20 ? deltaY : 20}px 0 0`,
+            transition: `.4s opacity, ${transformTransition}s transform, .4s top, .4s visibility`
+          } :
+          {
+            transition: `.4s opacity, ${transformTransition}s transform, .4s top, .4s visibility`
+          }
+      }
+      ref={refPassthroughBg}
+      {...handlers}
+      onTouchEnd={returnToInitial}
+    >
+      <div className="closeFullScreen" onClick={() => { setOpenFullScreenPlayer(false) }}>
+        {window.innerWidth > 1000 ? <HiChevronDown /> : <FiMinus style={{ opacity: .6 }} />}
       </div>
       <div className="FullScreenPlayer">
 
         <div className="leftSide" style={!openMenu ? { width: '100%' } : {}}>
-          <Player inputRef = {inputRef}/>
+          <Player inputRef={inputRef} />
         </div>
-        <div className="rightSideWrapper" style={!openMenu ? { transform: 'translateX(calc(100% - 90px))', width: 0 } : {}}>
-          <button className="menuBtn" style={openMenu ? { transform: 'rotate(180deg)' } : { opacity: 0, visibility: 'hidden' }} onClick={() => setOpenMenu(!openMenu)}><BiChevronLeft /></button>
-          <div className="rightSideControl">
-            {rightSide.map((el, i) => {
-              return (
-                <div className="controlIcon" key={el.id} style={el.id === rightSideCurrentPage && openMenu ? { background: "var(--themeColor)" } :el.id === 2 && noLyrics()?{opacity:.4}:{}} onClick={()=>changeRightSidePage(el)}>
-                  {el.icon}
-                </div>
-              )
-            })}
-          </div>
-          <div className="rightSide" ref={lyricsRef} style={!openMenu ? { display: 'none' } : {}}>
-            {rightSideContent(rightSideCurrentPage)}
-          </div>
-        </div>
+        {window.innerWidth > 1000 ?
+          <div className="rightSideWrapper" style={!openMenu ? { transform: 'translateX(calc(100% - 90px))', width: 0 } : {}}>
+            <button className="menuBtn" style={openMenu ? { transform: 'rotate(180deg)' } : { opacity: 0, visibility: 'hidden' }} onClick={() => setOpenMenu(!openMenu)}><BiChevronLeft /></button>
+            <div className="rightSideControl">
+              {rightSide.map((el, i) => {
+                return (
+                  <div className="controlIcon" key={el.id} style={el.id === rightSideCurrentPage && openMenu ? { background: "var(--themeColor)" } : el.id === 2 && noLyrics() ? { opacity: .4 } : {}} onClick={() => changeRightSidePage(el)}>
+                    {el.icon}
+                  </div>
+                )
+              })}
+            </div>
+            <div className="rightSide" ref={lyricsRef} style={!openMenu ? { display: 'none' } : {}}>
+              {rightSideContent(rightSideCurrentPage)}
+            </div>
+          </div> :
+          <div className="mobilePlayerMenu" {...handlersForMobileMenu} ref={refPassthroughMobileMenu} style={
+            openMenu ?
+              {
+                top: `calc(100% - calc(70vh + 55px) + ${deltaYMobileMenu}px)`,
+                transition: `${mobileMenuTransition}s`
 
+              } :
+              {
+                top: `calc(100% - 55px + ${deltaYMobileMenu}px)`,
+                transition: `${mobileMenuTransition}s`
+              }
+
+          }
+          // onTouchStart = {returnToInitialMobileMenu}
+          >
+            <div className="mobilePlayerMenuClose">
+              <FiMinus style={{ opacity: .6, width: '50px' }} onClick={() => setOpenMenu(!openMenu)} />
+            </div>
+            <div className="controlIconsWrapper">
+              {rightSide.map((el, i) => {
+                return (
+                  <div className="controlIcon" key={el.id} style={el.id === rightSideCurrentPage && openMenu ? { background: "var(--transparentWhite)" } : el.id === 2 && noLyrics() ? { opacity: .4 } : {}} onClick={(e) => changeRightSidePage(el)}>
+                    {el.title}
+                  </div>
+                )
+              })}
+            </div>
+            <div className="mobilePlayerMenuContent" ref = {mobileContentScroll} style = {!openMenu?{opacity:0}:{}}>
+              {rightSideContent(rightSideCurrentPage)}
+            </div>
+          </div>
+        }
       </div>
     </div>
   );

@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { ColorExtractor } from 'react-color-extractor'
 import { AiOutlineCloudDownload } from 'react-icons/ai'
-import { FiPlus, FiXCircle } from 'react-icons/fi'
-import { auth, firestore, storage } from '../../firebase'
-import { useAuth } from '../../functionality/AuthContext'
+import { FiXCircle } from 'react-icons/fi'
+import { firestore, storage } from '../../firebase'
 import getUID from '../../functions/getUID'
+import { LoadingCircle } from '../Basic/LoadingCircle'
 import { PersonTiny } from '../Basic/PersonTiny'
-import { Slider } from '../Tools/Slider'
 
 export const AddSong = () => {
 	const [songName, setSongName] = useState("")
@@ -19,19 +18,21 @@ export const AddSong = () => {
 	const [lyrics, setLyrics] = useState([])
 	const [imageLocalPath, setImageLocalPath] = useState("")
 	const [imageColors, setImageColors] = useState([])
+	const [loadingAuthors, setLoadingAuthors] = useState(false)
+	let typingTimeout
 	async function findAuthors(e) {
+		setLoadingAuthors(true)
 		setAllAuthors([])
-		if (e.key === 'Enter' && e.ctrlKey) {
-
-			const response = firestore.collection("users")
-				.where("displayName", "==", authorsInputValue)
-				.where('isAuthor', '==', true)
-			const data = await response.get();
+		const response = firestore.collection("users")
+			.where("displayName", "==", authorsInputValue)
+			// .where('isAuthor', '==', true)
+		const data = await response.get();
+		if (data !== undefined) {
 			data.docs.forEach(item => {
 				setAllAuthors([...allAuthors, item.data()])
 			})
+			setLoadingAuthors(false)
 		}
-
 	}
 
 	function removeAuthorFromList(data) {
@@ -109,6 +110,11 @@ export const AddSong = () => {
 		}
 
 	}
+
+	function timerUpFunc(func) {
+		clearTimeout(typingTimeout)
+		setTimeout(func, 1000)
+	}
 	
 	return (
 		<div className="AddSong">
@@ -120,7 +126,7 @@ export const AddSong = () => {
 				</label>
 				<label>
 					<h3>Song authors</h3>
-					<input type="text" placeholder="Enter author name" value={authorsInputValue} onChange={(e) => setAuthorsInputValue(e.target.value)} onKeyDown={findAuthors} style={{ marginBottom: '5px' }} />
+					<input type="text" placeholder="Enter author name" value={authorsInputValue} onChange={(e) => setAuthorsInputValue(e.target.value)} style={{ marginBottom: '5px' }} onKeyUp={()=>timerUpFunc(findAuthors)} onKeyDown={() => { return clearTimeout(typingTimeout) }} />
 					<div className="chosenAuthorsList">
 						{chosenAuthors.map((author) => {
 							return (
@@ -132,11 +138,17 @@ export const AddSong = () => {
 						})}
 					</div>
 					<div className="authorsResult">
-						{allAuthors.map((data, index) => {
-							return (
-								<PersonTiny data={data} onClick={() => addAuthor(data)} style={chosenAuthors.includes(data.uid) ? { background: 'var(--green)' } : {}} key={index} />
-							)
-						})}
+						{loadingAuthors ?
+							<div style={{ position: 'relative', width: '100%', height: '50px' }}>
+								<LoadingCircle />
+							</div>
+							:
+							allAuthors.map((data, index) => {
+								return (
+									<PersonTiny data={data} onClick={() => addAuthor(data)} style={chosenAuthors.includes(data.uid) ? { background: 'var(--green)' } : {}} key={index} />
+								)
+							})
+						}
 					</div>
 				</label>
 

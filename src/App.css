@@ -9,9 +9,88 @@ a{
   color:#fff;
 }
 
-a:hover{
-  text-decoration: underline;
+@media (min-width:1001px) {
+  a:hover{
+    text-decoration: underline;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(255, 255, 255);
+  }
+
+  input[type=range]::-webkit-slider-thumb:hover{
+    filter:brightness(1.2);
+  }
+
+  .btns .shuffleBtn:hover, .btns .repeatBtn:hover{
+    background: var(--transparentWhite);
+  }
+
+  .lyricsBlock p:hover{
+    background: rgba(255, 255, 255, 0.411);
+  }
+
+  .Loading:hover{
+    background: rgba(255, 255, 255, 0.411);
+  }
+
+  .controlIcon:hover{
+    background: rgba(255, 255, 255, 0.432);
+  }
+
+  .SongItem.inList:hover{
+    background: var(--blue);
+  }
+
+  .songItemMenuWindowItem:hover .songItemMenuWindow.inner{
+    display: flex;
+  }
+
+  .songItemMenuWindowItem:hover{
+    background: var(--transparentWhite);
+  }
+
+  .SongItem:hover{
+    background: rgba(255, 255, 255, 0.342);
+  }
+
+  .SongItem:hover .songItemMoreBtn{
+    opacity: 1;
+  }
+
+  .SongItem:hover .songItemPlayOrPause{
+    opacity: 1;
+  }
+
+  .OptionItem:hover{
+    background: var(--transparentWhite);
+  }
+
+  .shareSocialIcon:hover{
+    background: rgba(255, 255, 255, 0.432);
+  }
+
+  .shareBtn:hover{
+    filter: brightness(.9);
+  }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+   
+    background: rgba(255, 255, 255, 0.555);
+    border-radius: 10px;
+  }
 }
+
+
 
 :root{
   --themeColor:rgb(58, 94, 255);
@@ -56,28 +135,6 @@ body{
   overflow: hidden;
 }
 
-/* width */
-::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
- 
-  background: rgba(255, 255, 255, 0.555);
-  border-radius: 10px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: rgb(255, 255, 255);
-}
 
 .Wrapper{
   display: flex;
@@ -103,7 +160,7 @@ input[type=range] {
   height: 6px;
   background: linear-gradient(to right, var(--themeColor2) var(--inputRange), #fff var(--inputRange)); /* Otherwise white in Chrome */
   margin-bottom: 5px;
-  
+  border-radius: var(--standartBorderRadius);
 }
 
 input[type=range]::-webkit-slider-thumb {
@@ -117,9 +174,6 @@ input[type=range]::-webkit-slider-thumb {
   transition: .3s;
 }
 
-input[type=range]::-webkit-slider-thumb:hover{
-  filter:brightness(1.2);
-}
 
 input[type=range]:focus {
   outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
@@ -137,7 +191,7 @@ input[type=range]::-ms-track {
 
 .bg{
   background:linear-gradient(-135deg, var(--themeColor2), var(--themeColor4));
-  transition:.4s;
+  
   width: 100%;
   height: 100vh;
   top: 100%;
@@ -313,9 +367,6 @@ input[type=range]::-ms-track {
   height: 23px;
 }
 
-.btns .shuffleBtn:hover, .btns .repeatBtn:hover{
-  background: var(--transparentWhite);
-}
 
 .lyricsBlock{
   width: 500px;
@@ -336,9 +387,6 @@ input[type=range]::-ms-track {
   transform: scale(.94);
 }
 
-.lyricsBlock p:hover{
-  background: rgba(255, 255, 255, 0.411);
-}
 
 .lyricsBlock:last-child{
   margin-bottom: 50%;
@@ -352,10 +400,6 @@ input[type=range]::-ms-track {
   border-radius: 10px;
 }
 
-.Loading:hover{
-  background: rgba(255, 255, 255, 0.411);
-  
-}
 
 .outer{
   width: 100px;
@@ -365,6 +409,7 @@ input[type=range]::-ms-track {
   height: 10px;
   display: flex;
   align-items: center;
+  padding: 2px;
 }
 
 .inner{
@@ -372,11 +417,13 @@ input[type=range]::-ms-track {
   height: 100%;
   border-radius: 7px;
   transition: .6s;
+  min-width: 10px;
 }
 
 .lyricsAuthors{
   padding: 10px;
   width: 500px;
+  transform: translateX(10px);
 }
 
 .lyricsAuthors a{
@@ -569,9 +616,6 @@ input[type=range]::-ms-track {
   justify-content: center;
 }
 
-.controlIcon:hover{
-  background: rgba(255, 255, 255, 0.432);
-}
 
 .rightSideControl svg{
   width: 20px;
@@ -594,10 +638,6 @@ input[type=range]::-ms-track {
 
 .SongItem.inList{
   background: var(--lightBlue);
-}
-
-.SongItem.inList:hover{
-  background: var(--blue);
 }
 
 .songItemMenuWindow{
@@ -646,10 +686,6 @@ input[type=range]::-ms-track {
   position: relative;
 }
 
-.songItemMenuWindowItem:hover .songItemMenuWindow.inner{
-  display: flex;
-}
-
 .newSongMarker{
   background: var(--red);
   border-radius: 10px;
@@ -693,10 +729,6 @@ input[type=range]::-ms-track {
   min-height: 17px;
 }
 
-.songItemMenuWindowItem:hover{
-  background: var(--transparentWhite);
-}
-
 .songItemImageAndName{
   display: flex;
   align-items: center;
@@ -730,14 +762,6 @@ input[type=range]::-ms-track {
 
 .SongItem.playingNow{
   background: rgba(255, 255, 255, 0.514);
-}
-
-.SongItem:hover{
-  background: rgba(255, 255, 255, 0.342);
-}
-
-.SongItem:hover .songItemMoreBtn{
-  opacity: 1;
 }
 
 .SongItem .songItemImage{
@@ -828,10 +852,6 @@ input[type=range]::-ms-track {
   z-index: 2;
 }
 
-.SongItem:hover .songItemPlayOrPause{
-  opacity: 1;
-}
-
 .Options{
   display: flex;
   flex-direction:column;
@@ -855,10 +875,6 @@ input[type=range]::-ms-track {
   width: 25px;
   height: 25px;
   margin-right: 7px;
-}
-
-.OptionItem:hover{
-  background: var(--transparentWhite);
 }
 
 .Queue, .Options, .Share, .Lyrics{
@@ -977,10 +993,6 @@ input[type=range]::-ms-track {
   cursor: pointer;
 }
 
-.shareSocialIcon:hover{
-  background: rgba(255, 255, 255, 0.432);
-}
-
 .sharePeopleShort{
   box-sizing: border-box;
   display: flex;
@@ -1053,10 +1065,6 @@ input[type=range]::-ms-track {
 .shareBtn{
   background: var(--themeColor2);
   font-weight: bold;
-}
-
-.shareBtn:hover{
-  filter: brightness(.9);
 }
 
 .isInShareList{
@@ -1193,5 +1201,105 @@ input[type=range]::-ms-track {
 
   .rightSideControl{
     flex-direction: row;
+  }
+
+  .closeFullScreen{
+    top: 0%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .FullScreenPlayer .leftSide .songCover{
+    margin-bottom: 30px;
+  }
+
+  input[type=range]{
+    height: 4px;
+  }
+
+  .mobilePlayerMenu{
+    width: 100%;
+    position: absolute;
+    top: calc(100% - 55px);
+    z-index: 20;
+    border-radius: var(--standartBorderRadius) var(--standartBorderRadius) 0 0 ;
+    background: var(--themeColor4);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* transition: .2s top ; */
+  }
+  
+  .controlIconsWrapper{
+    height: 40px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 0 15px;
+    box-sizing: border-box;
+  }
+
+  .mobilePlayerMenuClose{
+    height: 15px;
+    width: 100%;
+    position: relative;
+  }
+
+  .mobilePlayerMenuClose svg{
+    position: absolute;
+    left: 50%;
+    top: 70%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+  }
+
+  .controlIcon{
+    height: 100%;
+    width: 100%;
+    font-weight: 600;
+    opacity: .8;
+    border-radius:  var(--standartBorderRadius2);
+  }
+
+  .controlIcon svg{
+    width: 20px;
+    height: 20px;
+  }
+
+  .mobilePlayerMenuContent{
+    height: 70vh;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 10px 15px;
+    box-sizing: border-box;
+    scroll-padding-top: 100px;
+    transition: .15s opacity;
+  }
+
+  .OptionItem{
+    margin-left: 24%;
+  }
+
+  .lyricsBlock{
+    width: 100%;
+  }
+
+  .Loading{
+    width: auto;
+  }
+
+  .lyricsAuthors{
+    padding: 10px;
+    transform: translate(0);
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .songItemMoreBtn{
+    opacity: 1;
   }
 }

@@ -8,10 +8,8 @@ import checkNumber from '../../functions/checkNumber'
 import correctTimeDisplay from '../../functions/correctTimeDisplay'
 import { ColorCircles } from './colorCircles'
 
-export const Player = ({textLimit = 18, inputRef}) => {
+export const Player = ({inputRef, textLimit = 18}) => {
 	const { 
-		setImgColors, 
-		currentSong,
 		findLen,  
 		currentTime, 
 		changeCurrentTime, 

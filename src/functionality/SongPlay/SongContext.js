@@ -44,9 +44,10 @@ export const SongProvider = ({ children }) => {
 	const [rightSideCurrentPage, setRightSideCurrentPage] = useState(0)
 	const [openMenu, setOpenMenu] = useState(false)
 
+
 	function checkKaraoke() {
 		if (currentSongData.lyrics !== undefined && currentSongData.lyrics.length !== 0) {
-			if (currentSongData.lyrics[0].startTime === undefined) return false
+			if (currentSongData.lyrics[0].startTime === 'undefined') return false
 		}
 
 		return true
@@ -54,13 +55,13 @@ export const SongProvider = ({ children }) => {
 
 	function fetchYourFriends() {
 		setYourFriends([])
-		if(currentUser.friends !== undefined){
+		if (currentUser.friends !== undefined) {
 			console.log(currentUser.friends)
-			currentUser.friends.forEach(async friendObj =>{
+			currentUser.friends.forEach(async friendObj => {
 				const friend = (await firestore.collection('users').doc(friendObj.uid).get()).data()
 				console.log(friend)
-				if(friendObj.status === 'added'){
-					setYourFriends(prev=>[...prev, friend])
+				if (friendObj.status === 'added') {
+					setYourFriends(prev => [...prev, friend])
 				}
 			})
 		}
@@ -216,7 +217,7 @@ export const SongProvider = ({ children }) => {
 		setCurrentTime(e.target.currentTime);
 		setSongDuration(e.target.duration)
 		inputRef.current.max = e.target.duration
-		if(window.innerWidth > 1000) leftSideBarInputRef.current.max = e.target.duration
+		if (window.innerWidth > 1000) leftSideBarInputRef.current.max = e.target.duration
 		document.documentElement.style
 			.setProperty('--inputRange', 0 + '%');
 		if (play) { e.target.play() }
@@ -258,7 +259,7 @@ export const SongProvider = ({ children }) => {
 	}
 
 	async function nextSong(e) {
-		if(e) e.stopPropagation()
+		if (e) e.stopPropagation()
 		let correctSongNumber = checkNumber(currentSongInQueue + 1, currentSongQueue.length - 1)
 		let currentSongId = await (await firestore.collection('songs').doc(currentSongQueue[correctSongNumber].id).get()).data().id
 		setCurrentParagraph(0)
@@ -270,7 +271,7 @@ export const SongProvider = ({ children }) => {
 	}
 
 	async function prevSong(e) {
-		if(e) e.stopPropagation()
+		if (e) e.stopPropagation()
 		if (currentTime > 5) {
 			songRef.current.currentTime = 0
 			setCurrentTime(0)
@@ -379,7 +380,11 @@ export const SongProvider = ({ children }) => {
 				findLen,
 				fetchYourSongs,
 				setOpenMenu,
-				openMenu
+				openMenu,
+				currentSongData,
+				setCurrentSongData,
+				setIsThereKaraoke,
+				checkKaraoke
 			}
 		}>
 			{!loading ?

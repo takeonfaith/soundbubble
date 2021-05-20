@@ -19,13 +19,14 @@ export const AddSong = () => {
 	const [imageLocalPath, setImageLocalPath] = useState("")
 	const [imageColors, setImageColors] = useState([])
 	const [loadingAuthors, setLoadingAuthors] = useState(false)
+	const [lyricsObject, setLyricsObject] = useState([])
 	let typingTimeout
 	async function findAuthors(e) {
 		setLoadingAuthors(true)
 		setAllAuthors([])
 		const response = firestore.collection("users")
 			.where("displayName", "==", authorsInputValue)
-			// .where('isAuthor', '==', true)
+		// .where('isAuthor', '==', true)
 		const data = await response.get();
 		if (data !== undefined) {
 			data.docs.forEach(item => {
@@ -62,17 +63,26 @@ export const AddSong = () => {
 	}
 
 	function transformLyricsToArrayOfObjects(e) {
-		// if(e.key === 'Enter' && e.ctrlKey){
-		// 	console.log("rfgfer")
-		// 	const arr = JSON.parse(lyrics)
-		// 	console.log(arr)
-		// }
+		const arrayOfParagraphs = []
+		let startSubstr = 0
+		for (let i = 0; i < lyrics.length; i++) {
+			if (lyrics[i] === '\n' || lyrics[i + 1] === undefined) {
+				
+				arrayOfParagraphs.push({
+					startTime: 'undefined',
+					text: lyrics.substr(startSubstr, i-startSubstr)
+				})
+				startSubstr = i + 1
+			}
+		}
+		setLyricsObject(arrayOfParagraphs)
 	}
 
 	async function addSongToFirebase(e) {
 		e.preventDefault()
 		let uid = getUID()
-		if(chosenAuthors.length !== 0){
+		console.log(lyricsObject)
+		if (chosenAuthors.length !== 0) {
 			firestore.collection('songs').doc(uid).set(
 				{
 					id: uid,
@@ -82,8 +92,8 @@ export const AddSong = () => {
 					cover: songCover,
 					listens: 0,
 					releaseDate: releaseDate,
-					lyrics: lyrics,
-					imageColors:imageColors
+					lyrics: lyricsObject,
+					imageColors: imageColors
 				}
 			).then(() => {
 				setAllAuthors([])
@@ -97,14 +107,14 @@ export const AddSong = () => {
 			}).catch(err => {
 				console.log(err)
 			})
-	
-			chosenAuthors.forEach(async author=>{
+
+			chosenAuthors.forEach(async author => {
 				const authorRef = await firestore.collection('users').doc(author.uid).get()
 				const authorData = authorRef.data()
 				const authorSongs = authorData.ownSongs
 				authorSongs.push(uid)
 				firestore.collection('users').doc(author.uid).update({
-					ownSongs:authorSongs
+					ownSongs: authorSongs
 				})
 			})
 		}
@@ -115,10 +125,10 @@ export const AddSong = () => {
 		clearTimeout(typingTimeout)
 		setTimeout(func, 1000)
 	}
-	
+
 	return (
 		<div className="AddSong">
-			<ColorExtractor src = {imageLocalPath} getColors = {(colors)=>setImageColors(colors)}/>
+			<ColorExtractor src={imageLocalPath} getColors={(colors) => setImageColors(colors)} />
 			<form onSubmit={addSongToFirebase}>
 				<label>
 					<h3>Song name</h3>
@@ -126,7 +136,7 @@ export const AddSong = () => {
 				</label>
 				<label>
 					<h3>Song authors</h3>
-					<input type="text" placeholder="Enter author name" value={authorsInputValue} onChange={(e) => setAuthorsInputValue(e.target.value)} style={{ marginBottom: '5px' }} onKeyUp={()=>timerUpFunc(findAuthors)} onKeyDown={() => { return clearTimeout(typingTimeout) }} />
+					<input type="text" placeholder="Enter author name" value={authorsInputValue} onChange={(e) => setAuthorsInputValue(e.target.value)} style={{ marginBottom: '5px' }} onKeyUp={() => timerUpFunc(findAuthors)} onKeyDown={() => { return clearTimeout(typingTimeout) }} />
 					<div className="chosenAuthorsList">
 						{chosenAuthors.map((author) => {
 							return (
@@ -166,8 +176,8 @@ export const AddSong = () => {
 					<div className="downloadPhoto">
 						<span className="downloadBtnText">
 							<AiOutlineCloudDownload />
-									Download song cover
-								</span>
+							Download song cover
+						</span>
 						<span className="photoLoadLine" style={songCover !== '' ? { width: '100%' } : {}}></span>
 					</div>
 					<input type="file" name="" id="" onChange={(e) => onFileChange(e, 'songsImages/', setSongCover)} />
@@ -184,12 +194,12 @@ export const AddSong = () => {
 					<input type="file" name="" id="" onChange={(e) => onFileChange(e, 'songs/', setSongSrc)} />
 				</label>
 
-				{/* <label>
-							<textarea name="" id="" placeholder = {"Add song lyrics:\ne.g. bla-bla-bla[time-when-it-plays]"} onKeyDown = {transformLyricsToArrayOfObjects} onChange = {(e)=>setLyrics(e.target.value)}></textarea>
-						</label> */}
+				<label>
+					<textarea name="" id="" placeholder={"Add song lyrics"} onKeyDown={transformLyricsToArrayOfObjects} onChange={(e) => setLyrics(e.target.value)}></textarea>
+				</label>
 				<button type="submit" className="addSongBtn">Add song</button>
-				{imageColors.map(color=>{
-					return <div style = {{background:color, width:'30px', height:'30px'}}></div>
+				{imageColors.map(color => {
+					return <div style={{ background: color, width: '30px', height: '30px' }}></div>
 				})}
 			</form>
 		</div>

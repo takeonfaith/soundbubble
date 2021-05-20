@@ -6,7 +6,7 @@ import { Player } from '../FullScreenPlayer/Player';
 import { HiChevronDown } from 'react-icons/hi';
 import { useSong } from '../../functionality/SongPlay/SongContext';
 import { FiMinus } from 'react-icons/fi';
-import { useSwipeable } from 'react-swipeable';
+import {useSwipeable} from 'react-swipeable'
 import checkNumber from '../../functions/checkNumber';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 

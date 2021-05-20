@@ -371,6 +371,35 @@ input[type=range]::-ms-track {
 .lyricsBlock{
   width: 500px;
   transition: .3s;
+  position: relative;
+}
+
+.lyricsBlockInput{
+  position: absolute;
+  right: -15%;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  padding: 10px;
+  width: 50px;
+  outline: none;
+  border-radius: var(--standartBorderRadius2);
+  border:none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.Lyrics.moderator .lyricsBlock:hover .lyricsBlockInput{
+  opacity: 1;
 }
 
 .lyricsBlock p{

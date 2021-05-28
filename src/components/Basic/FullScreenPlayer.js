@@ -49,7 +49,7 @@ export default function FullScreenPlayer() {
   
 
   function returnToInitialMobileMenu() {
-    var dropDelta
+    let dropDelta
     clearTimeout(dropDelta)
     setMobileMenuTransition(0)
     dropDelta = setTimeout(() => {
@@ -84,7 +84,7 @@ export default function FullScreenPlayer() {
   
 
   function returnToInitial() {
-    var dropDelta
+    let dropDelta
     clearTimeout(dropDelta)
     setTransformTransition(0.2)
     dropDelta = setTimeout(() => {
@@ -143,6 +143,7 @@ export default function FullScreenPlayer() {
             transition: `.4s opacity, ${transformTransition}s transform, .4s top, .4s visibility`
           } :
           {
+            transform: `translateY(${deltaY}px)`,
             transition: `.4s opacity, ${transformTransition}s transform, .4s top, .4s visibility`
           }
       }

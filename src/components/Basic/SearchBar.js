@@ -54,7 +54,7 @@ export const SearchBar = ({value, setValue, allFoundSongs, setAllFoundSongs, set
 	async function findPlaylists(){
 		const foundItemTempArray = []
 		const response = firestore.collection('playlists')
-			.where('name', "==", value)
+			.where('name', "==", value).where('isPrivate', '==', 'false')
 		const data = await response.get();
 		data.docs.forEach(item => {
 			foundItemTempArray.push(item.data())
@@ -82,7 +82,7 @@ export const SearchBar = ({value, setValue, allFoundSongs, setAllFoundSongs, set
 					<BackBtn />
 					<span onClick={() => value.length ? setValue("") : null}>{value.length ? <FiX /> : <FiSearch />}</span>
 				</div>
-				<input type="text" placeholder="Search for songs" value={value} onChange={(e) => setValue(e.target.value)} onKeyUp={() => timerUpFunc(findSomething)} onKeyDown={() => {clearTimeout(typingTimeout)} } />
+				<input type="text" placeholder="Search for songs or for people" value={value} onChange={(e) => setValue(e.target.value)} onKeyUp={() => timerUpFunc(findSomething)} onKeyDown={() => {clearTimeout(typingTimeout)} } />
 			</div>
 			<div className="authorsResult">
 				{loading ?

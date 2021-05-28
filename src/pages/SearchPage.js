@@ -5,9 +5,7 @@ import { authors } from '../data/authors'
 import { songs } from '../data/songs'
 import { playlists } from '../data/playlists'
 import { AiFillFire } from 'react-icons/ai'
-import normalizeString from '../functions/normalizeString'
 import "../styles/SearchPage.css"
-import { ColorExtractor } from 'react-color-extractor'
 import { PlaylistItem } from '../components/AuthorPage/PlaylistItem'
 import { useSong } from '../functionality/SongPlay/SongContext'
 import { BackBtn } from '../components/Basic/BackBtn'
@@ -41,9 +39,9 @@ export const SearchPage = () => {
 		setTop(tempArr)
 	}
 
-	function searchNormalize(str) {
-		return str.toLowerCase().replace(/[.-/_$#@*()!+=\s']/g, '')
-	}
+	// function searchNormalize(str) {
+	// 	return str.toLowerCase().replace(/[.-/_$#@*()!+=\s']/g, '')
+	// }
 
 	function setQueueInSearch() {
 		setCurrentSongQueue(resultSongList)

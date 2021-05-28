@@ -20,6 +20,7 @@ export const SongProvider = ({ children }) => {
 	const { currentUser, loading, setLoading } = useAuth()
 	const [yourSongs, setYourSongs] = useState([])
 	const [yourPlaylists, setYourPlaylists] = useState([])
+	const [yourAuthors, setYourAuthors] = useState([])
 	const [yourFriends, setYourFriends] = useState([])
 	const [currentSongQueue, setCurrentSongQueue] = useState()
 	const [currentSong, setCurrentSong] = useState('')
@@ -43,7 +44,6 @@ export const SongProvider = ({ children }) => {
 	const leftSideBarInputRef = useRef(null)
 	const [rightSideCurrentPage, setRightSideCurrentPage] = useState(0)
 	const [openMenu, setOpenMenu] = useState(false)
-
 
 	function checkKaraoke() {
 		if (currentSongData.lyrics !== undefined && currentSongData.lyrics.length !== 0) {
@@ -169,6 +169,39 @@ export const SongProvider = ({ children }) => {
 				});
 			})
 		}
+
+		if (currentUser.addedPlaylists) {
+			currentUser.addedPlaylists.map((playlistId, i) => {
+				const response = firestore.collection("playlists").doc(playlistId)
+				response.get().then((doc) => {
+					if (doc.exists) {
+						setYourPlaylists(prev => [...prev, doc.data()])
+					} else {
+						console.log("No such document!");
+					}
+				}).catch((error) => {
+					console.log("Error getting document:", error);
+				});
+			})
+		}
+	}
+
+	function fetchYourAuthors() {
+		setYourAuthors([])
+		if (currentUser.addedAuthors) {
+			currentUser.addedAuthors.map((authorId, i) => {
+				const response = firestore.collection("users").doc(authorId)
+				response.get().then((doc) => {
+					if (doc.exists) {
+						setYourAuthors(prev => [doc.data(), ...prev])
+					} else {
+						console.log("No such document!");
+					}
+				}).catch((error) => {
+					console.log("Error getting document:", error);
+				});
+			})
+		}
 	}
 
 	useEffect(() => {
@@ -178,6 +211,7 @@ export const SongProvider = ({ children }) => {
 			fetchCurrentSongInitial()
 			fetchYourPlaylists()
 			fetchYourFriends()
+			fetchYourAuthors()
 		}
 	}, [currentUser])
 
@@ -204,22 +238,51 @@ export const SongProvider = ({ children }) => {
 			}
 		}
 	}, [shuffleMode])
-
+	let listenCountTimeOut = useRef()
 	function playSong(e) {
-		e.stopPropagation()
-		if (play) songRef.current.pause()
-		else songRef.current.play()
+		if (e) e.stopPropagation()
+		if (play) {
+			songRef.current.pause()
+		}
+		else {
+			songRef.current.play()
+		}
 
 		setPlay(!play)
 	}
 
+	function updateListenCount(){
+		console.log('listen Count Update')
+		listenCountTimeOut.current = setTimeout(() => {
+			console.log('count added')
+			let listens = currentSongData.listens
+			listens++
+			firestore.collection('songs').doc(currentSongData.id).update({
+				listens: listens
+			})
+		}, songDuration * 1000 * 0.5)
+	}
+
+	useEffect(() => {
+		clearTimeout(listenCountTimeOut)
+		if(play){
+			updateListenCount()
+		}
+	}, [play])
+
+	useEffect(() => {
+		clearTimeout(listenCountTimeOut)
+		if(play){
+			updateListenCount()
+		}
+	}, [currentSong])
+
 	function loadSongData(e) {
-		setCurrentTime(e.target.currentTime);
+		setCurrentTime(e.target.currentTime)
 		setSongDuration(e.target.duration)
 		inputRef.current.max = e.target.duration
 		if (window.innerWidth > 1000) leftSideBarInputRef.current.max = e.target.duration
-		document.documentElement.style
-			.setProperty('--inputRange', 0 + '%');
+		document.documentElement.style.setProperty('--inputRange', 0 + '%')
 		if (play) { e.target.play() }
 		else e.target.pause()
 	}
@@ -234,8 +297,8 @@ export const SongProvider = ({ children }) => {
 			return true
 		})
 	}
-
 	function playing(event) {
+
 		if (event.target.currentTime === songDuration) {
 			if (repeatMode === 0) {
 				songRef.current.pause()
@@ -384,7 +447,10 @@ export const SongProvider = ({ children }) => {
 				currentSongData,
 				setCurrentSongData,
 				setIsThereKaraoke,
-				checkKaraoke
+				checkKaraoke,
+				setYourPlaylists,
+				yourAuthors,
+				setYourAuthors
 			}
 		}>
 			{!loading ?

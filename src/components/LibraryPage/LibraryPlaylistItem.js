@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import normalizeString from '../../functions/normalizeString'
 import shortWord from '../../functions/shortWord'
 import {HiPause, HiPlay} from 'react-icons/hi'
 import { useSong } from '../../functionality/SongPlay/SongContext'
 import { firestore } from '../../firebase'
-export const PlaylistItem = ({playlist}) => {
+import { useEffect } from 'react'
+export const LibraryPlaylistItem = ({playlist}) => {
 	const playlistDate = new Date(playlist.creationDate)
 	const {setCurrentSongQueue, setCurrentSongPlaylistSource, playSong, setCurrentSongInQueue, setCurrentSong, currentSongPlaylistSource, songRef, setPlay, play} = useSong()
 	const [playlistSongs, setPlaylistSongs] = useState([])
@@ -39,21 +40,14 @@ export const PlaylistItem = ({playlist}) => {
 	}, [playlistSongs.length])
 
 	return (
-		<Link to={`/albums/${playlist.id}`} style = {{textDecoration:'none'}}>
-			<div className="playlistItem">
+		<Link to={`/albums/${playlist.id}`}>
+			<div className="library playlistItem">
 				{playlist.image?<img src={playlist.image} alt="" />:<h1>{playlist.name.split(' ')[0][0]}{playlist.name.split(' ')[1][0]}</h1>}
-				{/* {!playlist.isAlbum?<h2>{playlist.name}</h2>:null} */}
+				<h2 style = {{background:playlist.imageColors[2]}}>{shortWord(playlist.name, 10) }</h2>
 				<button onClick = {playChosenPlaylist}>
 					{(currentSongPlaylistSource.name === playlist.name) && play?<HiPause/>:<HiPlay/>}
 				</button>
 			</div>
-			<h4 style = {{display:'flex', alignItems:'center', margin:'5px 0'}}>
-				{shortWord(playlist.name, 15)} 
-				<span style = {{fontSize:".6em", opacity:.6, fontWeight:'500', marginLeft:'7px'}}>
-					{playlist.isAlbum?playlist.songs.length === 1?"single":'album':'playlist'}
-				</span>
-			</h4>
-			<h5 style = {{margin:'5px 0'}}>{playlistDate.getFullYear()}</h5>
 		</Link>
 	)
 }

@@ -1,8 +1,6 @@
 import React from 'react'
-import { ColorExtractor } from 'react-color-extractor'
 import { FaBackward, FaForward, FaPause, FaPlay } from 'react-icons/fa'
 import { TiArrowRepeat, TiArrowShuffle } from 'react-icons/ti'
-import { songs } from '../../data/songs'
 import { useSong } from '../../functionality/SongPlay/SongContext'
 import checkNumber from '../../functions/checkNumber'
 import correctTimeDisplay from '../../functions/correctTimeDisplay'

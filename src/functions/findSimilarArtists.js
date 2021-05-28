@@ -21,7 +21,8 @@ function findSimilarArtistsNames(authorsSongsArr, authorsData, setSimilarAuthors
 			
 		}
 	}
-	return setSimilarAuthors(uniqueAuthorsDataArray)
+	setSimilarAuthors(uniqueAuthorsDataArray)
+	return uniqueAuthorsDataArray
 }
 
 export default async function findSimilarArtists(authorsData, setSimilarAuthors) {

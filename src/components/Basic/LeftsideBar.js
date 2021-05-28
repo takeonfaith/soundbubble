@@ -14,14 +14,18 @@ import shareWithOneFriend from '../../functions/shareWithOneFriend'
 import { useAuth } from '../../functionality/AuthContext'
 import { firestore } from '../../firebase'
 import { FiMessageCircle, FiUser } from 'react-icons/fi'
+import { useModal } from '../../functionality/ModalClass'
+import { FriendsListToShareWith } from './FriendsListToShareWith'
 export const LeftsideBar = () => {
 	const {currentUser} = useAuth()
 	const {
 		leftSideBarInputRef,
 		setOpenFullScreenPlayer, 
 		currentSong,
+		currentSongData,
 		yourFriends
 	} = useSong()
+	const {openModalWithContent} = useModal()
 	const [friendChatId, setFriendChatId] = useState(0)
 	const [currentPage, setCurrentPage] = useState(
 		() => {
@@ -100,7 +104,7 @@ export const LeftsideBar = () => {
 					}
 					return null
 				})}
-				<h4 className = "seeMoreBtn">See more</h4>
+				<h4 className = "seeMoreBtn" onClick = {()=>{openModalWithContent(<FriendsListToShareWith song = {currentSongData}/>)}}>See more</h4>
 			</div>
 			<div className="leftSideBarContainer">
 				<div className="littlePlayer">

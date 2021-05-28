@@ -46,6 +46,7 @@
 }
 
 .Header .headerAuthorsImage{
+	/* background: var(--yellowAndPinkGrad); */
 	width: 180px;
 	height: 180px;
 	border-radius: var(--standartBorderRadius0);
@@ -374,7 +375,7 @@
 	width: 100%;
 	margin: 10px auto;
 	padding: 10px 30px;
-	background: var(--darkGreen);
+	background: var(--purpleAndBlueGrad);
 	color:#fff;
 	border-radius: var(--standartBorderRadius2);
 }
@@ -429,5 +430,19 @@
 
 	.Header .headerListenersAndSubsItem::after{
 		right: 0%;
+	}
+
+	.artistsWrapper{
+		max-width: 100%;
+		overflow-x: auto;
+	}
+
+	.AuthorItemBig{
+		width: 140px;
+	}
+
+	.AuthorItemBigImage{
+		width: 140px;
+		height: 140px;
 	}
 }

@@ -31,6 +31,13 @@
 	align-items: center;
 	cursor: pointer;
 	position: relative;
+	user-select: none;
+}
+
+.FriendsListToShareWith .person svg{
+	width: 25px;
+	height: 25px;
+	margin-right: 5px;
 }
 
 .leftSideBarContainer a {

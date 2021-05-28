@@ -6,9 +6,7 @@ import { Playlists } from '../components/AuthorPage/Playlists'
 import { SimilarArtists } from '../components/AuthorPage/SimilarArtists'
 import { TopSongs } from '../components/AuthorPage/TopSongs'
 import { LoadingCircle } from '../components/Basic/LoadingCircle'
-import { authors } from '../data/authors'
 import { firestore } from '../firebase'
-import normalizeString from '../functions/normalizeString'
 import "../styles/AuthorPage.css"
 export const AuthorPage = () => {
 	const match = useRouteMatch('/authors/:authorId')
@@ -20,7 +18,7 @@ export const AuthorPage = () => {
 		const response = firestore.collection("users").doc(authorId)
 		response.get().then((doc) => {
 			if (doc.exists) {
-				 console.log("Document data:", doc.data());
+				//  console.log("Document data:", doc.data());
 				 setAuthorsData(doc.data())
 				 setHeaderColors(doc.data().imageColors)
 				 setLoading(false)

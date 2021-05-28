@@ -8,13 +8,16 @@ import { RadioBtn } from '../SignIn-Up/RadioBtn'
 import { SongItemChoice } from '../Basic/SongItemChoice'
 import { LoadingCircle } from '../Basic/LoadingCircle'
 import { ColorExtractor } from 'react-color-extractor'
+import { useAuth } from '../../functionality/AuthContext'
 export const AddPlaylist = () => {
+	const {currentUser} = useAuth()
+	const isModerator = currentUser.email === 'takeonfaith6@gmail.com'
 	const [playlistName, setPlaylistName] = useState("")
 	const [playlistCover, setPlaylistCover] = useState("")
 	const [authorsInputValue, setAuthorsInputValue] = useState('')
 	const [allAuthors, setAllAuthors] = useState([])
-	const [chosenAuthors, setChosenAuthors] = useState([])
-	const [releaseDate, setReleaseDate] = useState("")
+	const [chosenAuthors, setChosenAuthors] = useState(currentUser.email !== 'takeonfaith6@gmail.com'?[{uid:currentUser.uid, photoURL:currentUser.photoURL, displayName:currentUser.displayName}]:[])
+	const [releaseDate, setReleaseDate] = useState(isModerator?"":new Date.toString())
 	const [songsSearch, setSongsSearch] = useState("")
 	const [allSongs, setAllSongs] = useState([])
 	const [chosenSongs, setChosenSongs] = useState([])
@@ -26,11 +29,13 @@ export const AddPlaylist = () => {
 	const [imageColors, setImageColors] = useState([])
 	let typingTimeout
 	async function findAuthors(e) {
+		
 		setLoadingAuthors(true)
 		setAllAuthors([])
-		const response = firestore.collection("users")
-			.where("displayName", "==", authorsInputValue)
-			// .where('isAuthor', '==', true)
+		const friendsIds = currentUser.friends.map(friend=>{if(friend.status === 'added') return friend.uid})
+		const response = isModerator?
+			firestore.collection("users").where("displayName", "==", authorsInputValue):
+			firestore.collection("users").where("uid", "in", friendsIds).where("displayName", "==", authorsInputValue)
 		const data = await response.get();
 		if (data !== undefined) {
 			data.docs.forEach(item => {
@@ -148,7 +153,7 @@ export const AddPlaylist = () => {
 							return (
 								<div className="chosenAuthorItem">
 									<span>{author.displayName}</span>
-									<FiXCircle onClick={() => removeAuthorFromList(author)} />
+									<FiXCircle onClick={() => author.uid === currentUser.uid?null:removeAuthorFromList(author)} />
 								</div>
 							)
 						})}
@@ -204,10 +209,13 @@ export const AddPlaylist = () => {
 					<RadioBtn label="Private" onClick={() => setIsPlaylistPrivate(1)} currentActive={isPlaylistPrivate} id={1} />
 				</div>
 
-				<label>
-					<h3>Release Date</h3>
-					<input type="date" name="" id="" value={releaseDate} onChange={(e) => setReleaseDate(e.target.value)} />
-				</label>
+				{
+					isModerator?
+					<label>
+						<h3>Release Date</h3>
+						<input type="date" name="" id="" value={releaseDate} onChange={(e) => setReleaseDate(e.target.value)} />
+					</label>:null
+				}
 
 				<label className="downloadFile">
 					<div className="downloadPhoto">
@@ -219,7 +227,7 @@ export const AddPlaylist = () => {
 					</div>
 					<input type="file" name="" id="" onChange={(e) => onFileChange(e, 'songsImages/', setPlaylistCover)} />
 				</label>
-				<button type="submit" className="addSongBtn">Add song</button>
+				<button type="submit" className="addSongBtn">Add playlist</button>
 			</form>
 		</div>
 	)

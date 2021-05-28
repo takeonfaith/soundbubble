@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { playlists } from '../../data/playlists'
 import { firestore } from '../../firebase'
+import { useAuth } from '../../functionality/AuthContext'
 import { MoreBtn } from '../Basic/MoreBtn'
 import { PlaylistItem } from './PlaylistItem'
 
 export const Playlists = ({ authorsData }) => {
+	const {currentUser} = useAuth()
 	const [authorsPlaylists, setAuthorsPlaylists] = useState([])
 	const [openAllPlaylists, setOpenAllPlaylists] = useState(false)
 
@@ -13,8 +15,10 @@ export const Playlists = ({ authorsData }) => {
 		setAuthorsPlaylists([])
 		const tempArray = []
 		if(authorsData.ownPlaylists !== undefined && authorsData.ownPlaylists.length !== 0){
-			const response = firestore.collection("playlists")
-				.where("id", "in", authorsData.ownPlaylists)
+			const response = authorsData.uid === currentUser.uid?firestore.collection("playlists")
+				.where("id", "in", authorsData.ownPlaylists):
+				firestore.collection("playlists")
+				.where("id", "in", authorsData.ownPlaylists).where('isPrivate', '==', false)
 			const data = await response.get();
 			data.docs.forEach(item => {
 				tempArray.push(item.data())

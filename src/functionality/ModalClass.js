@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 
 const ModalContext = React.createContext()
 
@@ -6,40 +6,23 @@ export const useModal = () =>{
 	return useContext(ModalContext)
 }
 
-
 export const ModalClassProvider = ({children}) => {
-	class ModalWindow{
-		constructor(){
-			super();
-			this.state = {
-				open:false,
-				content:null
-			}
-			this.open = this.open.bind(this);
-			this.close = this.close.bind(this);
-			this.initContent = this.initContent.bind(this);
-		}
+	const [openModal, setOpenModal] = useState(false)
+	const [content, setContent] = useState(<h1>Test</h1>)
+	
+	function toggleModal(){
+		setOpenModal(!openModal)
+	}
 
-		open(){
-			this.setState(state=>({
-				open:true
-			}))
-		}
-
-		close(){
-			this.setState(state=>({
-				open:false
-			}))
-		}
-
-		initContent(content){
-			this.setState(state=>({
-				content:content
-			}))
-		}
+	const value = {
+		openModal,
+		setOpenModal,
+		toggleModal, 
+		setContent, 
+		content
 	}
 	return (
-		<ModalContext.Provider value = {ModalWindow}>
+		<ModalContext.Provider value = {value}>
 			{children}
 		</ModalContext.Provider>
 	)

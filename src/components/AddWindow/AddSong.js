@@ -3,17 +3,20 @@ import { ColorExtractor } from 'react-color-extractor'
 import { AiOutlineCloudDownload } from 'react-icons/ai'
 import { FiXCircle } from 'react-icons/fi'
 import { firestore, storage } from '../../firebase'
+import { useAuth } from '../../functionality/AuthContext'
 import getUID from '../../functions/getUID'
 import { LoadingCircle } from '../Basic/LoadingCircle'
 import { PersonTiny } from '../Basic/PersonTiny'
 
 export const AddSong = () => {
+	const {currentUser} = useAuth()
+	const isModerator = currentUser.email === 'takeonfaith6@gmail.com'
 	const [songName, setSongName] = useState("")
 	const [songCover, setSongCover] = useState("")
 	const [songSrc, setSongSrc] = useState("")
 	const [authorsInputValue, setAuthorsInputValue] = useState('')
 	const [allAuthors, setAllAuthors] = useState([])
-	const [chosenAuthors, setChosenAuthors] = useState([])
+	const [chosenAuthors, setChosenAuthors] = useState(!isModerator?[{uid:currentUser.uid, photoURL:currentUser.photoURL, displayName:currentUser.displayName}]:[])
 	const [releaseDate, setReleaseDate] = useState("")
 	const [lyrics, setLyrics] = useState([])
 	const [imageLocalPath, setImageLocalPath] = useState("")
@@ -123,7 +126,7 @@ export const AddSong = () => {
 
 	function timerUpFunc(func) {
 		clearTimeout(typingTimeout)
-		setTimeout(func, 1000)
+		typingTimeout = setTimeout(func, 1000)
 	}
 
 	return (
@@ -142,7 +145,7 @@ export const AddSong = () => {
 							return (
 								<div className="chosenAuthorItem">
 									<span>{author.displayName}</span>
-									<FiXCircle onClick={() => removeAuthorFromList(author)} />
+									<FiXCircle onClick={() => {if(isModerator)removeAuthorFromList(author);else if(author.uid !== currentUser.uid)removeAuthorFromList(author);}} />
 								</div>
 							)
 						})}

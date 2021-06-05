@@ -25,7 +25,7 @@ export const Lyrics = () => {
 	}
 
 	useEffect(() => {
-		if(lyrics[0].startTime !== 'undefined'){
+		if(lyrics[0] && lyrics[0].startTime !== 'undefined'){
 			lyrics.forEach(paragraph => {
 				karaokeModeratorTimes.push(paragraph.startTime)
 			});

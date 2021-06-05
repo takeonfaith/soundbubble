@@ -117,7 +117,7 @@
 	justify-content: flex-start;
 	min-width: 200px;
 	max-width: 350px;
-	margin-top:20px;
+	margin-top:10px;
 }
 
 .headerListenersAndSubsItem{
@@ -378,6 +378,114 @@
 	background: var(--purpleAndBlueGrad);
 	color:#fff;
 	border-radius: var(--standartBorderRadius2);
+}
+
+.FriendRequestItem{
+	width: 100%;
+	padding: 5px 15px;
+	border-radius: var(--standartBorderRadius2);
+	background: var(--reallyLightGrey);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	box-sizing: border-box;
+	margin: 10px 0;
+}
+
+.friendRequestImageAndName{
+	display: flex;
+	align-items: center;
+}
+
+.FriendRequestItem .requestImage{
+	width: 35px;
+	height: 35px;
+	overflow: hidden;
+	border-radius: 100px;
+	margin-right: 7px;
+}
+
+.FriendRequestItem .requestImage img{
+	width: 100%;
+}
+
+.FriendRequestItem .requestButtons{
+	display: flex;	
+	align-items: center;
+	justify-content: center;
+}
+
+.FriendRequestItem .requestButtons button{
+	display: flex;	
+	align-items: center;
+	justify-content: center;
+	padding: 10px;
+	border-radius: var(--standartBorderRadius3);
+	background: var(--transparentWhite);
+	margin-left: 7px;
+}
+
+.PersonTinyList{
+	
+	width: 100%;
+}
+
+.personTinyListWrapper{
+	display: flex;
+	align-items: center;
+	overflow-y: auto;
+}
+
+.PersonTinyVerticalItem{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 50px;
+	text-align: center;
+	padding: 10px 15px;
+	border-radius: var(--standartBorderRadius3);
+	cursor: pointer;
+}
+
+.PersonTinyVerticalItem:hover{
+	background: var(--transparentWhite);
+}
+
+.PersonTinyVerticalItem .personTinyImage{
+	width: 50px;
+	height: 50px;
+	overflow: hidden;
+	border-radius: 100px;
+	margin-bottom: 5px;
+}
+
+.PersonTinyVerticalItem .personTinyImage img{
+	width: 100%;
+}
+
+.PersonTinyVerticalItem .personTinyName{
+	font-size: .8em;
+	font-weight: 600;
+}
+
+.ChatWithFriendButton{
+	padding: 5px 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: var(--blue);
+	color:#fff;
+	margin-top: 20px;
+	border-radius: var(--standartBorderRadius3);
+	width: 100%;
+	
+}
+
+.ChatWithFriendButton svg{
+	margin-right: 4px;
+	width: 17px;
+	height: 17px;
 }
 
 @media (max-width:1000px) {

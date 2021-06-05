@@ -14,7 +14,7 @@ import {useModal} from '../../functionality/ModalClass'
 import filterArrayWithArray from '../../functions/filterArrayWithArray'
 import { FriendsListToShareWith } from '../Basic/FriendsListToShareWith'
 import { SongInfo } from '../Basic/SongInfo'
-export const SongItem = ({ song, localIndex, showListens = false, listens = 0, isNewSong = false }) => {
+export const SongItem = ({ song, localIndex, showListens = false, isNewSong = false }) => {
 	const { yourSongs, setCurrentSong, currentSong, displayAuthors, play, songRef, setPlay, setYourSongs, yourPlaylists, currentSongQueue, setCurrentSongInQueue, fetchYourSongs, songDuration, setYourAuthors, yourFriends } = useSong()
 	const [openMoreWindow, setOpenMoreWindow] = useState(false)
 	const [moreWindowPosRelativeToViewport, setMoreWindowPosRelativeToViewport] = useState(0)
@@ -118,7 +118,7 @@ export const SongItem = ({ song, localIndex, showListens = false, listens = 0, i
 	function showAdditionalInfoIfShould() {
 		return showListens ?
 			<span style={{ display: 'flex', alignItems: 'center', opacity: .7, fontSize: '.8em' }} className={isNewSong ? "newSongMarker" : ""}>
-				{rightFormanForBigNumber(listens)} <CgMusicNote />
+				{rightFormanForBigNumber(song.listens)} <CgMusicNote />
 			</span> :
 			isNewSong ?
 				<span style={{ display: 'flex', alignItems: 'center', fontSize: '.7em' }} className={"newSongMarker"}>
@@ -187,7 +187,7 @@ export const SongItem = ({ song, localIndex, showListens = false, listens = 0, i
 							</div>
 							<MdPlaylistAdd />Add to playlist <MdKeyboardArrowRight/>
 						</div>
-						<div className="songItemMenuWindowItem" onClick = {()=>{toggleModal(); setContent(<FriendsListToShareWith song = {song}/>)}}>
+						<div className="songItemMenuWindowItem" onClick = {()=>{toggleModal(); setContent(<FriendsListToShareWith item = {song} whatToShare = {"song"}/>)}}>
 							<FiShare />Share
 						</div>
 						<div className="songItemMenuWindowItem" onClick = {()=>{toggleModal(); setContent(<SongInfo song = {song}/>)}}><FiInfo />Info</div>

@@ -3,8 +3,6 @@ import { AiFillFire, AiFillLike } from 'react-icons/ai'
 import { FcLike } from 'react-icons/fc'
 import { authors } from '../../data/authors'
 import { chat } from '../../data/chat'
-import { playlists } from '../../data/playlists'
-import { songs } from '../../data/songs'
 import { firestore } from '../../firebase'
 import { useAuth } from '../../functionality/AuthContext'
 import displayDate from '../../functions/displayDate'
@@ -17,7 +15,8 @@ export const MessageItem = ({ messageData, chatId, scrollToMessageRef, setScroll
 	const {message, attachedAlbums, attachedSongs, attachedAuthors, sender, inResponseToMessage, id, sentTime} = messageData
 	const [userThatSentMessage, setUserThatSentMessage] = useState({})
 	const [attachedSongsData, setAttachedSongsData] = useState([])
-	const image = ""
+	const [attachedAuthorsData, setAttachedAuthorsData] = useState([])
+	const [attachedPlaylistsData, setAttachedPlaylistsData] = useState([])
 	function findWhatToWriteInResponseToItem(referedMessage){
 		return referedMessage.attachedSongs.length ? "Audio":
 		referedMessage.attachedAlbums.length? "Album":
@@ -29,16 +28,18 @@ export const MessageItem = ({ messageData, chatId, scrollToMessageRef, setScroll
 		setUserThatSentMessage(user)
 	}
 
-	function findAttachedSongs() {
-		return attachedSongs.forEach(async (songId, index) => {
-			let song = (await firestore.collection('songs').doc(songId).get()).data()
-			setAttachedSongsData(prev=>[...prev, song])
+	function fetchAttachedData(list, place, setFunc){
+		return list.forEach(async (itemId) => {
+			let itemData = (await firestore.collection(place).doc(itemId).get()).data()
+			setFunc(prev=>[...prev, itemData])
 		})
 	}
 
 	useEffect(() => {
 		fetchSentMessageUser()
-		findAttachedSongs()
+		fetchAttachedData(attachedSongs, 'songs', setAttachedSongsData)
+		fetchAttachedData(attachedAuthors, 'users', setAttachedAuthorsData)
+		fetchAttachedData(attachedAlbums, 'playlists', setAttachedPlaylistsData)
 	}, [])
 
 
@@ -65,16 +66,14 @@ export const MessageItem = ({ messageData, chatId, scrollToMessageRef, setScroll
 					</div>:null
 				}
 				<div>	
-					<p>{emojis[message]}</p>
+					<p>{message}</p>
 					{attachedSongsData.map((song, key)=>{
 						return <SongItem song = {song} localIndex = {key} key = {key}/>
 					})}
-					{attachedAlbums.map((albumId, index) => {
-						let album = playlists['allPlaylists'][albumId]
+					{attachedPlaylistsData.map((album, index) => {
 						return <PlaylistItem playlist={album} key={index} />
 					})}
-					{attachedAuthors.map((authorId, index) => {
-						let author = authors[authorId]
+					{attachedAuthorsData.map((author, index) => {
 						return <AuthorItemBig data={author} key={index} />
 					})}
 				</div>

@@ -16,8 +16,8 @@ export const AddPlaylist = () => {
 	const [playlistCover, setPlaylistCover] = useState("")
 	const [authorsInputValue, setAuthorsInputValue] = useState('')
 	const [allAuthors, setAllAuthors] = useState([])
-	const [chosenAuthors, setChosenAuthors] = useState(currentUser.email !== 'takeonfaith6@gmail.com'?[{uid:currentUser.uid, photoURL:currentUser.photoURL, displayName:currentUser.displayName}]:[])
-	const [releaseDate, setReleaseDate] = useState(isModerator?"":new Date.toString())
+	const [chosenAuthors, setChosenAuthors] = useState(!isModerator?[{uid:currentUser.uid, photoURL:currentUser.photoURL, displayName:currentUser.displayName}]:[])
+	const [releaseDate, setReleaseDate] = useState(isModerator?"":new Date().toString())
 	const [songsSearch, setSongsSearch] = useState("")
 	const [allSongs, setAllSongs] = useState([])
 	const [chosenSongs, setChosenSongs] = useState([])
@@ -102,7 +102,7 @@ export const AddPlaylist = () => {
 				listens: 0,
 				creationDate: releaseDate, 
 				subscribers:0,
-				isAlbum:!playlistStatus,
+				isAlbum:playlistStatus,
 				imageColors:imageColors,
 				isPrivate:isPlaylistPrivate === true
 			}
@@ -134,7 +134,7 @@ export const AddPlaylist = () => {
 
 	function timerUpFunc(func) {
 		clearTimeout(typingTimeout)
-		setTimeout(func, 1000)
+		typingTimeout = setTimeout(func, 1000)
 	}
 
 	return (
@@ -199,10 +199,13 @@ export const AddPlaylist = () => {
 					</div>
 				</label>
 
-				<div style={{ display: 'flex', justifyContent: 'flex-start', margin: '15px 0' }}>
-					<RadioBtn label="Album" onClick={() => setPlaylistStatus(0)} currentActive={playlistStatus} id={0} />
-					<RadioBtn label="Playlist" onClick={() => setPlaylistStatus(1)} currentActive={playlistStatus} id={1} />
-				</div>
+				{
+					isModerator || currentUser.isAuthor? <div style={{ display: 'flex', justifyContent: 'flex-start', margin: '15px 0' }}>
+						<RadioBtn label="Playlist" onClick={() => setPlaylistStatus(0)} currentActive={playlistStatus} id={0} />
+						<RadioBtn label="Album" onClick={() => setPlaylistStatus(1)} currentActive={playlistStatus} id={1} />
+					</div>:
+					null
+				}
 
 				<div style={{ display: 'flex', justifyContent: 'flex-start', margin: '15px 0' }}>
 					<RadioBtn label="Not Private" onClick={() => setIsPlaylistPrivate(0)} currentActive={isPlaylistPrivate} id={0} />
@@ -210,7 +213,7 @@ export const AddPlaylist = () => {
 				</div>
 
 				{
-					isModerator?
+					isModerator || currentUser.isAuthor?
 					<label>
 						<h3>Release Date</h3>
 						<input type="date" name="" id="" value={releaseDate} onChange={(e) => setReleaseDate(e.target.value)} />

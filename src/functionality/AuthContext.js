@@ -37,6 +37,8 @@ export const AuthProvider = ({children}) => {
 					addedSongs:[],
 					addedPlaylists:[],
 					addedAuthors:[],
+					chats:[],
+					friends:[],
 					subscribers: 0,
 					regDate: firebase.firestore.FieldValue.serverTimestamp(),
 					imageColors:imageColors

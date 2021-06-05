@@ -9,6 +9,15 @@ a{
   color:#fff;
 }
 
+@keyframes loading {
+  0%{
+    transform: rotate(0deg);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
+}
+
 @media (min-width:1001px) {
   a:hover{
     text-decoration: underline;
@@ -97,6 +106,7 @@ a{
   --themeColor2:rgb(65, 141, 255);
   --pink:#cf6b99;
   --red:#f4546a;
+  --lightRed:#ff94a3;
   --purple:#ae67ef;
   --green:#69e985;
   --darkGreen:#3debd3;
@@ -104,6 +114,7 @@ a{
   --lightBlue:rgb(105, 131, 248);
   --reallyLightBlue:#94a8ff;
   --lightGrey:#3d3d3d;
+  --reallyLightGrey:#525252;
   --leftSideBarColor:rgb(39, 39, 39);
   --navItemColor:rgb(53, 53, 53);
   --playlistsColor:rgb(31, 31, 31);
@@ -222,6 +233,57 @@ body{
 
  .SongInfo .songImage img{
    width: 100%;
+ }
+
+ .AuthorsList{
+   position: relative;
+ }
+
+ .authorsWrapper{
+   max-width: 100%;
+   overflow-x: auto;
+ }
+
+ .authorsWrapper::-webkit-scrollbar{
+   height: 0;
+   width: 0;
+ }
+
+ .authorsShiftButtons{
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   width: 100%;
+   position: absolute;
+   top: 50%;
+   transform: translateY(-50%);
+   pointer-events: none;
+ }
+
+ .authorsShiftButtons button{
+   pointer-events: all;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   height: 35px;
+   width: 35px;
+   border-radius: 30px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.383);
+ }
+
+ .authorsShiftButtons button svg{
+   width: 20px;
+   height: 20px;
+ }
+
+ .NotificationCircle{
+   width: 13px;
+   height: 13px;
+   border-radius: 100px;
+   background: var(--red);
+   position: absolute;
+   left: 10px;
+   top: 4px;
  }
 
 @media (max-width:1000px) {

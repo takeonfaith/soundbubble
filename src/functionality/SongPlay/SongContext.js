@@ -1,12 +1,8 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react'
-import { CgEditMarkup } from 'react-icons/cg'
 import { Link } from 'react-router-dom'
 import { LoadingData } from '../../components/Basic/LoadingData'
-import { playlists } from '../../data/playlists'
-import { songs } from '../../data/songs'
 import { firestore } from '../../firebase'
 import checkNumber from '../../functions/checkNumber'
-import normalizeString from '../../functions/normalizeString'
 import shuffleSongs from '../../functions/shuffleSongs'
 import { useAuth } from '../AuthContext'
 
@@ -75,6 +71,19 @@ export const SongProvider = ({ children }) => {
 
 	// }
 
+	async function fetchQueue(){
+		setCurrentSongQueue([])
+		if(currentUser.lastQueue){
+			const tempQueue = []
+			currentUser.lastQueue.songsList.forEach(async songId=>{
+				const songData = (await firestore.collection('songs').doc(songId).get()).data()
+				tempQueue.unshift(songData)
+			})
+			setCurrentSongInQueue(currentUser.lastQueue.songsList.findIndex(songId => songId === currentSong))
+			setCurrentSongQueue(tempQueue)
+		}
+	}
+
 	async function fetchCurrentSongInitial() {
 
 		if (currentUser.uid !== undefined) {
@@ -89,13 +98,11 @@ export const SongProvider = ({ children }) => {
 				lyrics: [],
 				imageColors: []
 			}
-			const curSong = await (await firestore.collection('users').doc(currentUser.uid).get()).data().lastSongPlayed || (await firestore.collection('users').doc(currentUser.uid).get()).data().addedSongs[0] || tempSongObject.id
-			const curQueue = await (await firestore.collection('users').doc(currentUser.uid).get()).data().lastQueue || { source: '/library', name: 'Your Library', image: currentUser.photoURL, songsList: yourSongs } || []
+			const curSong = currentUser.lastSongPlayed || currentUser.addedSongs[0] || tempSongObject.id
+			const curQueue = currentUser.lastQueue || { source: '/library', name: 'Your Library', image: currentUser.photoURL, songsList: yourSongs } || []
 			setCurrentSong(curSong)
-			console.log(curSong)
 			setCurrentSongPlaylistSource(curQueue)
-			setCurrentSongQueue(curQueue.songsList)
-			setCurrentSongInQueue(curQueue.songsList.findIndex(song => song.id === curSong))
+			
 			if (curSong !== -1) {
 				const docRef = firestore.collection('songs').doc(curSong)
 				const docData = docRef.get()
@@ -211,6 +218,7 @@ export const SongProvider = ({ children }) => {
 			fetchCurrentSongInitial()
 			fetchYourPlaylists()
 			fetchYourFriends()
+			fetchQueue()
 			fetchYourAuthors()
 		}
 	}, [currentUser])

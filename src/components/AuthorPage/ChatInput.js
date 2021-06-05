@@ -14,7 +14,7 @@ import { BackBtn } from '../Basic/BackBtn'
 import { SearchSongWithChoice } from '../Basic/SearchSongWithChoice'
 import { SongItemChoice } from '../Basic/SongItemChoice'
 
-export const ChatInput = ({ chatId, sendMessage, attachedSongs, setAttachedSongs }) => {
+export const ChatInput = ({ sendMessage, attachedSongs, setAttachedSongs, setMessageText }) => {
 	const [openAttachWindow, setOpenAttachWindow] = useState(false)
 	const [searchValue, setSearchValue] = useState("")
 	const [allFoundSongs, setAllFoundSongs] = useState([])
@@ -58,7 +58,7 @@ export const ChatInput = ({ chatId, sendMessage, attachedSongs, setAttachedSongs
 						<ImAttachment />
 					</button>
 				</div>
-				<input type="text" style = {{background:'var(--lightGrey)', border:'none', outline:'none', minHeight:'100%'}}/>
+				<input type="text" style = {{background:'var(--lightGrey)', border:'none', outline:'none', minHeight:'100%'}} onChange = {(e)=>{setMessageText(e.target.value)}}/>
 				<div className="emojis">
 					<div className="emojiItem">
 						<FcLike />

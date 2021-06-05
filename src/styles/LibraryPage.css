@@ -83,7 +83,7 @@
 }
 
 .playlistItem img{
-	height: 100%;
+	width: 100%;
 }
 
 .playlistItem h2{
@@ -131,10 +131,6 @@
 	flex-direction: column;
 }
 
-.yourSongsList .SongItem{
-	margin: 5px 0;
-}
-
 .playlistContent{
 	display: flex;
 	align-items: center;
@@ -153,7 +149,12 @@
 	margin-top: 10px;
 	display: flex;
 	align-items: center;
+	
 	flex-wrap: wrap;
+}
+
+.authorsContainer{
+	justify-content: space-evenly;
 }
 
 .PlaylistsPage .playlistItem h4, .playlistsContainer .playlistItem h5{

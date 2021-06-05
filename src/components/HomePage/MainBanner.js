@@ -54,7 +54,7 @@ export const MainBanner = () => {
 						</div>
 						<div className={"sliderItem " + (currentSliderPage === 1?"current":"")} style = {{transform:`translateX(-${currentSliderPage*100}%)`}}>
 							<h3>Most popular song on platform</h3>
-							<SongItem song = {topSong} localIndex = {0} showListens = {true} listens = {topSong.listens}/>
+							<SongItem song = {topSong} localIndex = {0} showListens/>
 						</div>
 						<div className={"sliderItem " + (currentSliderPage === 2?"current":"")} style = {{transform:`translateX(-${currentSliderPage*100}%)`}}>
 							<h3>Most popular album on platform</h3>

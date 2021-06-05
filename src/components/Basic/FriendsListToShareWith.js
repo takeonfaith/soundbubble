@@ -6,10 +6,11 @@ import { useSong } from '../../functionality/SongPlay/SongContext'
 import shareWithFriends from '../../functions/shareWithManyFriends'
 import { PersonTiny } from './PersonTiny'
 
-export const FriendsListToShareWith = ({song}) => {
+export const FriendsListToShareWith = ({item, whatToShare = 'song'}) => {
 	const { yourFriends } = useSong()
 	const [chosenFriends, setChosenFriends] = useState([])
 	const {currentUser} = useAuth()
+	const [messageText, setMessageText] = useState("")
 	const [shared, setShared] = useState(false)
 	const {toggleModal} = useModal()
 	function removeFriendFromList(data) {
@@ -53,9 +54,27 @@ export const FriendsListToShareWith = ({song}) => {
 			</div>
 			<div>
 				<form>
-					<input type="text" placeholder="Your message" style={{ margin: 0 }} />
+					<input type="text" placeholder="Your message" style={{ margin: 0 }} onChange = {e=>setMessageText(e.target.value)}/>
 				</form>
-				<button className="shareBtn" style={!chosenFriends.length ? { opacity:0.5, maxWidth: 'none', background: 'var(--purpleAndBlueGrad)' } : { maxWidth: 'none', background: 'var(--purpleAndBlueGrad)' }} onClick={()=>{shareWithFriends(chosenFriends, currentUser, song.id);setShared(true)}}>Share with {chosenFriends.length} {chosenFriends.length > 1 ? "friends" : "friend"}</button>
+				<button 
+					className="shareBtn" 
+					style={!chosenFriends.length ? 
+						{ 
+							opacity:0.5, 
+							maxWidth: 'none', 
+							background: 'var(--purpleAndBlueGrad)' } : 
+						{ 
+							maxWidth: 'none', 
+							background: 'var(--purpleAndBlueGrad)' 
+						}
+					} 
+					onClick={()=>{
+							shareWithFriends(chosenFriends, currentUser, (whatToShare === 'author'?item.uid:item.id), whatToShare, messageText);
+							setShared(true)
+						}
+					}>
+					Share with {chosenFriends.length} {chosenFriends.length > 1 ? "friends" : "friend"}
+				</button>
 			</div>
 		</div>
 	)

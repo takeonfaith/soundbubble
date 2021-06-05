@@ -20,6 +20,145 @@
 	min-height: 50px;
 	padding: .4px 5px;
 	box-sizing: border-box;
+	/* overflow-y: auto;
+	overflow-x: visible; */
+	scroll-snap-type: y mandatory;
+	transition: .2s height;
+	position: relative;
+}
+
+.leftSideBarContainer.friendsAndPlaylists:hover .upAndDownBtns{
+	opacity: 1;
+	visibility: visible;
+}
+
+.upAndDownBtns{
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	right: -20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	z-index: 20;
+	border-radius: 8px;
+	overflow: hidden;
+	background: var(--reallyLightGrey);
+	padding: 3px;
+	opacity: 0;
+	visibility: hidden;
+	transition: .2s;
+}
+
+.leftSideBarContainer .createPlaylistBtn{
+	width: 100%;
+	padding: 7px 0;
+	border-radius: var(--standartBorderRadius2);
+	background: var(--reallyLightGrey);
+	font-size: .8em;
+}
+
+.TinyPlaylist{
+	box-sizing: border-box;
+	padding: 5px;
+	border-radius: var(--standartBorderRadius2);
+	margin: 5px 0;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+	position: relative;
+	user-select: none;
+}
+
+.TinyPlaylistBtns{
+	position: absolute;
+	display: flex;
+	height: 100%;
+	align-items: center;
+	justify-content: space-around;
+	z-index: 10;
+	opacity: 0;
+	right: 10px;
+	width: calc(100% - 50px);
+	border-radius: var(--standartBorderRadius2);
+}
+
+.TinyPlaylistBtns button{
+	background: rgba(216, 216, 216, 0);
+	height: 30px;
+	width: 40px;
+	display: flex;
+	align-items: center;	
+	justify-content: center;
+	color:rgb(255, 255, 255);
+	border-radius: var(--standartBorderRadius2);
+	z-index: 10;
+}
+
+.TinyPlaylistBtns button:hover{
+	background: var(--transparentWhite);
+}
+
+.TinyPlaylist:hover{
+	background: rgb(85, 85, 85);
+}
+
+.TinyPlaylist:hover .TinyPlaylistBtns{
+	opacity: 1;
+	background: rgb(85, 85, 85);
+}
+
+.TinyPlaylistImg{
+	width: 35px;
+	height: 35px;
+	border-radius: var(--standartBorderRadius3);
+	overflow: hidden;
+	margin-right: 8px;
+}
+
+.TinyPlaylistImg img{
+	width: 100%;
+}
+
+@keyframes scrollFromTop {
+	0%{
+		opacity: 0;
+		transform: translateY(-20px);
+	}
+	100%{
+		opacity: 1;
+		transform: translateY(0px);
+	}
+}
+@keyframes scrollFromBottom {
+	0%{
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	100%{
+		opacity: 1;
+		transform: translateY(0px);
+	}
+}
+
+.upAndDownBtns button{
+	background: transparent;
+	color:#fff;
+	padding: 5px;
+	border-radius: 6px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.upAndDownBtns button:hover{
+	background: var(--transparentWhite);
+}
+
+.leftSideBarContainer::-webkit-scrollbar {
+	width: 0px;
+	height: 0px;
 }
 
 .person{

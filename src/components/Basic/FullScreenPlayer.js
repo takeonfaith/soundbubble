@@ -151,6 +151,13 @@ export default function FullScreenPlayer() {
       {...handlers}
       onTouchEnd={returnToInitial}
     >
+
+      <div className="auroraWrapper">
+        <div className="auroraCircle"></div>
+        <div className="auroraCircle"></div>
+        <div className="auroraCircle"></div>
+      </div>
+      
       <div className="closeFullScreen" onClick={() => { setOpenFullScreenPlayer(false) }}>
         {window.innerWidth > 1000 ? <HiChevronDown /> : <FiMinus style={{ opacity: .6 }} />}
       </div>

@@ -1,32 +1,32 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { leftSideBar } from '../../data/leftSideBar'
 import NavigationItem from '../LeftsideBar/NavigationItem'
 import Logo from "../../images/Logo3.svg"
 import '../../styles/LeftsideBar.css'
-import { friends } from '../../data/friends'
 import { Player } from '../FullScreenPlayer/Player'
-import { BiFullscreen, BiShare } from 'react-icons/bi'
+import { BiFolderPlus, BiFullscreen} from 'react-icons/bi'
 import { useSong } from '../../functionality/SongPlay/SongContext'
 import normalizeString from '../../functions/normalizeString'
 import { Link } from 'react-router-dom'
-import { authors } from '../../data/authors'
-import shareWithOneFriend from '../../functions/shareWithOneFriend'
 import { useAuth } from '../../functionality/AuthContext'
-import { firestore } from '../../firebase'
-import { FiMessageCircle, FiUser } from 'react-icons/fi'
+import { FiChevronDown, FiChevronUp } from 'react-icons/fi'
 import { useModal } from '../../functionality/ModalClass'
 import { FriendsListToShareWith } from './FriendsListToShareWith'
+import { Person } from '../LeftsideBar/Person'
+import { CreatePlaylistPage } from '../LibraryPage/CreatePlaylistPage'
+import { TinyPlaylist } from '../LeftsideBar/TinyPlaylist'
+import { NotificationCircle } from './NotificationCircle'
 export const LeftsideBar = () => {
-	const {currentUser} = useAuth()
+	const { currentUser } = useAuth()
 	const {
 		leftSideBarInputRef,
-		setOpenFullScreenPlayer, 
-		currentSong,
+		setOpenFullScreenPlayer,
 		currentSongData,
-		yourFriends
+		yourFriends,
+		yourPlaylists
 	} = useSong()
-	const {openModalWithContent} = useModal()
-	const [friendChatId, setFriendChatId] = useState(0)
+	const { toggleModal, setContent } = useModal()
+	const [currentFriendToPlaylistPage, setCurrentFriendToPlaylistPage] = useState(0)
 	const [currentPage, setCurrentPage] = useState(
 		() => {
 			let page = leftSideBar.find((el, i) => {
@@ -36,22 +36,10 @@ export const LeftsideBar = () => {
 
 				return false
 			})
-			return page === undefined?0:page.id 
+			return page === undefined ? 0 : page.id
 		}
 	)
 
-	 function findChatURL(friendId){
-		if(currentUser.chats){
-			currentUser.chats.forEach(async yourChatsId=>{
-				const chatInfo = (await firestore.collection('chats').doc(yourChatsId).get()).data()
-				
-				if(chatInfo.participants.includes(friendId)){
-					setFriendChatId(chatInfo.id)
-				}
-			})
-		}
-	}
-	
 	return (
 		<div className="LeftsideBar">
 			<div className="logo">
@@ -59,8 +47,9 @@ export const LeftsideBar = () => {
 				<h3>Soundbubble</h3>
 			</div>
 			<div className="leftSideBarContainer">
-				<Link to = {`/authors/${currentUser.uid}`}>
+				<Link to={`/authors/${currentUser.uid}`}>
 					<div className="person">
+						{currentUser.friends.some(friend=>friend.status === 'requested')?<NotificationCircle/>:null}
 						<div className="pesronImg">
 							<img src={currentUser.photoURL} alt="" />
 						</div>
@@ -77,34 +66,40 @@ export const LeftsideBar = () => {
 					)
 				})}
 			</div>
-			<div className="leftSideBarContainer">
-				{yourFriends.map((friend, index) => {
-					findChatURL(friend.uid)
-					if (index <= 2) {
-						return (
-							<div className="person" key={index} id = {friend.uid} >
-								<div className="personBtns">
-									<Link to = {`/chat/${friendChatId}`}>
-										<button><FiMessageCircle/></button>
-									</Link>
-									<Link to = {`/authors/${friend.uid}`}>
-										<button><FiUser/></button>
-									</Link>
-									<button onClick = {(e)=>shareWithOneFriend(e, currentSong)}><BiShare/></button>
-								</div>
-								<div className="pesronImg" style = {{pointerEvents:'none'}}>
-									<img src={friend.photoURL} alt="" />
-								</div>
-								<div className="personName" style = {{pointerEvents:'none'}}>
-									{friend.displayName}
-								</div>
-								
-							</div>
-						)
+			<div className="leftSideBarContainer friendsAndPlaylists">
+				<span style={{display: !currentFriendToPlaylistPage ? "block" : "none", animation: 'scrollFromBottom .2s forwards' }}>
+					{
+						yourFriends.length > 0?
+						<>
+						{yourFriends.map((friend, index) => {
+							if (index <= 2) {
+								return (
+									<Person index={index} friend={friend}/>
+								)
+							}
+							return null
+						})}
+						<h4 className="seeMoreBtn" onClick={() => { toggleModal(); setContent(<FriendsListToShareWith item={currentSongData} whatToShare = {"song"}/>) }}>See more</h4>
+						</>:
+						<h4 style = {{position:'absolute', left:'50%', top:"50%", transform:'translate(-50%, -50%)', width:'100%', display:'flex', alignItems:'center', justifyContent:'center'}}>No friends added</h4>
 					}
-					return null
-				})}
-				<h4 className = "seeMoreBtn" onClick = {()=>{openModalWithContent(<FriendsListToShareWith song = {currentSongData}/>)}}>See more</h4>
+					
+				</span>
+				<span style={{display: currentFriendToPlaylistPage ? "block" : "none", animation: 'scrollFromTop .2s forwards' }}>
+					{yourPlaylists.map((playlist, index) => {
+						if (index <= 2) {
+							return <TinyPlaylist playlist = {playlist} key = {index}/>
+						}
+					})}
+					<button className="createPlaylistBtn" onClick={() => { toggleModal(); setContent(<CreatePlaylistPage />) }} style = {{margin:'5px 0'}}>
+						<BiFolderPlus />
+						Create Playlist
+					</button>
+				</span>
+				<div className="upAndDownBtns">
+					<button onClick={() => setCurrentFriendToPlaylistPage(0)} style={!currentFriendToPlaylistPage ? { opacity: '0.3' } : {}}><FiChevronUp /></button>
+					<button onClick={() => setCurrentFriendToPlaylistPage(1)} style={currentFriendToPlaylistPage ? { opacity: '0.3' } : {}}><FiChevronDown /></button>
+				</div>
 			</div>
 			<div className="leftSideBarContainer">
 				<div className="littlePlayer">

@@ -823,6 +823,13 @@ input[type=range] {
 	border-radius: 15px;
 	margin-left: 30%;
  }
+
+ .OptionItem span{
+	 width: 100%;	
+	 height: 100%;
+	 display: flex;
+	 align-items: center;
+ }
  
  .OptionItem svg{
 	width: 25px;
@@ -830,7 +837,7 @@ input[type=range] {
 	margin-right: 7px;
  }
  
- .Queue, .Options, .Share, .Lyrics{
+ .Queue, .Options, .Share, .Lyrics, .rightSideAuthorsList, .rightSide .SongInfo, .mobilePlayerMenuContent .SongInfo{
 	animation: zoomIn .2s forwards;
  }
  
@@ -913,6 +920,29 @@ input[type=range] {
 	align-items: center;
 	height: 100%;
  }
+
+ .Share .FriendsListToShareWith{
+	 width: 100%;
+ }
+
+ .Share .FriendsListToShareWith h2{
+	 margin-top: 5px;
+	 font-size: 1em;
+	 text-align: center;
+ }
+
+ .Share .FriendsListToShareWith .person:hover {
+	 background: var(--transparentWhite);
+ }
+
+ .Share .FriendsListToShareWith input{
+	background: var(--transparentWhite);
+	color:#fff;
+ }
+
+ .Share .FriendsListToShareWith input::placeholder{
+	 color: rgba(255, 255, 255, 0.65);
+ }
  
  .Share .shareCopyLink{
 	
@@ -963,6 +993,7 @@ input[type=range] {
 	flex-wrap: wrap;
 	padding: 2.5px;
 	transition: .2s;
+	padding: 10px;
  }
  
  .shareFriendItem{
@@ -1027,6 +1058,7 @@ input[type=range] {
  .shareBtn{
 	background: var(--themeColor2);
 	font-weight: bold;
+	margin-bottom: 0;
  }
  
  .isInShareList{
@@ -1123,6 +1155,48 @@ input[type=range] {
  
  .LoadingCircle img{
 	width: 40px;
+ }
+
+ .rightSideAuthorsList{
+	 width: 100%;
+	 height: 100%;
+	 display: flex;
+	 flex-direction: column;
+	 align-items: center;
+	 justify-content: center;
+ }
+
+ .rightSideAuthorsListCentralBlock{
+	min-width: 40%;
+	max-width: 70%;
+ }
+
+ .rightSideAuthorsList .person{
+	 margin: 15px 0;
+ }
+
+ .rightSideAuthorsList .person:hover{
+	 background: var(--transparentWhite);
+ }
+
+ .rightSide .SongInfo, .mobilePlayerMenuContent .SongInfo{
+	 height: 100%;
+	 justify-content: center;
+	 align-items: center;
+	 background: var(--transparentWhite);
+ }
+
+ .rightSide .SongInfo .songInfoContent{
+	 height: fit-content;
+ }
+
+ .rightSide .AddToPlaylists{
+	 height: 100%;
+	 width: 100%;
+	 display: flex;
+	 flex-direction: column;
+	 justify-content: center;
+	 align-items: center;
  }
 
  @media (max-width:1000px) {

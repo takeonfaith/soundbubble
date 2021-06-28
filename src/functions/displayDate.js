@@ -4,6 +4,7 @@ function amountOfZeros(number) {
 }
 
 function toDateTime(secs) {
+	// console.log("ewqeqw")
 	var t = new Date(1970, 0, 1); // Epoch
 	t.setSeconds(secs);
 	return t;
@@ -11,7 +12,7 @@ function toDateTime(secs) {
 
 export default function displayDate(stringDate, displayMode = 0){
 	const Months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-	let newDate = !isNaN(stringDate)?toDateTime(stringDate.seconds + 10800):new Date(stringDate)
+	let newDate = !isNaN(stringDate)?stringDate.seconds?toDateTime(stringDate.seconds + 10800):toDateTime((stringDate/1000) + 10800):new Date(stringDate)
 	if(displayMode === 0){
 		return Months[newDate.getMonth()] + " " + newDate.getDate() + ", " + newDate.getFullYear() 
 	}
@@ -22,5 +23,9 @@ export default function displayDate(stringDate, displayMode = 0){
 
 	if(displayMode === 2){
 		return amountOfZeros(newDate.getHours()) + ":" + amountOfZeros(newDate.getMinutes())
+	}
+
+	if(displayMode === 3){
+		return Months[newDate.getMonth()] + " " + newDate.getDate() + ", " + newDate.getFullYear() + " at " + amountOfZeros(newDate.getHours()) + ":" + amountOfZeros(newDate.getMinutes())
 	}
 }

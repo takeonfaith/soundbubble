@@ -4,7 +4,7 @@ import { firestore } from '../../firebase'
 import { BackBtn } from './BackBtn'
 import { LoadingCircle } from './LoadingCircle'
 
-export const SearchBar = ({value, setValue, allFoundSongs, setAllFoundSongs, setResultPlaylists, setResultAuthorList, focus = false}) => {
+export const SearchBar = ({value, setValue, setAllFoundSongs, setResultPlaylists, setResultAuthorList, focus = false, defaultSearchMode = undefined, inputText = "Search for songs or for people",defaultSongsListValue}) => {
 	const [loading, setLoading] = useState(false)
 	const [message, setMessage] = useState("")
 	const [foundAnything, setFoundAnything] = useState(false)
@@ -14,14 +14,17 @@ export const SearchBar = ({value, setValue, allFoundSongs, setAllFoundSongs, set
 
 	async function findSongs(){
 		const foundItemTempArray = []
-		const response = firestore.collection('songs')
+		let response = firestore.collection('songs')
 			.where('name', "==", value)
 		const data = await response.get();
 		data.docs.forEach(item => {
-			foundItemTempArray.push(item.data())
+			if(defaultSongsListValue && defaultSongsListValue.length){
+				if(defaultSongsListValue.map(song=>song.id).includes(item.id)) foundItemTempArray.push(item.data())
+			}
+			else foundItemTempArray.push(item.data())
 		})
-		if(foundItemTempArray.length !== 0 && searchMode === 0) {
-			
+
+		if(foundItemTempArray.length !== 0 && searchMode === 0 && defaultSearchMode === undefined) {
 			foundItemTempArray.forEach(async song=>{
 				const authorsIdsArray = (await firestore.collection('songs').doc(song.id).get()).data().authors
 				authorsIdsArray.forEach(async (author, index)=>{
@@ -45,7 +48,7 @@ export const SearchBar = ({value, setValue, allFoundSongs, setAllFoundSongs, set
 		data.docs.forEach(item => {
 			foundItemTempArray.push(item.data())
 		})
-		if(foundItemTempArray.length !== 0 && searchMode === 0) {
+		if(defaultSearchMode === undefined && foundItemTempArray.length !== 0 && searchMode === 0) {
 			
 			foundItemTempArray.forEach(async author=>{
 				const songsIdsArray = (await firestore.collection('users').doc(author.uid).get()).data().ownSongs
@@ -98,22 +101,47 @@ export const SearchBar = ({value, setValue, allFoundSongs, setAllFoundSongs, set
 	function findSomething() {
 		setLoading(true)
 		setFoundAnything(false)
-		if(searchMode === 0 || searchMode === 1) {
-			findSongs()
-			setResultAuthorList([])
-			setResultPlaylists([])
+		if(value !== ""){
+
+			if(defaultSearchMode === undefined){
+				if(searchMode === 0 || searchMode === 1) {
+					findSongs()
+					setResultAuthorList([])
+					setResultPlaylists([])
+				}
+				if(searchMode === 0 || searchMode === 2) 
+				{
+					findAuthors()
+					setAllFoundSongs([])
+					setResultPlaylists([])
+				}
+				if(searchMode === 0 || searchMode === 3) 
+				{
+					findPlaylists()
+					setResultAuthorList([])
+					setAllFoundSongs([])
+				}
+			}
+			else{
+				switch(defaultSearchMode){
+					case "songs":
+						findSongs()
+						break;
+					case "playlists":
+						findPlaylists()
+						break;
+					case "authors":
+						findAuthors()
+						break;
+					default:
+						findSongs()
+						break;
+				}
+			}
 		}
-		if(searchMode === 0 || searchMode === 2) 
-		{
-			findAuthors()
-			setAllFoundSongs([])
-			setResultPlaylists([])
-		}
-		if(searchMode === 0 || searchMode === 3) 
-		{
-			findPlaylists()
-			setResultAuthorList([])
-			setAllFoundSongs([])
+		else {
+			if(defaultSongsListValue !== undefined) setAllFoundSongs(defaultSongsListValue)
+			setLoading(false)
 		}
 		setMessage('Not found')
 	}
@@ -141,14 +169,14 @@ export const SearchBar = ({value, setValue, allFoundSongs, setAllFoundSongs, set
 				</div>
 				<input 
 					type="text" 
-					placeholder="Search for songs or for people" 
+					placeholder={inputText} 
 					value={value} 
 					onChange={(e) => setValue(e.target.value)} 
 					onKeyUp={() => timerUpFunc(findSomething)} 
 					onKeyDown={() => {clearTimeout(typingTimeout)} } 
 					ref = {inputRef}
 				/>
-				<div className="searchFilters">
+				<div className="searchFilters" style = {defaultSearchMode !== undefined?{display:'none'}:{}}>
 					<button onClick = {()=>setSearchMode(0)} style = {searchMode === 0?{background:'var(--lightBlue)'}:{}}>All</button>
 					<button onClick = {()=>setSearchMode(1)} style = {searchMode === 1?{background:'var(--lightBlue)'}:{}}>Songs</button>
 					<button onClick = {()=>setSearchMode(2)} style = {searchMode === 2?{background:'var(--lightBlue)'}:{}}>Authors</button>

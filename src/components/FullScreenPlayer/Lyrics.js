@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { Loading } from './Loading'
 import { useSong } from '../../functionality/SongPlay/SongContext'
-import { songs } from '../../data/songs'
 import { useAuth } from '../../functionality/AuthContext'
 import { firestore } from '../../firebase'
 import { Slider } from '../Tools/Slider'
 import {BiCheckCircle, BiDownArrow, BiUpArrow} from 'react-icons/bi'
 import { FiXCircle } from 'react-icons/fi'
 export const Lyrics = () => {
-	const { setIsThereKaraoke, currentSongData, setCurrentSongData, isThereKaraoke, currentParagraph, displayAuthors, changeCurrentTime, play, currentTime, currentParagraphRef, currentSong, lyrics } = useSong()
+	const { setIsThereKaraoke, currentSongData, setCurrentSongData, isThereKaraoke, currentParagraph, displayAuthors, changeCurrentTime, play, currentTime, currentParagraphRef, currentSong, lyrics, rightSideCurrentPage, openFullScreenPlayer } = useSong()
 	const { currentUser } = useAuth()
 	const [inputKaraokeTime, setInputKaraokeTime] = useState(0)
 	const [karaokeModeratorTimes, setKaraokeModeratorTimes] = useState([])
 	const [lyricsModeratorMode, setLyricsModeratorMode] = useState(0)
 	const [canUpdateLyrics, setCanUpdateLyrics] = useState(false)
+	useEffect(() => {
+		if (isThereKaraoke && rightSideCurrentPage === 2 && openFullScreenPlayer) currentParagraphRef.current.scrollIntoView()
+	}, [currentParagraph])
 	const isModerator = currentUser.email === 'takeonfaith6@gmail.com'
 	function inputKaraoke(e, index) {
 		// console.log("ewqewqewq")
@@ -80,7 +82,7 @@ export const Lyrics = () => {
 				isThereKaraoke ?
 					lyrics.map((el, i) => {
 						return (
-							<div className="lyricsBlock" key={i} onClick={(e) => changeCurrentTime(e, el.startTime)} style={play ? currentParagraph === i ? {} : Math.abs(currentParagraph - i) < 2 ? { opacity: .5, filter: 'blur(1px)' } : { opacity: .2, filter: 'blur(2px)' } : {}} ref={currentParagraph === i ? currentParagraphRef : null} >
+							<div className="lyricsBlock" key={i} id = {i}  onClick={(e) => changeCurrentTime(e, el.startTime)} style={play ? currentParagraph === i ? {} : Math.abs(currentParagraph - i) < 2 ? { opacity: .5, filter: 'blur(1px)' } : { opacity: .2, filter: 'blur(2px)' } : {}} ref={currentParagraph === i ? currentParagraphRef : null} >
 								{
 									lyricsModeratorMode === 1 ?
 									<div className="lyricsBlockInput">
@@ -95,11 +97,11 @@ export const Lyrics = () => {
 								}
 								{
 									el.text === "@loading" ?
-										<Loading currentTime={currentTime - lyrics[i].startTime} timeSpan={lyrics[i + 1].startTime - lyrics[i].startTime} />
+										<Loading currentTime={currentTime - lyrics[i].startTime} timeSpan={lyrics[i + 1].startTime - lyrics[i].startTime} id = {i}/>
 										:
 										el.text === "@end" ? <></>
 											:
-											<p key={i} style={currentParagraph === i ?
+											<p key={i} id = {i} style={currentParagraph === i ?
 												{} : window.innerWidth > 1000 ?
 													Math.abs(currentParagraph - i) < 2 ?
 														{ transform: 'scale(.8) translateX(-58px)' } : { transform: 'scale(.75) translateX(-78px)' } :

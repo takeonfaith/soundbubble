@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import { AuthorItemBig } from '../AuthorPage/AuthorItemBig'
 
-export const AuthorsList = ({ listOfAuthors, title }) => {
+export const AuthorsList = ({ listOfAuthors, title = "" }) => {
 	const [scrollLeft, setScrollLeft] = useState(0)
 	const wrapperRef = useRef(null)
 	const [shouldRenderRightArrow, setShouldRenderRightArrow] = useState(false)

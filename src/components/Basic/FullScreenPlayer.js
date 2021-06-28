@@ -202,11 +202,13 @@ export default function FullScreenPlayer() {
             </div>
             <div className="controlIconsWrapper">
               {rightSide.map((el, i) => {
-                return (
-                  <div className="controlIcon" key={el.id} style={el.id === rightSideCurrentPage && openMenu ? { background: "var(--transparentWhite)" } : el.id === 2 && noLyrics() ? { opacity: .4 } : {}} onClick={(e) => changeRightSidePage(el)}>
-                    {el.title}
-                  </div>
-                )
+                if(i <= 3){
+                  return (
+                    <div className="controlIcon" key={el.id} style={el.id === rightSideCurrentPage && openMenu ? { background: "var(--transparentWhite)" } : el.id === 2 && noLyrics() ? { opacity: .4 } : {}} onClick={(e) => changeRightSidePage(el)}>
+                      {el.title}
+                    </div>
+                  )
+                }
               })}
             </div>
             <div className="mobilePlayerMenuContent" ref = {mobileContentScroll} style = {!openMenu?{opacity:0}:{}}>

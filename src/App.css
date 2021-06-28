@@ -108,6 +108,7 @@ a{
   --red:#f4546a;
   --lightRed:#ff94a3;
   --purple:#ae67ef;
+  --lightPurple:#c38af7;
   --green:#69e985;
   --darkGreen:#3debd3;
   --blue:rgb(71, 102, 243);
@@ -216,23 +217,60 @@ body{
 
  .SongInfo{
    display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: center;
+   
+ }
+
+ .SongInfo .songInfoContent{
+   height: 100%;
  }
 
  .SongInfo .songImage{
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    border-radius: var(--standartBorderRadius0);
+    border-radius: var(--standartBorderRadius2);
+    margin-right: 15px;
  }
 
  .SongInfo .songImage img{
-   width: 100%;
+   height: 100%;
+ }
+
+ .SongInfo h3{
+   margin-top: 0;
+   margin-bottom: 5px;
+ }
+
+ .SongInfo .infoListens{
+   display: flex;
+   align-items: center;
+ }
+
+ .SongInfo .infoListens::after{
+   content:"";
+   width: 4px;
+   height: 4px;
+   position: absolute;
+   display: block;
+   top: 50%;
+   right: -10px;
+   transform: translateY(-50%);
+   background: rgb(173, 173, 173);
+   border-radius: 10px;
+ }
+
+ .SongInfo .listensAndDate::after{
+  content:"";
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  display: block;
+  bottom: 0px;
+  left:0px;
+  background: rgb(173, 173, 173);
  }
 
  .AuthorsList{
@@ -286,6 +324,29 @@ body{
    top: 4px;
  }
 
+.addToListBtn{
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  color:#fff;
+}
+
+.addToListBtn svg{
+  width: 25px;
+  height: 25px;
+}
+
+.onlineCircle{
+  position: absolute;
+  border-radius: 20px;
+  background: var(--green);
+  width: 8px;
+  height: 8px;
+}
+
 @media (max-width:1000px) {
   .Wrapper{
     flex-direction: column-reverse;
@@ -332,4 +393,7 @@ body{
     justify-content: space-between;
   }
 
+  .SongInfo{
+    flex-direction: column;
+  }
 }

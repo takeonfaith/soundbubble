@@ -6,8 +6,8 @@ export const AuthorsPage = () => {
 	return (
 		<div className = "AuthorsPage">
 			<div className="authorsContainer">
-				{yourAuthors.map((authorData, index)=>{
-					return <AuthorItemBig data = {authorData} key = {index}/>
+				{yourAuthors.map((authorData)=>{
+					return <AuthorItemBig data = {authorData} key = {authorData.uid}/>
 				})}
 			</div>
 		</div>

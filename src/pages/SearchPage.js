@@ -19,10 +19,25 @@ export const SearchPage = () => {
 	const [resultSongList, setResultSongList] = useState([])
 	const [resultAuthorList, setResultAuthorList] = useState([])
 	const [resultAlbumList, setResultAlbumList] = useState([])
-
+	const [shadowColor, setShadowColor] = useState("")
 	useEffect(() => {
 		setResultSongList([])
+		setResultAuthorList([])
+		setResultAlbumList([])
 	}, [searchValue])
+
+	useEffect(() => {
+		if(resultSongList.length !== 0){
+			setShadowColor(resultSongList[0].imageColors[0] + 'a6')
+		}
+		else if(resultAuthorList.length !== 0){
+			setShadowColor(resultAuthorList[0].imageColors[0] + 'a6')
+		}
+		else if(resultAlbumList.length !== 0){
+			setShadowColor(resultAlbumList[0].imageColors[0] + 'a6')
+		}
+		else setShadowColor("")
+	}, [resultSongList, resultAuthorList, resultAlbumList])
 	return (
 		<div className="SearchPage" style={{ animation: 'zoomIn .2s forwards' }}>
 			<SearchBar
@@ -38,17 +53,7 @@ export const SearchPage = () => {
 			<SongList listOfSongs = {resultSongList} source = {{ source: '/search', name: "Search", image: "https://lh3.googleusercontent.com/proxy/PJSN5iZPJhIuQKV-efbS0KD_HoL9nu4cyDmwOfWatZdeOyLBsEtosSWHTw4aK9ZKhrTEW2LGZCGxmH9vYFYx_PT16PIrETeNqijSxA", songsList:resultSongList }} title = {"Songs"} showListens/>
 			<AuthorsList listOfAuthors = {resultAuthorList} title = {"Authors"}/>
 			<AlbumList listOfAlbums = {resultAlbumList} title = {"Albums and Playlists"} loading = {false}/>
-				{/* <div className="playlistsResult" style={!resultAlbumList.length ? { display: 'none' } : {}}>
-					<div className="playLists">
-						{resultAlbumList && resultAlbumList.map((playlist, index) => {
-							return (
-								<PlaylistItem playlist={playlist} key = {index}/>
-							)
-						})}
-					</div>
-				</div> */}
-			<div className="colorfullShadow" style={{ background: resultSongList[0]&&resultSongList[0].imageColors[0] + "a6" }}></div>
-
+			<div className="colorfullShadow" style={{ background: shadowColor }}></div>
 		</div>
 	)
 }

@@ -6,6 +6,9 @@ import { BiDotsVerticalRounded, BiShare } from 'react-icons/bi';
 import {RiPlayListFill} from 'react-icons/ri'
 import {FiAlignLeft} from 'react-icons/fi'
 import { TiDocumentText } from 'react-icons/ti';
+import { AuthorsList } from '../components/FullScreenPlayer/AuthorsList';
+import { SongInfo } from '../components/Basic/SongInfo';
+import { AddToPlaylists } from '../components/FullScreenPlayer/AddToPlaylists';
 export const rightSide = [
 	{
 		id:0, 
@@ -30,5 +33,23 @@ export const rightSide = [
 		icon:<RiPlayListFill/>,
 		title:'Queue',
 		component:Queue
+	},
+	{
+		id:4, 
+		icon:null,
+		title:'Go To Authors',
+		component:AuthorsList
+	},
+	{
+		id:5, 
+		icon:null,
+		title:'Add to playlist',
+		component:AddToPlaylists
+	},
+	{
+		id:6, 
+		icon:null,
+		title:'Info',
+		component:SongInfo
 	},
 ]

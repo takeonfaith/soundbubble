@@ -11,6 +11,11 @@
 	animation: zoomIn .3s ease-out;
 }
 
+.songItemMenuWindowItem{
+	cursor: pointer;
+	user-select: none;
+}
+
 .headerBtns{
 	top: 30px;
 	right: 30px;
@@ -342,6 +347,7 @@
 	border-radius: var(--standartBorderRadius2);
 	width: fit-content;
 	margin-right: 5px;
+	margin-bottom: 5px;
 }
 
 .chosenAuthorItem svg{
@@ -436,6 +442,11 @@
 	overflow-y: auto;
 }
 
+.personTinyListWrapper::-webkit-scrollbar{
+	height: 0;
+	width: 0;
+}
+
 .PersonTinyVerticalItem{
 	display: flex;
 	flex-direction: column;
@@ -488,6 +499,28 @@
 	height: 17px;
 }
 
+.customizeAlbumBtn{
+	width: 30px;
+	height: 30px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: var(--transparentWhite);
+	color:#fff;
+	border-radius: var(--standartBorderRadius3);
+	margin-left: 10px;
+}
+
+.customizeAlbumBtn svg{
+	margin: 0;
+	width: 14px;
+	height: 14px;
+}
+
+.AlbumPage .searchBar{
+	margin-top: 10px;
+}
+
 @media (max-width:1000px) {
 	.Header{
 		flex-direction: column;
@@ -518,10 +551,14 @@
 		position: relative;
 	}
 
+	.customizeAlbumBtn svg{
+		position: relative;
+	}
 	.Header .headerAuthorsName svg{
 		position: absolute;
 		right: -30px;
 	}
+
 
 	.Header .headerListenersAndSubs{
 		justify-content: space-between;

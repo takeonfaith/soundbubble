@@ -22,7 +22,7 @@ export const SongsPage = () => {
 				</div>
 			</div>
 			<div className="yourSongsList">
-				<SongList listOfSongs = {yourSongs} source = {{ source: '/library', name: "Your Library", image: currentUser.photoURL, songsList: yourSongs}}/>
+				<SongList listOfSongs = {yourSongs} source = {{ source: '/library', name: "Your Library", image: currentUser.photoURL, songsList: yourSongs}} showSearch/>
 			</div>
 		</div>
 	)

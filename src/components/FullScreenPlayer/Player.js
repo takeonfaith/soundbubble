@@ -40,7 +40,7 @@ export const Player = ({inputRef, textLimit = 18}) => {
 				</div>
 			</div>
 			<div className="controlPanel">
-				<input type="range" name="" id="" min="0" ref={inputRef} step="1" value={currentTime} onChange={changeCurrentTime} />
+				<input type="range" min="0" ref={inputRef} step="1" value={currentTime} onChange={(event)=>{changeCurrentTime(event)}} />
 				<div className="startAndEndTime">
 					<span>{correctTimeDisplay(currentTime)}</span>
 					<span>{correctTimeDisplay(songDuration)}</span>

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { FiFlag, FiHeadphones, FiInfo, FiMoreVertical, FiPlusCircle, FiSettings, FiShare, FiTrash, FiUserCheck, FiUserPlus } from 'react-icons/fi'
+import { FiEdit2, FiFlag, FiHeadphones, FiInfo, FiMoreVertical, FiPlusCircle, FiSettings, FiShare, FiTrash, FiUserCheck, FiUserPlus } from 'react-icons/fi'
 import { ImCheckmark } from 'react-icons/im'
 import { useSong } from '../../functionality/SongPlay/SongContext'
 import displayDate from '../../functions/displayDate'
@@ -17,6 +17,9 @@ import { LoadingCircle } from '../Basic/LoadingCircle'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import { BiLoaderAlt } from 'react-icons/bi'
 import { FriendsListToShareWith } from '../Basic/FriendsListToShareWith'
+import { CustomizeAlbum } from '../AlbumPage/CustomizeAlbum'
+import { addAuthorToLibrary } from '../../functions/addAuthorToLibrary'
+import addFriend from '../../functions/addFriend'
 export const Header = ({ data, headerColors }) => {
 	const { displayAuthors, setYourPlaylists } = useSong()
 	const [albumAuthors, setAlbumAuthors] = useState([])
@@ -77,35 +80,9 @@ export const Header = ({ data, headerColors }) => {
 		})
 	}
 
-	async function addAuthorToLibrary() {
-		const addedAuthors = (await firestore.collection('users').doc(currentUser.uid).get()).data().addedAuthors
-		addedAuthors.push(data.uid)
-		firestore.collection('users').doc(currentUser.uid).update({
-			addedAuthors: addedAuthors
-		})
-		console.log(data.subscribers)
-		let subscribers = data.subscribers
-		subscribers++
-		firestore.collection('users').doc(data.uid).update({
-			subscribers: subscribers
-		})
-	}
+	
 
-	function addFriend(){
-		const updatedDataForFriend = data.friends
-		const updatedDataForCurrentUser = currentUser.friends
-		updatedDataForFriend.push({status:'requested', uid:currentUser.uid})
-		updatedDataForCurrentUser.push({status:'awaiting', uid:data.uid})
-
-		firestore.collection('users').doc(data.uid).update({
-			friends:updatedDataForFriend
-		})
-
-		firestore.collection('users').doc(currentUser.uid).update({
-			friends:updatedDataForCurrentUser
-		})
-
-	}
+	
 
 	function deleteFriend(){
 
@@ -119,16 +96,20 @@ export const Header = ({ data, headerColors }) => {
 		}
 		else {
 			if (currentUser.addedAuthors.includes(data.uid)) return <button><CgCheckO /></button>
-			else if (currentUser.uid === data.uid) return <button onClick = {()=>{toggleModal();}}><FiSettings /></button>
+			else if (currentUser.uid === data.uid) return <button onClick = {()=>{toggleModal();setContent(<h2>Settings here</h2>)}}><FiSettings /></button>
 			else if(!data.isAuthor && currentUser.friends.find(friend=>friend.uid === data.uid && friend.status === 'added')) return <button onClick={deleteFriend}><FiUserCheck /></button>
 			else if(!data.isAuthor && currentUser.friends.find(friend=>((friend.uid === data.uid) && (friend.status === 'awaiting')))) return <button onClick={addFriend}><BiLoaderAlt style = {{animation:'loading 1s infinite linear'}}/></button>
-			else if(!data.isAuthor) return <button onClick={addFriend}><FiUserPlus /></button>
-			else return <button onClick={addAuthorToLibrary}><FiPlusCircle /></button>
+			else if(!data.isAuthor) return <button onClick={()=>addFriend(data, currentUser)}><FiUserPlus /></button>
+			else return <button onClick={()=>addAuthorToLibrary(data, currentUser)}><FiPlusCircle /></button>
 		}
 	}
 
 	function findIfIsPrivate() {
 		return data.isPrivate ? <CgLock /> : null
+	}
+
+	function editButton(){
+		return data.authors && data.authors.find(person => person.uid === currentUser.uid)?<button onClick = {()=>{toggleModal(); setContent(<CustomizeAlbum playlist = {data}/>)}} className = "customizeAlbumBtn"><FiEdit2/></button>:null
 	}
 
 	return (
@@ -164,7 +145,7 @@ export const Header = ({ data, headerColors }) => {
 								<div className="songItemMenuWindowItem" onClick = {()=>{toggleModal(); setContent(<FriendsListToShareWith item = {data} whatToShare = {data.authors !== undefined ?'playlist':'author'}/>)}}>
 									<FiShare />Share
 								</div>
-								<div className="songItemMenuWindowItem"><FiInfo />Info</div>
+								<div className="songItemMenuWindowItem" onClick = {()=>{toggleModal();setContent(<h2>test</h2>)}}><FiInfo />Info</div>
 								<div className="songItemMenuWindowItem"><FiFlag />Flag</div>
 							</div>
 						) :
@@ -189,6 +170,7 @@ export const Header = ({ data, headerColors }) => {
 						<h1>{data.displayName || data.name}</h1>
 						{findIfIsVerified()}
 						{findIfIsPrivate()}
+						{editButton()}
 					</div>
 				</div>
 				{showCreatorsIfExist()}

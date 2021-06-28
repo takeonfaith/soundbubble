@@ -15,7 +15,7 @@ export const PlaylistsPage = () => {
 			</button>
 			<div className="playlistsContainer">
 				{yourPlaylists && yourPlaylists.map((playlist, index)=>{
-					return <PlaylistItem playlist = {playlist} key = {index}/>
+					return <PlaylistItem playlist = {playlist} key = {playlist.id}/>
 				})}
 			</div>
 		</div>

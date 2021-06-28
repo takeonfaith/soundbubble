@@ -3,6 +3,7 @@ import { BiAlbum } from 'react-icons/bi'
 import { FiPlayCircle, FiPlusCircle, FiShare } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import { useModal } from '../../functionality/ModalClass'
+import shortWord from '../../functions/shortWord'
 import { FriendsListToShareWith } from '../Basic/FriendsListToShareWith'
 
 export const TinyPlaylist = ({playlist}) => {
@@ -22,7 +23,7 @@ export const TinyPlaylist = ({playlist}) => {
 			</div>
 			<div style = {{display:'flex', flexDirection:'column'}}>
 				<span>
-					{playlist.name}
+					{shortWord(playlist.name, 15) }
 				</span>
 				<span style = {{fontSize:'0.8em', color:'grey', fontWeight:'500'}}>
 					{playlist.isAlbum?"album":"playlist"}

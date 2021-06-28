@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { LoadingData } from '../../components/Basic/LoadingData'
+import { PersonTiny } from '../../components/Basic/PersonTiny'
 import { firestore } from '../../firebase'
 import checkNumber from '../../functions/checkNumber'
 import shuffleSongs from '../../functions/shuffleSongs'
@@ -40,9 +41,11 @@ export const SongProvider = ({ children }) => {
 	const leftSideBarInputRef = useRef(null)
 	const [rightSideCurrentPage, setRightSideCurrentPage] = useState(0)
 	const [openMenu, setOpenMenu] = useState(false)
-
 	function checkKaraoke() {
-		if (currentSongData.lyrics !== undefined && currentSongData.lyrics.length !== 0) {
+		if (currentSongData.lyrics !== undefined && currentSongData.lyrics.length === 0) return false
+
+		if (currentSongData.lyrics !== undefined) {
+			console.log(currentSongData.lyrics.length)
 			if (currentSongData.lyrics[0].startTime === 'undefined') return false
 		}
 
@@ -71,16 +74,14 @@ export const SongProvider = ({ children }) => {
 
 	// }
 
-	async function fetchQueue(){
+	function fetchQueue() {
 		setCurrentSongQueue([])
 		if(currentUser.lastQueue){
-			const tempQueue = []
 			currentUser.lastQueue.songsList.forEach(async songId=>{
 				const songData = (await firestore.collection('songs').doc(songId).get()).data()
-				tempQueue.unshift(songData)
+				setCurrentSongQueue(prev=>[songData, ...prev])
 			})
 			setCurrentSongInQueue(currentUser.lastQueue.songsList.findIndex(songId => songId === currentSong))
-			setCurrentSongQueue(tempQueue)
 		}
 	}
 
@@ -102,7 +103,7 @@ export const SongProvider = ({ children }) => {
 			const curQueue = currentUser.lastQueue || { source: '/library', name: 'Your Library', image: currentUser.photoURL, songsList: yourSongs } || []
 			setCurrentSong(curSong)
 			setCurrentSongPlaylistSource(curQueue)
-			
+
 			if (curSong !== -1) {
 				const docRef = firestore.collection('songs').doc(curSong)
 				const docData = docRef.get()
@@ -159,6 +160,7 @@ export const SongProvider = ({ children }) => {
 			})
 		}
 	}
+
 
 	function fetchYourPlaylists() {
 		setYourPlaylists([])
@@ -259,7 +261,7 @@ export const SongProvider = ({ children }) => {
 		setPlay(!play)
 	}
 
-	function updateListenCount(){
+	function updateListenCount() {
 		console.log('listen Count Update')
 		listenCountTimeOut.current = setTimeout(() => {
 			console.log('count added')
@@ -272,18 +274,15 @@ export const SongProvider = ({ children }) => {
 	}
 
 	useEffect(() => {
-		clearTimeout(listenCountTimeOut)
-		if(play){
+		clearTimeout(listenCountTimeOut.current)
+		if (play) {
 			updateListenCount()
 		}
-	}, [play])
+	}, [play, currentSongData.id])
 
 	useEffect(() => {
-		clearTimeout(listenCountTimeOut)
-		if(play){
-			updateListenCount()
-		}
-	}, [currentSong])
+		setCurrentParagraph(0)
+	}, [currentSongData.id])
 
 	function loadSongData(e) {
 		setCurrentTime(e.target.currentTime)
@@ -296,14 +295,46 @@ export const SongProvider = ({ children }) => {
 	}
 
 	function defineCurrentParagraph() {
-		currentSongData.lyrics.find((el, i) => {
-			if (el.startTime <= songRef.current.currentTime) {
-				setCurrentParagraph(i)
-				return false
+		//Well, I'm maybe not a great mathematician or smth, but I want to make this not linear, but binary, hence O(logN)
+		// currentSongData.lyrics.find((el, i) => {
+		// 	if (el.startTime <= songRef.current.currentTime) {
+		// 		setCurrentParagraph(i)
+		// 		return false
+		// 	}
+		// 	// currentParagraphRef.current.scrollIntoView()
+		// 	return true
+		// })
+
+		let first = 0, last = currentSongData.lyrics.length - 1
+		let roundedTime = parseFloat(parseFloat(songRef.current.currentTime).toFixed(1))
+		while (first <= last) {
+			let midPoint = Math.floor((first + last) / 2)
+			let blockStartTime = parseFloat(parseFloat(currentSongData.lyrics[midPoint].startTime).toFixed(1))
+			let nextBlockStartTime = midPoint !== currentSongData.lyrics.length - 1 ? parseFloat(parseFloat(currentSongData.lyrics[midPoint + 1].startTime).toFixed(1)) : last
+			let dif = roundedTime - blockStartTime
+			if (currentSongData.lyrics[midPoint].startTime !== 'undefined') {
+				if (roundedTime >= blockStartTime && roundedTime <= nextBlockStartTime) {
+					setCurrentParagraph(midPoint)
+					break
+				}
+				else if (blockStartTime < roundedTime) first = midPoint + 1
+				else last = midPoint - 1
+
 			}
-			currentParagraphRef.current.scrollIntoView()
-			return true
-		})
+			else return
+		}
+
+	}
+
+	useEffect(() => {
+		if(rightSideCurrentPage === 2) defineCurrentParagraph()
+	}, [rightSideCurrentPage])
+
+	function defineCurrentParagraphLight() {
+		if (currentParagraph !== (currentSongData.lyrics.length - 1) && parseFloat(currentSongData.lyrics[currentParagraph + 1].startTime) <= songRef.current.currentTime) {
+			// console.log(parseFloat(currentSongData.lyrics[currentParagraph+1].startTime), songRef.current.currentTime)
+			return setCurrentParagraph(currentParagraph + 1)
+		}
 	}
 	function playing(event) {
 
@@ -324,7 +355,7 @@ export const SongProvider = ({ children }) => {
 			songRef.current.play()
 		}
 		setCurrentTime(event.target.currentTime)
-		if (isThereKaraoke && rightSideCurrentPage === 2 && openFullScreenPlayer && openMenu) defineCurrentParagraph()
+		if (isThereKaraoke && rightSideCurrentPage === 2 && openFullScreenPlayer && openMenu) defineCurrentParagraphLight()
 		document.documentElement.style
 			.setProperty('--inputRange', (event.target.currentTime / songDuration) * 100 + '%');
 	}
@@ -346,6 +377,7 @@ export const SongProvider = ({ children }) => {
 		if (currentTime > 5) {
 			songRef.current.currentTime = 0
 			setCurrentTime(0)
+			setCurrentParagraph(0)
 			return
 		}
 		let correctSongNumber = checkNumber(currentSongInQueue - 1, currentSongQueue.length - 1)
@@ -364,18 +396,17 @@ export const SongProvider = ({ children }) => {
 			songRef.current.currentTime = startTime
 			document.documentElement.style
 				.setProperty('--inputRange', (startTime / songDuration) * 100 + '%');
-			if (isThereKaraoke && rightSideCurrentPage === 2 && openFullScreenPlayer) defineCurrentParagraph()
+			if (isThereKaraoke && rightSideCurrentPage === 2 && openFullScreenPlayer) setCurrentParagraph(parseInt(event.target.id))
 			songRef.current.play()
 			setPlay(true)
 			return
 		}
 		else {
-
 			setCurrentTime(event.target.value)
 			songRef.current.currentTime = event.target.value
 			document.documentElement.style
 				.setProperty('--inputRange', (event.target.value / songDuration) * 100 + '%');
-
+			if (isThereKaraoke && rightSideCurrentPage === 2 && openFullScreenPlayer) defineCurrentParagraph()
 		}
 
 	}
@@ -384,11 +415,24 @@ export const SongProvider = ({ children }) => {
 		return (
 			authorsList.map((el, i) => {
 				return <>
-					<Link to={`/authors/${el.uid}`} key={i} onClick={(e) => { e.stopPropagation(); setOpenFullScreenPlayer(false) }}>{el.displayName}</Link>{(i === authorsList.length - 1 ? "" : separatingSign)}
+					<Link to={`/authors/${el.uid}`} key={el.uid} onClick={(e) => { e.stopPropagation(); setOpenFullScreenPlayer(false) }}>{el.displayName}</Link>{(i === authorsList.length - 1 ? "" : separatingSign)}
 				</>
 			})
 		)
 	}
+
+	function displayAuthorsFull(authorsList = currentSongData.authors, separatingSign = " & ") {
+		return (
+			authorsList.map((el, i) => {
+				return <>
+					<Link to={`/authors/${el.uid}`} key={el.uid} onClick={(e) => { e.stopPropagation(); setOpenFullScreenPlayer(false) }}>
+						<PersonTiny data = {el}/>
+					</Link>
+				</>
+			})
+		)
+	}
+
 	function findLen() {
 		let str = ""
 		currentSongData.authors.forEach(el => {
@@ -445,6 +489,7 @@ export const SongProvider = ({ children }) => {
 				setRightSideCurrentPage,
 				changeCurrentTime,
 				displayAuthors,
+				displayAuthorsFull,
 				openFullScreenPlayer,
 				setOpenFullScreenPlayer,
 				loadSongData,

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { firestore } from '../../firebase'
 import { useAuth } from '../../functionality/AuthContext'
 import { ChatMoreBtn } from './ChatMoreBtn'
+import { LastSeen } from '../Basic/LastSeen'
 export const ChatHeader = ({ data }) => {
 	const { currentUser } = useAuth()
 	const [otherPerson, setOtherPerson] = useState({})
@@ -20,7 +21,7 @@ export const ChatHeader = ({ data }) => {
 		if (data.chatName === "") {
 			fetchOtherPerson()
 		}
-	}, [])
+	}, [data.id])
 	return (
 		<div className="ChatHeader" style={headerColors.length ? { background: `linear-gradient(45deg, ${headerColors[0]}, ${headerColors[1]})` } : { background: `linear-gradient(45deg, grey, lightgrey)` }}>
 			<BackBtn />
@@ -28,7 +29,10 @@ export const ChatHeader = ({ data }) => {
 				<div className="chatHeaderImage">
 					<img src={otherPerson.photoURL || data.chatName} alt="" />
 				</div>
-				<h4>{otherPerson.displayName || data.chatImage}</h4>
+				<div style = {{display:'flex', flexDirection:'column', justifyContent:'center'}}>
+					<h4>{otherPerson.displayName || data.chatImage}</h4>
+					<LastSeen userUID = {otherPerson.uid}/>
+				</div>
 			</Link>
 			<ChatMoreBtn/>
 		</div>

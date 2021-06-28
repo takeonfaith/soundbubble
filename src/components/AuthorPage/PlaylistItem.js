@@ -5,11 +5,14 @@ import shortWord from '../../functions/shortWord'
 import {HiPause, HiPlay} from 'react-icons/hi'
 import { useSong } from '../../functionality/SongPlay/SongContext'
 import { firestore } from '../../firebase'
+import { useAuth } from '../../functionality/AuthContext'
 export const PlaylistItem = ({playlist}) => {
 	const playlistDate = new Date(playlist.creationDate)
+	const {currentUser} = useAuth()
 	const {setCurrentSongQueue, setCurrentSongPlaylistSource, playSong, setCurrentSongInQueue, setCurrentSong, currentSongPlaylistSource, songRef, setPlay, play} = useSong()
 	const [playlistSongs, setPlaylistSongs] = useState([])
 	function fetchSongsInAlbum() {
+		setPlaylistSongs([])
 		if(playlist.length !== 0){
 			playlist.songs.map(async songId=>{
 				let albumSong = (await firestore.collection('songs').doc(songId).get()).data()
@@ -27,19 +30,31 @@ export const PlaylistItem = ({playlist}) => {
 		fetchSongsInAlbum()
 		
 	}
+
 	useEffect(() => {
 		if(playlistSongs.length){
+			const source = {source:`/albums/${playlist.id}`, name:playlist.name, image:playlist.image, songsList:playlistSongs}
+			const listSongsIds = playlistSongs.map(song => song.id)
 			setCurrentSongQueue(playlistSongs)
 			setCurrentSongInQueue(0)
 			setCurrentSong(playlistSongs[0].id)
 			songRef.current.play()
 			setPlay(true)
-			setCurrentSongPlaylistSource({source:`/albums/${playlist.id}`, name:playlist.name, image:playlist.image, songsList:playlistSongs})
+			setCurrentSongPlaylistSource(source)
+			firestore.collection('users').doc(currentUser.uid).update({
+				lastSongPlayed: playlistSongs[0].id,
+				lastQueue: {
+					image: source.image,
+					name: source.name,
+					songsList: listSongsIds,
+					source: source.source
+				}
+			})
 		}
 	}, [playlistSongs.length])
 
 	return (
-		<Link to={`/albums/${playlist.id}`} style = {{textDecoration:'none'}}>
+		<Link to={`/albums/${playlist.id}`} style = {{textDecoration:'none'}} className = "playlistWrapper">
 			<div className="playlistItem">
 				{playlist.image?<img src={playlist.image} alt="" />:<h1>{playlist.name.split(' ')[0][0]}{playlist.name.split(' ')[1][0]}</h1>}
 				{/* {!playlist.isAlbum?<h2>{playlist.name}</h2>:null} */}

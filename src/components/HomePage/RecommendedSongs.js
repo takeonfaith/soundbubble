@@ -3,13 +3,10 @@ import { firestore } from '../../firebase'
 import { useAuth } from '../../functionality/AuthContext'
 import {useSong} from '../../functionality/SongPlay/SongContext'
 import { SongList } from '../Basic/SongList'
-import { TitleWithMoreBtn } from '../Basic/TitleWithMoreBtn'
-import { SongItem } from '../FullScreenPlayer/SongItem'
 export const RecommendedSongs = () => {
 	const {yourAuthors} = useSong()
 	const {currentUser} = useAuth()
 	const [recommendedSongs, setRecommendedSongs] = useState([])
-	
 	function fetchRecommendedSongs(){
 		const tempSongsIds = []
 		yourAuthors.forEach((author, i) => {
@@ -30,7 +27,6 @@ export const RecommendedSongs = () => {
 	}, [])
 	return (
 		<div className = 'RecommendedSongs'>
-			{/* <TitleWithMoreBtn title = {"Recomme"}/> */}
 			<SongList listOfSongs = {recommendedSongs} source = {{source: `/home`, name: "Recommended Songs", image: "", songsList: recommendedSongs}} title = {"Recommended Songs"}/>
 		</div>
 	)

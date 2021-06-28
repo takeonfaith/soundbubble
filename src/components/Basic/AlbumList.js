@@ -3,7 +3,7 @@ import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import { PlaylistItem } from '../AuthorPage/PlaylistItem'
 import { LoadingCircle } from './LoadingCircle'
 
-export const AlbumList = ({listOfAlbums, title, loading = true}) => {
+export const AlbumList = ({listOfAlbums, title = "", loading = true}) => {
 	const [scrollLeft, setScrollLeft] = useState(0)
 	const wrapperRef = useRef(null)
 	const [shouldRenderRightArrow, setShouldRenderRightArrow] = useState(false)

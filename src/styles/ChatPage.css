@@ -21,7 +21,7 @@
 	width: 100%;
 	height: 80px;
 	box-sizing: border-box;
-	
+	position: relative;
 }
 
 .ChatItem:hover{
@@ -29,6 +29,7 @@
 }
 
 .chatItemImage{
+	min-width: 40px;
 	width: 40px;
 	height: 40px;
 	overflow: hidden;
@@ -52,6 +53,12 @@
 	color:var(--reallyLightBlue);
 }
 
+.ChatItem .onlineCircle{
+	border:solid 4px var(--chatsColor);
+	bottom: 15px;
+	left: 44px;
+}
+
 .messageShowOutside{
 	display: flex;
 	align-items: center;
@@ -70,6 +77,7 @@
 	justify-content: space-between;
 	padding: 0 20px;
 	box-sizing: border-box;
+	height: 60px;
 	border-radius: var(--standartBorderRadius);
 }
 
@@ -77,6 +85,16 @@
 	display: flex;
 	align-items: center;
 	
+}
+
+.chatHeaderImageAndName h4{
+	margin: 0;
+}
+
+.chatHeaderImageAndName span{
+	opacity: 0.8;
+	font-size: .8em;
+	margin: 0;
 }
 
 .chatHeaderImage, .messageItemImage{
@@ -166,10 +184,29 @@
 	align-items: flex-end;
 	padding: 2px 0;
 	animation: zoomIn .5s forwards;
+	position: relative;
+}
+
+.DateOnTop{
+	position: absolute;
+	left: calc(50% - 2px);
+	top: 70px;
+	transform: translateX(-50%);
+	padding: 10px;
+	border-radius: var(--standartBorderRadius2);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: var(--playlistsColor);
+	box-shadow: 0 0 4px rgb(39, 39, 39);
 }
 
 .MessageItem.your .messageItemBody{
-	background: rgb(114, 114, 230);
+	background: #494949;
+}
+
+.MessageItem.your .messageItemBody .messageUserName{
+	color:var(--lightPurple);
 }
 
 .messageItemBody{
@@ -181,8 +218,13 @@
 	position: relative;
 }
 
-.messageItemBody .SongItem{
+.messageItemBody .SongItem, .messageItemBody .playlistItem{
 	margin: 0;
+}
+
+.messageItemBody .AuthorItemBig, .messageItemBody .playlistWrapper{
+	margin: 10px;
+	display: block;
 }
 
 .MessageItem a .playlistItem{
@@ -210,6 +252,10 @@
 	padding-left: 6px;
 	border-left: 3px solid var(--lightBlue);
 	cursor: pointer;
+	background: var(--lightGrey);
+	padding: 4px;
+	border-radius: 3px;
+	margin: 2px 0;
 }
 
 .responseItem:hover{
@@ -235,6 +281,25 @@
 	100%{
 		transform: scale(1);
 	}
+}
+
+.respondToMessageBtn{
+	width: 30px;
+	height: 30px;
+	border-radius: 40px;
+	margin-left: 7px;
+	align-self: center;
+	background: var(--transparentWhite);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color:#fff;
+	transition: .1s opacity;
+	opacity: 0;
+}
+
+.MessageItem:hover .respondToMessageBtn{
+	opacity: 1;
 }
 
 /* End Message Item */
@@ -352,4 +417,58 @@
 	margin: 10px 0;
 }
 
+.inResponseArea{
+	position: absolute;
+	bottom: 100%;
+	height: auto;
+	left: 50%;
+	transform: translateX(-50%);
+	width: calc(100% - 30px);
+	border-radius:  var(--standartBorderRadius) var(--standartBorderRadius) 0 0 ;
+	padding: 10px;
+	background: var(--leftSideBarColor);
+	margin-left: 0;
+	box-sizing: border-box;
+	transition: .2s;
+	z-index: 10;
+}
+
+.inResponseArea .responseItem{
+	width: fit-content;
+	position: relative;
+}
+
+.removeMessageFromResponse{
+	position: absolute;
+	right: -25px;
+	top: 0;
+	width: 15px;
+	height: 15px;
+	border-radius: 100px;
+	background: transparent;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0;
+}
+
+.removeMessageFromResponse svg{
+	width: 15px;
+	height: 15px;
+	color:#fff;
+}
+
+.attachedSongItem{
+	display: flex;
+	align-items: center;
+	padding: 7px 10px;
+	justify-content: center;
+	border-radius: var(--standartBorderRadius3);
+	background: var(--lightGrey);
+	width: fit-content;
+	margin-bottom: 3px;
+	position: relative;
+}
+
 /* End Chat Input */
+

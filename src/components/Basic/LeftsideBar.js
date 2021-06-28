@@ -74,7 +74,7 @@ export const LeftsideBar = () => {
 						{yourFriends.map((friend, index) => {
 							if (index <= 2) {
 								return (
-									<Person index={index} friend={friend}/>
+									<Person index={friend.uid} friend={friend}/>
 								)
 							}
 							return null
@@ -88,7 +88,7 @@ export const LeftsideBar = () => {
 				<span style={{display: currentFriendToPlaylistPage ? "block" : "none", animation: 'scrollFromTop .2s forwards' }}>
 					{yourPlaylists.map((playlist, index) => {
 						if (index <= 2) {
-							return <TinyPlaylist playlist = {playlist} key = {index}/>
+							return <TinyPlaylist playlist = {playlist} key = {playlist.id}/>
 						}
 					})}
 					<button className="createPlaylistBtn" onClick={() => { toggleModal(); setContent(<CreatePlaylistPage />) }} style = {{margin:'5px 0'}}>

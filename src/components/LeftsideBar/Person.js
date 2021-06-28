@@ -9,6 +9,7 @@ import { createChat } from '../../functions/createChat'
 import { findChatURL } from '../../functions/findChatURL'
 import getUID from '../../functions/getUID'
 import shareWithOneFriend from '../../functions/shareWithOneFriend'
+import { IsUserOnlineCircle } from '../Basic/IsUserOnlineCircle'
 
 export const Person = ({index, friend}) => {
 	const {currentUser} = useAuth()
@@ -33,6 +34,7 @@ export const Person = ({index, friend}) => {
 			<div className="pesronImg" style={{ pointerEvents: 'none' }}>
 				<img src={friend.photoURL} alt="" />
 			</div>
+			<IsUserOnlineCircle userUID = {friend.uid}/>
 			<div className="personName" style={{ pointerEvents: 'none' }}>
 				{friend.displayName}
 			</div>

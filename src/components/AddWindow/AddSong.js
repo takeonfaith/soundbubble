@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ColorExtractor } from 'react-color-extractor'
 import { AiOutlineCloudDownload } from 'react-icons/ai'
 import { FiXCircle } from 'react-icons/fi'
@@ -23,6 +23,7 @@ export const AddSong = () => {
 	const [imageColors, setImageColors] = useState([])
 	const [loadingAuthors, setLoadingAuthors] = useState(false)
 	const [lyricsObject, setLyricsObject] = useState([])
+	const [errorMessage, setErrorMessage] = useState("")
 	let typingTimeout
 	async function findAuthors(e) {
 		setLoadingAuthors(true)
@@ -57,12 +58,30 @@ export const AddSong = () => {
 	}
 
 	async function onFileChange(e, place, setFunc) {
+		setErrorMessage("")
 		const file = e.target.files[0]
-		setImageLocalPath(URL.createObjectURL(file))
-		const storageRef = storage.ref()
-		const fileRef = storageRef.child(place + file.name)
-		await fileRef.put(file)
-		setFunc(await fileRef.getDownloadURL())
+		let isValid = false
+		if(place === 'songsImages/'){
+			console.log("image")
+			const validExtensions = [".jpg", ".png", ".jpeg"]
+			if(validExtensions.find((ext)=>file.name.substr(file.name.length - ext.length, ext.length) === ext)) isValid = true
+			else setErrorMessage(`Format of your file is not valid. Download file with one of these: ${validExtensions.map(ex=>" "+ ex)}`)
+		}
+		else if(place === "songs/"){
+			console.log("song")
+			const validExtensions = [".mp3", ".mp4a", ".flac", ".wav", '.wma']
+			if(validExtensions.find((ext)=>file.name.substr(file.name.length - ext.length, ext.length) === ext)) isValid = true
+			else setErrorMessage(`Format of your file is not valid. Download file with one of these: ${validExtensions.map(ex=>ex)}`)
+		}
+
+		if(isValid){
+			console.log(file)
+			setImageLocalPath(URL.createObjectURL(file))
+			const storageRef = storage.ref()
+			const fileRef = storageRef.child(place + file.name)
+			await fileRef.put(file)
+			setFunc(await fileRef.getDownloadURL())
+		}
 	}
 
 	function transformLyricsToArrayOfObjects(e) {
@@ -85,7 +104,13 @@ export const AddSong = () => {
 		e.preventDefault()
 		let uid = getUID()
 		console.log(lyricsObject)
-		if (chosenAuthors.length !== 0) {
+		setErrorMessage("")
+		if(songName.length === 0) setErrorMessage("Song has to have some name")
+		else if(chosenAuthors.length === 0) setErrorMessage('Song has to have at least 1 author')
+		else if(songCover.length === 0) setErrorMessage('You didn\'t load song cover')
+		else if(songSrc.length === 0) setErrorMessage('You didn\'t load song file')
+		else if(releaseDate.length === 0) setErrorMessage('You have to set release date for a song')
+		else {
 			firestore.collection('songs').doc(uid).set(
 				{
 					id: uid,
@@ -129,13 +154,23 @@ export const AddSong = () => {
 		typingTimeout = setTimeout(func, 1000)
 	}
 
+	useEffect(() => {
+		console.log(imageColors)
+	}, [imageColors])
+
+	function manuallyChangeColor(e, i){
+		// const tempArr = imageColors; tempArr[i] = e.taget.value;
+		imageColors[i] = e.target.value
+		setImageColors([...imageColors])
+	}
+
 	return (
 		<div className="AddSong">
 			<ColorExtractor src={imageLocalPath} getColors={(colors) => setImageColors(colors)} />
 			<form onSubmit={addSongToFirebase}>
 				<label>
 					<h3>Song name</h3>
-					<input type="text" placeholder="Enter song name" value={songName} onChange={(e) => setSongName(e.target.value)} required />
+					<input type="text" placeholder="Enter song name" value={songName} onChange={(e) => setSongName(e.target.value)}/>
 				</label>
 				<label>
 					<h3>Song authors</h3>
@@ -175,6 +210,18 @@ export const AddSong = () => {
 					<input type="text" placeholder="Enter playlist name" value={authorsInputValue} onChange={(e) => setAuthorsInputValue(e.target.value)} onKeyDown={findAuthors} style={{ marginBottom: '5px' }} />
 				</label> */}
 
+				{errorMessage && 
+					<div className = "Alert">
+						{errorMessage}
+					</div>
+				}
+
+				<div style = {{width:'100%', display:'flex'}}>
+					{imageColors.map((color, index) => {
+						return <input type = "color" value = {color} style={{ width: '100%', height: '60px', padding:'0', borderRadius:'0px' }} onChange = {(e)=>{manuallyChangeColor(e, index)}}/>
+					})}
+				</div> 
+
 				<label className="downloadFile">
 					<div className="downloadPhoto">
 						<span className="downloadBtnText">
@@ -201,9 +248,6 @@ export const AddSong = () => {
 					<textarea name="" id="" placeholder={"Add song lyrics"} onKeyDown={transformLyricsToArrayOfObjects} onChange={(e) => setLyrics(e.target.value)}></textarea>
 				</label>
 				<button type="submit" className="addSongBtn">Add song</button>
-				{imageColors.map(color => {
-					return <div style={{ background: color, width: '30px', height: '30px' }}></div>
-				})}
 			</form>
 		</div>
 	)

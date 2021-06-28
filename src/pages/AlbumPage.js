@@ -14,9 +14,7 @@ export const AlbumPage = () => {
 	async function fetchAlbumsData() {
 		const response = firestore.collection("playlists").doc(albumId)
 		response.get().then((doc) => {
-
 			if (doc.exists) {
-				 console.log("Document data:", doc.data());
 				 setAlbumData(doc.data())
 				 setHeaderColors(doc.data().imageColors)
 			} else {
@@ -52,7 +50,7 @@ export const AlbumPage = () => {
 				loading?<LoadingCircle top = {'50%'}/>:
 				<>
 					<Header data = {albumData} headerColors = {headerColors} setHeaderColors = {setHeaderColors}/>
-					<SongList listOfSongs = {playlistSongs} source = {{source:`/albums/${albumData.id}`,name:albumData.name, image:albumData.image, songsList:playlistSongs}}/>
+					<SongList listOfSongs = {playlistSongs} source = {{source:`/albums/${albumData.id}`,name:albumData.name, image:albumData.image, songsList:playlistSongs}} showSearch defaultSearchMode = {"songs"}/>
 				</>
 			}
 			

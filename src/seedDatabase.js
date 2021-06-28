@@ -10,8 +10,8 @@ export default function seedDatabase(firestore) {
 		});
 	}
 
-	// firestore.collection('songs').doc('000a263e-24cd-4480-b3fb-3078e79dfee4').update({
-	// 	lyrics:songs['allSongs'][4].lyrics
+	// firestore.collection('songs').doc('147735de-52a3-4629-9383-9280e0201f7b').update({
+	// 	lyrics:songs['allSongs'][2].lyrics
 	// })
 
 	// async function findURL(fileURL){

@@ -91,7 +91,7 @@ export const AddPlaylist = () => {
 
 	async function addPlaylistToFirebase(e) {
 		e.preventDefault()
-		let uid = getUID()
+		const uid = getUID()
 		firestore.collection('playlists').doc(uid).set(
 			{
 				id: uid,

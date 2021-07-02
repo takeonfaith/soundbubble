@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/soundbubble/static/css/main.89177ada.chunk.css",
-    "main.js": "/soundbubble/static/js/main.1a3dd279.chunk.js",
-    "main.js.map": "/soundbubble/static/js/main.1a3dd279.chunk.js.map",
+    "main.js": "/soundbubble/static/js/main.e8d7dc25.chunk.js",
+    "main.js.map": "/soundbubble/static/js/main.e8d7dc25.chunk.js.map",
     "runtime-main.js": "/soundbubble/static/js/runtime-main.1c8057e1.js",
     "runtime-main.js.map": "/soundbubble/static/js/runtime-main.1c8057e1.js.map",
     "static/js/2.ee5b5cac.chunk.js": "/soundbubble/static/js/2.ee5b5cac.chunk.js",
@@ -114,6 +114,6 @@
     "static/js/runtime-main.1c8057e1.js",
     "static/js/2.ee5b5cac.chunk.js",
     "static/css/main.89177ada.chunk.css",
-    "static/js/main.1a3dd279.chunk.js"
+    "static/js/main.e8d7dc25.chunk.js"
   ]
 }

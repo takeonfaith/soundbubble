@@ -6,7 +6,8 @@ import {HiPause, HiPlay} from 'react-icons/hi'
 import { useSong } from '../../functionality/SongPlay/SongContext'
 import { firestore } from '../../firebase'
 import { useAuth } from '../../functionality/AuthContext'
-export const PlaylistItem = ({playlist}) => {
+import { AddToListCircle } from '../Basic/AddToListCircle'
+export const PlaylistItem = ({playlist, listOfChosenAlbums, setListOfChosenAlbums}) => {
 	const playlistDate = new Date(playlist.creationDate)
 	const {currentUser} = useAuth()
 	const {setCurrentSongQueue, setCurrentSongPlaylistSource, playSong, setCurrentSongInQueue, setCurrentSong, currentSongPlaylistSource, songRef, setPlay, play} = useSong()
@@ -55,6 +56,7 @@ export const PlaylistItem = ({playlist}) => {
 
 	return (
 		<Link to={`/albums/${playlist.id}`} style = {{textDecoration:'none'}} className = "playlistWrapper">
+			<AddToListCircle listOfChosenItems = {listOfChosenAlbums} setListOfChosenItems = {setListOfChosenAlbums} itemId = {playlist.id}/>
 			<div className="playlistItem">
 				{playlist.image?<img src={playlist.image} alt="" />:<h1>{playlist.name.split(' ')[0][0]}{playlist.name.split(' ')[1][0]}</h1>}
 				{/* {!playlist.isAlbum?<h2>{playlist.name}</h2>:null} */}

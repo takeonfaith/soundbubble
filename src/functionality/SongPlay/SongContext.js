@@ -311,7 +311,6 @@ export const SongProvider = ({ children }) => {
 			let midPoint = Math.floor((first + last) / 2)
 			let blockStartTime = parseFloat(parseFloat(currentSongData.lyrics[midPoint].startTime).toFixed(1))
 			let nextBlockStartTime = midPoint !== currentSongData.lyrics.length - 1 ? parseFloat(parseFloat(currentSongData.lyrics[midPoint + 1].startTime).toFixed(1)) : last
-			let dif = roundedTime - blockStartTime
 			if (currentSongData.lyrics[midPoint].startTime !== 'undefined') {
 				if (roundedTime >= blockStartTime && roundedTime <= nextBlockStartTime) {
 					setCurrentParagraph(midPoint)

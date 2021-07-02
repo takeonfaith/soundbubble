@@ -24,8 +24,27 @@
 	position: relative;
 }
 
+.AmountOfUnseenMessages{
+	width: 20px;
+	height: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: var(--blue);
+	border-radius: 20px;
+	color:#fff;
+	position: absolute;
+	right: 20px;
+	top: 45px;
+	font-size: .8em;
+}
+
 .ChatItem:hover{
 	filter: brightness(.9);
+}
+
+.ChatItem.unseen{
+	background: #5a5c6f;
 }
 
 .chatItemImage{
@@ -68,6 +87,60 @@
 	margin-right: 2px;
 }
 
+.typingWrapper{
+	display: flex;
+	align-items: center;
+	animation: zoomIn .2s forwards;
+}
+
+.TypingAnimation{
+	width: 40px;
+	height: 12px;
+	border-radius: var(--standartBorderRadius0);
+	background: rgb(241 90 153 / 58%);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 5px;
+	margin-left: 5px;
+}
+
+.typingCircle{
+	background: #ff5757;
+	border-radius: 20px;
+	height: 8px;
+	width: 8px;
+	display: block;
+	animation: typingCircle 1s infinite;
+}
+
+.typingCircle:nth-child(2){
+	animation-delay: .2s;
+}
+
+.typingCircle:nth-child(3){
+	animation-delay: .3s;
+}
+
+@keyframes typingCircle {
+	0%{
+		opacity: 1;
+		transform: scale(1);
+	}
+	50%{
+		opacity: 0;
+		transform: scale(0.5);
+	}
+	75%{
+		opacity: 0.5;
+		transform: scale(1.1);
+	}
+	100%{
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
 /* Start Chat header */
 
 .ChatHeader{
@@ -84,7 +157,7 @@
 .chatHeaderImageAndName{
 	display: flex;
 	align-items: center;
-	
+	cursor: pointer;
 }
 
 .chatHeaderImageAndName h4{
@@ -118,6 +191,18 @@
 	padding: 10px;
 	box-sizing: border-box;
 	scroll-behavior: auto;
+}
+
+.SeenByCircle{
+	width: 7px;
+	height: 7px;
+	background: var(--lightBlue);
+	border-radius: 10px;
+	margin-left: 5px;
+	align-self: center;
+	opacity: 0;
+	visibility: hidden;
+	transition: .2s;
 }
 
 .ChatMoreBtn{
@@ -471,4 +556,106 @@
 }
 
 /* End Chat Input */
+
+/* More Button Sections */
+
+.wallpapreWrapper{
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.WallpaperItem{
+	width: calc(33% - 5px);
+	max-height: 150px;
+	border-radius: var(--standartBorderRadius2);
+	margin: 3px;
+	overflow: hidden;
+	height: 145px;
+	cursor: pointer;
+	box-sizing: border-box;
+	transition: .1s;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.WallpaperItem.active{
+	border: 4px solid var(--green);
+}
+
+.WallpaperItem img{
+	height: 100%;
+	transition: .2s;
+}
+
+.WallpaperItem:hover{
+	border: 4px solid var(--purple);
+}
+
+.WallpaperItem:hover img{
+	transform: scale(1.1);
+}
+
+.chatInfoImageAndName{
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}
+
+.chatInfoImage{
+	width: 200px;
+	height: 200px;
+	overflow: hidden;
+	border-radius: 100px;
+	display: flex;
+	align-items: center; 
+	justify-content: center;
+	margin-bottom: 10px;
+}
+
+.chatInfoImage img{
+	height: 100%;
+}
+
+.chatInfoButtons{
+	display: flex;
+	margin-top: 5px;
+}
+
+.chatInfoButton{
+	width: 33%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 55px;
+	border-radius: var(--standartBorderRadius3);
+	background: transparent;
+	color:#fff;
+	font-weight: 600;
+}
+
+.chatInfoButton:hover{
+	background: var(--reallyTransparentWhite);
+}
+
+.chatInfoButton svg{
+	width: 23px;
+	height: 23px;
+	margin-bottom: 3px;
+}
+
+.chatInfoButton:nth-child(1){
+	color:var(--lightBlue);
+}
+.chatInfoButton:nth-child(2){
+	color:var(--red);
+}
+.chatInfoButton:nth-child(3){
+	color:var(--purple);
+}
+
+/* End More Button Sections */
 

@@ -10,6 +10,7 @@ import { useState } from 'react'
 import { useAuth } from '../functionality/AuthContext'
 import { SongList } from '../components/Basic/SongList'
 import { SongItem } from '../components/FullScreenPlayer/SongItem'
+import { DefaultPlaylists } from '../components/HomePage/DefaultPlaylists'
 export const Home = () => {
 	const [songList, setSongList] = useState([])
 	const {currentUser} = useAuth()
@@ -28,11 +29,8 @@ return (
 		<MainBanner />
 		<RecommendedSongs/>
 		<RecommendedAuthors/>
+		{/* <DefaultPlaylists/> */}
 		<RecentSongs/>
-		{/* <SongList listOfSongs = {songList} source = {{ source: `/home`, name: "Home", image: "", songsList: songList }} title = {"Queue"}/> */}
-		{songList.map((song, index)=>{
-			return <SongItem song = { song } key = {song.id} localIndex = {index}/>
-		})}
 	</div>
 )
 }

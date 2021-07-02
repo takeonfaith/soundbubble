@@ -20,6 +20,8 @@ import { FriendsListToShareWith } from '../Basic/FriendsListToShareWith'
 import { CustomizeAlbum } from '../AlbumPage/CustomizeAlbum'
 import { addAuthorToLibrary } from '../../functions/addAuthorToLibrary'
 import addFriend from '../../functions/addFriend'
+import { LastSongListened } from './LastSongListened'
+import { LastSeen } from '../Basic/LastSeen'
 export const Header = ({ data, headerColors }) => {
 	const { displayAuthors, setYourPlaylists } = useSong()
 	const [albumAuthors, setAlbumAuthors] = useState([])
@@ -27,6 +29,7 @@ export const Header = ({ data, headerColors }) => {
 	const { currentUser, logout } = useAuth()
 	const [openMoreWindow, setOpenMoreWindow] = useState(false)
 	const {toggleModal, setContent} = useModal()
+	const isFriend = currentUser.friends.find(friend=>(friend.uid === data.uid && friend.status === 'added'))
 	const moreWindowRef = useRef(null)
 	useOutsideClick(moreWindowRef, setOpenMoreWindow)
 	async function fetchAuthorsData() {
@@ -34,7 +37,6 @@ export const Header = ({ data, headerColors }) => {
 			const ids = data.authors.map(author => author.uid)
 			const response = firestore.collection("users").where("uid", "in", ids)
 			const authrorsData = await response.get();
-			console.log(authrorsData.docs)
 			authrorsData.docs.forEach((a) => {
 				console.log(a.data())
 				setAlbumAuthors(prev => [...prev, a.data()])
@@ -55,7 +57,7 @@ export const Header = ({ data, headerColors }) => {
 	}
 
 	function isAlbumOrIsAuthor() {
-		return data.authors !== undefined ? data.isAlbum ? <h5>Album</h5> : <h5>Playlist</h5> : data.isAuthor ? <h5>Author</h5> : <h5>User</h5>
+		return data.authors !== undefined ? data.isAlbum ? <h5>Album</h5> : <h5>Playlist</h5> : data.isAuthor ? <h5>Author</h5> : <h5>User {data.authors === undefined && isFriend?<LastSeen userUID = {data.uid}/>:null}</h5>
 	}
 
 	function showCreatorsIfExist() {
@@ -171,6 +173,8 @@ export const Header = ({ data, headerColors }) => {
 						{findIfIsVerified()}
 						{findIfIsPrivate()}
 						{editButton()}
+						{/* <LastSongListened data = {data}/> */}
+						
 					</div>
 				</div>
 				{showCreatorsIfExist()}
@@ -185,7 +189,7 @@ export const Header = ({ data, headerColors }) => {
 					</div>
 					{displayCreationDateIfExists()}
 				</div>
-				{currentUser.friends.find(friend=>(friend.uid === data.uid && friend.status === 'added'))?<ChatWithFriendButton data = {data} color = {headerColors[3]}/>:null}
+				{isFriend?<ChatWithFriendButton data = {data} color = {headerColors[3]}/>:null}
 			</div>
 		</div>
 	)

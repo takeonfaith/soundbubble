@@ -5,18 +5,20 @@ import { FiXCircle } from 'react-icons/fi'
 import { firestore, storage } from '../../firebase'
 import { useAuth } from '../../functionality/AuthContext'
 import getUID from '../../functions/getUID'
+import { DownloadPhotoButton } from '../Basic/DownloadPhotoButton'
+import { ErrorPlate } from '../Basic/ErrorPlate'
 import { LoadingCircle } from '../Basic/LoadingCircle'
 import { PersonTiny } from '../Basic/PersonTiny'
 
 export const AddSong = () => {
-	const {currentUser} = useAuth()
+	const { currentUser } = useAuth()
 	const isModerator = currentUser.email === 'takeonfaith6@gmail.com'
 	const [songName, setSongName] = useState("")
 	const [songCover, setSongCover] = useState("")
 	const [songSrc, setSongSrc] = useState("")
 	const [authorsInputValue, setAuthorsInputValue] = useState('')
 	const [allAuthors, setAllAuthors] = useState([])
-	const [chosenAuthors, setChosenAuthors] = useState(!isModerator?[{uid:currentUser.uid, photoURL:currentUser.photoURL, displayName:currentUser.displayName}]:[])
+	const [chosenAuthors, setChosenAuthors] = useState(!isModerator ? [{ uid: currentUser.uid, photoURL: currentUser.photoURL, displayName: currentUser.displayName }] : [])
 	const [releaseDate, setReleaseDate] = useState("")
 	const [lyrics, setLyrics] = useState([])
 	const [imageLocalPath, setImageLocalPath] = useState("")
@@ -61,20 +63,20 @@ export const AddSong = () => {
 		setErrorMessage("")
 		const file = e.target.files[0]
 		let isValid = false
-		if(place === 'songsImages/'){
+		if (place === 'songsImages/') {
 			console.log("image")
 			const validExtensions = [".jpg", ".png", ".jpeg"]
-			if(validExtensions.find((ext)=>file.name.substr(file.name.length - ext.length, ext.length) === ext)) isValid = true
-			else setErrorMessage(`Format of your file is not valid. Download file with one of these: ${validExtensions.map(ex=>" "+ ex)}`)
+			if (validExtensions.find((ext) => file.name.substr(file.name.length - ext.length, ext.length) === ext)) isValid = true
+			else setErrorMessage(`Format of your file is not valid. Download file with one of these: ${validExtensions.map(ex => " " + ex)}`)
 		}
-		else if(place === "songs/"){
+		else if (place === "songs/") {
 			console.log("song")
 			const validExtensions = [".mp3", ".mp4a", ".flac", ".wav", '.wma']
-			if(validExtensions.find((ext)=>file.name.substr(file.name.length - ext.length, ext.length) === ext)) isValid = true
-			else setErrorMessage(`Format of your file is not valid. Download file with one of these: ${validExtensions.map(ex=>ex)}`)
+			if (validExtensions.find((ext) => file.name.substr(file.name.length - ext.length, ext.length) === ext)) isValid = true
+			else setErrorMessage(`Format of your file is not valid. Download file with one of these: ${validExtensions.map(ex => ex)}`)
 		}
 
-		if(isValid){
+		if (isValid) {
 			console.log(file)
 			setImageLocalPath(URL.createObjectURL(file))
 			const storageRef = storage.ref()
@@ -89,10 +91,10 @@ export const AddSong = () => {
 		let startSubstr = 0
 		for (let i = 0; i < lyrics.length; i++) {
 			if (lyrics[i] === '\n' || lyrics[i + 1] === undefined) {
-				
+
 				arrayOfParagraphs.push({
 					startTime: 'undefined',
-					text: lyrics.substr(startSubstr, i-startSubstr)
+					text: lyrics.substr(startSubstr, i - startSubstr)
 				})
 				startSubstr = i + 1
 			}
@@ -105,11 +107,11 @@ export const AddSong = () => {
 		let uid = getUID()
 		console.log(lyricsObject)
 		setErrorMessage("")
-		if(songName.length === 0) setErrorMessage("Song has to have some name")
-		else if(chosenAuthors.length === 0) setErrorMessage('Song has to have at least 1 author')
-		else if(songCover.length === 0) setErrorMessage('You didn\'t load song cover')
-		else if(songSrc.length === 0) setErrorMessage('You didn\'t load song file')
-		else if(releaseDate.length === 0) setErrorMessage('You have to set release date for a song')
+		if (songName.length === 0) setErrorMessage("Song has to have some name")
+		else if (chosenAuthors.length === 0) setErrorMessage('Song has to have at least 1 author')
+		else if (songCover.length === 0) setErrorMessage('You didn\'t load song cover')
+		else if (songSrc.length === 0) setErrorMessage('You didn\'t load song file')
+		else if (releaseDate.length === 0) setErrorMessage('You have to set release date for a song')
 		else {
 			firestore.collection('songs').doc(uid).set(
 				{
@@ -158,7 +160,7 @@ export const AddSong = () => {
 		console.log(imageColors)
 	}, [imageColors])
 
-	function manuallyChangeColor(e, i){
+	function manuallyChangeColor(e, i) {
 		// const tempArr = imageColors; tempArr[i] = e.taget.value;
 		imageColors[i] = e.target.value
 		setImageColors([...imageColors])
@@ -170,7 +172,7 @@ export const AddSong = () => {
 			<form onSubmit={addSongToFirebase}>
 				<label>
 					<h3>Song name</h3>
-					<input type="text" placeholder="Enter song name" value={songName} onChange={(e) => setSongName(e.target.value)}/>
+					<input type="text" placeholder="Enter song name" value={songName} onChange={(e) => setSongName(e.target.value)} />
 				</label>
 				<label>
 					<h3>Song authors</h3>
@@ -180,7 +182,7 @@ export const AddSong = () => {
 							return (
 								<div className="chosenAuthorItem">
 									<span>{author.displayName}</span>
-									<FiXCircle onClick={() => {if(isModerator)removeAuthorFromList(author);else if(author.uid !== currentUser.uid)removeAuthorFromList(author);}} />
+									<FiXCircle onClick={() => { if (isModerator) removeAuthorFromList(author); else if (author.uid !== currentUser.uid) removeAuthorFromList(author); }} />
 								</div>
 							)
 						})}
@@ -210,35 +212,22 @@ export const AddSong = () => {
 					<input type="text" placeholder="Enter playlist name" value={authorsInputValue} onChange={(e) => setAuthorsInputValue(e.target.value)} onKeyDown={findAuthors} style={{ marginBottom: '5px' }} />
 				</label> */}
 
-				{errorMessage && 
-					<div className = "Alert">
-						{errorMessage}
-					</div>
-				}
+				<ErrorPlate errorMessage = {errorMessage}/>
 
-				<div style = {{width:'100%', display:'flex'}}>
+				<div style={{ width: '100%', display: 'flex' }}>
 					{imageColors.map((color, index) => {
-						return <input type = "color" value = {color} style={{ width: '100%', height: '60px', padding:'0', borderRadius:'0px' }} onChange = {(e)=>{manuallyChangeColor(e, index)}}/>
+						return <input type="color" value={color} style={{ width: '100%', height: '60px', padding: '0', borderRadius: '0px' }} onChange={(e) => { manuallyChangeColor(e, index) }} />
 					})}
-				</div> 
+				</div>
+
+				<DownloadPhotoButton setErrorMessage = {setErrorMessage} setImageLocalPath = {setImageLocalPath} downloadedPhoto = {songCover} setDownloadedPhoto = {setSongCover} place = {'songsImages/'}/>
 
 				<label className="downloadFile">
 					<div className="downloadPhoto">
 						<span className="downloadBtnText">
 							<AiOutlineCloudDownload />
-							Download song cover
+							Download song file
 						</span>
-						<span className="photoLoadLine" style={songCover !== '' ? { width: '100%' } : {}}></span>
-					</div>
-					<input type="file" name="" id="" onChange={(e) => onFileChange(e, 'songsImages/', setSongCover)} />
-				</label>
-
-				<label className="downloadFile">
-					<div className="downloadPhoto">
-						<span className="downloadBtnText">
-							<AiOutlineCloudDownload />
-									Download song file
-								</span>
 						<span className="photoLoadLine" style={songSrc !== '' ? { width: '100%' } : {}}></span>
 					</div>
 					<input type="file" name="" id="" onChange={(e) => onFileChange(e, 'songs/', setSongSrc)} />

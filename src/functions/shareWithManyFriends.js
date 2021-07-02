@@ -67,7 +67,7 @@ export default function shareWithFriends(shareList, currentUser, itemId, whatToS
 			}
 			else{
 				const chatUID = getUID()
-				createChat(currentUser.uid, userId, chatUID).then(async ()=>{
+				createChat([currentUser.uid, userId], chatUID).then(async ()=>{
 					chatData = (await firestore.collection('chats').doc(chatUID).get()).data()
 					switch(whatToShare){
 						case "song":

@@ -6,7 +6,7 @@ import { SongItem } from '../FullScreenPlayer/SongItem'
 import { SearchBar } from './SearchBar'
 import { TitleWithMoreBtn } from './TitleWithMoreBtn'
 
-export const SongList = ({ listOfSongs, source, title = "", showListens = false, isNewSong = false, showCount = false, listOfChosenSogns, setListOfSongs, showSearch = false }) => {
+export const SongList = ({ listOfSongs, source, title = "", showListens = false, isNewSong = false, showCount = false, listOfChosenSongs, setListOfSongs, showSearch = false }) => {
 	const { setCurrentSongQueue, setCurrentSongPlaylistSource } = useSong()
 	const { currentUser } = useAuth()
 	const [showMoreSongs, setShowMoreSongs] = useState(false)
@@ -41,7 +41,7 @@ export const SongList = ({ listOfSongs, source, title = "", showListens = false,
 						return (
 							<span className="topSongItem">
 								{showCount ? <h3 style = {{opacity:'0.7'}}>{index + 1}</h3> : null}
-								<SongItem song={song} key = {song.id} localIndex={index} showListens={showListens} isNewSong={isNewSong} listOfChosenSogns = {listOfChosenSogns} setListOfSongs = {setListOfSongs}/>
+								<SongItem song={song} key = {song.id} localIndex={index} showListens={showListens} isNewSong={isNewSong} listOfChosenSongs = {listOfChosenSongs} setListOfSongs = {setListOfSongs}/>
 							</span>
 						)
 					}
@@ -49,7 +49,7 @@ export const SongList = ({ listOfSongs, source, title = "", showListens = false,
 						if (index < 5) {
 							return <span className="topSongItem">
 								{showCount ? <h3 style = {{opacity:'0.7'}}>{index + 1}</h3> : null}
-								<SongItem song={song} key = {song.id} localIndex={index} showListens={showListens} isNewSong={isNewSong} listOfChosenSogns = {listOfChosenSogns} setListOfSongs = {setListOfSongs}/>
+								<SongItem song={song} key = {song.id} localIndex={index} showListens={showListens} isNewSong={isNewSong} listOfChosenSongs = {listOfChosenSongs} setListOfSongs = {setListOfSongs}/>
 							</span>
 						}
 					}
@@ -58,7 +58,7 @@ export const SongList = ({ listOfSongs, source, title = "", showListens = false,
 					return (
 						<span className="topSongItem">
 							{showCount ? <h3 style = {{opacity:'0.7'}}>{index + 1}</h3> : null}
-							<SongItem song={song} key = {song.id} localIndex={index} showListens={showListens} isNewSong={isNewSong} listOfChosenSogns = {listOfChosenSogns} setListOfSongs = {setListOfSongs}/>
+							<SongItem song={song} key = {song.id} localIndex={index} showListens={showListens} isNewSong={isNewSong} listOfChosenSongs = {listOfChosenSongs} setListOfSongs = {setListOfSongs}/>
 						</span>
 					)
 				}

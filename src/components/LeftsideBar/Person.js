@@ -24,7 +24,7 @@ export const Person = ({index, friend}) => {
 		<div className="person" key={index} id={friend.uid} >
 			<div className="personBtns">
 				<Link to={`/chat/${friendChatId}`}>
-					<button onClick = {()=>{if(shouldCreate) createChat(currentUser.uid, friend.uid ,friendChatId)}}><FiMessageCircle /></button>
+					<button onClick = {()=>{if(shouldCreate) createChat([currentUser.uid, friend.uid] ,friendChatId)}}><FiMessageCircle /></button>
 				</Link>
 				<Link to={`/authors/${friend.uid}`}>
 					<button><FiUser /></button>

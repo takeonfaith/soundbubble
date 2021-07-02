@@ -12,6 +12,7 @@ import { useAuth } from '../functionality/AuthContext'
 import { LoadingCircle } from '../components/Basic/LoadingCircle'
 import displayDate from '../functions/displayDate'
 import { DateOnTop } from '../components/ChatPage/DateOnTop'
+import { TypingAnimation } from '../components/ChatPage/TypingAnimation'
 export const DialoguePage = () => {
 	const match = useRouteMatch('/chat/:chatId')
 	const { currentUser } = useAuth()
@@ -38,7 +39,7 @@ export const DialoguePage = () => {
 			.onSnapshot(snapshot => {
 				setChatData(snapshot.data())
 				setMessageList(snapshot.data().messages)
-				setCurrentDateOnTop(snapshot.data().messages[0].sentTime)
+				setCurrentDateOnTop(snapshot.data().messages.length?snapshot.data().messages[0].sentTime:new Date().toString())
 				setLoading(false)
 			})
 		return () => {
@@ -75,6 +76,7 @@ export const DialoguePage = () => {
 						<div className="chatMessagesWindow" ref={messagesWindowRef} onScroll = {findTopDate}>
 							<DisplayChatMessages chatId = {chatId} messageList = {messageList} inResponseToMessage = {inResponseToMessage} setInResponseToMessage = {setInResponseToMessage} messagesWindowRef = {messagesWindowRef} setDateRefsArray = {setDateRefsArray}/>
 							<span className="scrollToBottomElement" ref={scrollToBottomElementRef}></span>
+							<TypingAnimation typingPeople = {chatData.typing}/>
 						</div>
 						<ChatInput 
 							chatId={chatId} 
@@ -87,6 +89,7 @@ export const DialoguePage = () => {
 						/>
 					</>
 			}
+			{chatData.wallpaper !== "undefined"?<img src={chatData.wallpaper} alt="" style = {{position:'absolute', top:"-30px", left:"-30px", width:'calc(100% + 60px)', height:'calc(100% + 65px)', zIndex:'-1', outline:'none'}}/>:null}
 		</div>
 	)
 }

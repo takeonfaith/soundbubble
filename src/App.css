@@ -130,6 +130,7 @@ a{
   --inputRange:100%;
   --themeColorTransparent:rgba(65, 141, 255, 0.37);
   --transparentWhite:rgba(255, 255, 255, 0.336);
+  --reallyTransparentWhite:rgba(255, 255, 255, 0.192);
 }
 
 button{
@@ -141,6 +142,37 @@ button{
 
 button:active{
   transform: scale(.95);
+}
+
+.standartButton{
+  padding: 10px 20px;
+  border-radius: var(--standartBorderRadius);
+  background: var(--reallyLightGrey);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color:#fff;
+  font-weight: bold;
+}
+
+.standartInput{
+  padding: 10px 20px;
+  border-radius: var(--standartBorderRadius3);
+  background: var(--playlistsColor);
+  display: flex;
+  align-items: center;
+  color:#fff;
+  font-weight: bold;
+  width: 100%;
+  border:none;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.standartButton svg{
+  margin-right: 5px;
+  width: 20px;
+  height: 20px;
 }
 
 body{
@@ -337,6 +369,27 @@ body{
 .addToListBtn svg{
   width: 25px;
   height: 25px;
+}
+
+.AuthorItemBig, .playlistWrapper{
+  position: relative;
+}
+
+
+
+.AuthorItemBig .addToListBtn, .playlistWrapper .addToListBtn{
+  position: absolute;
+  top: 20px;
+  left: 10px;
+  background: #fff;
+  border-radius: 20px;
+  color:rgb(63, 63, 63);
+  z-index: 10;
+}
+
+.playlistWrapper .addToListBtn{
+  left: 20px;
+  top: 10px;
 }
 
 .onlineCircle{

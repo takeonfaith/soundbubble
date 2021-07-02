@@ -1,9 +1,9 @@
 import React from 'react'
-import {IoIosCheckmarkCircle, IoIosCheckmarkCircleOutline, IoIosRadioButtonOff} from 'react-icons/io'
-export const PersonTiny = ({data, chosenArray, showChoose,...restProps}) => {
+import { AddToListCircle } from './AddToListCircle'
+export const PersonTiny = ({data, chosenArray, setChosenArray, ...restProps}) => {
 	return (
 		<div className="person" {...restProps}>
-			{showChoose?chosenArray.includes(data.uid)?<IoIosCheckmarkCircle style = {{color:'var(--lightBlue)'}}/>:<IoIosRadioButtonOff/>:null}
+			<AddToListCircle listOfChosenItems = {chosenArray} setListOfChosenItems = {setChosenArray} itemId = {data.uid}/>
 			<div className="pesronImg">
 				<img src={data.photoURL} alt="" />
 			</div>

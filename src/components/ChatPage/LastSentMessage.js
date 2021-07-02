@@ -5,6 +5,7 @@ import { firestore } from '../../firebase'
 import { useAuth } from '../../functionality/AuthContext'
 import {BsDot} from 'react-icons/bs'
 import shortWord from '../../functions/shortWord'
+import { SeenByCircle } from './SeenByCircle'
 export const LastSentMessage = ({ messages }) => {
 	const {currentUser} = useAuth()
 	const [lastAttachedItem, setLastAttachedItem] = useState("")
@@ -45,6 +46,7 @@ export const LastSentMessage = ({ messages }) => {
 			{shouldPutDot && lastAttachedItem.length?<BsDot/>:null}
 			{messageIcons[lastIcon]}
 			{lastAttachedItem}
+			<SeenByCircle listOfSeen = {messages[messages.length - 1].seenBy}/>
 		</div>
 	)
 }

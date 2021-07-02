@@ -223,7 +223,7 @@ export const CustomizeAlbum = ({ playlist }) => {
 							<div style={{ position: 'relative', width: '100%', height: '50px' }}>
 								<LoadingCircle />
 							</div> :
-							<SongList listOfSongs={allSongs} source={'no'} listOfChosenSogns={chosenSongs} setListOfSongs={setChosenSongs} />
+							<SongList listOfSongs={allSongs} source={'no'} listOfChosenSongs={chosenSongs} setListOfSongs={setChosenSongs} />
 							// allSongs.map((data, index) => {
 							// return (
 							// 	<SongItemChoice song={data} listOfSongs={chosenSongs} setListOfSongs={setChosenSongs} />

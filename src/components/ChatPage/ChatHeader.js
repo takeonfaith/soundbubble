@@ -6,8 +6,11 @@ import { firestore } from '../../firebase'
 import { useAuth } from '../../functionality/AuthContext'
 import { ChatMoreBtn } from './ChatMoreBtn'
 import { LastSeen } from '../Basic/LastSeen'
+import { useModal } from '../../functionality/ModalClass'
+import { ChatInfo } from './ChatInfo'
 export const ChatHeader = ({ data }) => {
 	const { currentUser } = useAuth()
+	const {toggleModal, setContent} = useModal()
 	const [otherPerson, setOtherPerson] = useState({})
 	const [headerColors, setHeaderColors] = useState([])
 	async function fetchOtherPerson() {
@@ -25,16 +28,26 @@ export const ChatHeader = ({ data }) => {
 	return (
 		<div className="ChatHeader" style={headerColors.length ? { background: `linear-gradient(45deg, ${headerColors[0]}, ${headerColors[1]})` } : { background: `linear-gradient(45deg, grey, lightgrey)` }}>
 			<BackBtn />
-			<Link className="chatHeaderImageAndName" to={`/authors/${otherPerson.uid}`}>
+			{data.participants.length === 2 ? <Link className="chatHeaderImageAndName" to={`/authors/${otherPerson.uid}`}>
 				<div className="chatHeaderImage">
-					<img src={otherPerson.photoURL || data.chatName} alt="" />
+					<img src={otherPerson.photoURL || data.chatImage} alt="" />
 				</div>
-				<div style = {{display:'flex', flexDirection:'column', justifyContent:'center'}}>
-					<h4>{otherPerson.displayName || data.chatImage}</h4>
-					<LastSeen userUID = {otherPerson.uid}/>
+				<div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+					<h4>{otherPerson.displayName || data.chatName}</h4>
+					<LastSeen userUID={otherPerson.uid} />
 				</div>
-			</Link>
-			<ChatMoreBtn/>
+			</Link> :
+				<div className="chatHeaderImageAndName" onClick = {()=>{toggleModal(); setContent(<ChatInfo data = {data}/>)}}>
+					<div className="chatHeaderImage">
+						<img src={otherPerson.photoURL || data.chatImage} alt="" />
+					</div>
+					<div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+						<h4>{otherPerson.displayName || data.chatName}</h4>
+						<LastSeen userUID={otherPerson.uid} />
+					</div>
+				</div>
+			}
+			<ChatMoreBtn chatId={data.id} data={data} currentWallpaper={data.wallpaper} />
 		</div>
 	)
 }

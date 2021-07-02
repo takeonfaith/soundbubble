@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import { AuthorItemBig } from '../AuthorPage/AuthorItemBig'
 
-export const AuthorsList = ({ listOfAuthors, title = "" }) => {
+export const AuthorsList = ({ listOfAuthors, title = "", listOfChosenAuthors, setListOfChosenAuthors }) => {
 	const [scrollLeft, setScrollLeft] = useState(0)
 	const wrapperRef = useRef(null)
 	const [shouldRenderRightArrow, setShouldRenderRightArrow] = useState(false)
@@ -26,13 +26,13 @@ export const AuthorsList = ({ listOfAuthors, title = "" }) => {
 		<div className="AuthorsList" >
 			{title.length !== 0 ? <h2>{title}</h2> : null}
 			<div className="authorsWrapper" ref={wrapperRef} onScroll={e => setScrollLeft(e.target.scrollLeft)}>
-				{listOfAuthors.map((author, index) => {
-					return <AuthorItemBig data={author} key={index} />
+				{listOfAuthors.map((author) => {
+					return <AuthorItemBig data={author} key={author.uid} listOfChosenAuthors = {listOfChosenAuthors} setListOfChosenAuthors = {setListOfChosenAuthors}/>
 				})}
 			</div>
 			<div className="authorsShiftButtons">
 				<button onClick={scrollToLeft} style={scrollLeft <= 0 ? { visibility: 'hidden', opacity: '0' } : {}}><FiChevronLeft /></button>
-				<button onClick={scrollToRight} style={shouldRenderRightArrow && (wrapperRef.current.scrollWidth - wrapperRef.current.offsetWidth !== scrollLeft)? {} : { visibility: 'hidden', opacity: '0' }}><FiChevronRight /></button>
+				<button onClick={scrollToRight} style={shouldRenderRightArrow && (wrapperRef.current !== null && wrapperRef.current.scrollWidth - wrapperRef.current.offsetWidth !== scrollLeft)? {} : { visibility: 'hidden', opacity: '0' }}><FiChevronRight /></button>
 			</div>
 		</div>
 	):null

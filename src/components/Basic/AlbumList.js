@@ -3,7 +3,8 @@ import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import { PlaylistItem } from '../AuthorPage/PlaylistItem'
 import { LoadingCircle } from './LoadingCircle'
 
-export const AlbumList = ({listOfAlbums, title = "", loading = true}) => {
+export const AlbumList = ({listOfAlbums, title = "", loading = true, listOfChosenAlbums, setListOfChosenAlbums}) => {
+	// console.log(listOfAlbums)
 	const [scrollLeft, setScrollLeft] = useState(0)
 	const wrapperRef = useRef(null)
 	const [shouldRenderRightArrow, setShouldRenderRightArrow] = useState(false)
@@ -30,7 +31,7 @@ export const AlbumList = ({listOfAlbums, title = "", loading = true}) => {
 			{title.length !== 0 ? <h2>{title}</h2> : null}
 			<div className="authorsWrapper" ref={wrapperRef} onScroll={e => setScrollLeft(e.target.scrollLeft)}>
 				{listOfAlbums.map((playlist, index) => {
-					return <PlaylistItem playlist = {playlist} key={index} />
+					return <PlaylistItem playlist = {playlist} key={index} listOfChosenAlbums = {listOfChosenAlbums} setListOfChosenAlbums = {setListOfChosenAlbums}/>
 				})}
 			</div>
 			<div className="authorsShiftButtons">

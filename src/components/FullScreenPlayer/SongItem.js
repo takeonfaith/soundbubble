@@ -18,7 +18,8 @@ import { deleteSongFromLibrary } from '../../functions/deleteSongFromLibrary'
 import { addSongToLibrary } from '../../functions/addSongToLibrary'
 import shortWord from '../../functions/shortWord'
 import {AddToPlaylists} from './AddToPlaylists'
-export const SongItem = ({ song, localIndex, showListens = false, isNewSong = false, listOfChosenSogns, setListOfSongs }) => {
+import { AddToListCircle } from '../Basic/AddToListCircle'
+export const SongItem = ({ song, localIndex, showListens = false, isNewSong = false, listOfChosenSongs, setListOfSongs }) => {
 	const { yourSongs, setCurrentSong, currentSong, displayAuthors, play, songRef, setPlay, setCurrentSongInQueue } = useSong()
 	const [openMoreWindow, setOpenMoreWindow] = useState(false)
 	const [moreWindowPosRelativeToViewport, setMoreWindowPosRelativeToViewport] = useState(0)
@@ -26,7 +27,6 @@ export const SongItem = ({ song, localIndex, showListens = false, isNewSong = fa
 	const { currentUser } = useAuth()
 	const { toggleModal, setContent } = useModal()
 	useOutsideClick(currentItemRef, setOpenMoreWindow)
-	let listenCountTimeOut
 
 	function chooseSongItem() {
 		setCurrentSong(song.id)
@@ -79,16 +79,7 @@ export const SongItem = ({ song, localIndex, showListens = false, isNewSong = fa
 	
 	return (
 		<>
-			{listOfChosenSogns !== undefined ?
-				listOfChosenSogns.includes(song.id) ?
-					<button type="button" onClick={() => { let filteredList = listOfChosenSogns.filter(el => el !== song.id); setListOfSongs(filteredList) }} className="addToListBtn">
-						<IoIosCheckmarkCircle style={{ color: 'var(--lightBlue)' }} />
-					</button> :
-					<button type="button" onClick={() => setListOfSongs(prev => [...prev, song.id])} className="addToListBtn">
-						<IoIosRadioButtonOff />
-					</button>
-				: null
-			}
+			<AddToListCircle listOfChosenItems = {listOfChosenSongs} setListOfChosenItems = {setListOfSongs} itemId = {song.id}/>
 			<div className={'SongItem ' + (song.id === currentSong && play ? "playingNow" : "")} onClick={chooseSongItem} ref={openMoreWindow ? currentItemRef : null} style={openMoreWindow ? { background: 'var(--playlistsColor)' } : {}}>
 				<div className="songItemImageAndName">
 					<div className="songItemImage">

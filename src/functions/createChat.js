@@ -1,25 +1,24 @@
 import { firestore } from "../firebase"
 import getUID from "./getUID"
 
-export const createChat = async (currentUserId, otherPersonId, chatUID = getUID()) => {
+export const createChat = async (admins, participants, chatUID = getUID(), chatName, chatImage) => {
 	firestore.collection('chats').doc(chatUID).set({
-		chatImage:'',
-		chatName:'',
+		chatImage:chatImage,
+		chatName:chatName,
 		id:chatUID,
 		messages:[],
-		participants:[currentUserId, otherPersonId]
+		participants:participants,
+		wallpaper:'undefined',
+		admin:participants.length > 2? admins:undefined,
+		fullySeenBy:[],
+		typing:[]
 	})
 
-	const currentUserChatsInfo = (await firestore.collection('users').doc(currentUserId).get()).data().chats
-	const otherUserChatsInfo = (await firestore.collection('users').doc(otherPersonId).get()).data().chats
-	currentUserChatsInfo.push(chatUID)
-	otherUserChatsInfo.push(chatUID)
-
-	firestore.collection('users').doc(currentUserId).update({
-		chats:currentUserChatsInfo
-	})
-
-	firestore.collection('users').doc(otherPersonId).update({
-		chats:otherUserChatsInfo
+	participants.map(async personId=>{
+		let chatInfo = (await firestore.collection('users').doc(personId).get()).data().chats
+		chatInfo.push(chatUID)
+		firestore.collection('users').doc(personId).update({
+			chats:chatInfo
+		})
 	})
 }

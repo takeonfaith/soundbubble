@@ -234,8 +234,8 @@
 
 .topTitle .MoreBtn button{
 	transition: .1s background;
-	background: var(--blue);
-	color:#fff;
+	background: rgb(71 102 243 / 57%);
+	color: #979eff;
 	padding: 5px 20px;
 	border-radius: var(--standartBorderRadius3);
 	font-weight: 600;
@@ -519,6 +519,23 @@
 
 .AlbumPage .searchBar{
 	margin-top: 10px;
+}
+
+.LastSongListened{
+	width: fit-content;
+	color:rgba(255, 255, 255, 0.705);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+}
+
+.LastSongListened svg{
+	margin-right: 5px;
+}
+
+.LastSongListened:hover{
+	text-decoration: underline;
 }
 
 @media (max-width:1000px) {

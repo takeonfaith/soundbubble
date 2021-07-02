@@ -16,7 +16,7 @@ export const ChatWithFriendButton = ({ data, color }) => {
 
 	return (
 		<Link to={`/chat/${friendChatId}`} style = {{display:'block', width:'fit-content', textDecoration: "none"}}>
-			<button onClick={() => { if (shouldCreate) createChat(currentUser.uid, data.uid, friendChatId) }} style = {{background:color}} className = "ChatWithFriendButton"><FiMessageCircle /> Messages</button>
+			<button onClick={() => { if (shouldCreate) createChat([currentUser.uid, data.uid], friendChatId) }} style = {{background:color}} className = "ChatWithFriendButton"><FiMessageCircle /> Messages</button>
 		</Link>
 	)
 }

@@ -7,7 +7,6 @@ export const useFetchFirebaseData = (setLoading, collection, list, setState, sor
 		const tempArray = []
 		if (list === undefined) {
 			if (whereCondFP !== undefined) {
-				console.log("chatInfo")
 				const items = await firestore.collection(collection).where(whereCondFP, whereCondSP, whereCondTP).get()
 				items.docs.forEach(itemData => {
 					tempArray.push(itemData.data())
@@ -16,7 +15,6 @@ export const useFetchFirebaseData = (setLoading, collection, list, setState, sor
 			else{
 				
 				const items = await firestore.collection(collection).get()
-				console.log("wallpaper")
 				items.docs.forEach(itemData => {
 					tempArray.push(itemData.data())
 					
@@ -27,7 +25,6 @@ export const useFetchFirebaseData = (setLoading, collection, list, setState, sor
 			await list.forEach(async (itemId, index) => {
 				const itemData = (await firestore.collection(collection).doc(itemId).get()).data()
 				tempArray.push(itemData)
-				console.log(tempArray)
 				if(index === list.length - 1){
 					if(sortCondition !== undefined){
 						tempArray.sort(sortCondition)

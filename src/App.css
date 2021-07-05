@@ -9,6 +9,10 @@ a{
   color:#fff;
 }
 
+#root{
+  overflow: hidden;
+}
+
 @keyframes loading {
   0%{
     transform: rotate(0deg);
@@ -111,9 +115,11 @@ a{
   --lightPurple:#c38af7;
   --green:#69e985;
   --darkGreen:#3debd3;
+  --transparentBlue:#7f6fff57;
   --blue:rgb(71, 102, 243);
   --lightBlue:rgb(105, 131, 248);
   --reallyLightBlue:#94a8ff;
+  --darkBlue:rgb(30, 61, 163);
   --lightGrey:#3d3d3d;
   --reallyLightGrey:#525252;
   --leftSideBarColor:rgb(39, 39, 39);
@@ -131,6 +137,7 @@ a{
   --themeColorTransparent:rgba(65, 141, 255, 0.37);
   --transparentWhite:rgba(255, 255, 255, 0.336);
   --reallyTransparentWhite:rgba(255, 255, 255, 0.192);
+  --transparentBlack:rgba(0, 0, 0, 0.856);
 }
 
 button{
@@ -138,6 +145,7 @@ button{
   border:none;
   cursor: pointer;
   transition: .2s transform;
+  position: relative;
 }
 
 button:active{
@@ -153,6 +161,9 @@ button:active{
   justify-content: center;
   color:#fff;
   font-weight: bold;
+  width: 100%;
+  max-width: 226px;
+  margin: 5px 0;
 }
 
 .standartInput{
@@ -175,10 +186,153 @@ button:active{
   height: 20px;
 }
 
+.importantMessage{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin:10px 0;
+}
+
+.importantMessage img{
+  width:50px;
+  height:50px;
+}
+
+.importantMessage > *{
+  width:100%;
+  max-width: 450px;
+  border-radius:var(--standartBorderRadius);
+  background:var(--yellowAndPinkGrad);
+  padding:10px;
+  text-align:center;
+}
+
+.SwitchToggle{
+  width: 60px;
+  height: 35px;
+  border-radius: var(--standartBorderRadius0);
+  background: var(--playlistsColor);
+  padding: 5px;
+  box-sizing: border-box;
+  user-select: none;
+  cursor: pointer;
+
+}
+
+.SwitchToggle:active .switchInnerCircle{
+  width: 27px;
+}
+
+.switchInnerCircle{
+  width: 25px;
+  height: 25px;
+  border-radius: 20px;
+  background: #464646;
+  transition: .2s transform, .2s width, .2s background;
+}
+
+.FullScreenLoading{
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.466);
+  opacity: 1;
+  visibility: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: .2s;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 10;
+}
+
+.FullScreenLoading img{
+  width: 40px;
+  height: 40px;
+}
+
+.SongItem.SongItemLoading .songItemImage{
+  background: var(--transparentWhite);
+  position: relative;
+}
+
+.SongItem.SongItemLoading .songItemNameAndAuthor{
+  width: 200px;
+}
+
+.SongItem.SongItemLoading .songItemName{
+  background: var(--transparentWhite);
+  width: 100%;
+  max-width: 200px;
+  height: 15px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.SongItem.SongItemLoading .songItemAuthor{
+  width: 100%;
+  max-width: 150px;
+  height: 10px;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  background: var(--transparentWhite);
+}
+
+.Hint{
+  opacity: 0;
+  visibility: hidden;
+  transition: .2s;
+  position: absolute;
+  padding: 5px 10px; 
+  border-radius: var(--standartBorderRadius3);
+  background: var(--transparentBlack);
+  text-align: center;
+  width: fit-content;
+  white-space: nowrap;
+  z-index: 100;
+}
+
+*:hover > .Hint{
+  opacity: 1;
+  visibility: visible;
+}
+
+/* .SongItem.SongItemLoading .songItemAuthor::after, .SongItem.SongItemLoading .songItemName::after, .SongItem.SongItemLoading .songItemImage::after{
+  content: "";
+  height: 100%;
+  background: var(--reallyTransparentWhite);
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 10px;
+  animation: loadingWhite 2s infinite;
+}
+
+@keyframes loadingWhite {
+  0%{
+    opacity: 0;
+    width: 0%;
+  }
+  50%{
+    opacity: 1;
+    width: 100%;
+  }
+  100%{
+    opacity: 0;
+    width: 100%;
+  }
+} */
+
 body{
   margin: 0;
   padding: 0;
   overflow: hidden;
+  background: rgb(15, 15, 15);
 }
 
 
@@ -186,6 +340,13 @@ body{
   display: flex;
   min-width: 100%;
   background: var(--navItemColor);
+  transition: .5s transform, .5s border-radius, .5s opacity;
+}
+
+.Wrapper.turnedOff{
+  transform: scale(0.95) translateY(40px);
+  border-radius: 40px;
+  opacity: 0;
 }
 
 .Content{
@@ -193,7 +354,6 @@ body{
 	box-sizing: border-box;
 	width: 100%;
 	max-height: 100vh;
-	height: 100vh;
 	overflow-y: auto;
   color:#fff;
   z-index: 0;
@@ -375,8 +535,6 @@ body{
   position: relative;
 }
 
-
-
 .AuthorItemBig .addToListBtn, .playlistWrapper .addToListBtn{
   position: absolute;
   top: 20px;
@@ -400,6 +558,19 @@ body{
   height: 8px;
 }
 
+.SuccessPlate{
+  width: 100%;
+  padding: 15px;
+  border-radius: var(--standartBorderRadius);
+  background: var(--green);
+  color:#fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
 @media (max-width:1000px) {
   .Wrapper{
     flex-direction: column-reverse;
@@ -407,7 +578,7 @@ body{
 
   .Content{
     padding: 10px;
-    height: calc(100vh - 99px);
+    height: 100%;
     font-size: .85em;
   }
 

@@ -12,15 +12,20 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
 	const [currentUser, setCurrentUser] = useState({})
 	const [loading, setLoading] = useState(true)
-	function login(email, password) {
-		return auth.signInWithEmailAndPassword(email, password)
+	function login(email, password, setError, setLoading) {
+		setLoading(true)
+		return auth.signInWithEmailAndPassword(email, password).then().catch(err=>{
+			setError(err.message)
+			setLoading(false)
+		})
 	}
 
 	function logout() {
 		return auth.signOut()
 	}
 
-	function signup(email, name, password, role, photoURL, imageColors) {
+	function signup(email, name, password, role, photoURL, imageColors, setError, setLoading) {
+		setLoading(true)
 		return auth.createUserWithEmailAndPassword(email, password)
 			.then((result) => {
 				firestore.collection('users')
@@ -37,12 +42,16 @@ export const AuthProvider = ({ children }) => {
 						addedSongs: [],
 						addedPlaylists: [],
 						addedAuthors: [],
+						lastSongPlayed:"",
 						chats: [],
 						friends: [],
 						subscribers: 0,
 						regDate: firebase.firestore.FieldValue.serverTimestamp(),
 						imageColors: imageColors
 					})
+				setLoading(false)
+			}).catch(err=>{
+				setError(err.message)
 			})
 	}
 

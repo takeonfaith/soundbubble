@@ -11,7 +11,7 @@ export const ChatWithFriendButton = ({ data, color }) => {
 	const [friendChatId, setFriendChatId] = useState(0)
 
 	useEffect(() => {
-		findChatURL(data.uid, currentUser, setShouldCreate, setFriendChatId)
+		findChatURL([data.uid], currentUser, setShouldCreate, setFriendChatId)
 	}, [data.uid])
 
 	return (

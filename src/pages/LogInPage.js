@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { ErrorPlate } from '../components/Basic/ErrorPlate'
+import { FullScreenLoading } from '../components/Basic/FullScreenLoading'
 import { BlurredBg } from '../components/SignIn-Up/BlurredBg'
 import { TitleAndLogo } from '../components/SignIn-Up/TitleAndLogo'
 import { useAuth } from '../functionality/AuthContext'
@@ -17,26 +19,14 @@ export const LogInPage = () => {
 		if(!isValid){
 			return setErrorMessage("One of your fields is totaly empty")
 		}
-
-		try{
-			setLoading(true)
-			setErrorMessage('')
-			await login(email, password)
-		} catch{
-			setErrorMessage('Some error happend')
-		}
-
-		setLoading(false)
+		await login(email, password, setErrorMessage, setLoading)
 	}
 	return (
 		<div className = "In-Up-Container">
 			<div className="CentralPlate">
+				<FullScreenLoading loading = {loading}/>
 				<TitleAndLogo title="Log In"/>
-				{errorMessage &&
-					<div className = "Alert">
-						{errorMessage}
-					</div>
-				}
+				<ErrorPlate errorMessage = {errorMessage}/>
 				<form onSubmit = {handleSubmit}>
 					<input type="email" placeholder="Enter your Email" className="emailInput" onChange = {(e)=>setEmail(e.target.value)}/>
 					<input type="password" name="" id="" placeholder="Enter your password" onChange = {(e)=>setPassword(e.target.value)}/>

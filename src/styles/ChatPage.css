@@ -122,6 +122,16 @@
 	animation-delay: .3s;
 }
 
+.chatWallpaper{
+	position:absolute;
+	top:-30px;
+	left:-30px;
+	width:calc(100% + 60px);
+	height:calc(100% + 65px);
+	z-index:-1;
+	outline:none;
+}
+
 @keyframes typingCircle {
 	0%{
 		opacity: 1;
@@ -284,6 +294,7 @@
 	align-items: center;
 	background: var(--playlistsColor);
 	box-shadow: 0 0 4px rgb(39, 39, 39);
+	z-index: 2;
 }
 
 .MessageItem.your .messageItemBody{
@@ -612,6 +623,30 @@
 	align-items: center; 
 	justify-content: center;
 	margin-bottom: 10px;
+	position: relative;
+}
+
+.chatInfoImage .changePhoto{
+	position:absolute;
+	width:100%;
+	height:100%;
+	left: 0;
+	top: 0;
+	z-index:10;
+	background:var(--transparentBlack);
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	opacity: 0;
+	transition: .2s;
+	transform: scale(0.96);
+	border-radius: 100px;
+	cursor: pointer;
+}
+
+.chatInfoImage .changePhoto:hover{
+	opacity: 1;
+	transform: scale(1);
 }
 
 .chatInfoImage img{
@@ -658,4 +693,33 @@
 }
 
 /* End More Button Sections */
+
+/* Start Mobile */
+
+@media (max-width:1000px) {
+	.MessageItem{
+		animation: none;
+		transition: .1s transform;
+	}
+
+	.messageItemBody{
+		max-width: none;
+	}
+
+	.chatWallpaper{
+		width: calc(100% + 40px);
+		height: calc(100% + 40px);
+	}
+
+	.chatMessagesWindow{
+		height: calc(100vh - 125px);
+	}
+
+	.chatInput .attachAndEmojis input{
+		width: 100%;
+		margin-right: 6px;
+	}
+}
+
+/* End Mobile */
 

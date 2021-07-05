@@ -11,13 +11,12 @@ import { ColorExtractor } from 'react-color-extractor'
 import { useAuth } from '../../functionality/AuthContext'
 export const AddPlaylist = () => {
 	const {currentUser} = useAuth()
-	const isModerator = currentUser.email === 'takeonfaith6@gmail.com'
 	const [playlistName, setPlaylistName] = useState("")
 	const [playlistCover, setPlaylistCover] = useState("")
 	const [authorsInputValue, setAuthorsInputValue] = useState('')
 	const [allAuthors, setAllAuthors] = useState([])
-	const [chosenAuthors, setChosenAuthors] = useState(!isModerator?[{uid:currentUser.uid, photoURL:currentUser.photoURL, displayName:currentUser.displayName}]:[])
-	const [releaseDate, setReleaseDate] = useState(isModerator?"":new Date().toString())
+	const [chosenAuthors, setChosenAuthors] = useState(!currentUser.isAdmin?[{uid:currentUser.uid, photoURL:currentUser.photoURL, displayName:currentUser.displayName}]:[])
+	const [releaseDate, setReleaseDate] = useState(currentUser.isAdmin?"":new Date().toString())
 	const [songsSearch, setSongsSearch] = useState("")
 	const [allSongs, setAllSongs] = useState([])
 	const [chosenSongs, setChosenSongs] = useState([])
@@ -33,7 +32,7 @@ export const AddPlaylist = () => {
 		setLoadingAuthors(true)
 		setAllAuthors([])
 		const friendsIds = currentUser.friends.map(friend=>{if(friend.status === 'added') return friend.uid})
-		const response = isModerator?
+		const response = currentUser.isAdmin?
 			firestore.collection("users").where("displayName", "==", authorsInputValue):
 			firestore.collection("users").where("uid", "in", friendsIds).where("displayName", "==", authorsInputValue)
 		const data = await response.get();
@@ -200,7 +199,7 @@ export const AddPlaylist = () => {
 				</label>
 
 				{
-					isModerator || currentUser.isAuthor? <div style={{ display: 'flex', justifyContent: 'flex-start', margin: '15px 0' }}>
+					currentUser.isAdmin || currentUser.isAuthor? <div style={{ display: 'flex', justifyContent: 'flex-start', margin: '15px 0' }}>
 						<RadioBtn label="Playlist" onClick={() => setPlaylistStatus(0)} currentActive={playlistStatus} id={0} />
 						<RadioBtn label="Album" onClick={() => setPlaylistStatus(1)} currentActive={playlistStatus} id={1} />
 					</div>:
@@ -213,7 +212,7 @@ export const AddPlaylist = () => {
 				</div>
 
 				{
-					isModerator || currentUser.isAuthor?
+					currentUser.isAdmin || currentUser.isAuthor?
 					<label>
 						<h3>Release Date</h3>
 						<input type="date" name="" id="" value={releaseDate} onChange={(e) => setReleaseDate(e.target.value)} />

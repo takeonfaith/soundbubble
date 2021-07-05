@@ -40,9 +40,9 @@ export const LibraryPlaylistItem = ({playlist}) => {
 	}, [playlistSongs.length])
 
 	return (
-		<Link to={`/albums/${playlist.id}`}>
+		<Link to={`/albums/${playlist.id}`} className = "playlistWrapper">
 			<div className="library playlistItem">
-				{playlist.image?<img src={playlist.image} alt="" />:<h1>{playlist.name.split(' ')[0][0]}{playlist.name.split(' ')[1][0]}</h1>}
+				{playlist.image?<div className = "playlistImageWrapper"><img src={playlist.image} alt="" /></div>:<h1>{playlist.name.split(' ')[0][0]}{playlist.name.split(' ')[1][0]}</h1>}
 				<h2 style = {{background:playlist.imageColors[2]}}>{shortWord(playlist.name, 10) }</h2>
 				<button onClick = {playChosenPlaylist}>
 					{(currentSongPlaylistSource.name === playlist.name) && play?<HiPause/>:<HiPlay/>}

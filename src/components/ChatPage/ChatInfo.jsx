@@ -1,30 +1,69 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
-import { firestore } from '../../firebase'
+import { firestore, storage } from '../../firebase'
 import { useFetchFirebaseData } from '../../hooks/fetchFirebaseData'
 import { useFetchDocs } from '../../hooks/useFetchDocs'
 import { LoadingCircle } from '../Basic/LoadingCircle'
 import { PersonTiny } from '../Basic/PersonTiny'
-import {FiSettings, FiVolume2} from 'react-icons/fi'
-import { BiCrown } from 'react-icons/bi'
+import {FiSettings} from 'react-icons/fi'
+import {MdModeEdit} from 'react-icons/md'
+import {RiVolumeUpLine } from 'react-icons/ri'
 import {ImAttachment} from 'react-icons/im'
 import shortWord from '../../functions/shortWord'
 import { useModal } from '../../functionality/ModalClass'
 import { AttachmentList } from './AttachmentList'
 import { Slider } from '../Tools/Slider'
+import { ColorExtractor } from 'react-color-extractor'
 
 export const ChatInfo = ({ data }) => {
 	const [participants, setParticipants] = useState([])
 	const [loading, setLoading] = useState(true)
 	const [chatNameValue, setChatNameValue] = useState(data.chatName)
+	const [newChatPhoto, setNewChatPhoto] = useState(data.chatImage)
+	const [newImageLocalPath, setNewImageLocalPath] = useState("")
+	const [newImageColors, setNewImageColors] = useState(data.imageColors || [])
 	const {setContent} = useModal()
 	const [participantsPage, setParticipantsPage] = useState(0)
+	const [showUpdateBtn, setShowUpdateBtn] = useState(false)
 	useFetchDocs(setLoading, data.participants, setParticipants, [data.id])	
+	useEffect(() => {
+		if(chatNameValue.trim() !== data.chatName.trim() || newChatPhoto !== data.chatImage){
+			setShowUpdateBtn(true)
+		}
+		else setShowUpdateBtn(false)
+	}, [chatNameValue, newChatPhoto])
+
+	useEffect(() => {
+		setChatNameValue(data.chatName)
+	}, [data.id])
+
+	function updateChatInfo(){
+		firestore.collection('chats').doc(data.id).update({
+			chatName:chatNameValue,
+			chatImage:newChatPhoto,
+			imageColors:newImageColors
+		})
+	}
+
+	async function onFileChange(e, place, setFunc) {
+		const file = e.target.files[0]
+		setNewImageLocalPath(URL.createObjectURL(file))
+		const storageRef = storage.ref()
+		const fileRef = storageRef.child(place + file.name)
+		await fileRef.put(file)
+		setFunc(await fileRef.getDownloadURL())
+	}
 	return(
 		<div className="ChatInfo">
+			<ColorExtractor src = {newImageLocalPath} getColors = {(colors)=>setNewImageColors(colors)}/>
 			<div className="chatInfoImageAndName">
 				<div className="chatInfoImage">
-					<img src={data.chatImage} alt="" />
+					<label className = "changePhoto">
+						<MdModeEdit/>
+						Change photo
+						<input type="file" style = {{display:'none'}} onChange = {(e)=>onFileChange(e, 'chatCovers/', setNewChatPhoto)}/>
+					</label>
+					<img src={newChatPhoto} alt="" />
 				</div>
 				<div>
 					<input type="text" className = "standartInput" value = {chatNameValue} onChange = {(e)=>setChatNameValue(e.target.value)}/>
@@ -38,11 +77,12 @@ export const ChatInfo = ({ data }) => {
 							{shortWord("Attachments", 7)} 
 						</button>
 						<button className="chatInfoButton">
-							<FiVolume2/>
+							<RiVolumeUpLine/>
 							Sound
 						</button>
 					</div>
 				</div>
+				{showUpdateBtn?<button className = "standartButton" onClick = {updateChatInfo}>Update Chat</button>:null}
 			</div>
 			<h4>Chat participants</h4>
 			<Slider pages = {['All participants', "Administrators"]} currentPage = {participantsPage} setCurrentPage = {setParticipantsPage}/>

@@ -4,7 +4,7 @@ import { HiPause, HiPlay } from 'react-icons/hi'
 import { useSong } from '../../functionality/SongPlay/SongContext'
 import { CgMusicNote } from 'react-icons/cg'
 import rightFormanForBigNumber from '../../functions/rightFormatForBigNumber'
-import { FiCheck, FiFlag, FiInfo, FiMoreVertical, FiPlusCircle, FiShare, FiTrash2 } from 'react-icons/fi'
+import { FiX, FiFlag, FiInfo, FiMoreVertical, FiPlusCircle, FiShare, FiTrash2 } from 'react-icons/fi'
 import { useOutsideClick } from '../../hooks/useOutsideClick'
 import { MdKeyboardArrowRight, MdPlaylistAdd } from 'react-icons/md'
 import AddOrDeleteButtonFull from './AddOrDeleteSongButton'
@@ -13,14 +13,17 @@ import { firestore } from '../../firebase'
 import { useModal } from '../../functionality/ModalClass'
 import { FriendsListToShareWith } from '../Basic/FriendsListToShareWith'
 import { SongInfo } from '../Basic/SongInfo'
-import { IoIosCheckmarkCircle, IoIosRadioButtonOff } from 'react-icons/io'
 import { deleteSongFromLibrary } from '../../functions/deleteSongFromLibrary'
 import { addSongToLibrary } from '../../functions/addSongToLibrary'
 import shortWord from '../../functions/shortWord'
 import {AddToPlaylists} from './AddToPlaylists'
 import { AddToListCircle } from '../Basic/AddToListCircle'
+import { useScreen } from '../../functionality/ScreenContext'
+import { displayAuthorsStr } from '../../functions/displayAuthorsStr'
+import { Hint } from '../Basic/Hint'
 export const SongItem = ({ song, localIndex, showListens = false, isNewSong = false, listOfChosenSongs, setListOfSongs }) => {
 	const { yourSongs, setCurrentSong, currentSong, displayAuthors, play, songRef, setPlay, setCurrentSongInQueue } = useSong()
+	const {isMobile} = useScreen()
 	const [openMoreWindow, setOpenMoreWindow] = useState(false)
 	const [moreWindowPosRelativeToViewport, setMoreWindowPosRelativeToViewport] = useState(0)
 	const currentItemRef = useRef(null)
@@ -65,13 +68,15 @@ export const SongItem = ({ song, localIndex, showListens = false, isNewSong = fa
 
 	function addOrDeleteButton() {
 		if (!currentUser.addedSongs.includes(song.id)) {
-			return <button onClick={(e) => addSongToLibrary(e, song, currentUser)}>
+			return <button onClick={(e) => addSongToLibrary(e, song, currentUser)} style = {{position:"relative"}}>
+				<Hint text = {"add song"}/>
 				<FiPlusCircle />
 			</button>
 		}
 		else {
-			return <button onClick={(e) => deleteSongFromLibrary(e, song, currentUser, yourSongs)}>
-				<FiCheck />
+			return <button onClick={(e) => deleteSongFromLibrary(e, song, currentUser, yourSongs)}  style = {{position:"relative"}}>
+				<Hint text = {"delete song"}/>
+				<FiX />
 			</button>
 		}
 	}
@@ -99,12 +104,13 @@ export const SongItem = ({ song, localIndex, showListens = false, isNewSong = fa
 								{showAdditionalInfoIfShould()}
 							</span>
 						</div>
-						<div className="songItemAuthor">{displayAuthors(song.authors)}</div>
+						{!isMobile?<div className="songItemAuthor">{displayAuthors(song.authors)}</div>:<div className="songItemAuthor">{displayAuthorsStr(song.authors, ' & ', 30)}</div>}
 					</div>
 				</div>
 				<div className="songItemMoreBtn" onClick={openSongItemMoreWindow}>
 					{addOrDeleteButton()}
 					<button>
+						<Hint text = {"more"}/>
 						<FiMoreVertical />
 					</button>
 				</div>

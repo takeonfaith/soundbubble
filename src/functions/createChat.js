@@ -1,7 +1,7 @@
 import { firestore } from "../firebase"
 import getUID from "./getUID"
 
-export const createChat = async (admins, participants, chatUID = getUID(), chatName, chatImage) => {
+export const createChat = async ( participants, chatUID = getUID(), chatName = "", chatImage = "", admins = [], imageColors = []) => {
 	firestore.collection('chats').doc(chatUID).set({
 		chatImage:chatImage,
 		chatName:chatName,
@@ -9,9 +9,9 @@ export const createChat = async (admins, participants, chatUID = getUID(), chatN
 		messages:[],
 		participants:participants,
 		wallpaper:'undefined',
-		admin:participants.length > 2? admins:undefined,
-		fullySeenBy:[],
-		typing:[]
+		admins:participants.length > 2? admins:[],
+		typing:[],
+		imageColors:imageColors
 	})
 
 	participants.map(async personId=>{

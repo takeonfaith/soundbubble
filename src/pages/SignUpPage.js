@@ -9,6 +9,7 @@ import { useAuth } from '../functionality/AuthContext'
 import {AiOutlineCloudDownload} from 'react-icons/ai'
 import { storage } from '../firebase'
 import { ColorExtractor } from 'react-color-extractor'
+import { FullScreenLoading } from '../components/Basic/FullScreenLoading'
 export const SignUpPage = () => {
 	const [currentRoleChoice, setCurrentRoleChoice] = useState(1)
 	const [email, setEmail] = useState("")
@@ -36,21 +37,13 @@ export const SignUpPage = () => {
 			return setErrorMessage("One of your fields is totaly empty")
 		}
 
-		try{
-			setLoading(true)
-			setErrorMessage('')
-			await signup(email, name, password, currentRoleChoice, photoURL, imageColors)
-		} catch{
-			setErrorMessage("Some error happend")
-		}
-
-		setLoading(false)
+		await signup(email, name, password, currentRoleChoice, photoURL, imageColors, setErrorMessage, setLoading)
 	}
-	console.log(imageColors)
 	return (
 		<div className="In-Up-Container">
 			<ColorExtractor src = {imageLocalPath} getColors = {(colors)=>setImageColors(colors)}/>
 			<div className="CentralPlate">
+				<FullScreenLoading loading = {loading}/>
 				<TitleAndLogo title = "Sign Up"/>
 				
 				{errorMessage &&
@@ -68,10 +61,10 @@ export const SignUpPage = () => {
 					</div>
 					<label className = "downloadFile">
 						<div className = "downloadPhoto">
-							<span className = "downloadBtnText">
+							{photoURL === ''?<span className = "downloadBtnText">
 								<AiOutlineCloudDownload/>
 								Download photo
-							</span>
+							</span>:<span className = "downloadBtnText">Done</span>}
 							<span className="photoLoadLine" style = {photoURL !== ''?{width:'100%'}:{}}></span>
 						</div>
 						<input type="file" name="" id="" onChange = {onFileChange}/>

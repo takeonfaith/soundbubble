@@ -12,13 +12,12 @@ import { PersonTiny } from '../Basic/PersonTiny'
 
 export const AddSong = () => {
 	const { currentUser } = useAuth()
-	const isModerator = currentUser.email === 'takeonfaith6@gmail.com'
 	const [songName, setSongName] = useState("")
 	const [songCover, setSongCover] = useState("")
 	const [songSrc, setSongSrc] = useState("")
 	const [authorsInputValue, setAuthorsInputValue] = useState('')
 	const [allAuthors, setAllAuthors] = useState([])
-	const [chosenAuthors, setChosenAuthors] = useState(!isModerator ? [{ uid: currentUser.uid, photoURL: currentUser.photoURL, displayName: currentUser.displayName }] : [])
+	const [chosenAuthors, setChosenAuthors] = useState(!currentUser.isAdmin ? [{ uid: currentUser.uid, photoURL: currentUser.photoURL, displayName: currentUser.displayName }] : [])
 	const [releaseDate, setReleaseDate] = useState("")
 	const [lyrics, setLyrics] = useState([])
 	const [imageLocalPath, setImageLocalPath] = useState("")
@@ -26,6 +25,7 @@ export const AddSong = () => {
 	const [loadingAuthors, setLoadingAuthors] = useState(false)
 	const [lyricsObject, setLyricsObject] = useState([])
 	const [errorMessage, setErrorMessage] = useState("")
+	const [showSuccessMessage, setShowSuccessMessage] = useState(false)
 	let typingTimeout
 	async function findAuthors(e) {
 		setLoadingAuthors(true)
@@ -134,8 +134,10 @@ export const AddSong = () => {
 				setSongName('')
 				setSongSrc('')
 				setReleaseDate('')
+				setShowSuccessMessage(true)
+				setImageColors([])
 			}).catch(err => {
-				console.log(err)
+				setErrorMessage(err)
 			})
 
 			chosenAuthors.forEach(async author => {
@@ -147,9 +149,19 @@ export const AddSong = () => {
 					ownSongs: authorSongs
 				})
 			})
+
+			
 		}
 
 	}
+
+	useEffect(() => {
+		if(showSuccessMessage){
+			setTimeout(()=>{
+				setShowSuccessMessage(false)
+			}, 2000)
+		}
+	}, [showSuccessMessage])
 
 	function timerUpFunc(func) {
 		clearTimeout(typingTimeout)
@@ -182,7 +194,7 @@ export const AddSong = () => {
 							return (
 								<div className="chosenAuthorItem">
 									<span>{author.displayName}</span>
-									<FiXCircle onClick={() => { if (isModerator) removeAuthorFromList(author); else if (author.uid !== currentUser.uid) removeAuthorFromList(author); }} />
+									<FiXCircle onClick={() => { if (currentUser.isAdmin) removeAuthorFromList(author); else if (author.uid !== currentUser.uid) removeAuthorFromList(author); }} />
 								</div>
 							)
 						})}
@@ -236,7 +248,7 @@ export const AddSong = () => {
 				<label>
 					<textarea name="" id="" placeholder={"Add song lyrics"} onKeyDown={transformLyricsToArrayOfObjects} onChange={(e) => setLyrics(e.target.value)}></textarea>
 				</label>
-				<button type="submit" className="addSongBtn">Add song</button>
+				<button type="submit" className="addSongBtn">{!showSuccessMessage?"Add song":"Song Successfully added. Congrats!"}</button>
 			</form>
 		</div>
 	)

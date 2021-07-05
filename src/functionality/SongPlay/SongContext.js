@@ -86,7 +86,7 @@ export const SongProvider = ({ children }) => {
 	}
 
 	async function fetchCurrentSongInitial() {
-
+		console.log(currentUser)
 		if (currentUser.uid !== undefined) {
 			const tempSongObject = {
 				id: -1,
@@ -262,7 +262,6 @@ export const SongProvider = ({ children }) => {
 	}
 
 	function updateListenCount() {
-		console.log('listen Count Update')
 		listenCountTimeOut.current = setTimeout(() => {
 			console.log('count added')
 			let listens = currentSongData.listens
@@ -270,6 +269,17 @@ export const SongProvider = ({ children }) => {
 			firestore.collection('songs').doc(currentSongData.id).update({
 				listens: listens
 			})
+			if(currentSongPlaylistSource.source.substr(1, 6) === 'albums'){
+				console.log('I Updated album listen count')
+				const sourceId = currentSongPlaylistSource.source.substr(8, currentSongPlaylistSource.source.length - 8)
+				firestore.collection('playlists').doc(sourceId).get().then((res)=>{
+					let listedData = res.data().listens
+					listedData++
+					firestore.collection('playlists').doc(sourceId).update({
+						listens:listedData
+					})
+				})
+			}
 		}, songDuration * 1000 * 0.5)
 	}
 

@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { firestore } from '../../firebase'
 import { useAuth } from '../../functionality/AuthContext'
 import { useSong } from '../../functionality/SongPlay/SongContext'
+import { displayAuthorsStr } from '../../functions/displayAuthorsStr'
 import { SongItem } from '../FullScreenPlayer/SongItem'
 import { SearchBar } from './SearchBar'
 import { TitleWithMoreBtn } from './TitleWithMoreBtn'
 
-export const SongList = ({ listOfSongs, source, title = "", showListens = false, isNewSong = false, showCount = false, listOfChosenSongs, setListOfSongs, showSearch = false }) => {
+export const SongList = ({ listOfSongs, source, title = "", showListens = false, isNewSong = false, showCount = false, listOfChosenSongs, setListOfSongs, showSearch = false, displayIfEmpty }) => {
 	const { setCurrentSongQueue, setCurrentSongPlaylistSource } = useSong()
 	const { currentUser } = useAuth()
 	const [showMoreSongs, setShowMoreSongs] = useState(false)
@@ -14,10 +15,11 @@ export const SongList = ({ listOfSongs, source, title = "", showListens = false,
 	const [displaySongs, setDisplaySongs] = useState(listOfSongs)
 	useEffect(() => {
 		setDisplaySongs(listOfSongs)
+		if(listOfSongs.length > 1) displayAuthorsStr(listOfSongs[1].authors)
 	}, [listOfSongs])
 	
 	function setQueueInSongList() {
-		if(source !== 'no'){
+		if(source !== 'no' && listOfSongs.length !== 0){
 			setCurrentSongQueue(listOfSongs)
 			setCurrentSongPlaylistSource(source)
 			const listSongsIds = listOfSongs.map(song => song.id)
@@ -31,6 +33,8 @@ export const SongList = ({ listOfSongs, source, title = "", showListens = false,
 			})
 		}
 	}
+
+	
 	return (
 		<div className="SongList" onClick={setQueueInSongList}>
 			{title.length !== 0 ? <TitleWithMoreBtn title={title} func={() => setShowMoreSongs(!showMoreSongs)} boolVal={showMoreSongs} lenOfList={listOfSongs.length} /> : null}
@@ -63,6 +67,7 @@ export const SongList = ({ listOfSongs, source, title = "", showListens = false,
 					)
 				}
 			})}
+			{listOfSongs.length === 0?displayIfEmpty:null}
 		</div>
 	)
 }

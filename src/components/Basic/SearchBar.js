@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { FiSearch, FiX} from 'react-icons/fi'
+import { FiSearch, FiXCircle} from 'react-icons/fi'
 import { firestore } from '../../firebase'
 import { BackBtn } from './BackBtn'
 import { LoadingCircle } from './LoadingCircle'
@@ -164,8 +164,8 @@ export const SearchBar = ({value, setValue, setAllFoundSongs, setResultPlaylists
 		<div> 
 			<div className="searchBar">
 				<div className="searchBarElement">
-					<BackBtn />
-					<span onClick={() => value.length ? setValue("") : null}>{value.length ? <FiX /> : <FiSearch />}</span>
+					<FiSearch />
+					<span onClick={() => value.length ? setValue("") : null}>{value.length ? <FiXCircle /> : null}</span>
 				</div>
 				<input 
 					type="text" 

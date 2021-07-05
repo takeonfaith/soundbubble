@@ -65,7 +65,7 @@ export const MainBanner = () => {
 						<button onClick = {()=>setcurrentSliderPage(checkNumber(currentSliderPage-1, 2, 0))}><BiChevronLeft/></button>
 						<button onClick = {()=>setcurrentSliderPage(checkNumber(currentSliderPage+1, 2, 0))}><BiChevronRight/></button>
 					</div>
-					<BlurredBg circleColor = "#fff"/>
+					{/* <BlurredBg circleColor = "#fff"/> */}
 				</>
 			}
 		</div>

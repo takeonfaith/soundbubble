@@ -1,6 +1,6 @@
 .LeftsideBar{
 	width: 230px;
-	height: 100vh;
+	height: 100%;
 	background: var(--leftSideBarColor);
 	box-sizing: border-box;
 	padding: 10px;
@@ -94,6 +94,7 @@
 	color:rgb(255, 255, 255);
 	border-radius: var(--standartBorderRadius2);
 	z-index: 10;
+	position: relative;
 }
 
 .TinyPlaylistBtns button:hover{
@@ -182,7 +183,6 @@
 .FriendsListToShareWith .person svg{
 	width: 25px;
 	height: 25px;
-	margin-right: 5px;
 }
 
 .leftSideBarContainer a {
@@ -221,6 +221,7 @@
 	color:rgb(255, 255, 255);
 	border-radius: var(--standartBorderRadius2);
 	z-index: 10;
+	position: relative;
 }
 
 

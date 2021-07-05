@@ -8,11 +8,13 @@ import { useFetchFirebaseData } from '../hooks/fetchFirebaseData'
 import {FiPlus} from 'react-icons/fi'
 import { useModal } from '../functionality/ModalClass'
 import {CreateChat} from '../components/ChatPage/CreateChat'
+import { SwitchToggle } from '../components/Basic/SwitchToggle'
 export const ChatPage = () => {
 	const [yourChats, setYourChats] = useState([])
 	const {toggleModal, setContent} = useModal()
 	const { currentUser } = useAuth()
 	const [loading, setLoading] = useState(true)
+	const [switchValue, setSwitchValue] = useState(false)
 	const [searchValue, setSearchValue] = useState("")
 	useFetchFirebaseData(setLoading, 'chats', currentUser.chats, setYourChats, (a, b)=>{if(b.messages.length && a.messages.length) return new Date(b.messages[b.messages.length - 1].sentTime).getTime() - new Date(a.messages[a.messages.length - 1].sentTime).getTime()})
 
@@ -24,13 +26,16 @@ export const ChatPage = () => {
 					<FiPlus/>
 					Create chat
 				</button>
+				<div style = {{display:'flex', alignItems:'center'}}>
+					<span style = {{margin:'0px 10px'}}>No sound</span> 
+					<SwitchToggle boolValue = {switchValue} setBoolValue = {setSwitchValue}/>
+				</div>
 			</div>
 			{loading ?
 				<LoadingCircle />
 				:
 				<div className="chatsWrapper">
 					{yourChats.map((chat, index) => {
-						console.log(chat)
 						return <ChatItem chatData={chat} key={index} />
 					})}
 				</div>

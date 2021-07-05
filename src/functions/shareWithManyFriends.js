@@ -2,68 +2,29 @@ import { firestore } from "../firebase";
 import { createChat } from "./createChat";
 import { findChatURL } from "./findChatURL";
 import getUID from "./getUID";
+import { sendMessage } from "./sendMessage";
 
 export default function shareWithFriends(shareList, currentUser, itemId, whatToShare, messageText = "") {
-
+	//Сделать через функцию sendMessage
 	shareList.map(async userId=>{
-		const chatId = findChatURL(userId, currentUser, ()=>null, ()=>null)
+		const chatId = findChatURL([userId], currentUser, ()=>null, ()=>null)
 		chatId.then(async (res)=>{
 			let chatData = (await firestore.collection('chats').doc(res).get()).data()
 			if(chatData !== undefined){
 				switch(whatToShare){
 					case "song":
-						chatData.messages.push({
-							id: chatData.messages.length,
-							sender: currentUser.uid,
-							message: messageText,
-							sentTime: new Date().toString(),
-							inResponseToMessage: null,
-							attachedSongs: [itemId],
-							attachedAlbums: [],
-							attachedAuthors: [],
-						})
+						sendMessage(chatId, chatData, currentUser.uid, messageText, [itemId])
 						break;
 					case "playlist":
-						chatData.messages.push({
-							id: chatData.messages.length,
-							sender: currentUser.uid,
-							message: messageText,
-							sentTime: new Date().toString(),
-							inResponseToMessage: null,
-							attachedSongs: [],
-							attachedAlbums: [itemId],
-							attachedAuthors: [],
-						})
+						sendMessage(chatId, chatData, currentUser.uid, messageText, [], [itemId])
 						break;
 					case "author":
-						chatData.messages.push({
-							id: chatData.messages.length,
-							sender: currentUser.uid,
-							message: messageText,
-							sentTime: new Date().toString(),
-							inResponseToMessage: null,
-							attachedSongs: [],
-							attachedAlbums: [],
-							attachedAuthors: [itemId],
-						})
+						sendMessage(chatId, chatData, currentUser.uid, messageText, [], [], [itemId])
 						break;
-						
 					default:
-						chatData.messages.push({
-							id: chatData.messages.length,
-							sender: currentUser.uid,
-							message: messageText,
-							sentTime: new Date().toString(),
-							inResponseToMessage: null,
-							attachedSongs: [itemId],
-							attachedAlbums: [],
-							attachedAuthors: [],
-						})
+						sendMessage(chatId, chatData, currentUser.uid, messageText, [itemId])
 						break;
 				}
-				firestore.collection('chats').doc(res).update({
-					messages: chatData.messages
-				})
 			}
 			else{
 				const chatUID = getUID()
@@ -71,59 +32,19 @@ export default function shareWithFriends(shareList, currentUser, itemId, whatToS
 					chatData = (await firestore.collection('chats').doc(chatUID).get()).data()
 					switch(whatToShare){
 						case "song":
-							chatData.messages.push({
-								id: chatData.messages.length,
-								sender: currentUser.uid,
-								message: messageText,
-								sentTime: new Date().toString(),
-								inResponseToMessage: null,
-								attachedSongs: [itemId],
-								attachedAlbums: [],
-								attachedAuthors: [],
-							})
+							sendMessage(chatUID, chatData, currentUser.uid, messageText, [itemId])
 							break;
 						case "playlist":
-							chatData.messages.push({
-								id: chatData.messages.length,
-								sender: currentUser.uid,
-								message: messageText,
-								sentTime: new Date().toString(),
-								inResponseToMessage: null,
-								attachedSongs: [],
-								attachedAlbums: [itemId],
-								attachedAuthors: [],
-							})
+							sendMessage(chatUID, chatData, currentUser.uid, messageText, [], [itemId])
 							break;
 						case "author":
-							chatData.messages.push({
-								id: chatData.messages.length,
-								sender: currentUser.uid,
-								message: messageText,
-								sentTime: new Date().toString(),
-								inResponseToMessage: null,
-								attachedSongs: [],
-								attachedAlbums: [],
-								attachedAuthors: [itemId],
-							})
+							sendMessage(chatUID, chatData, currentUser.uid, messageText, [], [], [itemId])
 							break;
 							
 						default:
-							chatData.messages.push({
-								id: chatData.messages.length,
-								sender: currentUser.uid,
-								message: messageText,
-								sentTime: new Date().toString(),
-								inResponseToMessage: null,
-								attachedSongs: [itemId],
-								attachedAlbums: [],
-								attachedAuthors: [],
-							})
+							sendMessage(chatUID, chatData, currentUser.uid, messageText, [itemId])
 							break;
 					}
-
-					firestore.collection('chats').doc(chatUID).update({
-						messages: chatData.messages
-					})
 				})
 			}
 	

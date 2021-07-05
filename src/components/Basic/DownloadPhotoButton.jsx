@@ -1,7 +1,7 @@
 import React from 'react'
 import {AiOutlineCloudDownload} from 'react-icons/ai'
 import { storage } from '../../firebase'
-export const DownloadPhotoButton = ({setErrorMessage, setImageLocalPath, downloadedPhoto, setDownloadedPhoto, place}) => {
+export const DownloadPhotoButton = ({setErrorMessage, setImageLocalPath, downloadedPhoto, setDownloadedPhoto, place, btnText = "Download song cover"}) => {
 	async function onFileChange(e, place, setFunc) {
 		setErrorMessage("")
 		const file = e.target.files[0]
@@ -33,7 +33,7 @@ export const DownloadPhotoButton = ({setErrorMessage, setImageLocalPath, downloa
 			<div className="downloadPhoto">
 				<span className="downloadBtnText">
 					<AiOutlineCloudDownload />
-					Download song cover
+					{btnText}
 				</span>
 				<span className="photoLoadLine" style={downloadedPhoto !== '' ? { width: '100%' } : {}}></span>
 			</div>

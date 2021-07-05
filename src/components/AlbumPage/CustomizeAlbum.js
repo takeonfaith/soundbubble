@@ -12,7 +12,6 @@ import { useAuth } from '../../functionality/AuthContext'
 import { SongList } from '../Basic/SongList'
 export const CustomizeAlbum = ({ playlist }) => {
 	const { currentUser } = useAuth()
-	const isModerator = currentUser.email === 'takeonfaith6@gmail.com'
 	const [playlistName, setPlaylistName] = useState(playlist.name)
 	const [playlistCover, setPlaylistCover] = useState(playlist.image)
 	const [authorsInputValue, setAuthorsInputValue] = useState('')
@@ -46,7 +45,7 @@ export const CustomizeAlbum = ({ playlist }) => {
 		setLoadingAuthors(true)
 		setAllAuthors([])
 		const friendsIds = currentUser.friends.map(friend => { if (friend.status === 'added') return friend.uid })
-		const response = isModerator ?
+		const response = currentUser.isAdmin ?
 			firestore.collection("users").where("displayName", "==", authorsInputValue) :
 			firestore.collection("users").where("uid", "in", friendsIds).where("displayName", "==", authorsInputValue)
 		const data = await response.get();
@@ -233,7 +232,7 @@ export const CustomizeAlbum = ({ playlist }) => {
 				</label>
 
 				{
-					isModerator || currentUser.isAuthor ? <div style={{ display: 'flex', justifyContent: 'flex-start', margin: '15px 0' }}>
+					currentUser.isAdmin || currentUser.isAuthor ? <div style={{ display: 'flex', justifyContent: 'flex-start', margin: '15px 0' }}>
 						<RadioBtn label="Playlist" onClick={() => setPlaylistStatus(0)} currentActive={playlistStatus} id={0} />
 						<RadioBtn label="Album" onClick={() => setPlaylistStatus(1)} currentActive={playlistStatus} id={1} />
 					</div> :
@@ -246,7 +245,7 @@ export const CustomizeAlbum = ({ playlist }) => {
 				</div>
 
 				{
-					isModerator || currentUser.isAuthor ?
+					currentUser.isAdmin || currentUser.isAuthor ?
 						<label>
 							<h3>Release Date</h3>
 							<input type="date" name="" id="" value={releaseDate} onChange={(e) => setReleaseDate(e.target.value)} />

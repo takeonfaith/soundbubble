@@ -50,7 +50,7 @@ export const SearchPage = () => {
 				focus
 			/>
 
-			<SongList listOfSongs = {resultSongList} source = {{ source: '/search', name: "Search", image: "https://lh3.googleusercontent.com/proxy/PJSN5iZPJhIuQKV-efbS0KD_HoL9nu4cyDmwOfWatZdeOyLBsEtosSWHTw4aK9ZKhrTEW2LGZCGxmH9vYFYx_PT16PIrETeNqijSxA", songsList:resultSongList }} title = {"Songs"} showListens/>
+			<SongList listOfSongs = {resultSongList} source = {{ source: '/search', name: "Search", image: "https://lh3.googleusercontent.com/proxy/PJSN5iZPJhIuQKV-efbS0KD_HoL9nu4cyDmwOfWatZdeOyLBsEtosSWHTw4aK9ZKhrTEW2LGZCGxmH9vYFYx_PT16PIrETeNqijSxA", songsList:resultSongList }} title = {"Songs"} showListens displayIfEmpty = {""}/>
 			<AuthorsList listOfAuthors = {resultAuthorList} title = {"Authors"}/>
 			<AlbumList listOfAlbums = {resultAlbumList} title = {"Albums and Playlists"} loading = {false}/>
 			<div className="colorfullShadow" style={{ background: shadowColor }}></div>

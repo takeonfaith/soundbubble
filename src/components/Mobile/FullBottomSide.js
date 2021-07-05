@@ -8,7 +8,7 @@ export const FullBottomSide = () => {
 	return (
 		<div className = "FullBottomSide">
 			<span onClick = {()=>setOpenFullScreenPlayer(true)}>
-				<Player textLimit = {25}/>
+				<Player textLimit = {25} linkToAuthors = {false}/>
 			</span>
 			<BottomControlBar/>
 		</div>

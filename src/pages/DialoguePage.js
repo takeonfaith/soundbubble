@@ -39,6 +39,7 @@ export const DialoguePage = () => {
 			.onSnapshot(snapshot => {
 				setChatData(snapshot.data())
 				setMessageList(snapshot.data().messages)
+				
 				setCurrentDateOnTop(snapshot.data().messages.length?snapshot.data().messages[0].sentTime:new Date().toString())
 				setLoading(false)
 			})
@@ -46,6 +47,8 @@ export const DialoguePage = () => {
 			unsubscribe()
 		}
 	}, [firestore, chatId])
+
+
 
 	useEffect(() => {
 		if (chatData.participants !== undefined) {
@@ -89,7 +92,7 @@ export const DialoguePage = () => {
 						/>
 					</>
 			}
-			{chatData.wallpaper !== "undefined"?<img src={chatData.wallpaper} alt="" style = {{position:'absolute', top:"-30px", left:"-30px", width:'calc(100% + 60px)', height:'calc(100% + 65px)', zIndex:'-1', outline:'none'}}/>:null}
+			{chatData.wallpaper !== "undefined"?<img src={chatData.wallpaper} className = "chatWallpaper" alt=""/>:null}
 		</div>
 	)
 }

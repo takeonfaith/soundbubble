@@ -9,6 +9,7 @@ import { FiMinus } from 'react-icons/fi';
 import {useSwipeable} from 'react-swipeable'
 import checkNumber from '../../functions/checkNumber';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
+import { useScreen } from '../../functionality/ScreenContext';
 
 export default function FullScreenPlayer() {
   const {
@@ -22,7 +23,7 @@ export default function FullScreenPlayer() {
     openMenu,
     setOpenMenu
   } = useSong()
-  
+  const {isMobile} = useScreen()
   const lyricsRef = useRef(null)
   const [transformTransition, setTransformTransition] = useState(0.05)
   const [mobileMenuTransition, setMobileMenuTransition] = useState(0)
@@ -161,9 +162,13 @@ export default function FullScreenPlayer() {
       <div className="closeFullScreen" onClick={() => { setOpenFullScreenPlayer(false) }}>
         {window.innerWidth > 1000 ? <HiChevronDown /> : <FiMinus style={{ opacity: .6 }} />}
       </div>
-      <div className="FullScreenPlayer">
-
-        <div className="leftSide" style={!openMenu ? { width: '100%' } : {}}>
+      <div className="FullScreenPlayer" >
+        <div className="leftSide" style={!openMenu ? { width: '100%' } : isMobile?{
+            opacity: 0.6,
+            visibility: 'visible',
+            transform: `translateY(20px)`,
+            borderRadius: `10px`,
+            transition: `.4s`}:null}>
           <Player inputRef={inputRef} />
         </div>
         {window.innerWidth > 1000 ?

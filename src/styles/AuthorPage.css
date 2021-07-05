@@ -39,6 +39,7 @@
 	color:#fff;
 	background: transparent;
 	margin: 2px;
+	position: relative;
 }
 
 .headerBtns button:hover{
@@ -235,7 +236,7 @@
 .topTitle .MoreBtn button{
 	transition: .1s background;
 	background: rgb(71 102 243 / 57%);
-	color: #979eff;
+	color: #9cbbff;
 	padding: 5px 20px;
 	border-radius: var(--standartBorderRadius3);
 	font-weight: 600;
@@ -541,9 +542,18 @@
 @media (max-width:1000px) {
 	.Header{
 		flex-direction: column;
-		height: 420px;
-		justify-content: center;
+		min-height: 430px;
+		height: fit-content;
+		padding:30px;
+	}
 
+	.Header .headerBtns{
+		width: 100%;
+		position: relative;
+		top: 0;
+		left: 0;
+		justify-content: space-between;
+		margin-bottom: 20px;
 	}
 
 	.Header .headerAuthorsImage{

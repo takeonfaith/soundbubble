@@ -12,7 +12,7 @@ export const ChatHeader = ({ data }) => {
 	const { currentUser } = useAuth()
 	const {toggleModal, setContent} = useModal()
 	const [otherPerson, setOtherPerson] = useState({})
-	const [headerColors, setHeaderColors] = useState([])
+	const [headerColors, setHeaderColors] = useState(data.chatName === ""?[]:data.imageColors)
 	async function fetchOtherPerson() {
 		const otherPersonId = data.participants.find(personId => personId !== currentUser.uid)
 		const person = (await firestore.collection('users').doc(otherPersonId).get()).data()

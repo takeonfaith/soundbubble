@@ -2,20 +2,24 @@ import React, { useEffect, useRef, useState } from 'react'
 import { AiFillFire, AiFillLike } from 'react-icons/ai'
 import { BiShare } from 'react-icons/bi'
 import { FcLike } from 'react-icons/fc'
+import { useSwipeable } from 'react-swipeable'
 import { authors } from '../../data/authors'
 import { chat } from '../../data/chat'
 import { firestore } from '../../firebase'
 import { useAuth } from '../../functionality/AuthContext'
+import { useScreen } from '../../functionality/ScreenContext'
 import displayDate from '../../functions/displayDate'
 import { findWhatToWriteInResponseToItem } from '../../functions/findWhatToWriteInResponseItem'
 import useOnScreen from '../../hooks/useOnScreen'
 import { AuthorItemBig } from '../AuthorPage/AuthorItemBig'
 import { PlaylistItem } from '../AuthorPage/PlaylistItem'
+import { SongItemLoading } from '../Basic/SongItemLoading'
 import { SongItem } from '../FullScreenPlayer/SongItem'
 import { SeenByCircle } from './SeenByCircle'
 
 export const MessageItem = ({ messageData, chatId, scrollToMessageRef, setScrollToMessageId, scrollToMessageId, showPhoto = true, otherMessages, inResponseToMessageArr, setInResponseToMessageArr }) => {
 	const { currentUser } = useAuth()
+	const {isMobile} = useScreen()
 	const { message, attachedAlbums, attachedSongs, attachedAuthors, sender, inResponseToMessage, id, sentTime } = messageData
 	const [userThatSentMessage, setUserThatSentMessage] = useState({})
 	const messageSentTime = displayDate(sentTime, 2)
@@ -26,15 +30,26 @@ export const MessageItem = ({ messageData, chatId, scrollToMessageRef, setScroll
 	const [inResponseNames, setInResponseNames] = useState([])
 	const messageRef = useRef()
 	const isVisible = useOnScreen(messageRef)
-	
+	const [swipeDeltaX, setSwipeDeltaX] = useState(0)
+	const [transormTransition, setTransformTransition] = useState(0)
+	const handlers = useSwipeable({ onSwiping: (event) => {if(event.deltaX < 0) setSwipeDeltaX(event.deltaX)} })
+	const refPassthrough = (el) => {
+		// call useSwipeable ref prop with el
+		handlers.ref(el);
+
+		// set myRef el so you can access it yourself
+		messageRef.current = el;
+	}
 	useEffect(() => {
-		if(messageData.seenBy !== undefined){
-			if(messageData.seenBy.length === 1 && currentUser.uid !== messageData.sender){
-				const tempMessages = otherMessages
-				tempMessages[messageData.id].seenBy.push(currentUser.uid)
-				firestore.collection('chats').doc(chatId).update({
-					messages:tempMessages
-				})
+		if (messageData.seenBy !== undefined) {
+			if (currentUser.uid !== messageData.sender && isVisible) {
+				if (!messageData.seenBy.includes(currentUser.uid)) {
+					const tempMessages = otherMessages
+					tempMessages[messageData.id].seenBy.push(currentUser.uid)
+					firestore.collection('chats').doc(chatId).update({
+						messages: tempMessages
+					})
+				}
 			}
 		}
 	}, [isVisible])
@@ -75,10 +90,27 @@ export const MessageItem = ({ messageData, chatId, scrollToMessageRef, setScroll
 		}
 	}
 
+	function returnToInitial() {
+		let dropDelta
+		clearTimeout(dropDelta)
+		setTransformTransition(0.2)
+		dropDelta = setTimeout(() => {
+		  setSwipeDeltaX(0)
+		  setTransformTransition(0)
+		}, 100)
+	 }
+
+	useEffect(() => {
+		if(swipeDeltaX < -160){
+			returnToInitial()
+			addMessageToResponseList()
+		}
+	}, [swipeDeltaX])
+
 
 	const emojis = [<FcLike />, <AiFillFire />, <AiFillLike />]
 	return (
-		<div className={"MessageItem " + (sender === currentUser.uid ? 'your' : '')} ref={id === scrollToMessageId ? scrollToMessageRef : messageRef} style={showPhoto ? { paddingBottom: '15px' } : {}}>
+		<div className={"MessageItem " + (sender === currentUser.uid ? 'your' : '')} ref={id === scrollToMessageId ? scrollToMessageRef : refPassthrough} style={!isVisible ? { opacity: '0', visibility: 'hidden' } : showPhoto ? { paddingBottom: '15px', transform:`translateX(${swipeDeltaX}px)`, transition:transormTransition } : {transform:`translateX(${swipeDeltaX}px)`, transition:transormTransition}} onTouchEnd = {returnToInitial}>
 			<div className="messageItemImage">
 				{showPhoto ?
 					<img src={userThatSentMessage.photoURL} alt="" /> :
@@ -95,7 +127,7 @@ export const MessageItem = ({ messageData, chatId, scrollToMessageRef, setScroll
 					inResponseToMessagesData.map((messageData, index) => {
 						return (
 							<div className="responseItem" onClick={() => setScrollToMessageId(messageData.id)}>
-								<span style = {{display:'flex', alignItems:'center'}}>
+								<span style={{ display: 'flex', alignItems: 'center' }}>
 									<h5 style={messageData.sender === currentUser.uid ? { color: "var(--lightPurple)" } : {}}>
 										{inResponseNames[index]}
 									</h5>
@@ -115,7 +147,7 @@ export const MessageItem = ({ messageData, chatId, scrollToMessageRef, setScroll
 				<div>
 					<p>{message}</p>
 					{attachedSongsData.map((song, key) => {
-						return <SongItem song={song} localIndex={key} key={key} />
+						return isVisible ? <SongItem song={song} localIndex={key} key={key} /> : <SongItemLoading />
 					})}
 					{attachedPlaylistsData.map((album, index) => {
 						return <PlaylistItem playlist={album} key={index} />
@@ -126,8 +158,8 @@ export const MessageItem = ({ messageData, chatId, scrollToMessageRef, setScroll
 				</div>
 
 			</div>
-			<SeenByCircle listOfSeen = {messageData.seenBy}/>
-			<button className="respondToMessageBtn" onClick={addMessageToResponseList}>
+			<SeenByCircle listOfSeen={messageData.seenBy} />
+			<button className="respondToMessageBtn" onClick={addMessageToResponseList} style = {isMobile?{opacity:-swipeDeltaX/80}:{}}>
 				<BiShare />
 			</button>
 		</div>

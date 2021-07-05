@@ -4,9 +4,10 @@ import { TiArrowRepeat, TiArrowShuffle } from 'react-icons/ti'
 import { useSong } from '../../functionality/SongPlay/SongContext'
 import checkNumber from '../../functions/checkNumber'
 import correctTimeDisplay from '../../functions/correctTimeDisplay'
+import { displayAuthorsStr } from '../../functions/displayAuthorsStr'
 import { ColorCircles } from './colorCircles'
 
-export const Player = ({inputRef, textLimit = 18}) => {
+export const Player = ({inputRef, textLimit = 18, linkToAuthors = true}) => {
 	const { 
 		findLen,  
 		currentTime, 
@@ -35,7 +36,7 @@ export const Player = ({inputRef, textLimit = 18}) => {
 						<div style={name.length > textLimit ? { animation: 'outSideText 17s infinite', whiteSpace: 'nowrap' } : {}}>{name}</div>
 					</h2>
 					<h3 title={authors.map((el) => ' ' + el.displayName)} style={{ overflow: 'hidden' }}>
-						<div style={findLen() > textLimit ? { animation: 'outSideText 17s infinite', whiteSpace: 'nowrap' } : {}}>{displayAuthors()}</div>
+						{linkToAuthors?<div style={findLen() > textLimit ? { animation: 'outSideText 17s infinite', whiteSpace: 'nowrap' } : {}}>{displayAuthors()}</div>:<div>{displayAuthorsStr(authors, ' & ', 33)}</div>}
 					</h3>
 				</div>
 			</div>

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Loading } from './Loading'
+
 import { useSong } from '../../functionality/SongPlay/SongContext'
 import { useAuth } from '../../functionality/AuthContext'
 import { firestore } from '../../firebase'
 import { Slider } from '../Tools/Slider'
 import {BiCheckCircle, BiDownArrow, BiUpArrow} from 'react-icons/bi'
 import { FiXCircle } from 'react-icons/fi'
+import { LyricsParagraph } from './LyricsParagraph'
 export const Lyrics = () => {
 	const { setIsThereKaraoke, currentSongData, setCurrentSongData, isThereKaraoke, currentParagraph, displayAuthors, changeCurrentTime, play, currentTime, currentParagraphRef, currentSong, lyrics, rightSideCurrentPage, openFullScreenPlayer } = useSong()
 	const { currentUser } = useAuth()
@@ -16,7 +17,6 @@ export const Lyrics = () => {
 	useEffect(() => {
 		if (isThereKaraoke && rightSideCurrentPage === 2 && openFullScreenPlayer) currentParagraphRef.current.scrollIntoView()
 	}, [currentParagraph])
-	const isModerator = currentUser.email === 'takeonfaith6@gmail.com'
 	function inputKaraoke(e, index) {
 		// console.log("ewqewqewq")
 		let tempArray = karaokeModeratorTimes
@@ -74,7 +74,7 @@ export const Lyrics = () => {
 	return (
 		<div className="Lyrics">
 			{
-				isModerator ?
+				currentUser.isAdmin ?
 					<Slider pages={['Listen mode', 'Edit Mode']} currentPage={lyricsModeratorMode} setCurrentPage={setLyricsModeratorMode} /> :
 					null
 			}
@@ -82,35 +82,7 @@ export const Lyrics = () => {
 				isThereKaraoke ?
 					lyrics.map((el, i) => {
 						return (
-							<div className="lyricsBlock" key={i} id = {i}  onClick={(e) => changeCurrentTime(e, el.startTime)} style={play ? currentParagraph === i ? {} : Math.abs(currentParagraph - i) < 2 ? { opacity: .5, filter: 'blur(1px)' } : { opacity: .2, filter: 'blur(2px)' } : {}} ref={currentParagraph === i ? currentParagraphRef : null} >
-								{
-									lyricsModeratorMode === 1 ?
-									<div className="lyricsBlockInput">
-										<span onClick={e => e.stopPropagation()}>{karaokeModeratorTimes[i] !== undefined && karaokeModeratorTimes[i].length !== 0?<BiCheckCircle style = {{background:'var(--themeColor3)', color:'var(--themeColor)'}}/>:<FiXCircle/>} </span>
-										<input type="number"  value={karaokeModeratorTimes[i] || inputKaraokeTime} onChange={(e) => inputKaraoke(e, i)} onClick={e => e.stopPropagation()} /> 
-										<div className="addLyricsElementBtns" onClick={e => e.stopPropagation()}>
-											<button onClick = {()=>{addLyricsBlock(i, 'up')}}><BiUpArrow/></button>
-											<button onClick = {()=>{addLyricsBlock(i, 'down')}}><BiDownArrow/></button>
-										</div>
-									</div>:
-									null
-								}
-								{
-									el.text === "@loading" ?
-										<Loading currentTime={currentTime - lyrics[i].startTime} timeSpan={lyrics[i + 1].startTime - lyrics[i].startTime} id = {i}/>
-										:
-										el.text === "@end" ? <></>
-											:
-											<p key={i} id = {i} style={currentParagraph === i ?
-												{} : window.innerWidth > 1000 ?
-													Math.abs(currentParagraph - i) < 2 ?
-														{ transform: 'scale(.8) translateX(-58px)' } : { transform: 'scale(.75) translateX(-78px)' } :
-													Math.abs(currentParagraph - i) < 2 ?
-														{ transform: 'scale(.8) translateX(-11.5%)' } : { transform: 'scale(.75) translateX(-15.6%)' }}>{el.text}</p>
-								}
-
-							</div>
-
+							<LyricsParagraph el = {el} index = {i} lyricsModeratorMode = {lyricsModeratorMode} karaokeModeratorTimes = {karaokeModeratorTimes} setKaraokeModeratorTimes = {setKaraokeModeratorTimes} setInputKaraokeTime = {setInputKaraokeTime} inputKaraokeTime = {inputKaraoke}/>
 						)
 					}) :
 					lyrics.map((el, i) => {

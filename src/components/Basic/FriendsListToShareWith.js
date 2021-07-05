@@ -20,14 +20,6 @@ export const FriendsListToShareWith = ({ item, whatToShare = 'song' }) => {
 		return setChosenFriends(filtered)
 	}
 
-	function addFriend(data) {
-		if (!chosenFriends.some(personId => personId === data.uid)) {
-			return setChosenFriends(prev => [...prev, data.uid])
-		}
-
-		removeFriendFromList(data)
-	}
-
 	useEffect(() => {
 		if (shared) {
 			setTimeout(() => {
@@ -52,12 +44,12 @@ export const FriendsListToShareWith = ({ item, whatToShare = 'song' }) => {
 				{foundPeople.length > 0 ?
 					foundPeople.map((data, index) => {
 						return (
-							<PersonTiny data={data} showChoose chosenArray={chosenFriends} onClick={() => addFriend(data)} key={index} />
+							<PersonTiny data={data} showChoose chosenArray={chosenFriends} setChosenArray = {setChosenFriends} key={index} />
 						)
 					}):
 					yourFriends.map((data, index) => {
 						return (
-							<PersonTiny data={data} showChoose chosenArray={chosenFriends} onClick={() => addFriend(data)} key={index} />
+							<PersonTiny data={data} showChoose chosenArray={chosenFriends} setChosenArray = {setChosenFriends} key={index} />
 						)
 					})
 				}

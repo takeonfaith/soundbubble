@@ -36,7 +36,7 @@ export const AlbumList = ({listOfAlbums, title = "", loading = true, listOfChose
 			</div>
 			<div className="authorsShiftButtons">
 				<button onClick={scrollToLeft} style={scrollLeft <= 0 ? { visibility: 'hidden', opacity: '0' } : {}}><FiChevronLeft /></button>
-				<button onClick={scrollToRight} style={shouldRenderRightArrow && (wrapperRef.current.scrollWidth - wrapperRef.current.offsetWidth !== scrollLeft)? {} : { visibility: 'hidden', opacity: '0' }}><FiChevronRight /></button>
+				<button onClick={scrollToRight} style={shouldRenderRightArrow && wrapperRef.current && (wrapperRef.current.scrollWidth - wrapperRef.current.offsetWidth !== scrollLeft)? {} : { visibility: 'hidden', opacity: '0' }}><FiChevronRight /></button>
 			</div>
 		</div>
 	):null

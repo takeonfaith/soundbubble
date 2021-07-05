@@ -7,9 +7,11 @@ import { useSong } from '../../functionality/SongPlay/SongContext'
 import { firestore } from '../../firebase'
 import { useAuth } from '../../functionality/AuthContext'
 import { AddToListCircle } from '../Basic/AddToListCircle'
+import { useScreen } from '../../functionality/ScreenContext'
 export const PlaylistItem = ({playlist, listOfChosenAlbums, setListOfChosenAlbums}) => {
 	const playlistDate = new Date(playlist.creationDate)
 	const {currentUser} = useAuth()
+	const {isMobile} = useScreen()
 	const {setCurrentSongQueue, setCurrentSongPlaylistSource, playSong, setCurrentSongInQueue, setCurrentSong, currentSongPlaylistSource, songRef, setPlay, play} = useSong()
 	const [playlistSongs, setPlaylistSongs] = useState([])
 	function fetchSongsInAlbum() {
@@ -58,14 +60,17 @@ export const PlaylistItem = ({playlist, listOfChosenAlbums, setListOfChosenAlbum
 		<Link to={`/albums/${playlist.id}`} style = {{textDecoration:'none'}} className = "playlistWrapper">
 			<AddToListCircle listOfChosenItems = {listOfChosenAlbums} setListOfChosenItems = {setListOfChosenAlbums} itemId = {playlist.id}/>
 			<div className="playlistItem">
-				{playlist.image?<img src={playlist.image} alt="" />:<h1>{playlist.name.split(' ')[0][0]}{playlist.name.split(' ')[1][0]}</h1>}
+				{playlist.image?
+					<div className = "playlistImageWrapper"><img src={playlist.image} alt="" /></div>:
+					<h1>{playlist.name.split(' ')[0][0]}{playlist.name.split(' ')[1][0]}</h1>
+				}
 				{/* {!playlist.isAlbum?<h2>{playlist.name}</h2>:null} */}
 				<button onClick = {playChosenPlaylist}>
 					{(currentSongPlaylistSource.name === playlist.name) && play?<HiPause/>:<HiPlay/>}
 				</button>
 			</div>
 			<h4 style = {{display:'flex', alignItems:'center', margin:'5px 0'}}>
-				{shortWord(playlist.name, 15)} 
+				{shortWord(playlist.name, isMobile?10:15)} 
 				<span style = {{fontSize:".6em", opacity:.6, fontWeight:'500', marginLeft:'7px'}}>
 					{playlist.isAlbum?playlist.songs.length === 1?"single":'album':'playlist'}
 				</span>

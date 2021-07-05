@@ -14,15 +14,14 @@ export const BottomControlBar = () => {
 	const [currentPage, setCurrentPage] = useState(
 		() => {
 			let page = leftSideBar.find((el, i) => {
-				if (window.location.pathname.includes(normalizeString(el.title))) {
+				console.log(window.location.hash)
+				if (window.location.hash.includes(normalizeString(el.title))) {
 					return true
 				}
 
-				if(window.location.pathname.includes(currentUser.uid)) return true
-
 				return false
 			})
-			return page === undefined?0:page.id 
+			return page === undefined ? 0 : page.id
 		}
 	)
 	

@@ -4,6 +4,7 @@ import wave from '../../images/wave2.svg'
 import { useAuth } from '../../functionality/AuthContext'
 import {LibraryPlaylistItem} from '../../components/LibraryPage/LibraryPlaylistItem'
 import { SongList } from '../Basic/SongList'
+import { Link } from 'react-router-dom'
 export const SongsPage = () => {
 	const {yourSongs, yourPlaylists } = useSong()
 	const {currentUser} = useAuth()
@@ -22,7 +23,7 @@ export const SongsPage = () => {
 				</div>
 			</div>
 			<div className="yourSongsList">
-				<SongList listOfSongs = {yourSongs} source = {{ source: '/library', name: "Your Library", image: currentUser.photoURL, songsList: yourSongs}} showSearch/>
+				<SongList listOfSongs = {yourSongs} source = {{ source: '/library', name: "Your Library", image: currentUser.photoURL, songsList: yourSongs}} showSearch displayIfEmpty = {<Link to = "/search"><button className = "standartButton">Search for songs</button></Link>}/>
 			</div>
 		</div>
 	)

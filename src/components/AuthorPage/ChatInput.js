@@ -143,7 +143,7 @@ export const ChatInput = ({ chatId, chatData, messageText, setMessageText, inRes
 					</button>
 				</div>
 				<input type="text" style={{ background: 'var(--lightGrey)', border: 'none', outline: 'none', minHeight: '100%' }} value={messageText} onChange={(e) => { setMessageText(e.target.value) }} onKeyUp={(e) => { if (e.key === 'Enter') { sendMessageFull() } }} />
-				<div className="emojis">
+				{/* <div className="emojis">
 					<div className="emojiItem">
 						<FcLike />
 					</div>
@@ -153,7 +153,7 @@ export const ChatInput = ({ chatId, chatData, messageText, setMessageText, inRes
 					<div className="emojiItem" style={{ color: 'var(--lightBlue)' }}>
 						<AiFillLike />
 					</div>
-				</div>
+				</div> */}
 			</div>
 			<button className="sendBtn" onClick={() => { sendMessageFull() }}>
 				<MdSend />

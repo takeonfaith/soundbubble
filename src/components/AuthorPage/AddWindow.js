@@ -14,7 +14,7 @@ export const AddWindow = ({ data }) => {
 	const [openAddSongWindow, setOpenAddSongWindow] = useState(false)
 	const [currentSliderPage, setCurrentSliderPage] = useState(0)
 	const sliderPages = [<AddSong/>, <AddPlaylist/>]
-	return (((currentUser.email === 'takeonfaith6@gmail.com') || (data.isAuthor)) && (data.uid === currentUser.uid)) ?
+	return (((currentUser.isAdmin) || (data.isAuthor)) && (data.uid === currentUser.uid)) ?
 		(
 			<div className="AddSong">
 				<button onClick={() => setOpenAddSongWindow(!openAddSongWindow)} style={openAddSongWindow ? { background: 'var(--red)' } : {}} className = "openAddSongWindowBtn">

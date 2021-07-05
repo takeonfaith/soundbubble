@@ -30,7 +30,8 @@ export const LeftsideBar = () => {
 	const [currentPage, setCurrentPage] = useState(
 		() => {
 			let page = leftSideBar.find((el, i) => {
-				if (window.location.pathname.includes(normalizeString(el.title))) {
+				console.log(window.location.hash)
+				if (window.location.hash.includes(normalizeString(el.title))) {
 					return true
 				}
 
@@ -39,7 +40,6 @@ export const LeftsideBar = () => {
 			return page === undefined ? 0 : page.id
 		}
 	)
-
 	return (
 		<div className="LeftsideBar">
 			<div className="logo">
@@ -81,7 +81,7 @@ export const LeftsideBar = () => {
 						})}
 						<h4 className="seeMoreBtn" onClick={() => { toggleModal(); setContent(<FriendsListToShareWith item={currentSongData} whatToShare = {"song"}/>) }}>See more</h4>
 						</>:
-						<h4 style = {{position:'absolute', left:'50%', top:"50%", transform:'translate(-50%, -50%)', width:'100%', display:'flex', alignItems:'center', justifyContent:'center'}}>No friends added</h4>
+						<h4 style = {{alignSelf:'center',width:'100%', display:'flex', alignItems:'center', justifyContent:'center'}}>No friends added</h4>
 					}
 					
 				</span>
@@ -102,12 +102,15 @@ export const LeftsideBar = () => {
 				</div>
 			</div>
 			<div className="leftSideBarContainer">
-				<div className="littlePlayer">
-					<Player textLimit={15} inputRef={leftSideBarInputRef} />
-					<div className="fullScreenBtn" onClick={() => setOpenFullScreenPlayer(true)}>
-						<BiFullscreen />
+				{
+					(Object.keys(currentSongData).length === 0 && currentSongData.constructor === Object) || currentSongData.id === -1?
+					null:<div className="littlePlayer">
+						<Player textLimit={15} inputRef={leftSideBarInputRef} />
+						<div className="fullScreenBtn" onClick={() => setOpenFullScreenPlayer(true)}>
+							<BiFullscreen />
+						</div>
 					</div>
-				</div>
+				}
 			</div>
 		</div>
 	)

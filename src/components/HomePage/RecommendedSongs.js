@@ -3,6 +3,7 @@ import { firestore } from '../../firebase'
 import { useAuth } from '../../functionality/AuthContext'
 import {useSong} from '../../functionality/SongPlay/SongContext'
 import { SongList } from '../Basic/SongList'
+import {ImportantMessage} from '../Basic/ImportantMessage'
 export const RecommendedSongs = () => {
 	const {yourAuthors} = useSong()
 	const {currentUser} = useAuth()
@@ -27,7 +28,7 @@ export const RecommendedSongs = () => {
 	}, [])
 	return (
 		<div className = 'RecommendedSongs'>
-			<SongList listOfSongs = {recommendedSongs} source = {{source: `/home`, name: "Recommended Songs", image: "", songsList: recommendedSongs}} title = {"Recommended Songs"}/>
+			<SongList listOfSongs = {recommendedSongs} source = {{source: `/home`, name: "Recommended Songs", image: "", songsList: recommendedSongs}} title = {"Recommended Songs"} displayIfEmpty = {<ImportantMessage message = {"No songs recommended. Add favorite authors so we could know what to recommend"} image = {"https://i.pinimg.com/originals/b2/3d/f6/b23df649311586e74a8455c92eb3d76b.png"}/>}/>
 		</div>
 	)
 }

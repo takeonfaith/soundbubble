@@ -3,7 +3,7 @@ import { useRef } from 'react'
 import { useModal } from '../../functionality/ModalClass'
 import { useOutsideClick } from '../../hooks/useOutsideClick'
 
-export const ModalWindow = ({children, ...restProps}) => {
+export const ModalWindow = ({...restProps}) => {
 	const {openModal, setOpenModal, content} = useModal()
 	const modalRef = useRef(null)
 	useOutsideClick(modalRef, setOpenModal)

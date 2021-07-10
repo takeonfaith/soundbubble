@@ -1,5 +1,5 @@
 import React from 'react'
-import { useModal } from '../../functionality/ModalClass'
+import { useModal } from '../../contexts/ModalContext'
 
 export const GeneralSettings = () => {
 	const {setContent} = useModal()

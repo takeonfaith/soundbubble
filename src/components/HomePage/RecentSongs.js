@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { firestore } from '../../firebase'
-import { useSong } from '../../functionality/SongPlay/SongContext'
+import { useSong } from '../../contexts/SongContext'
 import findIfSongIsNew from '../../functions/findIfSongIsNew'
 import { SongList } from '../Basic/SongList'
 import { SongItem } from '../FullScreenPlayer/SongItem'

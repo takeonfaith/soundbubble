@@ -3,10 +3,10 @@ import { useState } from 'react'
 import { BackBtn } from '../Basic/BackBtn'
 import { Link } from 'react-router-dom'
 import { firestore } from '../../firebase'
-import { useAuth } from '../../functionality/AuthContext'
+import { useAuth } from '../../contexts/AuthContext'
 import { ChatMoreBtn } from './ChatMoreBtn'
 import { LastSeen } from '../Basic/LastSeen'
-import { useModal } from '../../functionality/ModalClass'
+import { useModal } from '../../contexts/ModalContext'
 import { ChatInfo } from './ChatInfo'
 export const ChatHeader = ({ data }) => {
 	const { currentUser } = useAuth()

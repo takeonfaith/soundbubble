@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { firestore } from '../../firebase'
-import { useAuth } from '../../functionality/AuthContext'
-import { useSong } from '../../functionality/SongPlay/SongContext'
+import { useAuth } from '../../contexts/AuthContext'
+import { useSong } from '../../contexts/SongContext'
 import displayDate from '../../functions/displayDate'
 import { PersonTinyList } from '../AuthorPage/PersonTinyList'
 import {CgMusicNote} from 'react-icons/cg'
 import {PersonTinyVerticalItem} from '../AuthorPage/PersonTinyVerticalItem'
-import { useModal } from '../../functionality/ModalClass'
+import { useModal } from '../../contexts/ModalContext'
 import { FriendsListToShareWith } from './FriendsListToShareWith'
 export const SongInfo = ({song}) => {
 	const {currentSongData} = useSong()

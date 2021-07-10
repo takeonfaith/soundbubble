@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { FiMessageCircle } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
-import { useAuth } from '../../functionality/AuthContext'
+import { useAuth } from '../../contexts/AuthContext'
 import { createChat } from '../../functions/createChat'
 import { findChatURL } from '../../functions/findChatURL'
 

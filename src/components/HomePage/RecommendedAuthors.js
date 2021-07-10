@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useAuth } from '../../functionality/AuthContext'
-import { useSong } from '../../functionality/SongPlay/SongContext'
+import { useAuth } from '../../contexts/AuthContext'
+import { useSong } from '../../contexts/SongContext'
 import findSimilarArtists from '../../functions/findSimilarArtists'
 import { AuthorItemBig } from '../AuthorPage/AuthorItemBig'
 import { AuthorsList } from '../Basic/AuthorsList'

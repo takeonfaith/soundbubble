@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import '../../styles/BottomControlBar.css'
 import {leftSideBar} from '../../data/leftSideBar'
 import { MobileControlBarItem } from '../BottomControlBar/MobileControlBarItem'
-import { useAuth } from '../../functionality/AuthContext'
+import { useAuth } from '../../contexts/AuthContext'
 import { BiUserCircle } from 'react-icons/bi'
 import normalizeString from '../../functions/normalizeString'
 export const BottomControlBar = () => {

@@ -285,7 +285,7 @@ button:active{
 .Hint{
   opacity: 0;
   visibility: hidden;
-  transition: .2s;
+  
   position: absolute;
   padding: 5px 10px; 
   border-radius: var(--standartBorderRadius3);
@@ -294,11 +294,43 @@ button:active{
   width: fit-content;
   white-space: nowrap;
   z-index: 100;
+  bottom:50%;
+  top:50%;
+  left:50%;
+  right: 50%;
+  transform:translate(-50%, -50%) scale(.9);
 }
+
 
 *:hover > .Hint{
   opacity: 1;
   visibility: visible;
+  transition: .1s transform, .1s top, .1s bottom, .1s left, .1s right, .3s opacity;
+}
+
+*:hover > .Hint.top{
+  bottom:110%;
+  top: auto;
+  left:50%;
+  transform:translateX(-50%) scale(1);
+}
+*:hover > .Hint.bottom{
+  top:120%;
+  left:50%;
+  bottom: auto;
+  transform:translateX(-50%) scale(1);
+}
+*:hover > .Hint.left{
+  top:50%;
+  left:-100%;
+  right: auto;
+  transform:translateY(-50%) scale(1);
+}
+*:hover > .Hint.right{
+  top:50%;
+  right:-100%;
+  left: auto;
+  transform:translateY(-50%) scale(1);
 }
 
 /* .SongItem.SongItemLoading .songItemAuthor::after, .SongItem.SongItemLoading .songItemName::after, .SongItem.SongItemLoading .songItemImage::after{
@@ -384,8 +416,44 @@ body{
 	color:#fff;
   position: relative;
   overflow-x: hidden;
+  transition: .2s;
  }
 
+.modal_darkBg.confirm{
+  align-items: flex-end;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.ConfirmWindow{
+  padding: 20px;
+	box-sizing: border-box;
+	width: 60%;
+  max-height: 70vh;
+  overflow-y: scroll;
+	max-width: 500px;
+	border-radius: var(--standartBorderRadius);
+	background: var(--leftSideBarColor);
+	color:#fff;
+  position: relative;
+  overflow-x: hidden;
+  transition: .2s;
+  text-align: center;
+}
+
+.ConfirmWindow .confirmButtons{
+  display: flex;
+  align-items: center;
+}
+
+.ConfirmWindow .confirmButtons button:first-child{
+  color:var(--red);
+}
+.ConfirmWindow .confirmButtons button:last-child{
+  margin-left: 10px;
+  color:var(--reallyLightBlue);
+}
+ 
  .FriendsListToShareWith .successMessageSent{
    position: absolute;
    top: 0; 
@@ -469,11 +537,26 @@ body{
    position: relative;
  }
 
+ .AuthorsList h2{
+   z-index: 3;
+ }
+
  .authorsWrapper{
    max-width: 100%;
    overflow-x: auto;
  }
 
+ .authorsWrapper::after{
+   content: "";
+   width: 50px;
+   height: 100%;
+   right: 0;
+   top: 0;
+   display: block;
+   position: absolute;
+   background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, var(--navItemColor) 100%);
+ }
+ 
  .authorsWrapper::-webkit-scrollbar{
    height: 0;
    width: 0;
@@ -571,6 +654,36 @@ body{
   box-sizing: border-box;
 }
 
+.listControlButtons{
+  display: flex;
+  align-items: center;
+}
+
+.listControlButtons button svg{
+  width: 20px;
+  height: 20px;
+}
+
+.listControlButtons button:last-child{
+  margin-left: 10px;
+}
+
+.CirclePages{
+  display: flex;
+  background: var(--reallyTransparentWhite);
+  padding: 5px;
+  border-radius: var(--standartBorderRadius3);
+  width: fit-content;
+}
+
+.circleItem{
+  width: 7px;
+  height: 7px;
+  background: var(--transparentWhite);
+  border-radius: 100px;
+  margin: 0px 3px;
+}
+
 @media (max-width:1000px) {
   .Wrapper{
     flex-direction: column-reverse;
@@ -601,20 +714,29 @@ body{
   .modal_darkBg{
     align-items: flex-end;
     justify-content: flex-start;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .modal_darkBg.confirm{
+    padding: 10px;
   }
 
   .ModalWindow{
     width: 100%;
-    min-height: 70vh;
     max-width: none;
-    border-radius: var(--standartBorderRadius2) var(--standartBorderRadius2) 0 0;
+    border-radius: var(--standartBorderRadius);
+  }
+
+  .ConfirmWindow{
+    width: 100%;
+
   }
 
   .FriendsListToShareWith{
     display: flex;
     height: 100%;
     flex-direction: column;
-    justify-content: space-between;
   }
 
   .SongInfo{

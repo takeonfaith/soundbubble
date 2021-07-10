@@ -4,12 +4,12 @@ import { BiChevronLeft } from 'react-icons/bi'
 import { rightSide } from '../../data/playerRightSide'
 import { Player } from '../FullScreenPlayer/Player';
 import { HiChevronDown } from 'react-icons/hi';
-import { useSong } from '../../functionality/SongPlay/SongContext';
+import { useSong } from '../../contexts/SongContext';
 import { FiMinus } from 'react-icons/fi';
 import {useSwipeable} from 'react-swipeable'
 import checkNumber from '../../functions/checkNumber';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
-import { useScreen } from '../../functionality/ScreenContext';
+import { useScreen } from '../../contexts/ScreenContext';
 
 export default function FullScreenPlayer() {
   const {
@@ -23,7 +23,7 @@ export default function FullScreenPlayer() {
     openMenu,
     setOpenMenu
   } = useSong()
-  const {isMobile} = useScreen()
+  const {isMobile, screenHeight} = useScreen()
   const lyricsRef = useRef(null)
   const [transformTransition, setTransformTransition] = useState(0.05)
   const [mobileMenuTransition, setMobileMenuTransition] = useState(0)
@@ -121,7 +121,7 @@ export default function FullScreenPlayer() {
   }
 
   function noLyrics() {
-    return lyrics.length === 0
+    return lyrics && lyrics.length === 0
   }
 
   function changeRightSidePage(el) {
@@ -135,6 +135,7 @@ export default function FullScreenPlayer() {
       style={
         openFullScreenPlayer ?
           {
+            height:screenHeight + "px",
             top: 0,
             opacity: 1,
             visibility: 'visible',

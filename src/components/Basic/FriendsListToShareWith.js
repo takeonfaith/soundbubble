@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { IoIosCheckmarkCircleOutline } from 'react-icons/io'
-import { useAuth } from '../../functionality/AuthContext'
-import { useModal } from '../../functionality/ModalClass'
-import { useSong } from '../../functionality/SongPlay/SongContext'
+import { useAuth } from '../../contexts/AuthContext'
+import { useModal } from '../../contexts/ModalContext'
+import { useSong } from '../../contexts/SongContext'
 import shareWithFriends from '../../functions/shareWithManyFriends'
 import { PersonTiny } from './PersonTiny'
 import { SearchBar } from '../Basic/SearchBar'
@@ -38,21 +38,22 @@ export const FriendsListToShareWith = ({ item, whatToShare = 'song' }) => {
 					Song has sent!
 				</div> : null
 			}
-			<SearchBar value={searchValue} setValue={setSearchValue} setResultAuthorList={setFoundPeople} defaultSearchMode={"authors"} inputText = {"Search for friends"}/>
-			{/* <h2>Share with friends</h2> */}
-			<div>
-				{foundPeople.length > 0 ?
-					foundPeople.map((data, index) => {
-						return (
-							<PersonTiny data={data} showChoose chosenArray={chosenFriends} setChosenArray = {setChosenFriends} key={index} />
-						)
-					}):
-					yourFriends.map((data, index) => {
-						return (
-							<PersonTiny data={data} showChoose chosenArray={chosenFriends} setChosenArray = {setChosenFriends} key={index} />
-						)
-					})
-				}
+			<div>	
+				<SearchBar value={searchValue} setValue={setSearchValue} setResultAuthorList={setFoundPeople} defaultSearchMode={"authors"} inputText = {"Search for friends"}/>
+				<div>
+					{foundPeople.length > 0 ?
+						foundPeople.map((data, index) => {
+							return (
+								<PersonTiny data={data} showChoose chosenArray={chosenFriends} setChosenArray = {setChosenFriends} key={index} />
+							)
+						}):
+						yourFriends.map((data, index) => {
+							return (
+								<PersonTiny data={data} showChoose chosenArray={chosenFriends} setChosenArray = {setChosenFriends} key={index} />
+							)
+						})
+					}
+				</div>
 			</div>
 			<div>
 				<form>

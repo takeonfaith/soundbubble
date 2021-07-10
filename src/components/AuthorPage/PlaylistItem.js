@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom'
 import normalizeString from '../../functions/normalizeString'
 import shortWord from '../../functions/shortWord'
 import {HiPause, HiPlay} from 'react-icons/hi'
-import { useSong } from '../../functionality/SongPlay/SongContext'
+import { useSong } from '../../contexts/SongContext'
 import { firestore } from '../../firebase'
-import { useAuth } from '../../functionality/AuthContext'
+import { useAuth } from '../../contexts/AuthContext'
 import { AddToListCircle } from '../Basic/AddToListCircle'
-import { useScreen } from '../../functionality/ScreenContext'
+import { useScreen } from '../../contexts/ScreenContext'
 export const PlaylistItem = ({playlist, listOfChosenAlbums, setListOfChosenAlbums}) => {
 	const playlistDate = new Date(playlist.creationDate)
 	const {currentUser} = useAuth()
@@ -61,7 +61,7 @@ export const PlaylistItem = ({playlist, listOfChosenAlbums, setListOfChosenAlbum
 			<AddToListCircle listOfChosenItems = {listOfChosenAlbums} setListOfChosenItems = {setListOfChosenAlbums} itemId = {playlist.id}/>
 			<div className="playlistItem">
 				{playlist.image?
-					<div className = "playlistImageWrapper"><img src={playlist.image} alt="" /></div>:
+					<img src={playlist.image} alt="" />:
 					<h1>{playlist.name.split(' ')[0][0]}{playlist.name.split(' ')[1][0]}</h1>
 				}
 				{/* {!playlist.isAlbum?<h2>{playlist.name}</h2>:null} */}

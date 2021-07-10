@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { firestore } from '../../firebase'
-import { useAuth } from '../../functionality/AuthContext'
-import {useSong} from '../../functionality/SongPlay/SongContext'
+import { useAuth } from '../../contexts/AuthContext'
+import {useSong} from '../../contexts/SongContext'
 import { SongList } from '../Basic/SongList'
 import {ImportantMessage} from '../Basic/ImportantMessage'
 export const RecommendedSongs = () => {
@@ -11,9 +11,9 @@ export const RecommendedSongs = () => {
 	function fetchRecommendedSongs(){
 		const tempSongsIds = []
 		yourAuthors.forEach((author, i) => {
-			author.ownSongs.forEach(async (songId)=>{
+			author.ownSongs.forEach(async (songId, index)=>{
 				let songData = (await firestore.collection('songs').doc(songId).get()).data()
-				if(!currentUser.addedSongs.includes(songId) && !tempSongsIds.includes(songData.id)){
+				if(!currentUser.addedSongs.includes(songId) && !tempSongsIds.includes(songData.id) && index <= 3){
 					setRecommendedSongs(prev=>[...prev, songData])
 					tempSongsIds.push(songData.id)
 				}

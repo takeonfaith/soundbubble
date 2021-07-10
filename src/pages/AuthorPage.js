@@ -9,7 +9,8 @@ import { SimilarArtists } from '../components/AuthorPage/SimilarArtists'
 import { TopSongs } from '../components/AuthorPage/TopSongs'
 import { LoadingCircle } from '../components/Basic/LoadingCircle'
 import { firestore } from '../firebase'
-import { useAuth } from '../functionality/AuthContext'
+import { useAuth } from '../contexts/AuthContext'
+import { useScreen } from '../contexts/ScreenContext'
 import "../styles/AuthorPage.css"
 export const AuthorPage = () => {
 	const match = useRouteMatch('/authors/:authorId')

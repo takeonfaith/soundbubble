@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { AuthProvider } from './functionality/AuthContext';
-import { ModalClassProvider } from './functionality/ModalClass';
-import { ScreenProvider } from './functionality/ScreenContext';
-import { SongProvider } from './functionality/SongPlay/SongContext';
+import { AuthProvider } from './contexts/AuthContext';
+import { ModalClassProvider } from './contexts/ModalContext';
+import { ScreenProvider } from './contexts/ScreenContext';
+import { SongProvider } from './contexts/SongContext';
 ReactDOM.render(
-  
   <React.StrictMode>
     <ScreenProvider>
       <AuthProvider>

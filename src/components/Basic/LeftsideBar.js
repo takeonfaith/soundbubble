@@ -5,12 +5,12 @@ import Logo from "../../images/Logo3.svg"
 import '../../styles/LeftsideBar.css'
 import { Player } from '../FullScreenPlayer/Player'
 import { BiFolderPlus, BiFullscreen} from 'react-icons/bi'
-import { useSong } from '../../functionality/SongPlay/SongContext'
+import { useSong } from '../../contexts/SongContext'
 import normalizeString from '../../functions/normalizeString'
 import { Link } from 'react-router-dom'
-import { useAuth } from '../../functionality/AuthContext'
+import { useAuth } from '../../contexts/AuthContext'
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi'
-import { useModal } from '../../functionality/ModalClass'
+import { useModal } from '../../contexts/ModalContext'
 import { FriendsListToShareWith } from './FriendsListToShareWith'
 import { Person } from '../LeftsideBar/Person'
 import { CreatePlaylistPage } from '../LibraryPage/CreatePlaylistPage'
@@ -30,7 +30,6 @@ export const LeftsideBar = () => {
 	const [currentPage, setCurrentPage] = useState(
 		() => {
 			let page = leftSideBar.find((el, i) => {
-				console.log(window.location.hash)
 				if (window.location.hash.includes(normalizeString(el.title))) {
 					return true
 				}
@@ -46,9 +45,9 @@ export const LeftsideBar = () => {
 				<img src={Logo} alt="" />
 				<h3>Soundbubble</h3>
 			</div>
-			<div className="leftSideBarContainer">
+			<div className="leftSideBarContainer" onClick = {()=>setCurrentPage(-1)} >
 				<Link to={`/authors/${currentUser.uid}`}>
-					<div className="person">
+					<div className="person" style = {currentPage === -1?{background:'var(--blue)'}:{}}>
 						{currentUser.friends.some(friend=>friend.status === 'requested')?<NotificationCircle/>:null}
 						<div className="pesronImg">
 							<img src={currentUser.photoURL} alt="" />
@@ -103,7 +102,7 @@ export const LeftsideBar = () => {
 			</div>
 			<div className="leftSideBarContainer">
 				{
-					(Object.keys(currentSongData).length === 0 && currentSongData.constructor === Object) || currentSongData.id === -1?
+					(currentSongData.id === -1)?
 					null:<div className="littlePlayer">
 						<Player textLimit={15} inputRef={leftSideBarInputRef} />
 						<div className="fullScreenBtn" onClick={() => setOpenFullScreenPlayer(true)}>

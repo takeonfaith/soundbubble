@@ -1,12 +1,12 @@
 import React from 'react'
 import {Route, Switch, Redirect} from 'react-router-dom'
 import { ContentWrapper } from '../components/Basic/ContentWrapper'
-import { useAuth } from '../functionality/AuthContext'
+import { useAuth } from '../contexts/AuthContext'
 import { publicRoutes } from '../routes'
 import { LOGIN_ROUTE} from '../utils/consts'
 export const AppRouter = () => {
 	const {currentUser} = useAuth()
-	return currentUser ?
+	return currentUser.uid ?
 	(
 		<Switch>
 			<Route path='/' component = {ContentWrapper} />

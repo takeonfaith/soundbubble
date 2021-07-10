@@ -6,12 +6,11 @@ import { sendMessage } from "./sendMessage";
 
 export default function shareWithFriends(shareList, currentUser, itemId, whatToShare, messageText = "") {
 	//Сделать через функцию sendMessage
-	shareList.map(async userId=>{
-		const chatId = findChatURL([userId], currentUser, ()=>null, ()=>null)
-		chatId.then(async (res)=>{
-			let chatData = (await firestore.collection('chats').doc(res).get()).data()
-			if(chatData !== undefined){
-				switch(whatToShare){
+	shareList.map(async userId => {
+		Promise.resolve(findChatURL([userId], currentUser, () => null, () => null)).then(async chatId => {
+			let chatData = (await firestore.collection('chats').doc(chatId).get()).data()
+			if (chatData !== undefined) {
+				switch (whatToShare) {
 					case "song":
 						sendMessage(chatId, chatData, currentUser.uid, messageText, [itemId])
 						break;
@@ -26,11 +25,11 @@ export default function shareWithFriends(shareList, currentUser, itemId, whatToS
 						break;
 				}
 			}
-			else{
+			else {
 				const chatUID = getUID()
-				createChat([currentUser.uid, userId], chatUID).then(async ()=>{
+				createChat([currentUser.uid, userId], chatUID).then(async () => {
 					chatData = (await firestore.collection('chats').doc(chatUID).get()).data()
-					switch(whatToShare){
+					switch (whatToShare) {
 						case "song":
 							sendMessage(chatUID, chatData, currentUser.uid, messageText, [itemId])
 							break;
@@ -40,17 +39,17 @@ export default function shareWithFriends(shareList, currentUser, itemId, whatToS
 						case "author":
 							sendMessage(chatUID, chatData, currentUser.uid, messageText, [], [], [itemId])
 							break;
-							
+
 						default:
 							sendMessage(chatUID, chatData, currentUser.uid, messageText, [itemId])
 							break;
 					}
 				})
 			}
-	
-			
+
+
 		})
 	})
 
-	
+
 }

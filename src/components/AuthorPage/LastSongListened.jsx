@@ -3,8 +3,8 @@ import { useEffect } from 'react'
 import {BiMusic} from 'react-icons/bi'
 import {IoPlayCircleOutline} from 'react-icons/io5'
 import { firestore } from '../../firebase'
-import { useAuth } from '../../functionality/AuthContext'
-import { useSong } from '../../functionality/SongPlay/SongContext'
+import { useAuth } from '../../contexts/AuthContext'
+import { useSong } from '../../contexts/SongContext'
 export const LastSongListened = ({data}) => {
 	const [lastSongId, setLastSongId] = useState(data.lastSongPlayed)
 	const [songData, setSongData] = useState()

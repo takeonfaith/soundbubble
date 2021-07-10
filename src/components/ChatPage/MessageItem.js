@@ -3,11 +3,9 @@ import { AiFillFire, AiFillLike } from 'react-icons/ai'
 import { BiShare } from 'react-icons/bi'
 import { FcLike } from 'react-icons/fc'
 import { useSwipeable } from 'react-swipeable'
-import { authors } from '../../data/authors'
-import { chat } from '../../data/chat'
 import { firestore } from '../../firebase'
-import { useAuth } from '../../functionality/AuthContext'
-import { useScreen } from '../../functionality/ScreenContext'
+import { useAuth } from '../../contexts/AuthContext'
+import { useScreen } from '../../contexts/ScreenContext'
 import displayDate from '../../functions/displayDate'
 import { findWhatToWriteInResponseToItem } from '../../functions/findWhatToWriteInResponseItem'
 import useOnScreen from '../../hooks/useOnScreen'
@@ -31,7 +29,7 @@ export const MessageItem = ({ messageData, chatId, scrollToMessageRef, setScroll
 	const messageRef = useRef()
 	const isVisible = useOnScreen(messageRef)
 	const [swipeDeltaX, setSwipeDeltaX] = useState(0)
-	const [transormTransition, setTransformTransition] = useState(0)
+	const [transformTransition, setTransformTransition] = useState(0)
 	const handlers = useSwipeable({ onSwiping: (event) => {if(event.deltaX < 0) setSwipeDeltaX(event.deltaX)} })
 	const refPassthrough = (el) => {
 		// call useSwipeable ref prop with el
@@ -97,7 +95,7 @@ export const MessageItem = ({ messageData, chatId, scrollToMessageRef, setScroll
 		dropDelta = setTimeout(() => {
 		  setSwipeDeltaX(0)
 		  setTransformTransition(0)
-		}, 100)
+		}, 200)
 	 }
 
 	useEffect(() => {
@@ -110,7 +108,7 @@ export const MessageItem = ({ messageData, chatId, scrollToMessageRef, setScroll
 
 	const emojis = [<FcLike />, <AiFillFire />, <AiFillLike />]
 	return (
-		<div className={"MessageItem " + (sender === currentUser.uid ? 'your' : '')} ref={id === scrollToMessageId ? scrollToMessageRef : refPassthrough} style={!isVisible ? { opacity: '0', visibility: 'hidden' } : showPhoto ? { paddingBottom: '15px', transform:`translateX(${swipeDeltaX}px)`, transition:transormTransition } : {transform:`translateX(${swipeDeltaX}px)`, transition:transormTransition}} onTouchEnd = {returnToInitial}>
+		<div className={"MessageItem " + (sender === currentUser.uid ? 'your' : '')} ref={id === scrollToMessageId ? scrollToMessageRef : refPassthrough} style={!isVisible ? { opacity: '0', visibility: 'hidden' } : showPhoto ? { paddingBottom: '15px', transform:`translateX(${swipeDeltaX}px)`, transition:transformTransition } : {transform:`translateX(${swipeDeltaX}px)`, transition:transformTransition}} onTouchEnd = {returnToInitial}>
 			<div className="messageItemImage">
 				{showPhoto ?
 					<img src={userThatSentMessage.photoURL} alt="" /> :

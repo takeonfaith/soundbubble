@@ -190,12 +190,12 @@
 }
 
 .person:hover{
-	background: rgb(85, 85, 85);
+	background: var(--reallyTransparentWhite);
 }
 
 .person:hover .personBtns{
 	opacity: 1;
-	background: rgb(85, 85, 85);
+	background: rgb(92, 92, 92);
 }
 
 .personBtns{

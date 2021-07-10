@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { useSong } from '../../functionality/SongPlay/SongContext'
+import { useSong } from '../../contexts/SongContext'
 import { Loading } from './Loading'
 import {BiCheckCircle, BiDownArrow, BiUpArrow} from 'react-icons/bi'
 import { FiXCircle } from 'react-icons/fi'

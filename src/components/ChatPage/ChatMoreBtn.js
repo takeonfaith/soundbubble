@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { FiFolder, FiImage, FiMoreHorizontal, FiSearch, FiTrash, FiInfo } from 'react-icons/fi'
-import { useModal } from '../../functionality/ModalClass'
+import { useModal } from '../../contexts/ModalContext'
 import { useOutsideClick } from '../../hooks/useOutsideClick'
 import { AttachmentList } from './AttachmentList'
 import { ChatInfo } from './ChatInfo'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSong } from '../../functionality/SongPlay/SongContext'
+import { useSong } from '../../contexts/SongContext'
 import { Player } from '../FullScreenPlayer/Player'
 import { BottomControlBar } from './BottomControlBar'
 

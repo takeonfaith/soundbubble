@@ -1,8 +1,8 @@
 import React from 'react'
-import { useSong } from '../../functionality/SongPlay/SongContext'
+import { useSong } from '../../contexts/SongContext'
 import {PlaylistItem} from '../AuthorPage/PlaylistItem'
 import {BiFolderPlus} from 'react-icons/bi'
-import { useModal } from '../../functionality/ModalClass'
+import { useModal } from '../../contexts/ModalContext'
 import { CreatePlaylistPage } from './CreatePlaylistPage'
 export const PlaylistsPage = () => {
 	const {yourPlaylists} = useSong()

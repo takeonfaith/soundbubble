@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useAuth } from '../../functionality/AuthContext'
+import { useAuth } from '../../contexts/AuthContext'
 import { findAmountOfUnseenMessages } from '../../functions/findAmountOfUnseenMessages'
 export const AmountOfUnseenMessages = ({amountOfUnseen}) => {
 	

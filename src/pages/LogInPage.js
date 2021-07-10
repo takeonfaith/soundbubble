@@ -4,7 +4,7 @@ import { ErrorPlate } from '../components/Basic/ErrorPlate'
 import { FullScreenLoading } from '../components/Basic/FullScreenLoading'
 import { BlurredBg } from '../components/SignIn-Up/BlurredBg'
 import { TitleAndLogo } from '../components/SignIn-Up/TitleAndLogo'
-import { useAuth } from '../functionality/AuthContext'
+import { useAuth } from '../contexts/AuthContext'
 import { HOME_ROUTE, LOGIN_ROUTE, SIGNUP_ROUTE } from '../utils/consts'
 
 export const LogInPage = () => {

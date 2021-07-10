@@ -1,14 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { FaFacebookF, FaTelegramPlane, FaVk } from 'react-icons/fa'
 import { FiCopy } from 'react-icons/fi'
 import { AiFillInstagram } from 'react-icons/ai'
 import { ImWhatsapp } from 'react-icons/im'
-import { friends } from '../../data/friends'
-import { HiSearch } from 'react-icons/hi'
-import { BiCheckCircle } from 'react-icons/bi'
-import { chat } from '../../data/chat'
-import { useSong } from '../../functionality/SongPlay/SongContext'
-import { authors } from '../../data/authors'
+import { useSong } from '../../contexts/SongContext'
 import {FriendsListToShareWith} from '../Basic/FriendsListToShareWith'
 export const Share = () => {
 	const {currentSongData} = useSong()

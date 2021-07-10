@@ -4,7 +4,6 @@ function amountOfZeros(number) {
 }
 
 function toDateTime(secs) {
-	// console.log("ewqeqw")
 	var t = new Date(1970, 0, 1); // Epoch
 	t.setSeconds(secs);
 	return t;

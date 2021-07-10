@@ -9,6 +9,8 @@
 	border-radius: var(--standartBorderRadius0);
 	position: relative;
 	animation: zoomIn .3s ease-out;
+	z-index: -1;
+	overflow: hidden;
 }
 
 .songItemMenuWindowItem{
@@ -297,6 +299,7 @@
 .AddSong{
 	width: 100%;
 	margin-top:20px;
+	position: relative;
 }
 
 .AddSong .openAddSongWindowBtn{
@@ -518,10 +521,6 @@
 	height: 14px;
 }
 
-.AlbumPage .searchBar{
-	margin-top: 10px;
-}
-
 .LastSongListened{
 	width: fit-content;
 	color:rgba(255, 255, 255, 0.705);
@@ -588,8 +587,7 @@
 
 
 	.Header .headerListenersAndSubs{
-		justify-content: space-between;
-		width: calc(100% - 50px);
+		display: none;
 	}
 
 	.Header .headerListenersAndSubsItem{

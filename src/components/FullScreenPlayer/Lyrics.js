@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react'
 
-import { useSong } from '../../functionality/SongPlay/SongContext'
-import { useAuth } from '../../functionality/AuthContext'
+import { useSong } from '../../contexts/SongContext'
+import { useAuth } from '../../contexts/AuthContext'
 import { firestore } from '../../firebase'
 import { Slider } from '../Tools/Slider'
 import {BiCheckCircle, BiDownArrow, BiUpArrow} from 'react-icons/bi'
 import { FiXCircle } from 'react-icons/fi'
 import { LyricsParagraph } from './LyricsParagraph'
 export const Lyrics = () => {
-	const { setIsThereKaraoke, currentSongData, setCurrentSongData, isThereKaraoke, currentParagraph, displayAuthors, changeCurrentTime, play, currentTime, currentParagraphRef, currentSong, lyrics, rightSideCurrentPage, openFullScreenPlayer } = useSong()
+	const { setIsThereKaraoke, currentSongData, setCurrentSongData, isThereKaraoke, currentParagraph, displayAuthors, changeCurrentTime, play, currentTime, currentParagraphRef, currentSong, lyrics, rightSideCurrentPage, openFullScreenPlayer, openMenu } = useSong()
 	const { currentUser } = useAuth()
 	const [inputKaraokeTime, setInputKaraokeTime] = useState(0)
 	const [karaokeModeratorTimes, setKaraokeModeratorTimes] = useState([])
 	const [lyricsModeratorMode, setLyricsModeratorMode] = useState(0)
 	const [canUpdateLyrics, setCanUpdateLyrics] = useState(false)
 	useEffect(() => {
-		if (isThereKaraoke && rightSideCurrentPage === 2 && openFullScreenPlayer) currentParagraphRef.current.scrollIntoView()
+		if (isThereKaraoke && (openMenu && rightSideCurrentPage === 2) && openFullScreenPlayer) currentParagraphRef.current.scrollIntoView()
 	}, [currentParagraph])
 	function inputKaraoke(e, index) {
 		// console.log("ewqewqewq")
@@ -25,6 +25,8 @@ export const Lyrics = () => {
 		setInputKaraokeTime(e.target.value)
 		setKaraokeModeratorTimes(tempArray)
 	}
+
+	// console.log(karaokeModeratorTimes)
 
 	useEffect(() => {
 		if(lyrics[0] && lyrics[0].startTime !== 'undefined'){

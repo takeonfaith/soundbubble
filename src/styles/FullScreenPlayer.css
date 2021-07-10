@@ -607,6 +607,34 @@ input[type=range] {
 	flex-direction: column;
 	animation: openSongMoreMenu .2s forwards;
  }
+
+ .SongItemMobileMoreWindow, .AuthorMoreWindow{
+	font-size: 1.3em;
+ }
+
+ .simpleSongElement{
+	 width: 100%;
+	 display: flex;
+	 align-items: center;
+	 justify-content: flex-start;
+	 padding: 10px;
+	 background: var(--playlistsColor);
+	 box-sizing: border-box;
+	 border-radius: var(--standartBorderRadius2);
+	 font-size: 0.8em;
+ }
+
+ .simpleSongElement .simpleSongElementImage{
+	 width: 30px;
+	 height: 30px;
+	 border-radius: var(--standartBorderRadius3);
+	 overflow: hidden;
+	 margin-right: 7px;
+ }
+
+ .simpleSongElement .simpleSongElementImage img{
+	 width: 100%;
+ }
  
  .songItemMenuWindow.inner{
 	left: calc(-100% - 10px);
@@ -1204,9 +1232,9 @@ input[type=range] {
 		top: 0%;
 		left: 50%;
 		transform: translateX(-50%);
-	 }
+	}
 
-	 .mobilePlayerMenu{
+	.mobilePlayerMenu{
 		width: 100%;
 		position: absolute;
 		top: calc(100% - 55px);
@@ -1218,9 +1246,9 @@ input[type=range] {
 		justify-content: center;
 		align-items: center;
 		/* transition: .2s top ; */
-	 }
-	 
-	 .controlIconsWrapper{
+	}
+	
+	.controlIconsWrapper{
 		height: 40px;
 		width: 100%;
 		display: flex;
@@ -1228,37 +1256,37 @@ input[type=range] {
 		justify-content: space-evenly;
 		padding: 0 15px;
 		box-sizing: border-box;
-	 }
-  
-	 .mobilePlayerMenuClose{
+	}
+
+	.mobilePlayerMenuClose{
 		height: 15px;
 		width: 100%;
 		position: relative;
-	 }
-  
-	 .mobilePlayerMenuClose svg{
+	}
+
+	.mobilePlayerMenuClose svg{
 		position: absolute;
 		left: 50%;
 		top: 70%;
 		transform: translate(-50%, -50%);
 		width: 40px;
 		height: 40px;
-	 }
-  
-	 .controlIcon{
+	}
+
+	.controlIcon{
 		height: 100%;
 		width: 100%;
 		font-weight: 600;
 		opacity: .8;
 		border-radius:  var(--standartBorderRadius2);
-	 }
-  
-	 .controlIcon svg{
+	}
+
+	.controlIcon svg{
 		width: 20px;
 		height: 20px;
-	 }
-  
-	 .mobilePlayerMenuContent{
+	}
+
+	.mobilePlayerMenuContent{
 		height: 70vh;
 		width: 100%;
 		overflow-x: hidden;
@@ -1267,28 +1295,32 @@ input[type=range] {
 		box-sizing: border-box;
 		scroll-padding-top: 100px;
 		transition: .15s opacity;
-	 }
-  
-	 .OptionItem{
-		margin-left: 24%;
-	 }
-  
-	 .lyricsBlock{
+	}
+
+	.OptionItem{
+		margin-left: 24%;	
+	}
+
+	.lyricsBlock{
 		width: 100%;
-	 }
-  
-	 .Loading{
+	}
+
+	.Loading{
 		width: auto;
-	 }
-  
-	 .lyricsAuthors{
+	}
+
+	.lyricsAuthors{
 		padding: 10px;
 		transform: translate(0);
 		width: 100%;
 		box-sizing: border-box;
-	 }
-  
-	 .songItemMoreBtn{
+	}
+
+	.songItemMoreBtn{
 		opacity: 1;
-	 }
+	}
+
+	.auroraWrapper{
+		display: none;
+	}
  }

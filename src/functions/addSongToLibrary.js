@@ -1,6 +1,6 @@
 import { firestore } from "../firebase"
 
-export const addSongToLibrary = (e, song, currentUser) => {
+export const addSongToLibrary = (e, song, currentUser, setCurrentUser) => {
 	e.stopPropagation()
 	const songAuthorsUIDS = song.authors.map(author => author.uid)
 	const finalAuthorsUIDS = []

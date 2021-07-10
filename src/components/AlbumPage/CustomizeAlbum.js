@@ -8,7 +8,7 @@ import { RadioBtn } from '../SignIn-Up/RadioBtn'
 import { SongItemChoice } from '../Basic/SongItemChoice'
 import { LoadingCircle } from '../Basic/LoadingCircle'
 import { ColorExtractor } from 'react-color-extractor'
-import { useAuth } from '../../functionality/AuthContext'
+import { useAuth } from '../../contexts/AuthContext'
 import { SongList } from '../Basic/SongList'
 export const CustomizeAlbum = ({ playlist }) => {
 	const { currentUser } = useAuth()
@@ -145,22 +145,7 @@ export const CustomizeAlbum = ({ playlist }) => {
 				imageColors:imageColors,
 				isPrivate:isPlaylistPrivate == true
 			}
-		).then(() => {
-			setAllAuthors([])
-			setAuthorsInputValue("")
-			setChosenAuthors([])
-			setPlaylistCover('')
-			setPlaylistName('')
-			setReleaseDate('')
-			setSongsSearch('')
-			setChosenSongs([])
-			setIsPlaylistPrivate(0)
-		}).catch(err => {
-			console.log(err)
-		})
-
-
-
+		)
 	}
 
 	function timerUpFunc(func) {

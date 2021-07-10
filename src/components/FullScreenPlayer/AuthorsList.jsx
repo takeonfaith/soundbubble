@@ -1,12 +1,12 @@
 import React from 'react'
-import { useSong } from '../../functionality/SongPlay/SongContext'
+import { useSong } from '../../contexts/SongContext'
 
-export const AuthorsList = () => {
+export const AuthorsList = ({listOfAuthors}) => {
 	const { displayAuthorsFull } = useSong()
 	return (
 		<div className="rightSideAuthorsList" >
 			<div className="rightSideAuthorsListCentralBlock">
-				{displayAuthorsFull()}
+				{displayAuthorsFull(listOfAuthors)}
 			</div>
 		</div>
 	)

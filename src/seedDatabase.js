@@ -1,14 +1,27 @@
-import { songs } from "./data/songs";
-import { storage } from "./firebase";
 
 export default function seedDatabase(firestore) {
-	function getUID() {
-		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
-			const piece = (Math.random() * 16) | 0;
-			const elem = c === 'x' ? piece : (piece & 0x3) | 0x8;
-			return elem.toString(16);
-		});
-	}
+	// function getUID() {
+	// 	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+	// 		const piece = (Math.random() * 16) | 0;
+	// 		const elem = c === 'x' ? piece : (piece & 0x3) | 0x8;
+	// 		return elem.toString(16);
+	// 	});
+	// }
+
+	// firestore.collection("playlists").get().then((querySnapshot) => {
+	// 	querySnapshot.forEach((doc) => {
+	// 		let variantsOfName = []
+	// 		let personName = normalizeString(doc.data().name)
+	// 		for (let i = 1; i < personName.length + 1; i++) {
+	// 			variantsOfName.push(personName.substr(0, i))
+	// 		}
+	// 		firestore.collection('search').doc(doc.data().id).set({
+	// 			place:'playlists',
+	// 			uid:doc.data().id,
+	// 			variantsOfName:variantsOfName
+	// 		})
+	// 	});
+	// });
 
 	// firestore.collection('songs').doc('b2916614-e715-4c9f-8fb2-d3ceceb6209b').update({
 	// 	lyrics:songs['allSongs'][5].lyrics
@@ -32,7 +45,7 @@ export default function seedDatabase(firestore) {
 	// 		return result
 	// 	})
 	// }
-	
+
 	// songs['allSongs'].map((song, index)=>{
 	// 	let randomId = getUID()
 	// 	// findSong(song.name)

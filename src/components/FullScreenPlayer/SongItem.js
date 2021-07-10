@@ -1,16 +1,16 @@
 import React, { useRef, useState } from 'react'
 import { ColorCircles } from './colorCircles'
 import { HiPause, HiPlay } from 'react-icons/hi'
-import { useSong } from '../../functionality/SongPlay/SongContext'
+import { useSong } from '../../contexts/SongContext'
 import { CgMusicNote } from 'react-icons/cg'
 import rightFormanForBigNumber from '../../functions/rightFormatForBigNumber'
 import { FiX, FiFlag, FiInfo, FiMoreVertical, FiPlusCircle, FiShare, FiTrash2 } from 'react-icons/fi'
 import { useOutsideClick } from '../../hooks/useOutsideClick'
 import { MdKeyboardArrowRight, MdPlaylistAdd } from 'react-icons/md'
 import AddOrDeleteButtonFull from './AddOrDeleteSongButton'
-import { useAuth } from '../../functionality/AuthContext'
+import { useAuth } from '../../contexts/AuthContext'
 import { firestore } from '../../firebase'
-import { useModal } from '../../functionality/ModalClass'
+import { useModal } from '../../contexts/ModalContext'
 import { FriendsListToShareWith } from '../Basic/FriendsListToShareWith'
 import { SongInfo } from '../Basic/SongInfo'
 import { deleteSongFromLibrary } from '../../functions/deleteSongFromLibrary'
@@ -18,17 +18,19 @@ import { addSongToLibrary } from '../../functions/addSongToLibrary'
 import shortWord from '../../functions/shortWord'
 import {AddToPlaylists} from './AddToPlaylists'
 import { AddToListCircle } from '../Basic/AddToListCircle'
-import { useScreen } from '../../functionality/ScreenContext'
+import { useScreen } from '../../contexts/ScreenContext'
 import { displayAuthorsStr } from '../../functions/displayAuthorsStr'
 import { Hint } from '../Basic/Hint'
+import { SongItemMoreWindow } from '../Windows/SongItemMoreWindow'
+import { SongItemMobileMoreWindow } from '../Windows/SongItemMobileMoreWindow'
 export const SongItem = ({ song, localIndex, showListens = false, isNewSong = false, listOfChosenSongs, setListOfSongs }) => {
 	const { yourSongs, setCurrentSong, currentSong, displayAuthors, play, songRef, setPlay, setCurrentSongInQueue } = useSong()
 	const {isMobile} = useScreen()
 	const [openMoreWindow, setOpenMoreWindow] = useState(false)
 	const [moreWindowPosRelativeToViewport, setMoreWindowPosRelativeToViewport] = useState(0)
 	const currentItemRef = useRef(null)
-	const { currentUser } = useAuth()
-	const { toggleModal, setContent } = useModal()
+	const { currentUser, setCurrentUser } = useAuth()
+	const { toggleModal, setContent, openConfirm, closeConfirm } = useModal()
 	useOutsideClick(currentItemRef, setOpenMoreWindow)
 
 	function chooseSongItem() {
@@ -68,13 +70,13 @@ export const SongItem = ({ song, localIndex, showListens = false, isNewSong = fa
 
 	function addOrDeleteButton() {
 		if (!currentUser.addedSongs.includes(song.id)) {
-			return <button onClick={(e) => addSongToLibrary(e, song, currentUser)} style = {{position:"relative"}}>
+			return <button onClick={(e) => addSongToLibrary(e, song, currentUser, setCurrentUser)} style = {{position:"relative"}}>
 				<Hint text = {"add song"}/>
 				<FiPlusCircle />
 			</button>
 		}
 		else {
-			return <button onClick={(e) => deleteSongFromLibrary(e, song, currentUser, yourSongs)}  style = {{position:"relative"}}>
+			return <button onClick = {(e)=>{e.stopPropagation();openConfirm(`You sure you want to delete "${song.name}" from library?`, "Yes, delete it", "No, just kidding", (e) => {deleteSongFromLibrary(e, song, currentUser, yourSongs);closeConfirm()})}} style = {{position:"relative"}}>
 				<Hint text = {"delete song"}/>
 				<FiX />
 			</button>
@@ -107,33 +109,14 @@ export const SongItem = ({ song, localIndex, showListens = false, isNewSong = fa
 						{!isMobile?<div className="songItemAuthor">{displayAuthors(song.authors)}</div>:<div className="songItemAuthor">{displayAuthorsStr(song.authors, ' & ', 30)}</div>}
 					</div>
 				</div>
-				<div className="songItemMoreBtn" onClick={openSongItemMoreWindow}>
+				<div className="songItemMoreBtn" >
 					{addOrDeleteButton()}
-					<button>
+					<button onClick={isMobile?(e)=>{e.stopPropagation();toggleModal();setContent(<SongItemMobileMoreWindow song = {song}/>)}:openSongItemMoreWindow}>
 						<Hint text = {"more"}/>
 						<FiMoreVertical />
 					</button>
 				</div>
-				{openMoreWindow ?
-					(
-						<div className="songItemMenuWindow" style={moreWindowPosRelativeToViewport > (window.innerHeight / 2) + 100 ? { top: 'auto', bottom: '110%' } : { top: '110%', bottom: 'auto' }} onClick={e => e.stopPropagation()}>
-							<div className="songItemMenuWindowItem"><AddOrDeleteButtonFull song = {song}/></div>
-							<div className="songItemMenuWindowItem">
-								<div className="songItemMenuWindow inner">
-									<AddToPlaylists song = {song}/>
-								</div>
-								<MdPlaylistAdd />Add to playlist <MdKeyboardArrowRight />
-							</div>
-							<div className="songItemMenuWindowItem" onClick={() => { toggleModal(); setContent(<FriendsListToShareWith item={song} whatToShare={"song"} />) }}>
-								<FiShare />Share
-							</div>
-							<div className="songItemMenuWindowItem" onClick={() => { toggleModal(); setContent(<SongInfo song={song} />) }}><FiInfo />Info</div>
-							<div className="songItemMenuWindowItem"><FiFlag />Flag</div>
-						</div>
-					) :
-					null
-				}
-
+				<SongItemMoreWindow openMoreWindow = {openMoreWindow} song = {song} moreWindowPosRelativeToViewport = {moreWindowPosRelativeToViewport}/>
 			</div >
 		</>
 	)

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { firestore } from '../../firebase'
-import { useAuth } from '../../functionality/AuthContext'
+import { useAuth } from '../../contexts/AuthContext'
 import displayDate from '../../functions/displayDate'
 import { findAmountOfUnseenMessages } from '../../functions/findAmountOfUnseenMessages'
 import { IsUserOnlineCircle } from '../Basic/IsUserOnlineCircle'

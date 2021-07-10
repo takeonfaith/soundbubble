@@ -8,7 +8,8 @@ import { RadioBtn } from '../SignIn-Up/RadioBtn'
 import { SongItemChoice } from '../Basic/SongItemChoice'
 import { LoadingCircle } from '../Basic/LoadingCircle'
 import { ColorExtractor } from 'react-color-extractor'
-import { useAuth } from '../../functionality/AuthContext'
+import { useAuth } from '../../contexts/AuthContext'
+import { findVariantsOfName } from '../../functions/findVariantsOfName'
 export const AddPlaylist = () => {
 	const {currentUser} = useAuth()
 	const [playlistName, setPlaylistName] = useState("")
@@ -128,6 +129,12 @@ export const AddPlaylist = () => {
 			firestore.collection('users').doc(author.uid).update({
 				ownPlaylists:authorPlaylists
 			})
+		})
+
+		firestore.collection('search').doc(uid).set({
+			place:'playlists',
+			uid:uid,
+			variantsOfName:findVariantsOfName(playlistName)
 		})
 	}
 

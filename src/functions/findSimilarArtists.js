@@ -28,12 +28,15 @@ function findSimilarArtistsNames(authorsSongsArr, authorsData, setSimilarAuthors
 export default async function findSimilarArtists(authorsData, setSimilarAuthors) {
 	if (authorsData !== undefined && authorsData.ownSongs !== undefined && authorsData.ownSongs.length !== 0) {
 		const authorsSongsArray = []
-		const response = firestore.collection("songs").where("id", "in", authorsData.ownSongs)
-		const data = await response.get();
-		data.docs.forEach(item => {
-			authorsSongsArray.push(item.data())
+		authorsData.ownSongs.forEach(async (songId, index)=>{
+			const songData = (await firestore.collection('songs').doc(songId).get()).data()
+			authorsSongsArray.push(songData)
+			if(index === authorsData.ownSongs.length - 1){
+				return findSimilarArtistsNames(authorsSongsArray, authorsData, setSimilarAuthors)
+			}
 		})
-		return findSimilarArtistsNames(authorsSongsArray, authorsData, setSimilarAuthors)
+
+
 	}
 }
 

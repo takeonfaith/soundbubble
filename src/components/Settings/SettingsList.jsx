@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import {FiMenu} from 'react-icons/fi'
 import {IoIosArrowForward} from 'react-icons/io'
-import { useModal } from '../../functionality/ModalClass'
+import { useModal } from '../../contexts/ModalContext'
 import "../../styles/Settings.css"
 import { GeneralSettings } from './GeneralSettings'
 export const SettingsList = () => {

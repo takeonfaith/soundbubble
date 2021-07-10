@@ -25,8 +25,6 @@
 
 .authorsWrapper{
 	display: flex;
-	align-items: center;
-
 }
 
 .authorResult a{
@@ -121,7 +119,7 @@
 }
 
 .searchFilters button{
-	background: var(--reallyLightGrey);
+	background: var(--reallyTransparentWhite);
 	border-radius: var(--standartBorderRadius2);
 	margin-right: 7px;
 	padding: 5px 10px;

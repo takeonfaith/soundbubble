@@ -3,13 +3,15 @@ import { ColorExtractor } from 'react-color-extractor'
 import { AiOutlineCloudDownload } from 'react-icons/ai'
 import { FiXCircle } from 'react-icons/fi'
 import { firestore, storage } from '../../firebase'
-import { useAuth } from '../../functionality/AuthContext'
+import { useAuth } from '../../contexts/AuthContext'
+import { findVariantsOfName } from '../../functions/findVariantsOfName'
 import getUID from '../../functions/getUID'
 import { DownloadPhotoButton } from '../Basic/DownloadPhotoButton'
 import { ErrorPlate } from '../Basic/ErrorPlate'
 import { LoadingCircle } from '../Basic/LoadingCircle'
 import { PersonTiny } from '../Basic/PersonTiny'
-
+import {FullScreenLoading} from '../Basic/FullScreenLoading'
+import {SearchBar} from '../Basic/SearchBar'
 export const AddSong = () => {
 	const { currentUser } = useAuth()
 	const [songName, setSongName] = useState("")
@@ -19,28 +21,15 @@ export const AddSong = () => {
 	const [allAuthors, setAllAuthors] = useState([])
 	const [chosenAuthors, setChosenAuthors] = useState(!currentUser.isAdmin ? [{ uid: currentUser.uid, photoURL: currentUser.photoURL, displayName: currentUser.displayName }] : [])
 	const [releaseDate, setReleaseDate] = useState("")
-	const [lyrics, setLyrics] = useState([])
+	const [lyrics, setLyrics] = useState("")
 	const [imageLocalPath, setImageLocalPath] = useState("")
 	const [imageColors, setImageColors] = useState([])
 	const [loadingAuthors, setLoadingAuthors] = useState(false)
 	const [lyricsObject, setLyricsObject] = useState([])
 	const [errorMessage, setErrorMessage] = useState("")
 	const [showSuccessMessage, setShowSuccessMessage] = useState(false)
+	const [loadingSong, setLoadingSong] = useState(false)
 	let typingTimeout
-	async function findAuthors(e) {
-		setLoadingAuthors(true)
-		setAllAuthors([])
-		const response = firestore.collection("users")
-			.where("displayName", "==", authorsInputValue)
-		// .where('isAuthor', '==', true)
-		const data = await response.get();
-		if (data !== undefined) {
-			data.docs.forEach(item => {
-				setAllAuthors([...allAuthors, item.data()])
-			})
-			setLoadingAuthors(false)
-		}
-	}
 
 	function removeAuthorFromList(data) {
 		const filtered = chosenAuthors.filter(people => people.uid !== data.uid)
@@ -64,20 +53,17 @@ export const AddSong = () => {
 		const file = e.target.files[0]
 		let isValid = false
 		if (place === 'songsImages/') {
-			console.log("image")
 			const validExtensions = [".jpg", ".png", ".jpeg"]
 			if (validExtensions.find((ext) => file.name.substr(file.name.length - ext.length, ext.length) === ext)) isValid = true
 			else setErrorMessage(`Format of your file is not valid. Download file with one of these: ${validExtensions.map(ex => " " + ex)}`)
 		}
 		else if (place === "songs/") {
-			console.log("song")
 			const validExtensions = [".mp3", ".mp4a", ".flac", ".wav", '.wma']
 			if (validExtensions.find((ext) => file.name.substr(file.name.length - ext.length, ext.length) === ext)) isValid = true
 			else setErrorMessage(`Format of your file is not valid. Download file with one of these: ${validExtensions.map(ex => ex)}`)
 		}
 
 		if (isValid) {
-			console.log(file)
 			setImageLocalPath(URL.createObjectURL(file))
 			const storageRef = storage.ref()
 			const fileRef = storageRef.child(place + file.name)
@@ -104,6 +90,7 @@ export const AddSong = () => {
 
 	async function addSongToFirebase(e) {
 		e.preventDefault()
+		setLoadingSong(true)
 		let uid = getUID()
 		console.log(lyricsObject)
 		setErrorMessage("")
@@ -134,10 +121,13 @@ export const AddSong = () => {
 				setSongName('')
 				setSongSrc('')
 				setReleaseDate('')
+				setLyrics([])
 				setShowSuccessMessage(true)
 				setImageColors([])
+				setLoadingSong(false)
 			}).catch(err => {
 				setErrorMessage(err)
+				setLoadingSong(false)
 			})
 
 			chosenAuthors.forEach(async author => {
@@ -150,6 +140,11 @@ export const AddSong = () => {
 				})
 			})
 
+			firestore.collection('search').doc(uid).set({
+				place:'songs',
+				uid:uid,
+				variantsOfName:findVariantsOfName(songName)
+			})
 			
 		}
 
@@ -163,23 +158,14 @@ export const AddSong = () => {
 		}
 	}, [showSuccessMessage])
 
-	function timerUpFunc(func) {
-		clearTimeout(typingTimeout)
-		typingTimeout = setTimeout(func, 1000)
-	}
-
-	useEffect(() => {
-		console.log(imageColors)
-	}, [imageColors])
-
 	function manuallyChangeColor(e, i) {
-		// const tempArr = imageColors; tempArr[i] = e.taget.value;
 		imageColors[i] = e.target.value
 		setImageColors([...imageColors])
 	}
 
 	return (
 		<div className="AddSong">
+			<FullScreenLoading loading = {loadingSong}/>
 			<ColorExtractor src={imageLocalPath} getColors={(colors) => setImageColors(colors)} />
 			<form onSubmit={addSongToFirebase}>
 				<label>
@@ -188,7 +174,7 @@ export const AddSong = () => {
 				</label>
 				<label>
 					<h3>Song authors</h3>
-					<input type="text" placeholder="Enter author name" value={authorsInputValue} onChange={(e) => setAuthorsInputValue(e.target.value)} style={{ marginBottom: '5px' }} onKeyUp={() => timerUpFunc(findAuthors)} onKeyDown={() => { return clearTimeout(typingTimeout) }} />
+					<SearchBar value = {authorsInputValue} setValue = {setAuthorsInputValue} setResultAuthorList = {setAllAuthors} defaultSearchMode = {'authors'}/>
 					<div className="chosenAuthorsList">
 						{chosenAuthors.map((author) => {
 							return (
@@ -246,7 +232,7 @@ export const AddSong = () => {
 				</label>
 
 				<label>
-					<textarea name="" id="" placeholder={"Add song lyrics"} onKeyDown={transformLyricsToArrayOfObjects} onChange={(e) => setLyrics(e.target.value)}></textarea>
+					<textarea name="" id="" placeholder={"Add song lyrics"} value = {lyrics} onKeyDown={transformLyricsToArrayOfObjects} onChange={(e) => setLyrics(e.target.value)}></textarea>
 				</label>
 				<button type="submit" className="addSongBtn">{!showSuccessMessage?"Add song":"Song Successfully added. Congrats!"}</button>
 			</form>

@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react'
-import { authors } from '../../data/authors'
 
 export const SmallImages = ({imagesList, borderColor = "#fff"}) => {
 	return (

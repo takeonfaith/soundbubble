@@ -1,17 +1,12 @@
 import React, { useRef, useState } from 'react'
 import { ColorCircles } from '../FullScreenPlayer/colorCircles'
 import { HiPause, HiPlay } from 'react-icons/hi'
-import { useSong } from '../../functionality/SongPlay/SongContext'
+import { useSong } from '../../contexts/SongContext'
 import { CgMusicNote } from 'react-icons/cg'
 import rightFormanForBigNumber from '../../functions/rightFormatForBigNumber'
-import { FiCheck, FiFlag, FiInfo, FiMoreVertical, FiPlusCircle, FiShare, FiTrash2 } from 'react-icons/fi'
+import { FiCheck, FiMoreVertical, FiPlusCircle, FiShare, FiTrash2 } from 'react-icons/fi'
 import { useOutsideClick } from '../../hooks/useOutsideClick'
-import { songs } from '../../data/songs'
-import { MdPlaylistAdd } from 'react-icons/md'
-import { friends } from '../../data/friends'
-import { authors } from '../../data/authors'
-import shareWithOneFriend from '../../functions/shareWithOneFriend'
-import { useAuth } from '../../functionality/AuthContext'
+import { useAuth } from '../../contexts/AuthContext'
 import { firestore } from '../../firebase'
 export const SongItemChoice = ({ song, listOfSongs, setListOfSongs, showListens = false, listens = 0, isNewSong = false }) => {
 	const { setCurrentSong, currentSong, displayAuthors, play, songRef, setPlay, setYourSongs, yourPlaylists, currentSongQueue, setCurrentSongInQueue, fetchYourSongs } = useSong()
@@ -108,48 +103,6 @@ export const SongItemChoice = ({ song, listOfSongs, setListOfSongs, showListens 
 					<FiMoreVertical />
 				</button>
 			</div>
-			{openMoreWindow ?
-				(
-					<div className="songItemMenuWindow" style={moreWindowPosRelativeToViewport > (window.innerHeight / 2) + 100 ? { top: 'auto', bottom: '110%' } : { top: '110%', bottom: 'auto' }} onClick={e => e.stopPropagation()}>
-						<div className="songItemMenuWindowItem" onClick={addOrDeleteSongToLibrary}>{currentUser.addedSongs.includes(song.id) ? <span><FiTrash2 />Delete</span> : <span><FiPlusCircle />Add</span>}</div>
-						<div className="songItemMenuWindowItem">
-							<div className="songItemMenuWindow inner">
-								{yourPlaylists.map((playlist, key) => {
-									if (!playlist.isAlbum && playlist.authors.includes(30))
-										return (
-											<div className="songItemMenuWindowItem" onClick={addOrDeleteSongToPlaylist} key={key} id={key}>
-												{!yourPlaylists[key].songs.includes(song.id) ? <FiPlusCircle /> : <FiCheck />}
-												{playlist.name}
-											</div>
-										)
-								})}
-							</div>
-							<MdPlaylistAdd />Add to playlist
-						</div>
-						<div className="songItemMenuWindowItem">
-							<div className="songItemMenuWindow inner">
-								{friends['30'].map((friendId, key) => {
-									const friend = authors[friendId]
-									if (key < 3)
-										return (
-											<div className="songItemMenuWindowItem" onClick={(e)=>shareWithOneFriend(e, song.id)} key={key} id={friendId}>
-												<div className="songItemMenuWindowItemImgWrapper">
-													<img src={friend.image} alt="" />
-												</div>
-												{friend.name}
-											</div>
-										)
-								})}
-							</div>
-							<FiShare />Share
-						</div>
-						<div className="songItemMenuWindowItem"><FiInfo />Info</div>
-						<div className="songItemMenuWindowItem"><FiFlag />Flag</div>
-					</div>
-				) :
-				null
-			}
-
 		</div >
 	)
 }

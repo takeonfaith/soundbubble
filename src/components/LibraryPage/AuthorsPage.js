@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSong } from '../../functionality/SongPlay/SongContext'
+import { useSong } from '../../contexts/SongContext'
 import {AuthorItemBig} from '../AuthorPage/AuthorItemBig'
 export const AuthorsPage = () => {
 	const {yourAuthors} = useSong()

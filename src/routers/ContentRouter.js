@@ -14,7 +14,7 @@ export const ContentRouter = () => {
 			<Route path={'/albums/:albumId'} component={AlbumPage} exact/>
 			<Route path={'/chat/:chatId'} component={DialoguePage} exact/>
 			{privateRoutes.map(({path, Component}, i)=>{
-				return <Route path={path} component={Component} exact = {true} key = {i}/>
+				return <Route path={path} component={Component} exact key = {i}/>
 			})}
 			<Redirect to={HOME_ROUTE} />
 		</Switch>

@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi'
-import { authors } from '../../data/authors'
-import { playlists } from '../../data/playlists'
-import { songs } from '../../data/songs'
 import { firestore } from '../../firebase'
 import checkNumber from '../../functions/checkNumber'
 import { AuthorItemBig } from '../AuthorPage/AuthorItemBig'
@@ -44,7 +41,7 @@ export const MainBanner = () => {
 	// 	return topAlbum.image
 	// }
 	return (
-		<div className = "MainBanner" style = {{background:bannerColors[currentSliderPage], boxShadow:`0 0 50px ${bannerColors[currentSliderPage] + 'ab'}`}}>
+		<div className = "MainBanner" style = {{background:bannerColors[currentSliderPage]}}>
 			{loading? <LoadingCircle/>:
 				<>
 					<div className="slider">

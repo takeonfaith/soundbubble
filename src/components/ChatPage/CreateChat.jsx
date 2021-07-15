@@ -3,13 +3,13 @@ import { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { useSong } from '../../contexts/SongContext'
-import { createChat } from '../../functions/createChat'
-import getUID from '../../functions/getUID'
+import { createChat } from '../../functions/create/createChat'
+import getUID from '../../functions/other/getUID'
 import { DownloadPhotoButton } from '../Basic/DownloadPhotoButton'
-import { ErrorPlate } from '../Basic/ErrorPlate'
+import { ErrorPlate } from '../MessagePlates/ErrorPlate'
 import { PersonTiny } from '../Basic/PersonTiny'
 import { SearchBar } from '../Basic/SearchBar'
-import {findChatURL} from '../../functions/findChatURL'
+import {findChatURL} from '../../functions/find/findChatURL'
 export const CreateChat = () => {
 	const {currentUser} = useAuth()
 	const { yourFriends } = useSong()

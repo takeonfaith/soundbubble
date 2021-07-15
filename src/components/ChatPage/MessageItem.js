@@ -6,8 +6,8 @@ import { useSwipeable } from 'react-swipeable'
 import { firestore } from '../../firebase'
 import { useAuth } from '../../contexts/AuthContext'
 import { useScreen } from '../../contexts/ScreenContext'
-import displayDate from '../../functions/displayDate'
-import { findWhatToWriteInResponseToItem } from '../../functions/findWhatToWriteInResponseItem'
+import displayDate from '../../functions/display/displayDate'
+import { findWhatToWriteInResponseToItem } from '../../functions/find/findWhatToWriteInResponseItem'
 import useOnScreen from '../../hooks/useOnScreen'
 import { AuthorItemBig } from '../AuthorPage/AuthorItemBig'
 import { PlaylistItem } from '../AuthorPage/PlaylistItem'
@@ -17,7 +17,7 @@ import { SeenByCircle } from './SeenByCircle'
 
 export const MessageItem = ({ messageData, chatId, scrollToMessageRef, setScrollToMessageId, scrollToMessageId, showPhoto = true, otherMessages, inResponseToMessageArr, setInResponseToMessageArr }) => {
 	const { currentUser } = useAuth()
-	const {isMobile} = useScreen()
+	const {isMobile, screenHeight} = useScreen()
 	const { message, attachedAlbums, attachedSongs, attachedAuthors, sender, inResponseToMessage, id, sentTime } = messageData
 	const [userThatSentMessage, setUserThatSentMessage] = useState({})
 	const messageSentTime = displayDate(sentTime, 2)
@@ -59,8 +59,10 @@ export const MessageItem = ({ messageData, chatId, scrollToMessageRef, setScroll
 
 	function fetchAttachedData(list, place, setFunc) {
 		return list.forEach(async (itemId) => {
-			let itemData = (await firestore.collection(place).doc(itemId).get()).data()
-			setFunc(prev => [...prev, itemData])
+			let itemData = (await firestore.collection(place).doc(itemId).get())
+			if(itemData.exists) setFunc(prev => [...prev, itemData.data()])
+			else setFunc(prev => [...prev, null])
+			
 		})
 	}
 
@@ -111,7 +113,7 @@ export const MessageItem = ({ messageData, chatId, scrollToMessageRef, setScroll
 		<div className={"MessageItem " + (sender === currentUser.uid ? 'your' : '')} ref={id === scrollToMessageId ? scrollToMessageRef : refPassthrough} style={!isVisible ? { opacity: '0', visibility: 'hidden' } : showPhoto ? { paddingBottom: '15px', transform:`translateX(${swipeDeltaX}px)`, transition:transformTransition } : {transform:`translateX(${swipeDeltaX}px)`, transition:transformTransition}} onTouchEnd = {returnToInitial}>
 			<div className="messageItemImage">
 				{showPhoto ?
-					<img src={userThatSentMessage.photoURL} alt="" /> :
+					<img loading = "lazy" src={userThatSentMessage.photoURL} alt="" /> :
 					null
 				}
 
@@ -145,7 +147,7 @@ export const MessageItem = ({ messageData, chatId, scrollToMessageRef, setScroll
 				<div>
 					<p>{message}</p>
 					{attachedSongsData.map((song, key) => {
-						return isVisible ? <SongItem song={song} localIndex={key} key={key} /> : <SongItemLoading />
+						return isVisible ? <SongItem song={song} localIndex={key} key={key} position = {screenHeight}/> : <SongItemLoading />
 					})}
 					{attachedPlaylistsData.map((album, index) => {
 						return <PlaylistItem playlist={album} key={index} />

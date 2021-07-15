@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { firestore } from '../../firebase'
-import displayDate from '../../functions/displayDate'
+import displayDate from '../../functions/display/displayDate'
 
 export const LastSeen = ({userUID}) => {
 	const [lastSeen, setLastSeen] = useState("")

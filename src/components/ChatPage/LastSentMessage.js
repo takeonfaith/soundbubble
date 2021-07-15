@@ -4,7 +4,7 @@ import { FiMusic, FiUser } from 'react-icons/fi'
 import { firestore } from '../../firebase'
 import { useAuth } from '../../contexts/AuthContext'
 import {BsDot} from 'react-icons/bs'
-import shortWord from '../../functions/shortWord'
+import shortWord from '../../functions/other/shortWord'
 import { SeenByCircle } from './SeenByCircle'
 export const LastSentMessage = ({ messages }) => {
 	const {currentUser} = useAuth()
@@ -24,9 +24,10 @@ export const LastSentMessage = ({ messages }) => {
 				setLastAttachedItem(str => str += songName)
 			}
 			if (lastAttachedItem.attachedAlbums.length) {
-				const playlistName = (await firestore.collection('playlists').doc(lastAttachedItem.attachedAlbums[0]).get()).data().name
+				const playlistName = (await firestore.collection('playlists').doc(lastAttachedItem.attachedAlbums[0]).get())
+				if(playlistName.exists) setLastAttachedItem(str => str +=playlistName.data().name)
+				else setLastAttachedItem(str => str +="Deleted Album ")
 				setLastIcon(2)
-				setLastAttachedItem(str => str +=playlistName)
 			}
 			if (lastAttachedItem.attachedAuthors.length) {
 				const authorName = (await firestore.collection('users').doc(lastAttachedItem.attachedAuthors[0]).get()).data().displayName

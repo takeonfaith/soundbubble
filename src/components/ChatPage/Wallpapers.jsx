@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useFetchFirebaseData } from '../../hooks/fetchFirebaseData'
-import { LoadingCircle } from '../Basic/LoadingCircle'
+import { LoadingCircle } from '../Loading/LoadingCircle'
 import { WallpaperItem } from './WallpaperItem'
 
 export const Wallpapers = ({chatId, currentWallpaper}) => {

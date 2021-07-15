@@ -63,6 +63,9 @@
 	justify-content: center;
 	align-items: center;
 	margin-right: 20px;
+	display: inline-block;
+	background-position: center center;
+	background-size: cover;
 }
 
 @keyframes floatingBorderRadius {
@@ -87,6 +90,11 @@
 	100%{
 		border-radius: 41% 59% 56% 44% / 39% 47% 53% 61%;
 	}
+}
+
+.headerImageAndNameContainer{
+	display: flex;
+	align-items: center;
 }
 
 .Header .headerAuthorsImage img{
@@ -544,6 +552,7 @@
 		min-height: 430px;
 		height: fit-content;
 		padding:30px;
+		text-align: center;
 	}
 
 	.Header .headerBtns{
@@ -566,6 +575,10 @@
 		flex-direction: column;
 		align-items: center;	
 		margin-top: 20px;
+	}
+
+	.Header .headerAuthorsName{
+		align-items: center;
 	}
 
 	.Header .headerAuthorsName h5{

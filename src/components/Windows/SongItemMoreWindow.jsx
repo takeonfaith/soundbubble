@@ -1,16 +1,21 @@
 import React from 'react'
 import { FiShare, FiInfo, FiFlag } from 'react-icons/fi';
 import { MdPlaylistAdd, MdKeyboardArrowRight } from 'react-icons/md';
+import { BiEditAlt } from 'react-icons/bi';
 import { useModal } from '../../contexts/ModalContext';
 import AddOrDeleteButtonFull from '../FullScreenPlayer/AddOrDeleteSongButton'
-import {AddToPlaylists} from '../FullScreenPlayer/AddToPlaylists'
-import {FriendsListToShareWith} from '../Basic/FriendsListToShareWith'
-import {SongInfo} from '../Basic/SongInfo'
-export const SongItemMoreWindow = ({openMoreWindow, song, moreWindowPosRelativeToViewport}) => {
-	const {toggleModal, setContent} = useModal()
+import { AddToPlaylists } from '../FullScreenPlayer/AddToPlaylists'
+import { FriendsListToShareWith } from '../Basic/FriendsListToShareWith'
+import { SongInfo } from '../Basic/SongInfo'
+import { useAuth } from '../../contexts/AuthContext';
+import { EditSong } from '../AdminAndAuthor/EditSong';
+export const SongItemMoreWindow = ({ openMoreWindow, song, moreWindowPosRelativeToViewport }) => {
+	const { toggleModal, setContent } = useModal()
+	const { currentUser } = useAuth()
 	return openMoreWindow ? (
 		(
 			<div className="songItemMenuWindow" style={moreWindowPosRelativeToViewport > (window.innerHeight / 2) + 100 ? { top: 'auto', bottom: '110%' } : { top: '110%', bottom: 'auto' }} onClick={e => e.stopPropagation()}>
+				{currentUser.isAdmin ? <div className="songItemMenuWindowItem" onClick = {()=>{toggleModal(); setContent(<EditSong song = {song}/>)}}><BiEditAlt />Edit</div> : null}
 				<div className="songItemMenuWindowItem"><AddOrDeleteButtonFull song={song} /></div>
 				<div className="songItemMenuWindowItem">
 					<div className="songItemMenuWindow inner">

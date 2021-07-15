@@ -30,7 +30,7 @@ export const ChatHeader = ({ data }) => {
 			<BackBtn />
 			{data.participants.length === 2 ? <Link className="chatHeaderImageAndName" to={`/authors/${otherPerson.uid}`}>
 				<div className="chatHeaderImage">
-					<img src={otherPerson.photoURL || data.chatImage} alt="" />
+					<img loading = "lazy" src={otherPerson.photoURL || data.chatImage} alt="" />
 				</div>
 				<div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
 					<h4>{otherPerson.displayName || data.chatName}</h4>
@@ -39,7 +39,7 @@ export const ChatHeader = ({ data }) => {
 			</Link> :
 				<div className="chatHeaderImageAndName" onClick = {()=>{toggleModal(); setContent(<ChatInfo data = {data}/>)}}>
 					<div className="chatHeaderImage">
-						<img src={otherPerson.photoURL || data.chatImage} alt="" />
+						<img loading = "lazy" src={otherPerson.photoURL || data.chatImage} alt="" />
 					</div>
 					<div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
 						<h4>{otherPerson.displayName || data.chatName}</h4>

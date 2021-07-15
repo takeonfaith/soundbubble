@@ -325,7 +325,7 @@ input[type=range] {
  }
  
  .lyricsBlock:active{
-	transform: scale(.94);
+	transform: scale(.98);
  }
  
  
@@ -1211,7 +1211,6 @@ input[type=range] {
 	 height: 100%;
 	 justify-content: center;
 	 align-items: center;
-	 background: var(--transparentWhite);
  }
 
  .rightSide .SongInfo .songInfoContent{
@@ -1322,5 +1321,10 @@ input[type=range] {
 
 	.auroraWrapper{
 		display: none;
+	}
+
+	.rightSide .SongInfo, .mobilePlayerMenuContent .SongInfo .songImage{
+		width: 70%;
+		padding-top: 70%;
 	}
  }

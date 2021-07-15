@@ -2,6 +2,7 @@ import firebase from 'firebase/app'
 import 'firebase/storage'
 import 'firebase/auth'
 import 'firebase/firestore'
+import 'firebase/analytics'
 import seedDatabase from './seedDatabase';
 
 const app = firebase.initializeApp({
@@ -13,6 +14,7 @@ const app = firebase.initializeApp({
 	appId:process.env.REACT_APP_FIREBASE_APP_ID,
 	measurementId: process.env.REACT_APP_MEASUREMENT_ID
 });
+firebase.analytics();
 export const auth = app.auth()
 export const storage = app.storage()
 export const firestore = app.firestore()

@@ -430,7 +430,7 @@
 	border: none;
 	outline: none;
 	min-height: 30px;
-	width: 80%;
+	width: 100%;
 	border-radius: var(--standartBorderRadius2);
 	margin-left: 6px;
 	padding: 7px 10px;
@@ -447,6 +447,11 @@
 	background: transparent;
 	border-radius: var(--standartBorderRadius2);
 	z-index: 2;
+	
+}
+
+.sendBtn{
+	margin-left: 6px;
 }
 
 .attachBtn button:hover, .sendBtn:hover{

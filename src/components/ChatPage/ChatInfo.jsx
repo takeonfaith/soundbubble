@@ -3,13 +3,13 @@ import { useEffect } from 'react'
 import { firestore, storage } from '../../firebase'
 import { useFetchFirebaseData } from '../../hooks/fetchFirebaseData'
 import { useFetchDocs } from '../../hooks/useFetchDocs'
-import { LoadingCircle } from '../Basic/LoadingCircle'
+import { LoadingCircle } from '../Loading/LoadingCircle'
 import { PersonTiny } from '../Basic/PersonTiny'
 import {FiSettings} from 'react-icons/fi'
 import {MdModeEdit} from 'react-icons/md'
 import {RiVolumeUpLine } from 'react-icons/ri'
 import {ImAttachment} from 'react-icons/im'
-import shortWord from '../../functions/shortWord'
+import shortWord from '../../functions/other/shortWord'
 import { useModal } from '../../contexts/ModalContext'
 import { AttachmentList } from './AttachmentList'
 import { Slider } from '../Tools/Slider'
@@ -63,7 +63,7 @@ export const ChatInfo = ({ data }) => {
 						Change photo
 						<input type="file" style = {{display:'none'}} onChange = {(e)=>onFileChange(e, 'chatCovers/', setNewChatPhoto)}/>
 					</label>
-					<img src={newChatPhoto} alt="" />
+					<img loading = "lazy" src={newChatPhoto} alt="" />
 				</div>
 				<div>
 					<input type="text" className = "standartInput" value = {chatNameValue} onChange = {(e)=>setChatNameValue(e.target.value)}/>

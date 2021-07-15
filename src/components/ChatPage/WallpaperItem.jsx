@@ -10,7 +10,7 @@ export const WallpaperItem = ({chatId, image, currentWallpaper}) => {
 	
 	return (
 		<div className = {"WallpaperItem " + (image === currentWallpaper?"active":"")} onClick = {changeChatWallpaper} style = {image === "undefined"?{background:'var(--playlistsColor)'}:{}}>
-			{image !== "undefined" ?<img src={image} alt="" />:null}
+			{image !== "undefined" ?<img loading = "lazy" src={image} alt="" />:null}
 		</div>
 	)
 }

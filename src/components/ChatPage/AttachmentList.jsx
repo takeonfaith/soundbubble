@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { firestore } from '../../firebase'
-import { LoadingCircle } from '../Basic/LoadingCircle'
-import { SongList } from '../Basic/SongList'
+import { LoadingCircle } from '../Loading/LoadingCircle'
+import { SongList } from '../Lists/SongList'
 import { AuthorsList } from '../Basic/AuthorsList'
-import { AlbumList } from '../Basic/AlbumList'
+import { AlbumList } from '../Lists/AlbumList'
 import { Slider } from '../Tools/Slider'
 export const AttachmentList = ({ chatId }) => {
 	const [attachmentList, setAttachmentList] = useState([])

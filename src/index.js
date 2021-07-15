@@ -9,11 +9,11 @@ ReactDOM.render(
   <React.StrictMode>
     <ScreenProvider>
       <AuthProvider>
-        <SongProvider>
-          <ModalClassProvider>
+        <ModalClassProvider>
+          <SongProvider>
             <App />
-          </ModalClassProvider>
-        </SongProvider>
+          </SongProvider>
+        </ModalClassProvider>
       </AuthProvider>
     </ScreenProvider>
   </React.StrictMode>,

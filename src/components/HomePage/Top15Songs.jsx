@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { firestore } from '../../firebase'
-import { LoadingCircle } from '../Basic/LoadingCircle'
-import { SongList } from '../Basic/SongList'
+import { LoadingCircle } from '../Loading/LoadingCircle'
+import { SongList } from '../Lists/SongList'
 
 export const Top15Songs = () => {
 	const [topSongs, setTopSongs] = useState([])

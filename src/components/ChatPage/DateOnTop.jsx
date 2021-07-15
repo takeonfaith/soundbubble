@@ -1,5 +1,5 @@
 import React from 'react'
-import displayDate from '../../functions/displayDate'
+import displayDate from '../../functions/display/displayDate'
 
 export const DateOnTop = ({date}) => {
 	return (

@@ -4,6 +4,7 @@
 	justify-content: space-evenly;
 	padding: 0 20px;
 	background: var(--playlistsColor);
+	position: relative;
 }
 
 .MobileControlBarItem{
@@ -44,14 +45,13 @@
 	position: relative;
 }
 
-.FullBottomSide .player::before{
+.mobileSongRange{
 	content: "";
 	display: block;
 	position: absolute;
-	width: var(--inputRange);
 	height: 1px;
 	background: var(--themeColor2);
-	bottom: -1px;
+	bottom: 43px;
 	left: 0;
 }
 

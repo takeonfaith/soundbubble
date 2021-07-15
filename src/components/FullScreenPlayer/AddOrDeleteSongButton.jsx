@@ -1,6 +1,6 @@
 import { useAuth } from "../../contexts/AuthContext"
-import { addSongToLibrary } from "../../functions/addSongToLibrary"
-import { deleteSongFromLibrary } from "../../functions/deleteSongFromLibrary"
+import { addSongToLibrary } from "../../functions/add/addSongToLibrary"
+import { deleteSongFromLibrary } from "../../functions/other/deleteSongFromLibrary"
 import {FiPlusCircle, FiTrash2} from 'react-icons/fi'
 import { useSong } from "../../contexts/SongContext"
 import { useModal } from "../../contexts/ModalContext"

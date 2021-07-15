@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { firestore } from '../../firebase'
 import { useAuth } from '../../contexts/AuthContext'
-import displayDate from '../../functions/displayDate'
-import { findAmountOfUnseenMessages } from '../../functions/findAmountOfUnseenMessages'
+import displayDate from '../../functions/display/displayDate'
+import { findAmountOfUnseenMessages } from '../../functions/find/findAmountOfUnseenMessages'
 import { IsUserOnlineCircle } from '../Basic/IsUserOnlineCircle'
 import { AmountOfUnseenMessages } from './AmountOfUnseenMessages'
 import { LastSentMessage } from './LastSentMessage'
@@ -32,7 +32,7 @@ export const ChatItem = ({ chatData }) => {
 		<Link to={`/chat/${chatData.id}`}>
 			<div className={"ChatItem " + (amountOfUnseen > 0?"unseen":"")} >
 				<div className="chatItemImage">
-					<img src={chatImage || otherPerson.photoURL} alt="" />
+					<img loading = "lazy" src={chatImage || otherPerson.photoURL} alt="" />
 				</div>
 				<IsUserOnlineCircle userUID = {otherPerson.uid}/>
 				<div style={{ width: '100%' }}>

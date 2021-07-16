@@ -23,6 +23,7 @@ import { displayAuthorsStr } from '../../functions/display/displayAuthorsStr'
 import { Hint } from '../Basic/Hint'
 import { SongItemMoreWindow } from '../Windows/SongItemMoreWindow'
 import { SongItemMobileMoreWindow } from '../Windows/SongItemMobileMoreWindow'
+import { addSongToHistory } from '../../functions/add/addSongToHistory'
 export const SongItem = ({ song, localIndex, showListens = false, isNewSong = false, listOfChosenSongs, setListOfSongs, position }) => {
 	const { yourSongs, setCurrentSong, currentSong, displayAuthors, play, songRef, setPlay, setCurrentSongInQueue } = useSong()
 	const {isMobile} = useScreen()
@@ -38,6 +39,7 @@ export const SongItem = ({ song, localIndex, showListens = false, isNewSong = fa
 		firestore.collection('users').doc(currentUser.uid).update({
 			lastSongPlayed: song.id
 		})
+		
 		setCurrentSongInQueue(localIndex)
 		if (song.id === currentSong && play) {
 			songRef.current.pause();
@@ -47,6 +49,8 @@ export const SongItem = ({ song, localIndex, showListens = false, isNewSong = fa
 		}
 		songRef.current.play();
 		setPlay(true)
+
+		addSongToHistory(song.id, currentUser)
 	}
 
 	function openSongItemMoreWindow(e) {

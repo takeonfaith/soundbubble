@@ -18,6 +18,7 @@ import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import { BiDoorOpen, BiLoaderAlt } from 'react-icons/bi'
 import { FriendsListToShareWith } from '../Basic/FriendsListToShareWith'
 import { CustomizeAlbum } from '../AlbumPage/CustomizeAlbum'
+import { CustomizeAuthor } from '../AuthorPage/CustomizeAuthor'
 import { addAuthorToLibrary } from '../../functions/add/addAuthorToLibrary'
 import addFriend from '../../functions/add/addFriend'
 import { LastSongListened } from './LastSongListened'
@@ -30,13 +31,13 @@ import { useScreen } from '../../contexts/ScreenContext'
 import { AuthorMoreWindow } from '../Windows/AuthorMoreWindow'
 import { AlbumInfo } from '../Info/AlbumInfo'
 import { AuthorInfo } from '../Info/AuthorInfo'
-import {deleteFriend} from '../../functions/delete/deleteFriend'
-import {useAlbumAuthors} from '../../hooks/useAlbumAuthors'
+import { deleteFriend } from '../../functions/delete/deleteFriend'
+import { useAlbumAuthors } from '../../hooks/useAlbumAuthors'
 import { deletePlaylist } from '../../functions/delete/deletePlaylist'
 import { quitPlaylist } from '../../functions/other/quitPlaylist'
 export const Header = ({ data, headerColors }) => {
 	const { isMobile } = useScreen()
-	const { displayAuthors} = useSong()
+	const { displayAuthors } = useSong()
 	const [albumAuthors, authorsImages] = useAlbumAuthors(data)
 	const { currentUser, logout } = useAuth()
 	const [openMoreWindow, setOpenMoreWindow] = useState(false)
@@ -45,14 +46,10 @@ export const Header = ({ data, headerColors }) => {
 	const moreWindowRef = useRef(null)
 	useOutsideClick(moreWindowRef, setOpenMoreWindow)
 
-
-	
-
-
-
 	function displayCreationDateIfExists() {
 		return data.creationDate !== undefined ?
 			<div className="headerListenersAndSubsItem">
+				<Hint text={"creation date"} style={{ fontSize: "0.8em" }} />
 				<span>{displayDate(data.creationDate)}</span>
 			</div> :
 			null
@@ -79,7 +76,7 @@ export const Header = ({ data, headerColors }) => {
 	function whatButtonToRender() {
 		if (data.authors) {
 			if (currentUser.ownPlaylists.includes(data.id) && data.authors.length === 1) return <button onClick={() => openConfirm("Are you sure you want to DELETE this playlist forever?!", "Yes, pretty sure", "No, I Don't!", () => { deletePlaylist(data.id); closeConfirm() })}><Hint text={"delete playlist"} direction={"bottom"} /><FiTrash /></button>
-			else if (currentUser.ownPlaylists.includes(data.id)) return <button onClick={() => openConfirm("Are you sure you want to quit this playlist?", "Yes, pretty sure", "No, I Don't!", () => { quitPlaylist(data.id); closeConfirm() })}><Hint text={"quit playlist"} direction={"bottom"} /><BiDoorOpen/></button>
+			else if (currentUser.ownPlaylists.includes(data.id)) return <button onClick={() => openConfirm("Are you sure you want to quit this playlist?", "Yes, pretty sure", "No, I Don't!", () => { quitPlaylist(data, currentUser); closeConfirm() })}><Hint text={"quit playlist"} direction={"bottom"} /><BiDoorOpen /></button>
 			else if (currentUser.addedPlaylists.includes(data.id)) return <button onClick={() => openConfirm("Are you sure you want to remove this playlist from library?", "Yes, pretty sure", "No-no-no, go away", () => { removePlaylistFromLibrary(data, currentUser); closeConfirm() })}><Hint text={"remove playlist from library"} direction={"bottom"} /><CgCheckO /></button>
 			else return <button onClick={() => addPlaylistToLibrary(data, currentUser)}><Hint text={"add playlist"} direction={"bottom"} /><FiPlusCircle /></button>
 		}
@@ -113,7 +110,11 @@ export const Header = ({ data, headerColors }) => {
 						{openMoreWindow ?
 							(
 								<div className="songItemMenuWindow" style={{ top: '110%', bottom: 'auto' }} onClick={e => e.stopPropagation()} >
-									{(data.authors && data.authors.find(person => person.uid === currentUser.uid)) || (data.authors && currentUser.isAdmin) ? <div className="songItemMenuWindowItem" onClick={() => { toggleModal(); setContent(<CustomizeAlbum playlist={data} />) }}><FiEdit2 />Edit</div> : null}
+									{
+										(data.authors && data.authors.find(person => person.uid === currentUser.uid)) || (data.authors && currentUser.isAdmin) ? <div className="songItemMenuWindowItem" onClick={() => { toggleModal(); setContent(<CustomizeAlbum playlist={data} />) }}><FiEdit2 />Edit</div> :
+										(data.uid === currentUser.uid && !data.isAuthor) ? <div className="songItemMenuWindowItem" onClick={() => { toggleModal(); setContent(<CustomizeAuthor author={data} />) }}><FiEdit2 />Edit</div> :
+										null
+									}
 									<div className="songItemMenuWindowItem" onClick={() => { toggleModal(); setContent(<FriendsListToShareWith item={data} whatToShare={data.authors !== undefined ? 'playlist' : 'author'} />) }}>
 										<FiShare />Share
 									</div>
@@ -127,7 +128,7 @@ export const Header = ({ data, headerColors }) => {
 				</div>
 				{
 					currentUser.uid === data.uid ?
-						<button onClick={logout} >
+						<button onClick={() => openConfirm("Are you sure you want to quit?", "Yes, pretty sure", "No, I Don't!", () => { logout(); closeConfirm() })} >
 							<Hint text={"quit"} direction={"bottom"} />
 							<IoMdExit />
 						</button> :
@@ -151,12 +152,12 @@ export const Header = ({ data, headerColors }) => {
 
 				<div className="headerListenersAndSubs">
 					<div className="headerListenersAndSubsItem">
-						<Hint text={(data.listens ?? data.numberOfListenersPerMonth) + ' listeners per month'} style = {{fontSize:"0.8em"}}/>
+						<Hint text={(data.listens ?? data.numberOfListenersPerMonth) + ' listeners per month'} style={{ fontSize: "0.8em" }} />
 						<span>{rightFormanForBigNumber(data.listens ?? data.numberOfListenersPerMonth)}</span>
 						<FiHeadphones />
 					</div>
 					<div className="headerListenersAndSubsItem">
-						<Hint text={data.subscribers + ' subscribers'} style = {{fontSize:"0.8em"}}/>
+						<Hint text={data.subscribers + ' subscribers'} style={{ fontSize: "0.8em" }} />
 						<span>{rightFormanForBigNumber(data.subscribers)}</span>
 						<FiUserPlus />
 					</div>

@@ -73,7 +73,7 @@ export const AddSong = () => {
 
 	async function addSongToFirebase(e) {
 		e.preventDefault()
-		setLoadingSong(true)
+		
 		let uid = getUID()
 		setErrorMessage("")
 		if (songName.length === 0) setErrorMessage("Song has to have some name")
@@ -82,6 +82,7 @@ export const AddSong = () => {
 		else if (songSrc.length === 0) setErrorMessage('You didn\'t load song file')
 		else if (releaseDate.length === 0) setErrorMessage('You have to set release date for a song')
 		else {
+			setLoadingSong(true)
 			firestore.collection('songs').doc(uid).set(
 				{
 					id: uid,
@@ -149,7 +150,7 @@ export const AddSong = () => {
 		<div className="AddSong">
 			<FullScreenLoading loading = {loadingSong}/>
 			<ColorExtractor src={imageLocalPath} getColors={(colors) => setImageColors(colors)} />
-			<form onSubmit={addSongToFirebase}>
+			<form onSubmit = {e=>e.preventDefault()}>
 				<label>
 					<h3>Song name</h3>
 					<input type="text" placeholder="Enter song name" value={songName} onChange={(e) => setSongName(e.target.value)} />
@@ -216,7 +217,7 @@ export const AddSong = () => {
 				<label>
 					<textarea name="" id="" placeholder={"Add song lyrics"} value = {lyrics} onChange={(e) => setLyrics(e.target.value)}></textarea>
 				</label>
-				<button type="submit" className="addSongBtn">{!showSuccessMessage?"Add song":"Song Successfully added. Congrats!"}</button>
+				<button className="addSongBtn" onClick = {addSongToFirebase}>{!showSuccessMessage?"Add song":"Song Successfully added. Congrats!"}</button>
 			</form>
 		</div>
 	)

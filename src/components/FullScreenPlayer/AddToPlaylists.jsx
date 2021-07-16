@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useAuth } from '../../contexts/AuthContext'
 import { useSong } from '../../contexts/SongContext'
-import { addOrDeleteSongToPlaylist } from '../../functions/add/addOrDeleteSongToPlaylist'
-import { FiPlusCircle, FiCheck } from 'react-icons/fi'
-import { Hint } from '../Basic/Hint'
-import { useAddOrDeleteSong } from '../../hooks/useAddOrDeleteSong'
 import { AddToPlaylistItem } from '../Playlist/AddToPlaylistItem'
 export const AddToPlaylists = ({ song }) => {
 	const { yourPlaylists, currentSongData } = useSong()
@@ -25,7 +21,7 @@ export const AddToPlaylists = ({ song }) => {
 							<AddToPlaylistItem playlist = {playlist} song = {songData}/>
 						)
 					}
-				}) : "No playlists created"}
+				}) : <div className = "songItemMenuWindowItem">No playlists created</div>}
 			</div>
 		</div>
 	)

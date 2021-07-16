@@ -51,8 +51,7 @@ export const LeftsideBar = () => {
 				<Link to={`/authors/${currentUser.uid}`}>
 					<div className="person" style = {currentPage === -1?{background:'var(--blue)'}:{}}>
 						{currentUser.friends.some(friend=>friend.status === 'requested')?<NotificationCircle/>:null}
-						<div className="pesronImg">
-							<img loading = "lazy" src={currentUser.photoURL} alt="" />
+						<div className="pesronImg" style = {{backgroundImage:`url(${currentUser.photoURL})`}}>
 						</div>
 						<div className="personName">
 							{shortWord(currentUser.displayName, 15)}

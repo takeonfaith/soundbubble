@@ -380,4 +380,8 @@ form input::placeholder {
 		width: 100%;
 		font-size: .8em;
 	}
+
+	.In-Up-Container .inAndUpBtns a{
+		width: 100%;
+	}
 }

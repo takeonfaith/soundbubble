@@ -8,17 +8,10 @@ export default function seedDatabase(firestore) {
 	// 	});
 	// }
 
-	// firestore.collection("playlists").get().then((querySnapshot) => {
+	// firestore.collection("users").get().then((querySnapshot) => {
 	// 	querySnapshot.forEach((doc) => {
-	// 		let variantsOfName = []
-	// 		let personName = normalizeString(doc.data().name)
-	// 		for (let i = 1; i < personName.length + 1; i++) {
-	// 			variantsOfName.push(personName.substr(0, i))
-	// 		}
-	// 		firestore.collection('search').doc(doc.data().id).set({
-	// 			place:'playlists',
-	// 			uid:doc.data().id,
-	// 			variantsOfName:variantsOfName
+	// 		firestore.collection('history').doc(doc.data().uid).set({
+	// 			history:[]
 	// 		})
 	// 	});
 	// });

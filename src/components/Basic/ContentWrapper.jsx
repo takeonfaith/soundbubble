@@ -10,14 +10,17 @@ import { firestore } from '../../firebase'
 import { useAuth } from '../../contexts/AuthContext'
 import { useScreen } from '../../contexts/ScreenContext'
 import { ConfirmWindow } from '../Windows/ConfirmWindow'
+import { useUpdateListenCount } from '../../hooks/useUpdateListenCount'
+import { useMediaMetadata } from '../../hooks/useMediaMetadata'
 
 export const ContentWrapper = () => {
-	const { songRef, loadSongData, playing, songSrc, openFullScreenPlayer, repeatMode, setPlay, prevSong, currentSongQueue, nextSong, updateListenCount, currentSongInQueue} = useSong()
+	const { songRef, loadSongData, playing, songSrc, openFullScreenPlayer, repeatMode, setPlay, prevSong, currentSongQueue, nextSong, currentSongInQueue} = useSong()
 	const { isMobile, screenHeight } = useScreen()
-	const { currentUser, setCurrentUser  } = useAuth()
-	const fiveMinutes = 300000 // ten minutes, or whatever makes sense for your app
+	const { currentUser } = useAuth()
+	const fiveMinutes = 300000 // 10min
 	const [intervalExciter, setIntervalExciter] = useState(true)
-	// "maintain connection"
+	useMediaMetadata()
+	const updateListenCount = useUpdateListenCount()
 	useEffect(() => {
 		const interval = setInterval(() => {
 			firestore.collection('users').doc(currentUser.uid).update({ online: new Date().getTime() })
@@ -31,7 +34,6 @@ export const ContentWrapper = () => {
 	}, [])
 
 	function audioEnded() {
-		console.log("i workdfasd")
 		if (repeatMode === 0) {
 			songRef.current.pause()
 			setPlay(false)
@@ -49,6 +51,8 @@ export const ContentWrapper = () => {
 		updateListenCount()
 		songRef.current.play()
 	}
+
+	
 
 	return (
 		<>

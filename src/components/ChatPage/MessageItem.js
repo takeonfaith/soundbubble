@@ -110,7 +110,7 @@ export const MessageItem = ({ messageData, chatId, scrollToMessageRef, setScroll
 
 	const emojis = [<FcLike />, <AiFillFire />, <AiFillLike />]
 	return (
-		<div className={"MessageItem " + (sender === currentUser.uid ? 'your' : '')} ref={id === scrollToMessageId ? scrollToMessageRef : refPassthrough} style={!isVisible ? { opacity: '0', visibility: 'hidden' } : showPhoto ? { paddingBottom: '15px', transform:`translateX(${swipeDeltaX}px)`, transition:transformTransition } : {transform:`translateX(${swipeDeltaX}px)`, transition:transformTransition}} onTouchEnd = {returnToInitial}>
+		<div className={"MessageItem " + (sender === currentUser.uid ? 'your' : '')} ref={id === scrollToMessageId ? scrollToMessageRef : refPassthrough} style={showPhoto ? { paddingBottom: '15px', transform:`translateX(${swipeDeltaX}px)`, transition:transformTransition } : {transform:`translateX(${swipeDeltaX}px)`, transition:transformTransition}} onTouchEnd = {returnToInitial}>
 			<div className="messageItemImage">
 				{showPhoto ?
 					<img loading = "lazy" src={userThatSentMessage.photoURL} alt="" /> :

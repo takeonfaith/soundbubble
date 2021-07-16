@@ -14,6 +14,7 @@ export const AuthProvider = ({ children }) => {
 	const [currentUser, setCurrentUser] = useState({})
 	const [userId, setUserId] = useState(null)
 	const [loading, setLoading] = useState(true)
+	const [searchValue, setSearchValue] = useState("")
 	function login(email, password, setError, setLoading) {
 		setLoading(true)
 		return auth.signInWithEmailAndPassword(email, password).then().catch(err => {
@@ -56,6 +57,10 @@ export const AuthProvider = ({ children }) => {
 					uid: result.user.uid,
 					variantsOfName: findVariantsOfName(name)
 				})
+
+				firestore.collection('history').doc(result.user.uid).set({
+					history:[]
+				})
 				setLoading(false)
 			}).catch(err => {
 				setError(err.message)
@@ -97,7 +102,9 @@ export const AuthProvider = ({ children }) => {
 		signup,
 		logout,
 		loading,
-		setLoading
+		setLoading,
+		searchValue, 
+		setSearchValue
 	}
 	return (
 		<AuthContext.Provider value={value}>

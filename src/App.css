@@ -730,6 +730,17 @@ body{
   opacity: .8;
 }
 
+.BackBtn button{
+	height: 35px;
+	width: 35px;
+	display: flex;	
+	align-items: center;
+	justify-content: center;
+	background: var(--transparentWhite);
+	color:#fff;
+	border-radius: 100px;
+}
+
 @media (max-width:1000px) {
   .Wrapper{
     flex-direction: column-reverse;

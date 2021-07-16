@@ -33,7 +33,7 @@ export const SongsPage = () => {
 				</div>
 			</div>
 			<div className="yourSongsList">
-				<SongList listOfSongs={yourSongs} source={{ source: '/library', name: "Your Library", image: currentUser.photoURL, songsList: yourSongs }} showSearch displayIfEmpty={<h3>Your library is empty</h3>} />
+				<SongList listOfSongs={yourSongs} source={{ source: '/library', name: "Your Library", image: currentUser.photoURL, songsList: yourSongs }} showSearch showhistory displayIfEmpty={<h3>Your library is empty</h3>} />
 			</div>
 		</div>
 	)

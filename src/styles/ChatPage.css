@@ -628,6 +628,9 @@
 	justify-content: center;
 	margin-bottom: 10px;
 	position: relative;
+	display: inline-block;
+	background-size: cover;
+	background-position: center center;
 }
 
 .chatInfoImage .changePhoto{

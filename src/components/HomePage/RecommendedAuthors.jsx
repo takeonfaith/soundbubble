@@ -3,7 +3,7 @@ import { useAuth } from '../../contexts/AuthContext'
 import { useSong } from '../../contexts/SongContext'
 import findSimilarArtists from '../../functions/find/findSimilarArtists'
 import { AuthorItemBig } from '../AuthorPage/AuthorItemBig'
-import { AuthorsList } from '../Basic/AuthorsList'
+import { AuthorsList } from '../Lists/AuthorsList'
 
 export const RecommendedAuthors = () => {
 	const { yourAuthors } = useSong()

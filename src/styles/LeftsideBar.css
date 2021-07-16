@@ -291,6 +291,9 @@
 	overflow: hidden;
 	border-radius: 30px;
 	margin-right: 7px;
+	display: inline-block;
+	background-position: center center;
+	background-size: cover;
 }
 
 .pesronImg img{

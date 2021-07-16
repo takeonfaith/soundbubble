@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
 import { firestore, storage } from '../../firebase'
-import { useFetchFirebaseData } from '../../hooks/fetchFirebaseData'
 import { useFetchDocs } from '../../hooks/useFetchDocs'
 import { LoadingCircle } from '../Loading/LoadingCircle'
 import { PersonTiny } from '../Basic/PersonTiny'

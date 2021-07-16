@@ -5,7 +5,6 @@ import { firestore, storage } from '../../firebase'
 import getUID from '../../functions/other/getUID'
 import { PersonTiny } from '../Basic/PersonTiny'
 import { RadioBtn } from '../SignIn-Up/RadioBtn'
-import { SongItemChoice } from '../Basic/SongItemChoice'
 import { LoadingCircle } from '../Loading/LoadingCircle'
 import { ColorExtractor } from 'react-color-extractor'
 import { useAuth } from '../../contexts/AuthContext'
@@ -45,35 +44,7 @@ export const CustomizeAlbum = ({ playlist }) => {
 			})
 		}
 	}, [songsSearch])
-	let typingTimeout
-	async function findAuthors(e) {
 
-		setLoadingAuthors(true)
-		setAllAuthors([])
-		const friendsIds = currentUser.friends.map(friend => { if (friend.status === 'added') return friend.uid })
-		const response = currentUser.isAdmin ?
-			firestore.collection("users").where("displayName", "==", authorsInputValue) :
-			firestore.collection("users").where("uid", "in", friendsIds).where("displayName", "==", authorsInputValue)
-		const data = await response.get();
-		if (data !== undefined) {
-			data.docs.forEach(item => {
-				setAllAuthors([...allAuthors, item.data()])
-			})
-			setLoadingAuthors(false)
-		}
-	}
-
-	async function findSongs(e) {
-		setLoadingSongs(true)
-		setAllSongs([])
-		const response = firestore.collection("songs")
-			.where("name", "==", songsSearch)
-		const data = await response.get();
-		data.docs.forEach(item => {
-			setAllSongs([...allAuthors, item.data()])
-		})
-		setLoadingSongs(false)
-	}
 
 	function removeAuthorFromList(data) {
 		const filtered = chosenAuthors.filter(people => people.uid !== data.uid)
@@ -154,15 +125,10 @@ export const CustomizeAlbum = ({ playlist }) => {
 		)
 	}
 
-	function timerUpFunc(func) {
-		clearTimeout(typingTimeout)
-		typingTimeout = setTimeout(func, 1000)
-	}
-	// console.log([5, 4, 2, 1])
 	return (
 		<div className="AddSong">
 			<ColorExtractor src={imageLocalPath} getColors={(colors) => setImageColors(colors)} />
-			<form>
+			<form onSubmit = {e=>e.preventDefault()}>
 				<label>
 					<h3>Playlist name</h3>
 					<input type="text" placeholder="Enter playlist name" value={playlistName} onChange={(e) => setPlaylistName(e.target.value)} required />
@@ -214,10 +180,6 @@ export const CustomizeAlbum = ({ playlist }) => {
 								<LoadingCircle />
 							</div> :
 							<SongList listOfSongs={allSongs} source={'no'} listOfChosenSongs={chosenSongs} setListOfSongs={setChosenSongs} />
-							// allSongs.map((data, index) => {
-							// return (
-							// 	<SongItemChoice song={data} listOfSongs={chosenSongs} setListOfSongs={setChosenSongs} />
-							// )
 						}
 					</div>
 				</label>

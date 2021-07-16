@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import findSimilarArtists from '../../functions/find/findSimilarArtists'
-import { AuthorsList } from '../Basic/AuthorsList'
+import { AuthorsList } from '../Lists/AuthorsList'
 
 export const SimilarArtists = ({ data }) => {
 	const [similarArtists, setSimilarArtists] = useState([])

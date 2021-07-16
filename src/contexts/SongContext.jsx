@@ -8,6 +8,9 @@ import shuffleSongs from '../functions/other/shuffleSongs'
 import { useConditionFunc } from '../hooks/useConditionFunc'
 import { useAuth } from './AuthContext'
 import { useModal } from './ModalContext'
+import { fetchItemsList } from '../functions/fetch/fetchItemsList'
+import { checkKaraoke } from '../functions/check/checkKaraoke'
+import { addSongToHistory } from '../functions/add/addSongToHistory'
 const SongContext = createContext(null)
 
 export const useSong = () => {
@@ -16,7 +19,7 @@ export const useSong = () => {
 
 export const SongProvider = ({ children }) => {
 	const { currentUser, loading, setLoading } = useAuth()
-	const {setOpenModal} = useModal()
+	const { setOpenModal } = useModal()
 	const [yourSongs, setYourSongs] = useState([])
 	const [yourPlaylists, setYourPlaylists] = useState([])
 	const [yourAuthors, setYourAuthors] = useState([])
@@ -43,42 +46,14 @@ export const SongProvider = ({ children }) => {
 	const leftSideBarInputRef = useRef(null)
 	const [rightSideCurrentPage, setRightSideCurrentPage] = useState(0)
 	const [openMenu, setOpenMenu] = useState(false)
-	function checkKaraoke() {
-		if (currentSongData.lyrics !== undefined && currentSongData.lyrics.length === 0) return false
+	
+	function fetchYourFriends() { fetchItemsList(currentUser.friends.filter(friend => friend.status === 'added').map(obj => obj.uid), 'users', setYourFriends) }
 
-		if (currentSongData.lyrics !== undefined) {
-			if (currentSongData.lyrics[0].startTime === 'undefined') return false
-		}
+	function fetchQueue() { fetchItemsList(currentUser?.lastQueue.songsList, 'songs', setCurrentSongQueue, (res) => res, () => setCurrentSongInQueue(currentUser.lastQueue.songsList.findIndex(songId => songId === currentUser.lastSongPlayed))) }
 
-		return true
-	}
+	function fetchYourSongs() { fetchItemsList(currentUser.addedSongs.slice(0).reverse(), 'songs', setYourSongs, (res) => res, fetchQueue) }
 
-	function fetchYourFriends() {
-		const tempArray = []
-		if (currentUser.friends !== undefined) {
-			currentUser.friends.forEach(async (friendObj, i) => {
-				const friend = (await firestore.collection('users').doc(friendObj.uid).get()).data()
-				if (friendObj.status === 'added') {
-					tempArray.push(friend)
-				}
-				if(i === currentUser.friends.length - 1){
-					setYourFriends(tempArray)
-				}
-			})
-		}
-	}
-
-	function fetchQueue() {
-		const tempArray = []
-		if (currentUser.lastQueue) {
-			currentUser.lastQueue.songsList.forEach(async (songId, i) => {
-				const songData = (await firestore.collection('songs').doc(songId).get()).data()
-				tempArray.push(songData)
-				if(i === currentUser.lastQueue.songsList.length - 1) setCurrentSongQueue(tempArray)
-			})
-			setCurrentSongInQueue(currentUser.lastQueue.songsList.findIndex(songId => songId === currentUser.lastSongPlayed))
-		}
-	}
+	function fetchYourAuthors() { fetchItemsList(currentUser.addedAuthors, 'users', setYourAuthors) }
 
 	async function fetchCurrentSongInitial() {
 		if (currentUser.uid !== undefined) {
@@ -134,26 +109,6 @@ export const SongProvider = ({ children }) => {
 		else fetchCurrentSongInitial()
 	}
 
-	function fetchYourSongs() {
-		const tempArray = []
-		if (currentUser.addedSongs) {
-			currentUser.addedSongs.map((song, i) => {
-				firestore.collection("songs").doc(song).get().then((doc) => {
-					if (doc.exists) {
-						tempArray.unshift(doc.data())
-						if (i === currentUser.addedSongs.length - 1) setYourSongs(tempArray)
-					} else {
-						console.log("No such document!");
-					}
-
-					if(i === currentUser.addedSongs.length - 1){
-						fetchQueue()
-					}
-				})
-			})
-		}
-	}
-
 	function fetchYourPlaylists() {
 		const tempArray = []
 		if (currentUser.ownPlaylists) {
@@ -189,32 +144,7 @@ export const SongProvider = ({ children }) => {
 		}
 	}
 
-	function fetchYourAuthors() {
-		const tempArray = []
-		if (currentUser.addedAuthors) {
-			currentUser.addedAuthors.map((authorId, i) => {
-				const response = firestore.collection("users").doc(authorId)
-				response.get().then((doc) => {
-					if (doc.exists) {
-						tempArray.unshift(doc.data())
-						if (i === currentUser.addedAuthors.length - 1) setYourAuthors(tempArray)
-					} else {
-						console.log("No such document!");
-					}
-				}).catch((error) => {
-					console.log("Error getting document:", error);
-				});
-			})
-		}
-	}
-
-	useEffect(() => {
-		let shouldChangeYourSongs = currentUser.addedSongs && (currentUser.addedSongs.length !== yourSongs.length)
-		if (shouldChangeYourSongs) {
-			fetchYourSongs()
-		}
-	}, [currentUser.addedSongs])
-
+	useConditionFunc(currentUser, fetchYourSongs, currentUser.addedSongs && (currentUser.addedSongs.length !== yourSongs.length), [currentUser.addedSongs])
 	useConditionFunc(currentUser, fetchYourPlaylists, currentUser.ownPlaylists && String(currentUser.ownPlaylists.concat(currentUser.addedPlaylists)) !== String(yourPlaylists), [currentUser.ownPlaylists])
 	useConditionFunc(currentUser, fetchYourFriends, currentUser.friends && String(currentUser.friends.filter(obj => obj.status === 'added')) !== String(yourFriends), [currentUser.friends])
 	useConditionFunc(currentUser, fetchYourAuthors, currentUser.addedAuthors && (currentUser.addedAuthors.length !== yourAuthors.length), [currentUser.addedAuthors])
@@ -234,7 +164,7 @@ export const SongProvider = ({ children }) => {
 	}, [currentUser.uid])
 
 	useEffect(() => {
-		setIsThereKaraoke(checkKaraoke())
+		setIsThereKaraoke(checkKaraoke(currentSongData.lyrics))
 	}, [currentSongData.lyrics])
 
 	useEffect(() => {
@@ -250,9 +180,9 @@ export const SongProvider = ({ children }) => {
 			}
 		}
 	}, [shuffleMode])
-	let listenCountTimeOut = useRef()
-	function playSong(e) {
-		if (e) e.stopPropagation()
+	
+	function playSong() {
+		console.log(play)
 		if (play) {
 			songRef.current.pause()
 		}
@@ -262,33 +192,6 @@ export const SongProvider = ({ children }) => {
 
 		setPlay(!play)
 	}
-
-	function updateListenCount() {
-		listenCountTimeOut.current = setTimeout(() => {
-			let listens = currentSongData.listens
-			listens++
-			firestore.collection('songs').doc(currentSongData.id).update({
-				listens: listens
-			})
-			if (currentSongPlaylistSource.source.substr(1, 6) === 'albums') {
-				const sourceId = currentSongPlaylistSource.source.substr(8, currentSongPlaylistSource.source.length - 8)
-				firestore.collection('playlists').doc(sourceId).get().then((res) => {
-					let listedData = res.data().listens
-					listedData++
-					firestore.collection('playlists').doc(sourceId).update({
-						listens: listedData
-					})
-				})
-			}
-		}, songDuration * 1000 * 0.5)
-	}
-
-	useEffect(() => {
-		clearTimeout(listenCountTimeOut.current)
-		if (play) {
-			updateListenCount()
-		}
-	}, [play, currentSongData.id])
 
 	useEffect(() => {
 		setCurrentParagraph(0)
@@ -305,16 +208,7 @@ export const SongProvider = ({ children }) => {
 	}
 
 	function defineCurrentParagraph() {
-		//Well, I'm maybe not a great mathematician or smth, but I want to make this not linear, but binary, hence O(logN)
-		// currentSongData.lyrics.find((el, i) => {
-		// 	if (el.startTime <= songRef.current.currentTime) {
-		// 		setCurrentParagraph(i)
-		// 		return false
-		// 	}
-		// 	// currentParagraphRef.current.scrollIntoView()
-		// 	return true
-		// })
-
+		//Binary Search
 		let first = 0, last = currentSongData.lyrics.length - 1
 		let roundedTime = parseFloat(parseFloat(songRef.current.currentTime).toFixed(1))
 		while (first <= last) {
@@ -350,10 +244,10 @@ export const SongProvider = ({ children }) => {
 		setInputRange((event.target.currentTime / songDuration) * 100)
 	}
 
-	async function nextSong(e) {
-		if (e) e.stopPropagation()
+	async function nextSong() {
 		let correctSongNumber = checkNumber(currentSongInQueue + 1, currentSongQueue.length - 1)
 		let currentSongId = await (await firestore.collection('songs').doc(currentSongQueue[correctSongNumber].id).get()).data().id
+		addSongToHistory(currentSongId, currentUser)
 		setCurrentParagraph(0)
 		setCurrentSong(currentSongId)
 		setCurrentSongInQueue(checkNumber(correctSongNumber, currentSongQueue.length - 1))
@@ -362,8 +256,7 @@ export const SongProvider = ({ children }) => {
 		})
 	}
 
-	async function prevSong(e) {
-		if (e) e.stopPropagation()
+	async function prevSong() {
 		if (currentTime > 5) {
 			songRef.current.currentTime = 0
 			setCurrentTime(0)
@@ -372,6 +265,7 @@ export const SongProvider = ({ children }) => {
 		}
 		let correctSongNumber = checkNumber(currentSongInQueue - 1, currentSongQueue.length - 1)
 		let currentSongId = await (await firestore.collection('songs').doc(currentSongQueue[correctSongNumber].id).get()).data().id
+		addSongToHistory(currentSongId, currentUser)
 		setCurrentParagraph(0)
 		setCurrentSong(currentSongId)
 		setCurrentSongInQueue(checkNumber(correctSongNumber, currentSongQueue.length - 1))
@@ -382,7 +276,7 @@ export const SongProvider = ({ children }) => {
 
 	function changeCurrentTime(event, startTime = 0) {
 		if (event.target.localName === 'div' || event.target.localName === "p") {
-			if(startTime !== undefined){
+			if (startTime !== undefined) {
 				setCurrentTime(startTime)
 				songRef.current.currentTime = startTime
 				setInputRange((startTime / songDuration) * 100)
@@ -421,14 +315,6 @@ export const SongProvider = ({ children }) => {
 				</>
 			})
 		)
-	}
-
-	function findLen() {
-		let str = ""
-		currentSongData.authors.forEach(el => {
-			str += el.displayName
-		})
-		return str.length
 	}
 
 	useEffect(() => {
@@ -483,18 +369,15 @@ export const SongProvider = ({ children }) => {
 				openFullScreenPlayer,
 				setOpenFullScreenPlayer,
 				loadSongData,
-				findLen,
 				fetchYourSongs,
 				setOpenMenu,
 				openMenu,
 				currentSongData,
 				setCurrentSongData,
 				setIsThereKaraoke,
-				checkKaraoke,
 				setYourPlaylists,
 				yourAuthors,
 				setYourAuthors,
-				updateListenCount,
 				inputRange
 			}
 		}>

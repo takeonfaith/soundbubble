@@ -5,6 +5,7 @@ import { firestore } from '../firebase'
 import { LoadingCircle } from '../components/Loading/LoadingCircle'
 import { SongList } from '../components/Lists/SongList'
 import { useHistory } from 'react-router-dom'
+import { fetchItemsList } from '../functions/fetch/fetchItemsList'
 export const AlbumPage = () => {
 	const match = useRouteMatch('/albums/:albumId')
 	const [playlistSongs, setPlaylistSongs] = useState([])
@@ -25,14 +26,7 @@ export const AlbumPage = () => {
 	}
 
 	function fetchSongsInAlbum() {
-		setPlaylistSongs([])
-		if (albumData.length !== 0) {
-			albumData.songs.map(async songId => {
-				let albumSong = (await firestore.collection('songs').doc(songId).get()).data()
-				setPlaylistSongs(prev => [...prev, albumSong])
-			})
-			setLoading(false)
-		}
+		fetchItemsList(albumData.songs, 'songs', setPlaylistSongs, (res)=>res, ()=>setLoading(false))
 	}
 
 	useEffect(() => {

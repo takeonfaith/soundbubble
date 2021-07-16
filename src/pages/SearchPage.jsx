@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from 'react'
 
 import "../styles/SearchPage.css"
-import { PlaylistItem } from '../components/AuthorPage/PlaylistItem'
-import { useSong } from '../contexts/SongContext'
-import { BackBtn } from '../components/Basic/BackBtn'
-import { FiSearch, FiX } from 'react-icons/fi'
-import { TitleWithMoreBtn } from '../components/Basic/TitleWithMoreBtn'
-import { firestore } from '../firebase'
-import { LoadingCircle } from '../components/Loading/LoadingCircle'
 import { SearchBar } from '../components/Basic/SearchBar'
-import {AuthorItemBig} from '../components/AuthorPage/AuthorItemBig'
 import { useAuth } from '../contexts/AuthContext'
 import { SongList } from '../components/Lists/SongList'
-import { AuthorsList } from '../components/Basic/AuthorsList'
+import { AuthorsList } from '../components/Lists/AuthorsList'
 import { AlbumList } from '../components/Lists/AlbumList'
 export const SearchPage = () => {
-	const [searchValue, setSearchValue] = useState("")
+	const {searchValue, setSearchValue} = useAuth()
 	const [resultSongList, setResultSongList] = useState([])
 	const [resultAuthorList, setResultAuthorList] = useState([])
 	const [resultAlbumList, setResultAlbumList] = useState([])

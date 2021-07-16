@@ -11,6 +11,7 @@ import { LoadingCircle } from '../components/Loading/LoadingCircle'
 import { firestore } from '../firebase'
 import { useAuth } from '../contexts/AuthContext'
 import "../styles/AuthorPage.css"
+import { useHistory } from 'react-router-dom'
 export const AuthorPage = () => {
 	const match = useRouteMatch('/authors/:authorId')
 	const {currentUser} = useAuth()
@@ -18,6 +19,7 @@ export const AuthorPage = () => {
 	const { authorId } = match.params
 	const [authorsData, setAuthorsData] = useState([])
 	const [loading, setLoading] = useState(true)
+	const history = useHistory()
 	async function fetchAuthorsData() {
 		const response = firestore.collection("users").doc(authorId)
 		response.get().then((doc) => {
@@ -26,7 +28,7 @@ export const AuthorPage = () => {
 				 setHeaderColors(doc.data().imageColors)
 				 setLoading(false)
 			} else {
-				 console.log("No such document!");
+				 history.push('/not-found')
 			}
 	  }).catch((error) => {
 			console.log("Error getting document:", error);

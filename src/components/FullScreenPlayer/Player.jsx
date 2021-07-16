@@ -7,10 +7,10 @@ import correctTimeDisplay from '../../functions/other/correctTimeDisplay'
 import { displayAuthorsStr } from '../../functions/display/displayAuthorsStr'
 import { ColorCircles } from './colorCircles'
 import {Hint} from '../Basic/Hint'
+import { findLenOfAuthors } from '../../functions/find/findLenOfAuthors'
 export const Player = ({inputRef, textLimit = 18, linkToAuthors = true}) => {
 	const { 
 		currentSongData,
-		findLen,  
 		currentTime, 
 		changeCurrentTime, 
 		songDuration, 
@@ -38,7 +38,7 @@ export const Player = ({inputRef, textLimit = 18, linkToAuthors = true}) => {
 						<div style={name.length > textLimit ? { animation: 'outSideText 17s infinite', whiteSpace: 'nowrap' } : {}}>{name}</div>
 					</h2>
 					<h3 style={{ overflow: 'hidden' }} title = {authors.map((el) => ' ' + el.displayName)}>
-						{linkToAuthors?<div style={findLen() > textLimit ? { animation: 'outSideText 17s infinite', whiteSpace: 'nowrap' } : {}}>{displayAuthors()}</div>:<div>{displayAuthorsStr(authors, ' & ', 33)}</div>}
+						{linkToAuthors?<div style={findLenOfAuthors(currentSongData.authors) > textLimit ? { animation: 'outSideText 17s infinite', whiteSpace: 'nowrap' } : {}}>{displayAuthors()}</div>:<div>{displayAuthorsStr(authors, ' & ', 33)}</div>}
 					</h3>
 				</div>
 			</div>
@@ -52,9 +52,9 @@ export const Player = ({inputRef, textLimit = 18, linkToAuthors = true}) => {
 					<button className="shuffleBtn" onClick={() => setShuffleMode(checkNumber(shuffleMode + 1, 1))} style={shuffleMode ? { background: 'var(--reallyTransparentWhite)' } : {}}>
 						<TiArrowShuffle style={shuffleMode ? { color: 'var(--themeColor)' } : {}} />
 					</button>
-					<button onClick={prevSong}><FaBackward /></button>
-					<button onClick={playSong}>{play ? <FaPause /> : <FaPlay />}</button>
-					<button onClick={nextSong}><FaForward /></button>
+					<button onClick={(e)=>{e.stopPropagation();prevSong()}}><FaBackward /></button>
+					<button onClick={(e)=>{e.stopPropagation();playSong()}}>{play ? <FaPause /> : <FaPlay />}</button>
+					<button onClick={(e)=>{e.stopPropagation();nextSong()}}><FaForward /></button>
 					<button className="repeatBtn" onClick={() => setRepeatMode(checkNumber(repeatMode + 1, 2))} style={repeatMode ? { background: 'var(--reallyTransparentWhite)' } : {}}>
 						<TiArrowRepeat style={repeatMode ? { color: 'var(--themeColor)' } : {}} />
 						<span style={repeatMode === 2 ? { opacity: 1 } : {}}></span>

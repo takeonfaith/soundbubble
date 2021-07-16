@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { firestore } from '../../firebase'
+import { fetchItemsList } from '../../functions/fetch/fetchItemsList'
 import findIfSongIsNew from '../../functions/find/findIfSongIsNew'
 import { SongList } from '../Lists/SongList'
 export const TopSongs = ({ authorId, authorsData, headerColors }) => {
@@ -7,30 +7,14 @@ export const TopSongs = ({ authorId, authorsData, headerColors }) => {
 	const [newSongs, setNewSongs] = useState([])
 
 	async function findAuthorsSongs() {
-		setPopularSongs([])
-		const tempArray = []
 		if (authorsData.isAuthor) {
-			if (authorsData.ownSongs !== undefined && authorsData.ownSongs.length !== 0) {
-				authorsData.ownSongs.forEach(async (songId, index)=>{
-					const songData = (await firestore.collection("songs").doc(songId).get()).data()
-					tempArray.push(songData)
-					if (findIfSongIsNew(songData) && !newSongs.includes(songData)) setNewSongs(prevSongs => [...prevSongs, songData])
-					if(index === authorsData.ownSongs.length - 1){
-						tempArray.sort((a, b) => b.listens - a.listens)
-						setPopularSongs(tempArray)
-					}
-				})
-			}
-			
+			fetchItemsList(authorsData.ownSongs, 'songs', setPopularSongs, (res) => {
+				res.forEach(songData=>{if (findIfSongIsNew(songData) && !newSongs.includes(songData)) setNewSongs(prevSongs => [...prevSongs, songData])})
+				return res.sort((a, b) => b.listens - a.listens)
+			})
 		}
 		else {
-			authorsData.addedSongs.forEach(async (songId, index)=>{
-				const songData = (await firestore.collection("songs").doc(songId).get()).data()
-				tempArray.unshift(songData)
-				if(index === authorsData.addedSongs.length - 1){
-					setPopularSongs(tempArray)
-				}
-			})
+			fetchItemsList(authorsData.addedSongs.slice(0).reverse(), 'songs', setPopularSongs)
 		}
 	}
 

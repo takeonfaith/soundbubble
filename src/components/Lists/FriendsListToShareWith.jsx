@@ -4,8 +4,8 @@ import { useAuth } from '../../contexts/AuthContext'
 import { useModal } from '../../contexts/ModalContext'
 import { useSong } from '../../contexts/SongContext'
 import shareWithFriends from '../../functions/other/shareWithManyFriends'
-import { PersonTiny } from './PersonTiny'
-import { SearchBar } from './SearchBar'
+import { PersonTiny } from '../Basic/PersonTiny'
+import { SearchBar } from '../Basic/SearchBar'
 export const FriendsListToShareWith = ({ item, whatToShare = 'song' }) => {
 	const { yourFriends } = useSong()
 	const [chosenFriends, setChosenFriends] = useState([])
@@ -26,12 +26,12 @@ export const FriendsListToShareWith = ({ item, whatToShare = 'song' }) => {
 	}, [shared])
 
 
-	return (
+	return yourFriends.length?(
 		<div className='FriendsListToShareWith'>
 			{shared ?
 				<div className="successMessageSent">
 					<IoIosCheckmarkCircleOutline />
-					Song has sent!
+					Message has sent!
 				</div> : null
 			}
 			<div style = {{overflowY:'auto', maxHeight:'300px'}}>	
@@ -79,5 +79,5 @@ export const FriendsListToShareWith = ({ item, whatToShare = 'song' }) => {
 				</button>
 			</div>
 		</div>
-	)
+	): <h3 style = {{margin:0}}>No friends added</h3>
 }

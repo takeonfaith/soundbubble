@@ -5,7 +5,7 @@ import { FullScreenLoading } from '../components/Loading/FullScreenLoading'
 import { BlurredBg } from '../components/SignIn-Up/BlurredBg'
 import { TitleAndLogo } from '../components/SignIn-Up/TitleAndLogo'
 import { useAuth } from '../contexts/AuthContext'
-import { HOME_ROUTE, LOGIN_ROUTE, SIGNUP_ROUTE } from '../utils/consts'
+import { SIGNUP_ROUTE } from '../utils/consts'
 
 export const LogInPage = () => {
 	const {login} = useAuth()

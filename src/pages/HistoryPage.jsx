@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
-import { BackBtn } from '../components/Basic/BackBtn'
+import { BackBtn } from '../components/Buttons/BackBtn'
 import { SongList } from '../components/Lists/SongList'
 import { useAuth } from '../contexts/AuthContext'
 import { firestore } from '../firebase'

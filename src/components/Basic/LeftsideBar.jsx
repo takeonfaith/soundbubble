@@ -11,13 +11,12 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi'
 import { useModal } from '../../contexts/ModalContext'
-import { FriendsListToShareWith } from './FriendsListToShareWith'
+import { FriendsListToShareWith } from '../Lists/FriendsListToShareWith'
 import { Person } from '../LeftsideBar/Person'
 import { CreatePlaylistPage } from '../LibraryPage/CreatePlaylistPage'
 import { TinyPlaylist } from '../LeftsideBar/TinyPlaylist'
 import { NotificationCircle } from './NotificationCircle'
 import shortWord from '../../functions/other/shortWord'
-import { Hint } from './Hint'
 export const LeftsideBar = () => {
 	const { currentUser } = useAuth()
 	const {
@@ -38,7 +37,7 @@ export const LeftsideBar = () => {
 
 				return false
 			})
-			return page === undefined ? 0 : page.id
+			return page === undefined ? -1 : page.id
 		}
 	)
 	return (
@@ -54,7 +53,7 @@ export const LeftsideBar = () => {
 						<div className="pesronImg" style = {{backgroundImage:`url(${currentUser.photoURL})`}}>
 						</div>
 						<div className="personName">
-							{shortWord(currentUser.displayName, 15)}
+							{shortWord(currentUser.displayName, 9)}
 						</div>
 					</div>
 				</Link>

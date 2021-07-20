@@ -5,58 +5,32 @@ import { firestore, storage } from '../../firebase'
 import getUID from '../../functions/other/getUID'
 import { PersonTiny } from '../Basic/PersonTiny'
 import { RadioBtn } from '../SignIn-Up/RadioBtn'
-import { SongItemChoice } from '../Basic/SongItemChoice'
+import { SongItem } from '../FullScreenPlayer/SongItem'
 import { LoadingCircle } from '../Loading/LoadingCircle'
 import { ColorExtractor } from 'react-color-extractor'
 import { useAuth } from '../../contexts/AuthContext'
 import { findVariantsOfName } from '../../functions/find/findVariantsOfName'
 import { SearchBar } from '../Basic/SearchBar'
+import { DownloadPhotoButton } from '../Buttons/DownloadPhotoButton'
+import { ErrorPlate } from '../MessagePlates/ErrorPlate'
+import { FullScreenLoading } from '../Loading/FullScreenLoading'
 export const AddPlaylist = () => {
-	const {currentUser} = useAuth()
+	const { currentUser } = useAuth()
 	const [playlistName, setPlaylistName] = useState("")
 	const [playlistCover, setPlaylistCover] = useState("")
 	const [authorsInputValue, setAuthorsInputValue] = useState('')
 	const [allAuthors, setAllAuthors] = useState([])
-	const [chosenAuthors, setChosenAuthors] = useState(!currentUser.isAdmin?[{uid:currentUser.uid, photoURL:currentUser.photoURL, displayName:currentUser.displayName}]:[])
-	const [releaseDate, setReleaseDate] = useState(currentUser.isAdmin?"":new Date().toString())
+	const [chosenAuthors, setChosenAuthors] = useState(!currentUser.isAdmin ? [{ uid: currentUser.uid, photoURL: currentUser.photoURL, displayName: currentUser.displayName }] : [])
+	const [releaseDate, setReleaseDate] = useState(currentUser.isAdmin ? "" : new Date().toString())
 	const [songsSearch, setSongsSearch] = useState("")
 	const [allSongs, setAllSongs] = useState([])
 	const [chosenSongs, setChosenSongs] = useState([])
 	const [playlistStatus, setPlaylistStatus] = useState(0)
 	const [isPlaylistPrivate, setIsPlaylistPrivate] = useState(0)
-	const [loadingAuthors, setLoadingAuthors] = useState(false)
-	const [loadingSongs, setLoadingSongs] = useState(false)
 	const [imageLocalPath, setImageLocalPath] = useState('')
 	const [imageColors, setImageColors] = useState([])
-	let typingTimeout
-	async function findAuthors(e) {
-		
-		setLoadingAuthors(true)
-		setAllAuthors([])
-		const friendsIds = currentUser.friends.map(friend=>{if(friend.status === 'added') return friend.uid})
-		const response = currentUser.isAdmin?
-			firestore.collection("users").where("displayName", "==", authorsInputValue):
-			firestore.collection("users").where("uid", "in", friendsIds).where("displayName", "==", authorsInputValue)
-		const data = await response.get();
-		if (data !== undefined) {
-			data.docs.forEach(item => {
-				setAllAuthors([...allAuthors, item.data()])
-			})
-			setLoadingAuthors(false)
-		}
-	}
-
-	async function findSongs(e) {
-		setLoadingSongs(true)
-		setAllSongs([])
-		const response = firestore.collection("songs")
-			.where("name", "==", songsSearch)
-		const data = await response.get();
-		data.docs.forEach(item => {
-			setAllSongs([...allAuthors, item.data()])
-		})
-		setLoadingSongs(false)
-	}
+	const [errorMessage, setErrorMessage] = useState("")
+	const [loadingPlaylist, setLoadingPlaylist] = useState(false)
 
 	function removeAuthorFromList(data) {
 		const filtered = chosenAuthors.filter(people => people.uid !== data.uid)
@@ -81,96 +55,88 @@ export const AddPlaylist = () => {
 		removeAuthorFromList(data)
 	}
 
-	async function onFileChange(e, place, setFunc) {
-		const file = e.target.files[0]
-		setImageLocalPath(URL.createObjectURL(file))
-		const storageRef = storage.ref()
-		const fileRef = storageRef.child(place + file.name)
-		await fileRef.put(file)
-		setFunc(await fileRef.getDownloadURL())
-	}
-
 	async function addPlaylistToFirebase(e) {
 		e.preventDefault()
 		const uid = getUID()
-		firestore.collection('playlists').doc(uid).set(
-			{
-				id: uid,
-				name: playlistName,
-				songs: chosenSongs,
-				authors: chosenAuthors,
-				image: playlistCover,
-				listens: 0,
-				creationDate: releaseDate, 
-				subscribers:0,
-				isAlbum:playlistStatus,
-				imageColors:imageColors,
-				isPrivate:isPlaylistPrivate === true
-			}
-		).then(() => {
-			setAllAuthors([])
-			setAuthorsInputValue("")
-			setChosenAuthors([])
-			setPlaylistCover('')
-			setPlaylistName('')
-			setReleaseDate('')
-			setSongsSearch('')
-			setChosenSongs([])
-			setIsPlaylistPrivate(0)
-		}).catch(err => {
-			console.log(err)
-		})
-
-
-		chosenAuthors.forEach(async author=>{
-			const authorRef = await firestore.collection('users').doc(author.uid).get()
-			const authorData = authorRef.data()
-			const authorPlaylists = authorData.ownPlaylists
-			authorPlaylists.push(uid)
-			firestore.collection('users').doc(author.uid).update({
-				ownPlaylists:authorPlaylists
+		if (playlistName.length === 0) setErrorMessage("Playlist has to have some name")
+		else if (chosenAuthors.length === 0) setErrorMessage('Playlist has to have at least 1 author')
+		else if (releaseDate.length === 0) setErrorMessage('You have to set release date for a playlist')
+		else {
+			setLoadingPlaylist(true)
+			firestore.collection('playlists').doc(uid).set(
+				{
+					id: uid,
+					name: playlistName,
+					songs: chosenSongs,
+					authors: chosenAuthors,
+					image: playlistCover,
+					listens: 0,
+					creationDate: releaseDate,
+					subscribers: 0,
+					isAlbum: playlistStatus === 1,
+					imageColors: imageColors,
+					isPrivate: isPlaylistPrivate === true
+				}
+			).then(() => {
+				setAllAuthors([])
+				setAuthorsInputValue("")
+				setChosenAuthors([])
+				setPlaylistCover('')
+				setPlaylistName('')
+				setReleaseDate('')
+				setSongsSearch('')
+				setChosenSongs([])
+				setIsPlaylistPrivate(0)
+				setLoadingPlaylist(false)
+			}).catch(err => {
+				setErrorMessage(err)
+				setLoadingPlaylist(false)
 			})
-		})
 
-		firestore.collection('search').doc(uid).set({
-			place:'playlists',
-			uid:uid,
-			variantsOfName:findVariantsOfName(playlistName)
-		})
-	}
 
-	function timerUpFunc(func) {
-		clearTimeout(typingTimeout)
-		typingTimeout = setTimeout(func, 1000)
+			chosenAuthors.forEach(async author => {
+				const authorRef = await firestore.collection('users').doc(author.uid).get()
+				const authorData = authorRef.data()
+				const authorPlaylists = authorData.ownPlaylists
+				authorPlaylists.push(uid)
+				firestore.collection('users').doc(author.uid).update({
+					ownPlaylists: authorPlaylists
+				})
+			})
+
+			firestore.collection('search').doc(uid).set({
+				place: 'playlists',
+				uid: uid,
+				variantsOfName: findVariantsOfName(playlistName)
+			})
+		}
 	}
 
 	return (
 		<div className="AddSong">
-			<ColorExtractor src = {imageLocalPath} getColors = {(colors)=>setImageColors(colors)}/>
-			<form onSubmit={addPlaylistToFirebase}>
+			<FullScreenLoading loading = {loadingPlaylist}/>
+			<ColorExtractor src={imageLocalPath} getColors={(colors) => setImageColors(colors)} />
+			<form onSubmit={e => e.preventDefault()}>
 				<label>
 					<h3>Playlist name</h3>
 					<input type="text" placeholder="Enter playlist name" value={playlistName} onChange={(e) => setPlaylistName(e.target.value)} required />
 				</label>
 				<label>
 					<h3>Playlist authors</h3>
-					<input type="text" placeholder="Enter author name" value={authorsInputValue} onChange={(e) => setAuthorsInputValue(e.target.value)} style={{ marginBottom: '5px' }} onKeyUp={()=>timerUpFunc(findAuthors)} onKeyDown={() => { return clearTimeout(typingTimeout) }} />
+					<SearchBar value={authorsInputValue} setValue={setAuthorsInputValue} setResultAuthorList={setAllAuthors} defaultSearchMode={"authors"} inputText={"Search for authors"} />
+					{/* <input type="text" placeholder="Enter author name" value={authorsInputValue} onChange={(e) => setAuthorsInputValue(e.target.value)} style={{ marginBottom: '5px' }} onKeyUp={() => timerUpFunc(findAuthors)} onKeyDown={() => { return clearTimeout(typingTimeout) }} /> */}
 					<div className="chosenAuthorsList">
 						{chosenAuthors.map((author) => {
 							return (
 								<div className="chosenAuthorItem">
 									<span>{author.displayName}</span>
-									<FiXCircle onClick={() => author.uid === currentUser.uid?null:removeAuthorFromList(author)} />
+									<FiXCircle onClick={() => author.uid === currentUser.uid ? null : removeAuthorFromList(author)} />
 								</div>
 							)
 						})}
 					</div>
 					<div className="authorsResult">
-						{loadingAuthors ?
-							<div style={{ position: 'relative', width: '100%', height: '50px' }}>
-								<LoadingCircle />
-							</div>
-							:
+						{
 							allAuthors.map((data, index) => {
 								return (
 									<PersonTiny data={data} onClick={() => addAuthor(data)} style={chosenAuthors.includes(data.uid) ? { background: 'var(--green)' } : {}} key={index} />
@@ -182,7 +148,7 @@ export const AddPlaylist = () => {
 
 				<label>
 					<h3>Search for songs</h3>
-					<SearchBar value = {songsSearch} setValue = {setSongsSearch} setAllFoundSongs = {setAllSongs} defaultSearchMode = {'songs'}/>
+					<SearchBar value={songsSearch} setValue={setSongsSearch} setAllFoundSongs={setAllSongs} defaultSearchMode={'songs'} inputText={"Search for songs"} />
 					<div className="chosenAuthorsList">
 						{chosenSongs.map((songId) => {
 							return (
@@ -194,24 +160,22 @@ export const AddPlaylist = () => {
 						})}
 					</div>
 					<div className="authorsResult">
-						{loadingSongs ?
-							<div style={{ position: 'relative', width: '100%', height: '50px' }}>
-								<LoadingCircle />
-							</div>:
+						{
 							allSongs.map((data, index) => {
-							return (
-								<SongItemChoice song={data} listOfSongs={chosenSongs} setListOfSongs={setChosenSongs} />
-							)
-						})}
+								return (
+									<SongItem song={data} localIndex={index} listOfChosenSongs={chosenSongs} setListOfSongs={setChosenSongs} />
+								)
+							})
+						}
 					</div>
 				</label>
 
 				{
-					currentUser.isAdmin || currentUser.isAuthor? <div style={{ display: 'flex', justifyContent: 'flex-start', margin: '15px 0' }}>
+					currentUser.isAdmin || currentUser.isAuthor ? <div style={{ display: 'flex', justifyContent: 'flex-start', margin: '15px 0' }}>
 						<RadioBtn label="Playlist" onClick={() => setPlaylistStatus(0)} currentActive={playlistStatus} id={0} />
 						<RadioBtn label="Album" onClick={() => setPlaylistStatus(1)} currentActive={playlistStatus} id={1} />
-					</div>:
-					null
+					</div> :
+						null
 				}
 
 				<div style={{ display: 'flex', justifyContent: 'flex-start', margin: '15px 0' }}>
@@ -220,24 +184,17 @@ export const AddPlaylist = () => {
 				</div>
 
 				{
-					currentUser.isAdmin || currentUser.isAuthor?
-					<label>
-						<h3>Release Date</h3>
-						<input type="date" name="" id="" value={releaseDate} onChange={(e) => setReleaseDate(e.target.value)} />
-					</label>:null
+					currentUser.isAdmin || currentUser.isAuthor ?
+						<label>
+							<h3>Release Date</h3>
+							<input type="date" name="" id="" value={releaseDate} onChange={(e) => setReleaseDate(e.target.value)} />
+						</label> : null
 				}
 
-				<label className="downloadFile">
-					<div className="downloadPhoto">
-						<span className="downloadBtnText">
-							<AiOutlineCloudDownload />
-							Download playlist cover
-						</span>
-						<span className="photoLoadLine" style={playlistCover !== '' ? { width: '100%' } : {}}></span>
-					</div>
-					<input type="file" name="" id="" onChange={(e) => onFileChange(e, 'songsImages/', setPlaylistCover)} />
-				</label>
-				<button type="submit" className="addSongBtn">Add playlist</button>
+
+				<DownloadPhotoButton setErrorMessage={setErrorMessage} setImageLocalPath={setImageLocalPath} downloadedPhoto={playlistCover} setDownloadedPhoto={setPlaylistCover} place={'songsImages/'} btnText={"Download playlist cover"} />
+				<ErrorPlate errorMessage={errorMessage} />
+				<button className="addSongBtn" onClick={addPlaylistToFirebase}>Add playlist</button>
 			</form>
 		</div>
 	)

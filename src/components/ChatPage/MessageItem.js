@@ -11,7 +11,7 @@ import { findWhatToWriteInResponseToItem } from '../../functions/find/findWhatTo
 import useOnScreen from '../../hooks/useOnScreen'
 import { AuthorItemBig } from '../AuthorPage/AuthorItemBig'
 import { PlaylistItem } from '../AuthorPage/PlaylistItem'
-import { SongItemLoading } from '../Basic/SongItemLoading'
+import { SongItemLoading } from '../Loading/SongItemLoading'
 import { SongItem } from '../FullScreenPlayer/SongItem'
 import { SeenByCircle } from './SeenByCircle'
 

@@ -4,20 +4,15 @@ import { HiPause, HiPlay } from 'react-icons/hi'
 import { useSong } from '../../contexts/SongContext'
 import { CgMusicNote } from 'react-icons/cg'
 import rightFormanForBigNumber from '../../functions/other/rightFormatForBigNumber'
-import { FiX, FiFlag, FiInfo, FiMoreVertical, FiPlusCircle, FiShare, FiTrash2 } from 'react-icons/fi'
+import { FiX, FiMoreVertical, FiPlusCircle } from 'react-icons/fi'
 import { useOutsideClick } from '../../hooks/useOutsideClick'
-import { MdKeyboardArrowRight, MdPlaylistAdd } from 'react-icons/md'
-import AddOrDeleteButtonFull from './AddOrDeleteSongButton'
 import { useAuth } from '../../contexts/AuthContext'
 import { firestore } from '../../firebase'
 import { useModal } from '../../contexts/ModalContext'
-import { FriendsListToShareWith } from '../Basic/FriendsListToShareWith'
-import { SongInfo } from '../Basic/SongInfo'
 import { deleteSongFromLibrary } from '../../functions/other/deleteSongFromLibrary'
 import { addSongToLibrary } from '../../functions/add/addSongToLibrary'
 import shortWord from '../../functions/other/shortWord'
-import {AddToPlaylists} from './AddToPlaylists'
-import { AddToListCircle } from '../Basic/AddToListCircle'
+import { AddToListCircle } from '../Tools/AddToListCircle'
 import { useScreen } from '../../contexts/ScreenContext'
 import { displayAuthorsStr } from '../../functions/display/displayAuthorsStr'
 import { Hint } from '../Basic/Hint'
@@ -89,7 +84,7 @@ export const SongItem = ({ song, localIndex, showListens = false, isNewSong = fa
 
 	
 	return (
-		<>
+		<div style = {{display:'flex', alignItems:'center', width:'100%'}}>
 			<AddToListCircle listOfChosenItems = {listOfChosenSongs} setListOfChosenItems = {setListOfSongs} itemId = {song.id}/>
 			<div className={'SongItem ' + (song.id === currentSong && play ? "playingNow" : "")} onClick={chooseSongItem} ref={openMoreWindow ? currentItemRef : null} style={openMoreWindow ? { background: 'var(--playlistsColor)' } : {}}>
 				<div className="songItemImageAndName">
@@ -122,6 +117,6 @@ export const SongItem = ({ song, localIndex, showListens = false, isNewSong = fa
 				</div>
 				<SongItemMoreWindow openMoreWindow = {openMoreWindow} song = {song} moreWindowPosRelativeToViewport = {moreWindowPosRelativeToViewport}/>
 			</div >
-		</>
+		</div>
 	)
 }

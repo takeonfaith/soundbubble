@@ -1,12 +1,12 @@
 import React from 'react'
-import { FiShare, FiInfo, FiFlag } from 'react-icons/fi';
+import { FiShare, FiInfo } from 'react-icons/fi';
 import { MdPlaylistAdd, MdKeyboardArrowRight } from 'react-icons/md';
 import { BiEditAlt } from 'react-icons/bi';
 import { useModal } from '../../contexts/ModalContext';
 import AddOrDeleteButtonFull from '../FullScreenPlayer/AddOrDeleteSongButton'
 import { AddToPlaylists } from '../FullScreenPlayer/AddToPlaylists'
-import { FriendsListToShareWith } from '../Basic/FriendsListToShareWith'
-import { SongInfo } from '../Basic/SongInfo'
+import { FriendsListToShareWith } from '../Lists/FriendsListToShareWith'
+import { SongInfo } from '../Info/SongInfo'
 import { useAuth } from '../../contexts/AuthContext';
 import { EditSong } from '../AdminAndAuthor/EditSong';
 export const SongItemMoreWindow = ({ openMoreWindow, song, moreWindowPosRelativeToViewport }) => {
@@ -15,7 +15,7 @@ export const SongItemMoreWindow = ({ openMoreWindow, song, moreWindowPosRelative
 	return openMoreWindow ? (
 		(
 			<div className="songItemMenuWindow" style={moreWindowPosRelativeToViewport > (window.innerHeight / 2) + 100 ? { top: 'auto', bottom: '110%' } : { top: '110%', bottom: 'auto' }} onClick={e => e.stopPropagation()}>
-				{currentUser.isAdmin ? <div className="songItemMenuWindowItem" onClick = {()=>{toggleModal(); setContent(<EditSong song = {song}/>)}}><BiEditAlt />Edit</div> : null}
+				{currentUser.isAdmin || song.authors.find(el=>el.uid === currentUser.uid) ? <div className="songItemMenuWindowItem" onClick = {()=>{toggleModal(); setContent(<EditSong song = {song}/>)}}><BiEditAlt />Edit</div> : null}
 				<div className="songItemMenuWindowItem"><AddOrDeleteButtonFull song={song} /></div>
 				<div className="songItemMenuWindowItem">
 					<div className="songItemMenuWindow inner">
@@ -27,7 +27,6 @@ export const SongItemMoreWindow = ({ openMoreWindow, song, moreWindowPosRelative
 					<FiShare />Share
 				</div>
 				<div className="songItemMenuWindowItem" onClick={() => { toggleModal(); setContent(<SongInfo song={song} />) }}><FiInfo />Info</div>
-				<div className="songItemMenuWindowItem"><FiFlag />Flag</div>
 			</div>
 		)
 

@@ -13,7 +13,9 @@ export const ChatMessagesWindow = ({chatId, chatData, messageList, findTopDate, 
 	}
 
 	useEffect(() => {
-		scrollToBottom()
+		setTimeout(()=>{
+			scrollToBottom()
+		}, 200) 
 	}, [messageList]);
 	return (
 		<div className="chatMessagesWindow" ref={messagesWindowRef} onScroll={findTopDate} style={{ height: !isMobile ? screenHeight - 170 + 'px' : screenHeight - 125 + 'px' }}>

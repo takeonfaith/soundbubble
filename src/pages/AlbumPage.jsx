@@ -26,7 +26,8 @@ export const AlbumPage = () => {
 	}
 
 	function fetchSongsInAlbum() {
-		fetchItemsList(albumData.songs, 'songs', setPlaylistSongs, (res)=>res, ()=>setLoading(false))
+		if(albumData.songs?.length) fetchItemsList(albumData.songs, 'songs', setPlaylistSongs, (res)=>res, ()=>setLoading(false))
+		else setLoading(false)
 	}
 
 	useEffect(() => {

@@ -38,7 +38,7 @@ export const LyricsParagraph = ({ el, index, lyricsModeratorMode, karaokeModerat
 	}
 
 	return (
-		<div className="lyricsBlock" key={index} id={index} onClick={(e) => changeCurrentTime(e, el.startTime)} style={play ? currentParagraph === index || !isVisible ? {} : Math.abs(currentParagraph - index) < 2? { opacity: .5} : { opacity: .1} : {}} ref={currentParagraph === index ? currentParagraphRef : paragraphRef} >
+		<div className={"lyricsBlock " + (!isVisible ?"notVisible":"")} key={index} id={index} onClick={(e) => changeCurrentTime(e, el.startTime)} style={play ? currentParagraph === index ? {} : Math.abs(currentParagraph - index) < 2? { opacity: .5} : { opacity: .1} : {}} ref={currentParagraph === index ? currentParagraphRef : paragraphRef} >
 			{
 				lyricsModeratorMode === 1 ?
 					<div className="lyricsBlockInput">

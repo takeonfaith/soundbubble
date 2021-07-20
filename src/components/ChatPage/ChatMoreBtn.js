@@ -21,10 +21,10 @@ export const ChatMoreBtn = ({chatId, currentWallpaper, data}) => {
 					<FiInfo/>
 					<span>Info</span>
 				</div>:null}
-				<div className="chatHeaderMenuWindowItem">
+				{/* <div className="chatHeaderMenuWindowItem">
 					<FiSearch/>
 					<span>Search messages</span>
-				</div>
+				</div> */}
 				<div className="chatHeaderMenuWindowItem" onClick = {()=>{toggleModal(); setContent(<AttachmentList chatId = {chatId}/>)}}>
 					<FiFolder/>
 					<span>Attachments</span>
@@ -33,10 +33,10 @@ export const ChatMoreBtn = ({chatId, currentWallpaper, data}) => {
 					<FiImage/>
 					<span>Change wallpaper</span>
 				</div>
-				<div className="chatHeaderMenuWindowItem">
+				{/* <div className="chatHeaderMenuWindowItem">
 					<FiTrash/>
 					<span>Delete chat</span>
-				</div>
+				</div> */}
 			</div>
 		</div>
 	)

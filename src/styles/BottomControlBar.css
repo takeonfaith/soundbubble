@@ -51,7 +51,7 @@
 	position: absolute;
 	height: 1px;
 	background: var(--themeColor2);
-	bottom: 43px;
+	bottom: 0px;
 	left: 0;
 }
 

@@ -1,50 +1,25 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import shortWord from '../../functions/other/shortWord'
-import {HiPause, HiPlay} from 'react-icons/hi'
+import { HiPause, HiPlay } from 'react-icons/hi'
 import { useSong } from '../../contexts/SongContext'
-import { firestore } from '../../firebase'
-import { useEffect } from 'react'
-export const LibraryPlaylistItem = ({playlist}) => {
-	const {setCurrentSongQueue, setCurrentSongPlaylistSource, playSong, setCurrentSongInQueue, setCurrentSong, currentSongPlaylistSource, songRef, setPlay, play} = useSong()
+import { usePlaylistSongs } from '../../hooks/usePlaylistSongs'
+import { useScreen } from '../../contexts/ScreenContext'
+import { BiAlbum } from 'react-icons/bi'
+export const LibraryPlaylistItem = ({ playlist }) => {
+	const { currentSongPlaylistSource, play } = useSong()
+	const { isMobile } = useScreen()
 	const [playlistSongs, setPlaylistSongs] = useState([])
-	function fetchSongsInAlbum() {
-		if(playlist.length !== 0){
-			playlist.songs.map(async songId=>{
-				let albumSong = (await firestore.collection('songs').doc(songId).get()).data()
-				setPlaylistSongs(prev=>[...prev, albumSong])
-			})
-		}
-	}
-
-	function playChosenPlaylist(e){
-		e.preventDefault()
-		if(currentSongPlaylistSource.name === playlist.name){
-			playSong()
-			return 
-		}
-		fetchSongsInAlbum()
-		
-	}
-	useEffect(() => {
-		if(playlistSongs.length){
-			setCurrentSongQueue(playlistSongs)
-			setCurrentSongInQueue(0)
-			setCurrentSong(playlistSongs[0].id)
-			songRef.current.play()
-			setPlay(true)
-			setCurrentSongPlaylistSource({source:`/albums/${playlist.id}`, name:playlist.name, image:playlist.image, songsList:playlistSongs})
-		}
-	}, [playlistSongs.length])
+	const playSongsInPlaylist = usePlaylistSongs(playlist, playlistSongs, setPlaylistSongs)
 
 	return (
-		<Link to={`/albums/${playlist.id}`} className = "playlistWrapper">
-			<div className="library playlistItem" style = {{backgroundImage:`url(${playlist.image})`}}>
-				{playlist.image?null:<h1>{playlist.name.split(' ')[0][0]}{playlist.name.split(' ')[1][0]}</h1>}
-				<h2 style = {{background:playlist.imageColors[2]}}>{shortWord(playlist.name, 10) }</h2>
-				<button onClick = {playChosenPlaylist}>
-					{(currentSongPlaylistSource.name === playlist.name) && play?<HiPause/>:<HiPlay/>}
-				</button>
+		<Link to={`/albums/${playlist.id}`} className="playlistWrapper">
+			<div className="library playlistItem" style={{ backgroundImage: `url(${playlist.image})`, background:'var(--yellowAndPinkGrad)' }}>
+				<h2 style={{ background: playlist.imageColors[2] }}>{shortWord(playlist.name, 10)}</h2>
+				{!playlist.image?<BiAlbum style = {{position:'absolute', left:'50%', top:'50%', transform:'translate(-50%, -50%)', width:'60px', height:'60px'}}/>:null}
+				{!isMobile ? <button onClick={playSongsInPlaylist}>
+					{(currentSongPlaylistSource.name === playlist.name) && play ? <HiPause /> : <HiPlay />}
+				</button> : null}
 			</div>
 		</Link>
 	)

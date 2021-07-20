@@ -28,7 +28,6 @@ export const ChatInput = ({ chatId, chatData, messageText, setMessageText, inRes
 	const { yourSongs, yourAuthors, yourPlaylists } = useSong()
 	const [searchValue, setSearchValue] = useState("")
 	const [allFoundSongs, setAllFoundSongs] = useState(yourSongs)
-	const [searchSongList, setSearchSongList] = useState([])
 	const [attachedSongs, setAttachedSongs] = useState([])
 	const [attachedAlbums, setAttachedAlbums] = useState([])
 	const [attachedAuthors, setAttachedAuthors] = useState([])
@@ -142,7 +141,7 @@ export const ChatInput = ({ chatId, chatData, messageText, setMessageText, inRes
 						<ImAttachment />
 					</button>
 				</div>
-				<input type="text" style={{ background: 'var(--lightGrey)', border: 'none', outline: 'none', minHeight: '100%' }} value={messageText} onChange={(e) => { setMessageText(e.target.value) }} onKeyUp={(e) => { if (e.key === 'Enter') { sendMessageFull() } }} />
+				<input type="text" style={{ background: 'var(--lightGrey)', border: 'none', outline: 'none', minHeight: '100%' }} value={messageText} onChange={(e) => { setMessageText(e.target.value) }} onKeyDown={(e) => { if (e.key === 'Enter') { sendMessageFull() } }} />
 				{/* <div className="emojis">
 					<div className="emojiItem">
 						<FcLike />

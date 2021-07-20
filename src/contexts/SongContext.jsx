@@ -46,10 +46,10 @@ export const SongProvider = ({ children }) => {
 	const leftSideBarInputRef = useRef(null)
 	const [rightSideCurrentPage, setRightSideCurrentPage] = useState(0)
 	const [openMenu, setOpenMenu] = useState(false)
-	
+
 	function fetchYourFriends() { fetchItemsList(currentUser.friends.filter(friend => friend.status === 'added').map(obj => obj.uid), 'users', setYourFriends) }
 
-	function fetchQueue() { fetchItemsList(currentUser?.lastQueue.songsList, 'songs', setCurrentSongQueue, (res) => res, () => setCurrentSongInQueue(currentUser.lastQueue.songsList.findIndex(songId => songId === currentUser.lastSongPlayed))) }
+	function fetchQueue() { fetchItemsList(currentUser?.lastQueue?.songsList, 'songs', setCurrentSongQueue, (res) => res, () => setCurrentSongInQueue(currentUser.lastQueue.songsList.findIndex(songId => songId === currentUser.lastSongPlayed))) }
 
 	function fetchYourSongs() { fetchItemsList(currentUser.addedSongs.slice(0).reverse(), 'songs', setYourSongs, (res) => res, fetchQueue) }
 
@@ -180,7 +180,7 @@ export const SongProvider = ({ children }) => {
 			}
 		}
 	}, [shuffleMode])
-	
+
 	function playSong() {
 		console.log(play)
 		if (play) {

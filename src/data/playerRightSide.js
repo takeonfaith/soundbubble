@@ -7,7 +7,7 @@ import {RiPlayListFill} from 'react-icons/ri'
 import {FiAlignLeft} from 'react-icons/fi'
 import { TiDocumentText } from 'react-icons/ti';
 import { AuthorsList } from '../components/FullScreenPlayer/AuthorsList';
-import { SongInfo } from '../components/Basic/SongInfo';
+import { SongInfo } from '../components/Info/SongInfo';
 import { AddToPlaylists } from '../components/FullScreenPlayer/AddToPlaylists';
 export const rightSide = [
 	{

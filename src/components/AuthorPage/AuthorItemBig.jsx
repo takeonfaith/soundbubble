@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import normalizeString from '../../functions/other/normalizeString'
-import { AddToListCircle } from '../Basic/AddToListCircle'
+import { AddToListCircle } from '../Tools/AddToListCircle'
 
 export const AuthorItemBig = ({data, listOfChosenAuthors, setListOfChosenAuthors}) => {
 	return (

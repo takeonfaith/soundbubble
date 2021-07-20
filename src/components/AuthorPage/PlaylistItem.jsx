@@ -6,10 +6,11 @@ import {HiPause, HiPlay} from 'react-icons/hi'
 import { useSong } from '../../contexts/SongContext'
 import { firestore } from '../../firebase'
 import { useAuth } from '../../contexts/AuthContext'
-import { AddToListCircle } from '../Basic/AddToListCircle'
+import { AddToListCircle } from '../Tools/AddToListCircle'
 import { useScreen } from '../../contexts/ScreenContext'
 import { usePlaylistSongs } from '../../hooks/usePlaylistSongs'
 import { DeletedPlaylist } from '../Playlist/DeletedPlaylist'
+import { BiAlbum } from 'react-icons/bi'
 export const PlaylistItem = ({playlist = null, listOfChosenAlbums, setListOfChosenAlbums}) => {
 	const playlistDate = new Date(playlist?.creationDate)
 	const {isMobile} = useScreen()
@@ -19,12 +20,11 @@ export const PlaylistItem = ({playlist = null, listOfChosenAlbums, setListOfChos
 	return playlist !== null?(
 		<Link to={`/albums/${playlist.id}`} style = {{textDecoration:'none'}} className = "playlistWrapper">
 			<AddToListCircle listOfChosenItems = {listOfChosenAlbums} setListOfChosenItems = {setListOfChosenAlbums} itemId = {playlist.id}/>
-			<div className="playlistItem" style = {{backgroundImage:`url(${playlist.image})`}}>
-				{!playlist.image?<h1>{shortWord(playlist.name, 13)}</h1>:null}
-				{/* {!playlist.isAlbum?<h2>{playlist.name}</h2>:null} */}
-				<button onClick = {playSongsInPlaylist}>
+			<div className="playlistItem" style = {playlist.image?{backgroundImage:`url(${playlist.image})`}:{background:'var(--yellowAndPinkGrad)'}}>
+				{!playlist.image?<BiAlbum style = {{position:'absolute', left:'50%', top:'50%', transform:'translate(-50%, -50%)', width:'60px', height:'60px'}}/>:null}
+				{!isMobile?<button onClick = {playSongsInPlaylist}>
 					{(currentSongPlaylistSource.name === playlist.name) && play?<HiPause/>:<HiPlay/>}
-				</button>
+				</button>:null}
 			</div>
 			<h4 style = {{display:'flex', alignItems:'center', margin:'5px 0'}}>
 				{shortWord(playlist.name, isMobile?10:15)} 

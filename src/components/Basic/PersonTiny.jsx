@@ -1,5 +1,5 @@
 import React from 'react'
-import { AddToListCircle } from './AddToListCircle'
+import { AddToListCircle } from '../Tools/AddToListCircle'
 export const PersonTiny = ({data, chosenArray, setChosenArray, ...restProps}) => {
 	return (
 		<div className="person" {...restProps}>

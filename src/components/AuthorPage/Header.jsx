@@ -1,22 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { FiEdit2, FiFlag, FiHeadphones, FiInfo, FiMoreVertical, FiPlusCircle, FiSettings, FiShare, FiTrash, FiUserCheck, FiUserPlus } from 'react-icons/fi'
+import React, { useRef, useState } from 'react'
+import { FiEdit2, FiHeadphones, FiInfo, FiMoreVertical, FiPlusCircle, FiSettings, FiShare, FiTrash, FiUserCheck, FiUserPlus } from 'react-icons/fi'
 import { ImCheckmark } from 'react-icons/im'
 import { useSong } from '../../contexts/SongContext'
 import displayDate from '../../functions/display/displayDate'
-import { BackBtn } from '../Basic/BackBtn'
+import { BackBtn } from '../Buttons/BackBtn'
 import { SmallImages } from './SmallImages'
 import { useAuth } from '../../contexts/AuthContext'
 import { IoMdExit } from 'react-icons/io'
-import { firestore } from '../../firebase'
 import rightFormanForBigNumber from '../../functions/other/rightFormatForBigNumber'
 import { CgCheckO, CgLock } from 'react-icons/cg'
 import { useModal } from '../../contexts/ModalContext'
 import { useOutsideClick } from '../../hooks/useOutsideClick'
 import { ChatWithFriendButton } from './ChatWithFriendButton'
-import { LoadingCircle } from '../Loading/LoadingCircle'
-import { AiOutlineLoading3Quarters } from 'react-icons/ai'
-import { BiDoorOpen, BiLoaderAlt } from 'react-icons/bi'
-import { FriendsListToShareWith } from '../Basic/FriendsListToShareWith'
+import { BiAlbum, BiDoorOpen, BiLoaderAlt } from 'react-icons/bi'
+import { FriendsListToShareWith } from '../Lists/FriendsListToShareWith'
 import { CustomizeAlbum } from '../AlbumPage/CustomizeAlbum'
 import { CustomizeAuthor } from '../AuthorPage/CustomizeAuthor'
 import { addAuthorToLibrary } from '../../functions/add/addAuthorToLibrary'
@@ -119,7 +116,6 @@ export const Header = ({ data, headerColors }) => {
 										<FiShare />Share
 									</div>
 									<div className="songItemMenuWindowItem" onClick={() => { toggleModal(); setContent(data.authors !== undefined ? <AlbumInfo album={data} /> : <AuthorInfo author={data} />) }}><FiInfo />Info</div>
-									<div className="songItemMenuWindowItem"><FiFlag />Flag</div>
 								</div>
 							) :
 							null
@@ -135,7 +131,8 @@ export const Header = ({ data, headerColors }) => {
 						null
 				}
 			</div>
-			<div className="headerAuthorsImage" style={data.authors === undefined ? { animation: "floatingBorderRadius 10s infinite ease-in-out", backgroundImage: `url(${data.photoURL})` } : { backgroundImage: `url(${data.image})` }}>
+			<div className="headerAuthorsImage" style={data.authors === undefined ? { animation: "floatingBorderRadius 10s infinite ease-in-out", backgroundImage: `url(${data.photoURL})`, position:'relative' } : { backgroundImage: `url(${data.image})`, position:'relative', backgroundColor:'var(--red)' }}>
+			{data.authors !== undefined && !data.image?<BiAlbum style = {{position:'absolute', left:'50%', top:'50%', transform:'translate(-50%, -50%)', width:'60px', height:'60px'}}/>:null}
 			</div>
 			<div className="headerAuthorInfo">
 				<div className="headerAuthorsName">

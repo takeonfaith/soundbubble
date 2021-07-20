@@ -1,12 +1,10 @@
 import React from 'react'
 import {MdPlaylistAdd} from 'react-icons/md'
-import { BiAlbum, BiHeart, BiInfoCircle, BiPlusCircle, BiUserCircle } from "react-icons/bi";
-import {FiTrash2, FiPlusCircle, FiInfo} from 'react-icons/fi'
-import { useAuth } from '../../contexts/AuthContext';
+import { BiUserCircle } from "react-icons/bi";
+import {FiInfo} from 'react-icons/fi'
 import { useSong } from '../../contexts/SongContext';
 import AddOrDeleteButtonFull from './AddOrDeleteSongButton';
 export const Options = () => {
-	const {currentUser} = useAuth()
 	const {currentSongData, setRightSideCurrentPage} = useSong()
 	return (
 		<div className='Options'>

@@ -197,6 +197,7 @@
 
 .chatMessagesWindow{
 	overflow-y: auto;
+	overflow-x: hidden;
 	padding: 10px;
 	box-sizing: border-box;
 	scroll-behavior: auto;
@@ -710,7 +711,8 @@
 	}
 
 	.messageItemBody{
-		max-width: none;
+		width: calc(100% - 115px);
+		max-width: 300px;
 	}
 
 	.chatWallpaper{

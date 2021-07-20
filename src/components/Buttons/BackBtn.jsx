@@ -1,7 +1,7 @@
 import React from 'react'
 import { FiArrowLeft } from 'react-icons/fi'
 import { useHistory } from 'react-router'
-import { Hint } from './Hint'
+import { Hint } from '../Basic/Hint'
 export const BackBtn = ({color = ""}) => {
 	const history = useHistory()
 	return (

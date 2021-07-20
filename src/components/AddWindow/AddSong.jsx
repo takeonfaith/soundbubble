@@ -6,12 +6,12 @@ import { firestore, storage } from '../../firebase'
 import { useAuth } from '../../contexts/AuthContext'
 import { findVariantsOfName } from '../../functions/find/findVariantsOfName'
 import getUID from '../../functions/other/getUID'
-import { DownloadPhotoButton } from '../Basic/DownloadPhotoButton'
+import { DownloadPhotoButton } from '../Buttons/DownloadPhotoButton'
 import { ErrorPlate } from '../MessagePlates/ErrorPlate'
 import { LoadingCircle } from '../Loading/LoadingCircle'
 import { PersonTiny } from '../Basic/PersonTiny'
-import {FullScreenLoading} from '../Loading/FullScreenLoading'
-import {SearchBar} from '../Basic/SearchBar'
+import { FullScreenLoading } from '../Loading/FullScreenLoading'
+import { SearchBar } from '../Basic/SearchBar'
 import { transformLyricsToArrayOfObjects } from '../../functions/other/transformLyricsToArrayOfObject'
 export const AddSong = () => {
 	const { currentUser } = useAuth()
@@ -73,7 +73,7 @@ export const AddSong = () => {
 
 	async function addSongToFirebase(e) {
 		e.preventDefault()
-		
+
 		let uid = getUID()
 		setErrorMessage("")
 		if (songName.length === 0) setErrorMessage("Song has to have some name")
@@ -124,18 +124,18 @@ export const AddSong = () => {
 			})
 
 			firestore.collection('search').doc(uid).set({
-				place:'songs',
-				uid:uid,
-				variantsOfName:findVariantsOfName(songName)
+				place: 'songs',
+				uid: uid,
+				variantsOfName: findVariantsOfName(songName)
 			})
-			
+
 		}
 
 	}
 
 	useEffect(() => {
-		if(showSuccessMessage){
-			setTimeout(()=>{
+		if (showSuccessMessage) {
+			setTimeout(() => {
 				setShowSuccessMessage(false)
 			}, 2000)
 		}
@@ -148,16 +148,16 @@ export const AddSong = () => {
 
 	return (
 		<div className="AddSong">
-			<FullScreenLoading loading = {loadingSong}/>
+			<FullScreenLoading loading={loadingSong} />
 			<ColorExtractor src={imageLocalPath} getColors={(colors) => setImageColors(colors)} />
-			<form onSubmit = {e=>e.preventDefault()}>
+			<form onSubmit={e => e.preventDefault()}>
 				<label>
 					<h3>Song name</h3>
 					<input type="text" placeholder="Enter song name" value={songName} onChange={(e) => setSongName(e.target.value)} />
 				</label>
 				<label>
 					<h3>Song authors</h3>
-					<SearchBar value = {authorsInputValue} setValue = {setAuthorsInputValue} setResultAuthorList = {setAllAuthors} defaultSearchMode = {'authors'}/>
+					<SearchBar value={authorsInputValue} setValue={setAuthorsInputValue} setResultAuthorList={setAllAuthors} defaultSearchMode={'authors'} inputText = {"Search for authors"}/>
 					<div className="chosenAuthorsList">
 						{chosenAuthors.map((author) => {
 							return (
@@ -169,16 +169,11 @@ export const AddSong = () => {
 						})}
 					</div>
 					<div className="authorsResult">
-						{loadingAuthors ?
-							<div style={{ position: 'relative', width: '100%', height: '50px' }}>
-								<LoadingCircle />
-							</div>
-							:
-							allAuthors.map((data, index) => {
-								return (
-									<PersonTiny data={data} onClick={() => addAuthor(data)} style={chosenAuthors.includes(data.uid) ? { background: 'var(--green)' } : {}} key={index} />
-								)
-							})
+						{allAuthors.map((data, index) => {
+							return (
+								<PersonTiny data={data} onClick={() => addAuthor(data)} style={chosenAuthors.includes(data.uid) ? { background: 'var(--green)' } : {}} key={index} />
+							)
+						})
 						}
 					</div>
 				</label>
@@ -188,12 +183,7 @@ export const AddSong = () => {
 					<input type="date" name="" id="" value={releaseDate} onChange={(e) => setReleaseDate(e.target.value)} />
 				</label>
 
-				{/* <label>
-					<h3>Add to albums and playlists</h3>
-					<input type="text" placeholder="Enter playlist name" value={authorsInputValue} onChange={(e) => setAuthorsInputValue(e.target.value)} onKeyDown={findAuthors} style={{ marginBottom: '5px' }} />
-				</label> */}
-
-				<ErrorPlate errorMessage = {errorMessage}/>
+				<ErrorPlate errorMessage={errorMessage} />
 
 				<div style={{ width: '100%', display: 'flex' }}>
 					{imageColors.map((color, index) => {
@@ -201,7 +191,7 @@ export const AddSong = () => {
 					})}
 				</div>
 
-				<DownloadPhotoButton setErrorMessage = {setErrorMessage} setImageLocalPath = {setImageLocalPath} downloadedPhoto = {songCover} setDownloadedPhoto = {setSongCover} place = {'songsImages/'}/>
+				<DownloadPhotoButton setErrorMessage={setErrorMessage} setImageLocalPath={setImageLocalPath} downloadedPhoto={songCover} setDownloadedPhoto={setSongCover} place={'songsImages/'} />
 
 				<label className="downloadFile">
 					<div className="downloadPhoto">
@@ -215,9 +205,9 @@ export const AddSong = () => {
 				</label>
 
 				<label>
-					<textarea name="" id="" placeholder={"Add song lyrics"} value = {lyrics} onChange={(e) => setLyrics(e.target.value)}></textarea>
+					<textarea name="" id="" placeholder={"Add song lyrics"} value={lyrics} onChange={(e) => setLyrics(e.target.value)}></textarea>
 				</label>
-				<button className="addSongBtn" onClick = {addSongToFirebase}>{!showSuccessMessage?"Add song":"Song Successfully added. Congrats!"}</button>
+				<button className="addSongBtn" onClick={addSongToFirebase}>{!showSuccessMessage ? "Add song" : "Song Successfully added. Congrats!"}</button>
 			</form>
 		</div>
 	)

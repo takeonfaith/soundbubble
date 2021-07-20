@@ -4,7 +4,7 @@ import { FiCopy } from 'react-icons/fi'
 import { AiFillInstagram } from 'react-icons/ai'
 import { ImWhatsapp } from 'react-icons/im'
 import { useSong } from '../../contexts/SongContext'
-import {FriendsListToShareWith} from '../Basic/FriendsListToShareWith'
+import {FriendsListToShareWith} from '../Lists/FriendsListToShareWith'
 export const Share = () => {
 	const {currentSongData} = useSong()
 	const socialMedia = [

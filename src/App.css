@@ -22,6 +22,8 @@ a{
   }
 }
 
+
+
 @media (min-width:1001px) {
   a:hover{
     text-decoration: underline;
@@ -138,6 +140,50 @@ a{
   --transparentWhite:rgba(255, 255, 255, 0.336);
   --reallyTransparentWhite:rgba(255, 255, 255, 0.192);
   --transparentBlack:rgba(0, 0, 0, 0.856);
+}
+
+@keyframes shineAndScale{
+  0%{
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50%{
+    transform: scale(1.05);
+    filter: brightness(1.1);
+  }
+  100%{
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+.LoadingData{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100vh;
+	position: absolute;
+	left: 0;
+	top: 0;
+	background: var(--playlistsColor);
+}
+ 
+.LoadingData img{
+	width: 100px;
+	animation: zoomIn .2s forwards, shineAndScale 2s infinite;
+}
+ 
+.LoadingCircle{
+  position:absolute;
+  left:50%;
+  top:50%;
+
+  transform: translate(-50%, -50%);
+}
+ 
+.LoadingCircle img{
+	width: 40px;
 }
 
 button{
@@ -547,7 +593,7 @@ body{
   height: 1px;
   position: absolute;
   display: block;
-  bottom: 0px;
+  bottom: -5px;
   left:0px;
   background: rgb(173, 173, 173);
  }

@@ -7,7 +7,7 @@ import { useModal } from '../../contexts/ModalContext'
 import shortWord from '../../functions/other/shortWord'
 import { useAddOrDeleteSong } from '../../hooks/useAddOrDeleteSong'
 import { usePlaylistSongs } from '../../hooks/usePlaylistSongs'
-import { FriendsListToShareWith } from '../Basic/FriendsListToShareWith'
+import { FriendsListToShareWith } from '../Lists/FriendsListToShareWith'
 import { Hint } from '../Basic/Hint'
 
 export const TinyPlaylist = ({ playlist }) => {
@@ -48,7 +48,8 @@ export const TinyPlaylist = ({ playlist }) => {
 					<FiPlayCircle />
 				</button>
 			</div>
-			<div className="TinyPlaylistImg" style={{ backgroundImage: `url(${playlist.image})`, display: 'inline-block', backgroundPosition: "center center", backgroundSize: "cover" }} onClick = {()=>history.push(`/albums/${playlist.id}`)}>
+			<div className="TinyPlaylistImg" style={{ backgroundImage: `url(${playlist.image})`, display: 'inline-block', backgroundPosition: "center center", backgroundSize: "cover", background: 'var(--yellowAndPinkGrad)', position:'relative' }} onClick={() => history.push(`/albums/${playlist.id}`)}>
+				{!playlist.image ? <BiAlbum style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', width: '20px', height: '20px' }} /> : null}
 			</div>
 			<div style={{ display: 'flex', flexDirection: 'column' }}>
 				<span>

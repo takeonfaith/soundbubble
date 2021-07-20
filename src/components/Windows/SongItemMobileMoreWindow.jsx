@@ -5,8 +5,8 @@ import { BiEditAlt } from 'react-icons/bi';
 import { useModal } from '../../contexts/ModalContext';
 import AddOrDeleteButtonFull from '../FullScreenPlayer/AddOrDeleteSongButton'
 import { AddToPlaylists } from '../FullScreenPlayer/AddToPlaylists'
-import { FriendsListToShareWith } from '../Basic/FriendsListToShareWith'
-import { SongInfo } from '../Basic/SongInfo'
+import { FriendsListToShareWith } from '../Lists/FriendsListToShareWith'
+import { SongInfo } from '../Info/SongInfo'
 import { AuthorsList } from '../FullScreenPlayer/AuthorsList'
 import { EditSong } from '../AdminAndAuthor/EditSong';
 import { useAuth } from '../../contexts/AuthContext';
@@ -30,7 +30,6 @@ export const SongItemMobileMoreWindow = ({ song }) => {
 				<FiShare />Share
 			</div>
 			<div className="songItemMenuWindowItem" onClick={() => { setContent(<SongInfo song={song} />) }}><FiInfo />Info</div>
-			<div className="songItemMenuWindowItem"><FiFlag />Flag</div>
 			<div className="songItemMenuWindowItem" onClick={() => { setContent(<AuthorsList listOfAuthors={song.authors} title={"Authors"} />) }}><FiUsers />Authors</div>
 		</div>
 	)

@@ -259,6 +259,10 @@ input[type=range] {
 	transition: .3s;
 	position: relative;
  }
+
+ .lyricsBlock.notVisible{
+	 visibility: hidden;
+ }
  
  .lyricsBlockInput{
 	position: absolute;
@@ -578,11 +582,12 @@ input[type=range] {
  }
  
  .SongItem{
+	width: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	border-radius: 13px;
-	margin: 15px 0;
+	margin: 5px 0;
 	cursor: pointer;
 	padding: 3px;
 	font-size: 1.3em;
@@ -891,7 +896,7 @@ input[type=range] {
 	background: var(--transparentWhite);
 	left: 50%;
 	transform: translateX(-50%);
-	bottom: -10px;
+	bottom: -5px;
  }
  
  .Queue .queueNowIsPlaying .queueImage{
@@ -1154,35 +1159,6 @@ input[type=range] {
 	background: var(--lightGrey);
 	font-weight: 600;
 	opacity: 1;
- }
- 
- .LoadingData{
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 100%;
-	height: 100vh;
-	position: absolute;
-	left: 0;
-	top: 0;
-	background: var(--playlistsColor);
- }
- 
- .LoadingData img{
-	width: 100px;
-	animation: zoomIn .2s forwards;
- }
- 
- .LoadingCircle{
-	position:absolute;
-	left:50%;
-	top:50%;
- 
-	transform: translate(-50%, -50%);
- }
- 
- .LoadingCircle img{
-	width: 40px;
  }
 
  .rightSideAuthorsList{

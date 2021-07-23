@@ -3,7 +3,6 @@ export function findAmountOfUnseenMessages(messages, currentUser) {
 		if(message.sender !== currentUser.uid){
 			if(message.seenBy !== undefined){
 				if(!message.seenBy.includes(currentUser.uid)){
-					console.log("i'm here")
 					return ++accum
 				}
 			}

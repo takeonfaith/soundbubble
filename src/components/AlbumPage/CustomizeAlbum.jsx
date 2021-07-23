@@ -37,7 +37,6 @@ export const CustomizeAlbum = ({ playlist }) => {
 	useEffect(() => {
 		if (songsSearch.length === 0) {
 			playlist.songs.map(async songId => {
-				console.log(songId)
 				const songData = (await firestore.collection('songs').doc(songId).get()).data()
 				setLoadingSongs(false)
 				setAllSongs(prev => [...prev, songData])
@@ -88,7 +87,6 @@ export const CustomizeAlbum = ({ playlist }) => {
 				const authorData = authorRef.data()
 				const authorPlaylists = authorData.ownPlaylists
 				authorPlaylists.push(playlist.id)
-				console.log(authorPlaylists)
 				firestore.collection('users').doc(author.uid).update({
 					ownPlaylists: authorPlaylists
 				})
@@ -101,7 +99,6 @@ export const CustomizeAlbum = ({ playlist }) => {
 				const authorData = authorRef.data()
 				const authorPlaylists = authorData.ownPlaylists
 				const filteredPlaylists = authorPlaylists.filter(playlistId => playlistId !== playlist.id)
-				console.log(filteredPlaylists)
 				firestore.collection('users').doc(author.uid).update({
 					ownPlaylists: filteredPlaylists
 				})

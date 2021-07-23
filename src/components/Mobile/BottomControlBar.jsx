@@ -14,7 +14,6 @@ export const BottomControlBar = () => {
 	const [currentPage, setCurrentPage] = useState(
 		() => {
 			let page = leftSideBar.find((el, i) => {
-				console.log(window.location.hash)
 				if (window.location.hash.includes(normalizeString(el.title))) {
 					return true
 				}

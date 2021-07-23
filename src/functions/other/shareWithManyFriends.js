@@ -4,17 +4,16 @@ import { findChatURL } from "../find/findChatURL";
 import getUID from "./getUID";
 import { sendMessage } from "./sendMessage";
 
-export default function shareWithFriends(shareList, currentUser, itemId, whatToShare, messageText = "") {
+export default function shareWithFriends(shareList, currentUser, itemId, whatToShare, messageText = "", setShouldCreate = () => null, setFriendChatId = () => null) {
 	//Сделать через функцию sendMessage
 	shareList.map(async userId => {
 		//Сортировка по последнему отправлению
-		const sortedFriends = [{uid:userId, status:'added'}, ...currentUser.friends.filter(obj => obj.uid !== userId)]
+		const sortedFriends = [{ uid: userId, status: 'added' }, ...currentUser.friends.filter(obj => obj.uid !== userId)]
 		firestore.collection('users').doc(currentUser.uid).update({
-			friends:sortedFriends
+			friends: sortedFriends
 		})
-		Promise.resolve(findChatURL([userId], currentUser, () => null, () => null)).then(async chatId => {
+		Promise.resolve(findChatURL([userId], currentUser, ()=>null, setFriendChatId)).then(async chatId => {
 			let chatData = (await firestore.collection('chats').doc(chatId).get()).data()
-			console.log(chatId, chatData)
 			if (chatData !== undefined) {
 				switch (whatToShare) {
 					case "song":
@@ -32,21 +31,21 @@ export default function shareWithFriends(shareList, currentUser, itemId, whatToS
 				}
 			}
 			else {
-				const chatUID = getUID()
-				createChat([currentUser.uid, userId], chatUID).then(async () => {
-					chatData = (await firestore.collection('chats').doc(chatUID).get()).data()
+				createChat([currentUser.uid, userId], chatId).then(async () => {
+					chatData = (await firestore.collection('chats').doc(chatId).get()).data()
+					setShouldCreate(false)
 					switch (whatToShare) {
 						case "song":
-							sendMessage(chatUID, chatData, currentUser.uid, messageText, [itemId])
+							sendMessage(chatId, chatData, currentUser.uid, messageText, [itemId])
 							break;
 						case "playlist":
-							sendMessage(chatUID, chatData, currentUser.uid, messageText, [], [itemId])
+							sendMessage(chatId, chatData, currentUser.uid, messageText, [], [itemId])
 							break;
 						case "author":
-							sendMessage(chatUID, chatData, currentUser.uid, messageText, [], [], [itemId])
+							sendMessage(chatId, chatData, currentUser.uid, messageText, [], [], [itemId])
 							break;
 						default:
-							sendMessage(chatUID, chatData, currentUser.uid, messageText, [itemId])
+							sendMessage(chatId, chatData, currentUser.uid, messageText, [itemId])
 							break;
 					}
 				})

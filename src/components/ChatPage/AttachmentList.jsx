@@ -19,7 +19,7 @@ export const AttachmentList = ({ chatId }) => {
 		const chatData = await firestore.collection('chats').doc(chatId).get()
 		chatData.data().messages.forEach(message => {
 			if (message[attachedType].length > 0) {
-				fetchItemsList(message[attachedType], firebaseCollection, setAttachmentList, (res) => res, () => setLoading(false), message[attachedType].length, 1)
+				fetchItemsList(message[attachedType], firebaseCollection, setAttachmentList, (res) => res, () => setLoading(false), undefined, 1)
 			}
 		})
 	}

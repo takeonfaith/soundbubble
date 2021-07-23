@@ -13,6 +13,8 @@ export const useUpdateListenCount = () => {
 				firestore.collection('songs').doc(currentSongData.id).update({
 					listens: listens
 				})
+
+				//update playlist listens
 				if (currentSongPlaylistSource.source.substr(1, 6) === 'albums') {
 					const sourceId = currentSongPlaylistSource.source.substr(8, currentSongPlaylistSource.source.length - 8)
 					firestore.collection('playlists').doc(sourceId).get().then((res) => {
@@ -23,6 +25,15 @@ export const useUpdateListenCount = () => {
 						})
 					})
 				}
+
+				//update authors' listens
+				currentSongData.authors.forEach(async author=>{
+					let authorNumberOfListenersPerMonth = (await firestore.collection('users').doc(author.uid).get()).data().numberOfListenersPerMonth
+					++authorNumberOfListenersPerMonth
+					firestore.collection('users').doc(author.uid).update({
+						numberOfListenersPerMonth: authorNumberOfListenersPerMonth
+					})
+				})
 			}, songDuration * 1000 * 0.5)
 		}
 	}

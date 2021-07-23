@@ -7,20 +7,17 @@ export const DownloadPhotoButton = ({ setErrorMessage, setImageLocalPath, downlo
 		const file = e.target.files[0]
 		let isValid = false
 		if (place === 'songsImages/' || place === 'chatCovers/') {
-			console.log("image")
 			const validExtensions = [".jpg", ".png", ".jpeg"]
 			if (validExtensions.find((ext) => file.name.substr(file.name.length - ext.length, ext.length) === ext)) isValid = true
 			else setErrorMessage(`Format of your file is not valid. Download file with one of these: ${validExtensions.map(ex => " " + ex)}`)
 		}
 		else if (place === "songs/") {
-			console.log("song")
 			const validExtensions = [".mp3", ".mp4a", ".flac", ".wav", '.wma']
 			if (validExtensions.find((ext) => file.name.substr(file.name.length - ext.length, ext.length) === ext)) isValid = true
 			else setErrorMessage(`Format of your file is not valid. Download file with one of these: ${validExtensions.map(ex => ex)}`)
 		}
 
 		if (isValid) {
-			console.log(file)
 			setImageLocalPath(URL.createObjectURL(file))
 			const storageRef = storage.ref()
 			const fileRef = storageRef.child(place + file.name)

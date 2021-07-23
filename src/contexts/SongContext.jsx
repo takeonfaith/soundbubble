@@ -182,7 +182,6 @@ export const SongProvider = ({ children }) => {
 	}, [shuffleMode])
 
 	function playSong() {
-		console.log(play)
 		if (play) {
 			songRef.current.pause()
 		}

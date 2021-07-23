@@ -33,7 +33,6 @@ export const useAddOrDeleteSong = (playlistId, songId) => {
 
 			const newSongsList = playlistSongs
 			newSongsList.unshift(songData)
-			console.log(playlistId)
 			firestore.collection('playlists').doc(playlistId).update({
 				songs: newSongsList
 			})

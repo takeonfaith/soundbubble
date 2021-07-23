@@ -22,6 +22,7 @@ export const SearchBar = ({ value, setValue, setAllFoundSongs, setResultPlaylist
 		if (focus) inputRef.current.focus()
 	}, [])
 
+
 	return (
 		<div style={{ marginTop: '10px', width: '100%' }} className = "searchBarWrapper">
 			<div className="searchBar">
@@ -49,7 +50,7 @@ export const SearchBar = ({ value, setValue, setAllFoundSongs, setResultPlaylist
 					<div style={{ position: 'relative', width: '100%', height: '50px', marginTop: '40px' }}>
 						<LoadingCircle />
 					</div> :
-					!foundAnything && value.length !== 0 ? <h2>{message}</h2> : null}
+					!foundAnything && value.length !== 0 ? <h2>Not found</h2> : null}
 			</div>
 		</div>
 	)

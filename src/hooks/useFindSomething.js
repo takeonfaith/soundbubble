@@ -3,7 +3,7 @@ import { firestore } from '../firebase';
 import { fetchItemsList } from '../functions/fetch/fetchItemsList';
 import normalizeString from '../functions/other/normalizeString';
 
-export const useFindSomething = (value, setAllFoundSongs,setResultAuthorList, setResultPlaylists, defaultSearchMode, searchMode, defaultSongsListValue, defaultAuthorsListValue, defaultPlaylistsListValue) => {
+export const useFindSomething = (value, setAllFoundSongs, setResultAuthorList, setResultPlaylists, defaultSearchMode, searchMode, defaultSongsListValue, defaultAuthorsListValue, defaultPlaylistsListValue) => {
 	const [message, setMessage] = useState("")
 	const [loading, setLoading] = useState(false)
 	const [foundAnything, setFoundAnything] = useState(false)
@@ -20,11 +20,12 @@ export const useFindSomething = (value, setAllFoundSongs,setResultAuthorList, se
 				}
 				else if (!realData.isPrivate) foundItemTempArray.push(realData)
 				if (defaultSearchMode === undefined && searchMode === 0 && foundItemTempArray.length !== 0) {
+					setList(foundItemTempArray)
 					switch (itemData.place) {
 						case "songs":
 							for (let i = 0; i < foundItemTempArray.length; i++) {
 								const authorsIdsArray = realData.authors
-								fetchItemsList(authorsIdsArray.map(author=>author.uid), 'users', setResultAuthorList, (res) => res.sort((a, b) => b.subscribers - a.subscribers), undefined, undefined, 1)
+								fetchItemsList(authorsIdsArray.map(author => author.uid), 'users', setResultAuthorList, (res) => res.sort((a, b) => b.subscribers - a.subscribers), undefined, undefined, 1)
 							}
 							break;
 						case "users":
@@ -38,7 +39,7 @@ export const useFindSomething = (value, setAllFoundSongs,setResultAuthorList, se
 						case "playlists":
 							for (let i = 0; i < foundItemTempArray.length; i++) {
 								const authorsIdsArray = realData.authors
-								fetchItemsList(authorsIdsArray.map(author=>author.uid), 'users', setResultAuthorList, (res) => res.sort((a, b) => b.subscribers - a.subscribers), undefined, undefined, 1)
+								fetchItemsList(authorsIdsArray.map(author => author.uid), 'users', setResultAuthorList, (res) => res.sort((a, b) => b.subscribers - a.subscribers), undefined, undefined, 1)
 							}
 							break
 						default:
@@ -46,16 +47,17 @@ export const useFindSomething = (value, setAllFoundSongs,setResultAuthorList, se
 							break;
 					}
 				}
-
-				setList(foundItemTempArray)
-				setLoading(false)
-				if (foundItemTempArray.length !== 0) setFoundAnything(true)
+				
+				if (foundItemTempArray.length !== 0) {
+					setLoading(false)
+					setFoundAnything(true)
+					setList(foundItemTempArray)
+				}
 			}
 		})
 		setLoading(false)
-		if (foundItemTempArray.length === 0) { setList([]) }
+		if (foundItemTempArray.length === 0) { setList([]); setFoundAnything(false) }
 	}
-
 	function findSomething() {
 		if (value.length !== 0) {
 			setLoading(true)
@@ -97,7 +99,7 @@ export const useFindSomething = (value, setAllFoundSongs,setResultAuthorList, se
 	}
 
 	useEffect(() => {
-		if(value.length === 0){
+		if (value.length === 0) {
 			if (defaultSongsListValue !== undefined) setAllFoundSongs(defaultSongsListValue)
 			if (defaultAuthorsListValue !== undefined) setResultAuthorList(defaultAuthorsListValue)
 			if (defaultPlaylistsListValue !== undefined) setResultPlaylists(defaultPlaylistsListValue)

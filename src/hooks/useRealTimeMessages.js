@@ -5,7 +5,7 @@ import { firestore } from '../firebase'
  	* Returns [chatData, messageList, loading, currentDateOnTop, findTopDate]
 */
 export const useRealTimeMessages = (chatId, dateRefsArray) => {
-	const [chatData, setChatData] = useState([])
+	const [chatData, setChatData] = useState(null)
 	const [messageList, setMessageList] = useState([])
 	const [loading, setLoading] = useState(true)
 	const [currentDateOnTop, setCurrentDateOnTop] = useState("")
@@ -21,8 +21,8 @@ export const useRealTimeMessages = (chatId, dateRefsArray) => {
 		const unsubscribe = firestore.collection('chats').doc(chatId)
 			.onSnapshot(snapshot => {
 				setChatData(snapshot.data())
-				setMessageList(snapshot.data().messages)
-				setCurrentDateOnTop(snapshot.data().messages.length ? snapshot.data().messages[0].sentTime : new Date().toString())
+				setMessageList(snapshot.data()?.messages)
+				setCurrentDateOnTop(snapshot.data()?.messages.length ? snapshot.data().messages[0].sentTime : new Date().toString())
 				setLoading(false)
 			})
 		return () => {

@@ -12,7 +12,7 @@ export const Queue = () => {
 				<h5 style={{ marginTop: 2 }}>
 					Now is playing:
 					<Link onClick={() => setOpenFullScreenPlayer(false)} to={currentSongPlaylistSource.source} className="queueAlbumName">
-						<div className="queueImage">
+						<div className="queueImage" style = {currentSongPlaylistSource.image?{}:{display:'none'}}>
 							<img loading = "lazy" src={currentSongPlaylistSource.image} alt="" />
 						</div>
 						<span>{shortWord(currentSongPlaylistSource.name, 25)}</span>

@@ -24,9 +24,9 @@ export const Person = ({ index, friend }) => {
 	}, [])
 
 	useEffect(() => {
-		if(sendAnimation?.length > 0){
+		if (sendAnimation?.length > 0) {
 			setLoadingSendSong(true)
-			setTimeout(()=>{
+			setTimeout(() => {
 				setSendAnimation("")
 				setLoadingSendSong(false)
 			}, 600)
@@ -34,7 +34,7 @@ export const Person = ({ index, friend }) => {
 	}, [sendAnimation])
 	return (
 		<div className="person" key={index} id={friend.uid} >
-			<img loading = "lazy" src={currentSongData.cover} alt="" className = {"sendSongImage " + sendAnimation}/>
+			<img loading="lazy" src={currentSongData.cover} alt="" className={"sendSongImage " + sendAnimation} />
 			<div className="personBtns">
 				<Link to={`/chat/${friendChatId}`}>
 					<button onClick={() => { if (shouldCreate) createChat([currentUser.uid, friend.uid], friendChatId) }}>
@@ -48,13 +48,13 @@ export const Person = ({ index, friend }) => {
 						<FiUser />
 					</button>
 				</Link>
-				<button onClick={() => {if(!loadingSendSong) {shareWithManyFriends([friend.uid], currentUser, currentSong, "song", ""); setSendAnimation('sendAnimation')}}}>
+				<button onClick={() => { if (!loadingSendSong) { shareWithManyFriends([friend.uid], currentUser, currentSong, "song", "", setShouldCreate, setFriendChatId); setSendAnimation('sendAnimation');} }}>
 					<Hint text={'share'} />
 					<BiShare />
 				</button>
 			</div>
 			<div className="pesronImg" style={{ pointerEvents: 'none' }}>
-				<img loading = "lazy" src={friend.photoURL} alt="" />
+				<img loading="lazy" src={friend.photoURL} alt="" />
 			</div>
 			<IsUserOnlineCircle userUID={friend.uid} />
 			<div className="personName" style={{ pointerEvents: 'none' }}>

@@ -14,7 +14,7 @@ export const LibraryPlaylistItem = ({ playlist }) => {
 
 	return (
 		<Link to={`/albums/${playlist.id}`} className="playlistWrapper">
-			<div className="library playlistItem" style={{ backgroundImage: `url(${playlist.image})`, background:'var(--yellowAndPinkGrad)' }}>
+			<div className="library playlistItem" style={{ backgroundImage: `url(${playlist.image})`}}>
 				<h2 style={{ background: playlist.imageColors[2] }}>{shortWord(playlist.name, 10)}</h2>
 				{!playlist.image?<BiAlbum style = {{position:'absolute', left:'50%', top:'50%', transform:'translate(-50%, -50%)', width:'60px', height:'60px'}}/>:null}
 				{!isMobile ? <button onClick={playSongsInPlaylist}>

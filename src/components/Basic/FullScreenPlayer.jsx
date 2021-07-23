@@ -6,7 +6,7 @@ import { Player } from '../FullScreenPlayer/Player';
 import { HiChevronDown } from 'react-icons/hi';
 import { useSong } from '../../contexts/SongContext';
 import { FiMinus } from 'react-icons/fi';
-import {useSwipeable} from 'react-swipeable'
+import { useSwipeable } from 'react-swipeable'
 import checkNumber from '../../functions/other/checkNumber';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { useScreen } from '../../contexts/ScreenContext';
@@ -23,7 +23,7 @@ export default function FullScreenPlayer() {
     openMenu,
     setOpenMenu
   } = useSong()
-  const {isMobile, screenHeight} = useScreen()
+  const { isMobile, screenHeight, screenWidth } = useScreen()
   const lyricsRef = useRef(null)
   const [transformTransition, setTransformTransition] = useState(0.05)
   const [mobileMenuTransition, setMobileMenuTransition] = useState(0)
@@ -43,11 +43,11 @@ export default function FullScreenPlayer() {
   const bgRef = React.useRef();
 
   const handlersForMobileMenu = useSwipeable({
-    onSwiping: (event) => {event.event.stopPropagation();if (openMenu && mobileContentScroll.current.scrollTop === 0 &&  event.deltaY > 0) setDeltaYMobileMenu(event.deltaY); else if (!openMenu && event.deltaY < 0) setDeltaYMobileMenu(event.deltaY) },
-    onSwipedLeft:()=> {setRightSideCurrentPage(checkNumber(rightSideCurrentPage+1, 3))},
-    onSwipedRight:()=> {setRightSideCurrentPage(checkNumber(rightSideCurrentPage-1, 3))}
+    onSwiping: (event) => { event.event.stopPropagation(); if (openMenu && mobileContentScroll.current.scrollTop === 0 && event.deltaY > 0) setDeltaYMobileMenu(event.deltaY); else if (!openMenu && event.deltaY < 0) setDeltaYMobileMenu(event.deltaY) },
+    onSwipedLeft: () => { setRightSideCurrentPage(checkNumber(rightSideCurrentPage + 1, 3)) },
+    onSwipedRight: () => { setRightSideCurrentPage(checkNumber(rightSideCurrentPage - 1, 3)) }
   })
-  
+
 
   function returnToInitialMobileMenu() {
     let dropDelta
@@ -57,7 +57,7 @@ export default function FullScreenPlayer() {
       setMobileMenuTransition(0.2)
       setDeltaYMobileMenu(0)
     }, 300)
-    
+
   }
 
   useEffect(() => {
@@ -82,7 +82,7 @@ export default function FullScreenPlayer() {
     }
   }, [deltaYMobileMenu])
 
-  
+
 
   function returnToInitial() {
     let dropDelta
@@ -153,22 +153,29 @@ export default function FullScreenPlayer() {
       onTouchEnd={returnToInitial}
     >
 
-      <div className="auroraWrapper">
-        <div className="auroraCircle"></div>
-        <div className="auroraCircle"></div>
-        <div className="auroraCircle"></div>
-      </div>
-      
+      {/* <div className="auroraWrapper">
+        <svg height={screenHeight} width={screenWidth}>
+          <defs>
+            <filter id="f1" x="0" y="0">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="215" />
+            </filter>
+          </defs>
+          <circle cx={screenWidth/2} cy="0" r={screenHeight}
+            fill={imgColors[0]} filter="url(#f1)" />
+        </svg>
+      </div> */}
+
       <div className="closeFullScreen" onClick={() => { setOpenFullScreenPlayer(false) }}>
         {window.innerWidth > 1000 ? <HiChevronDown /> : <FiMinus style={{ opacity: .6 }} />}
       </div>
       <div className="FullScreenPlayer" >
-        <div className="leftSide" style={!openMenu ? { width: '100%' } : isMobile?{
-            opacity: 0.6,
-            visibility: 'visible',
-            transform: `translateY(20px)`,
-            borderRadius: `10px`,
-            transition: `.4s`}:null}>
+        <div className="leftSide" style={!openMenu ? { width: '100%' } : isMobile ? {
+          opacity: 0.6,
+          visibility: 'visible',
+          transform: `translateY(20px)`,
+          borderRadius: `10px`,
+          transition: `.4s`
+        } : null}>
           <Player inputRef={inputRef} />
         </div>
         {window.innerWidth > 1000 ?
@@ -207,7 +214,7 @@ export default function FullScreenPlayer() {
             </div>
             <div className="controlIconsWrapper">
               {rightSide.map((el, i) => {
-                if(i <= 3){
+                if (i <= 3) {
                   return (
                     <div className="controlIcon" key={el.id} style={el.id === rightSideCurrentPage && openMenu ? { background: "var(--transparentWhite)" } : el.id === 2 && noLyrics() ? { opacity: .4 } : {}} onClick={(e) => changeRightSidePage(el)}>
                       {el.title}
@@ -216,12 +223,12 @@ export default function FullScreenPlayer() {
                 }
               })}
             </div>
-            <div className="mobilePlayerMenuContent" ref = {mobileContentScroll} style = {!openMenu?{opacity:0}:{}}>
+            <div className="mobilePlayerMenuContent" ref={mobileContentScroll} style={!openMenu ? { opacity: 0 } : {}}>
               {rightSideContent(rightSideCurrentPage)}
             </div>
           </div>
         }
       </div>
-    </div>
+    </div >
   );
 }

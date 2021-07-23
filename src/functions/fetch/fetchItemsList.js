@@ -12,8 +12,10 @@ export const fetchItemsList = (list, collection, setList, resManipulation = (res
 			else setList(prev=>{
 				let temp = []
 				finalResult.forEach(item=>{
-					if(!prev.find(el=>el.uid === item['uid' || 'id'])){
-						temp.push(item)
+					if(item){
+						if(!prev.find(el=>el['id'] === item['id'])){
+							temp.push(item)
+						}
 					}
 				})
 				return [...prev, ...temp]

@@ -149,7 +149,7 @@ export const Header = ({ data, headerColors }) => {
 
 				<div className="headerListenersAndSubs">
 					<div className="headerListenersAndSubsItem">
-						<Hint text={(data.listens ?? data.numberOfListenersPerMonth) + ' listeners per month'} style={{ fontSize: "0.8em" }} />
+						<Hint text={(data.listens ?? data.numberOfListenersPerMonth) + ' listens'} style={{ fontSize: "0.8em" }} />
 						<span>{rightFormanForBigNumber(data.listens ?? data.numberOfListenersPerMonth)}</span>
 						<FiHeadphones />
 					</div>

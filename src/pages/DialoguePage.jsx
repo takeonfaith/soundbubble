@@ -22,12 +22,15 @@ export const DialoguePage = () => {
 	const [chatData, messageList, loading, currentDateOnTop, findTopDate] = useRealTimeMessages(chatId, dateRefsArray)
 	
 	useEffect(() => {
-		if (chatData.participants !== undefined) {
+		if(chatData === undefined){
+			history.push('/not-found')
+		}
+		else if (chatData?.participants !== undefined) {
 			if (!chatData.participants.includes(currentUser.uid)) history.push('/chat')
 		}
 	}, [chatData])
 
-	return (
+	return chatData !== null && chatData !== undefined?(
 		<div className="DialoguePage" style = {{height:'100%'}}>
 			{
 				loading ?
@@ -47,7 +50,7 @@ export const DialoguePage = () => {
 						/>
 					</>
 			}
-			{chatData.wallpaper !== "undefined"?<img loading = "lazy" src={chatData.wallpaper} className = "chatWallpaper" alt=""/>:null}
+			{chatData?.wallpaper !== "undefined"?<img loading = "lazy" src={chatData.wallpaper} className = "chatWallpaper" alt=""/>:null}
 		</div>
-	)
+	):null
 }

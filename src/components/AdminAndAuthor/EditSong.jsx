@@ -48,7 +48,6 @@ export const EditSong = ({ song }) => {
 					const authorData = authorRef.data()
 					const authorSongs = authorData.ownSongs
 					authorSongs.push(song.id)
-					console.log(authorSongs)
 					firestore.collection('users').doc(author.uid).update({
 						ownSongs: authorSongs
 					})
@@ -61,7 +60,6 @@ export const EditSong = ({ song }) => {
 					const authorData = authorRef.data()
 					const authorSongs = authorData.ownSongs
 					const filteredSongs = authorSongs.filter(songId => songId !== song.id)
-					console.log(filteredSongs)
 					firestore.collection('users').doc(author.uid).update({
 						ownSongs: filteredSongs
 					})

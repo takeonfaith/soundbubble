@@ -42,7 +42,6 @@ export const SongList = ({ listOfSongs, source, title = "", showListens = false,
 	function playShuffledList(e){
 		e.stopPropagation()
 		let newList = shuffleSongs(listOfSongs)
-		console.log(newList)
 		setCurrentSongQueue(newList)
 		setCurrentSongPlaylistSource(source)
 		const listSongsIds = newList.map(song => song.id)

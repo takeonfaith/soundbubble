@@ -17,7 +17,6 @@ export const DefaultPlaylists = () => {
 		const orderedSongs = firestore.collection('songs').orderBy('listens', 'desc')
 		const data = await orderedSongs.get()
 		data.docs.forEach((song, index)=>{
-			console.log(song.data())
 			if(index < 10){
 				setTopPlaylistData(prev=>[...prev, song.data().id])
 			}

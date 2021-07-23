@@ -7,7 +7,6 @@ export const Wallpapers = ({chatId, currentWallpaper}) => {
 	const [wallpaperList, setWallpaperList] = useState([])
 	const [loading, setLoading] = useState(true)
 	useFetchFirebaseData(setLoading,'chatWallpapers', undefined, setWallpaperList)
-	console.log(wallpaperList)
 	return !loading?(
 		<div className='Wallpapers'>
 			<h2>Wallpapers</h2>

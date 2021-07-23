@@ -18,7 +18,6 @@ export const Lyrics = () => {
 		if (isThereKaraoke && (openMenu && rightSideCurrentPage === 2) && openFullScreenPlayer) currentParagraphRef.current.scrollIntoView()
 	}, [currentParagraph])
 	function inputKaraoke(e, index) {
-		// console.log("ewqewqewq")
 		let tempArray = karaokeModeratorTimes
 		let convertedToNumber = e.target.value
 		tempArray[index] = convertedToNumber

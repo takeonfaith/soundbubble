@@ -4,7 +4,7 @@
 
 Basically, it's a music web application, that has a chat in it, karaoke mode, ability to share music, playlists and authors, and more
 
-There were 4 main purposes while making this:
+There were 4 main purposes while making this:<br/>
 -To learn new stuff about React, Firebase and the way people usually make something like Spotify
 -To make my own music service, because I like listening to music (and because it's always way cooler to use something you created yourself)
 -To gain experience of coding more or less big applications

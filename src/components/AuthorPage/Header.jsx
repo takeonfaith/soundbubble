@@ -109,8 +109,8 @@ export const Header = ({ data, headerColors }) => {
 								<div className="songItemMenuWindow" style={{ top: '110%', bottom: 'auto' }} onClick={e => e.stopPropagation()} >
 									{
 										(data.authors && data.authors.find(person => person.uid === currentUser.uid)) || (data.authors && currentUser.isAdmin) ? <div className="songItemMenuWindowItem" onClick={() => { toggleModal(); setContent(<CustomizeAlbum playlist={data} />) }}><FiEdit2 />Edit</div> :
-										(data.uid === currentUser.uid && !data.isAuthor) ? <div className="songItemMenuWindowItem" onClick={() => { toggleModal(); setContent(<CustomizeAuthor author={data} />) }}><FiEdit2 />Edit</div> :
-										null
+											(data.uid === currentUser.uid && !data.isAuthor) ? <div className="songItemMenuWindowItem" onClick={() => { toggleModal(); setContent(<CustomizeAuthor author={data} />) }}><FiEdit2 />Edit</div> :
+												null
 									}
 									<div className="songItemMenuWindowItem" onClick={() => { toggleModal(); setContent(<FriendsListToShareWith item={data} whatToShare={data.authors !== undefined ? 'playlist' : 'author'} />) }}>
 										<FiShare />Share
@@ -131,8 +131,8 @@ export const Header = ({ data, headerColors }) => {
 						null
 				}
 			</div>
-			<div className="headerAuthorsImage" style={data.authors === undefined ? { animation: "floatingBorderRadius 10s infinite ease-in-out", backgroundImage: `url(${data.photoURL})`, position:'relative' } : { backgroundImage: `url(${data.image})`, position:'relative', backgroundColor:'var(--red)' }}>
-			{data.authors !== undefined && !data.image?<BiAlbum style = {{position:'absolute', left:'50%', top:'50%', transform:'translate(-50%, -50%)', width:'60px', height:'60px'}}/>:null}
+			<div className="headerAuthorsImage" style={data.authors === undefined ? { animation: "floatingBorderRadius 10s infinite ease-in-out", backgroundImage: `url(${data.photoURL})`, position: 'relative' } : { backgroundImage: `url(${data.image})`, position: 'relative', backgroundColor: 'var(--red)' }}>
+				{data.authors !== undefined && !data.image ? <BiAlbum style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', width: '60px', height: '60px' }} /> : null}
 			</div>
 			<div className="headerAuthorInfo">
 				<div className="headerAuthorsName">

@@ -6,6 +6,8 @@ export const SEARCH_ROUTE = '/search'
 export const CHAT_ROUTE = '/chat'
 export const NOTFOUND_ROUTE = '/not-found'
 export const HISTORY_ROUTE = '/history'
+export const SETTINGS_ROUTE = '/settings'
+export const LYRICS_EDITING_ROUTE = '/lyrics-editing'
 
 export const TEMPLATE_CHAT = '/chat/:chatId'
 export const TEMPLATE_ALBUM = '/albums/:albumId'

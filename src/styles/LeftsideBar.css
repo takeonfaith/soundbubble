@@ -1,497 +1,518 @@
-.LeftsideBar{
-	width: 230px;
-	height: 100%;
-	background: var(--leftSideBarColor);
-	box-sizing: border-box;
-	padding: 10px;
+.LeftsideBar {
+  width: 230px;
+  height: 100%;
+  background: var(--leftSideBarColor);
+  box-sizing: border-box;
+  padding: 10px;
 }
 
-.LeftsideBar>*{
-	margin: 9px 0;
-	text-decoration: none;
+.LeftsideBar > * {
+  margin: 9px 0;
+  text-decoration: none;
 }
 
-.leftSideBarContainer{
-	width: 100%;
-	border-radius: var(--standartBorderRadius);
-	background: var(--navItemColor);
-	color:#fff;
-	font-weight: bold;
-	min-height: 40px;
-	padding: .4px 5px;
-	box-sizing: border-box;
-	/* overflow-y: auto;
+.leftSideBarContainer {
+  width: 100%;
+  border-radius: var(--standartBorderRadius);
+  background: var(--navItemColor);
+  color: #fff;
+  font-weight: bold;
+  min-height: 40px;
+  padding: 0.4px 5px;
+  box-sizing: border-box;
+  /* overflow-y: auto;
 	overflow-x: visible; */
-	scroll-snap-type: y mandatory;
-	transition: .2s height;
-	position: relative;
+  scroll-snap-type: y mandatory;
+  transition: 0.2s height;
+  position: relative;
 }
 
-.leftSideBarContainer.friendsAndPlaylists:hover .upAndDownBtns{
-	opacity: 1;
-	visibility: visible;
+.leftSideBarContainer.friendsAndPlaylists:hover .upAndDownBtns {
+  opacity: 1;
+  visibility: visible;
 }
 
-.upAndDownBtns{
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	right: -20px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	z-index: 20;
-	border-radius: 8px;
-	overflow: hidden;
-	background: var(--reallyLightGrey);
-	padding: 3px;
-	opacity: 0;
-	visibility: hidden;
-	transition: .2s;
+.upAndDownBtns {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--reallyLightGrey);
+  padding: 3px;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.2s;
 }
 
-.leftSideBarContainer .createPlaylistBtn{
-	width: 100%;
-	padding: 7px 0;
-	border-radius: var(--standartBorderRadius2);
-	background: var(--reallyLightGrey);
-	font-size: .8em;
+.leftSideBarContainer .createPlaylistBtn {
+  width: 100%;
+  padding: 7px 0;
+  border-radius: var(--standartBorderRadius2);
+  background: var(--reallyLightGrey);
+  font-size: 0.8em;
 }
 
-.TinyPlaylist{
-	box-sizing: border-box;
-	padding: 5px;
-	border-radius: var(--standartBorderRadius2);
-	margin: 5px 0;
-	display: flex;
-	align-items: center;
-	cursor: pointer;
-	position: relative;
-	user-select: none;
+.TinyPlaylist {
+  box-sizing: border-box;
+  padding: 5px;
+  border-radius: var(--standartBorderRadius2);
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  user-select: none;
 }
 
-.TinyPlaylistBtns{
-	position: absolute;
-	display: flex;
-	height: 100%;
-	align-items: center;
-	justify-content: space-around;
-	z-index: 10;
-	opacity: 0;
-	right: 10px;
-	width: calc(100% - 50px);
-	border-radius: var(--standartBorderRadius2);
+.TinyPlaylistBtns {
+  position: absolute;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 10;
+  opacity: 0;
+  right: 10px;
+  width: calc(100% - 50px);
+  border-radius: var(--standartBorderRadius2);
 }
 
-.TinyPlaylistBtns button{
-	background: rgba(216, 216, 216, 0);
-	height: 30px;
-	width: 40px;
-	display: flex;
-	align-items: center;	
-	justify-content: center;
-	color:rgb(255, 255, 255);
-	border-radius: var(--standartBorderRadius2);
-	z-index: 10;
-	position: relative;
+.TinyPlaylistBtns button {
+  background: rgba(216, 216, 216, 0);
+  height: 30px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(255, 255, 255);
+  border-radius: var(--standartBorderRadius2);
+  z-index: 10;
+  position: relative;
 }
 
-.TinyPlaylistBtns button:hover{
-	background: var(--transparentWhite);
+.TinyPlaylistBtns button:hover {
+  background: var(--transparentWhite);
 }
 
-.TinyPlaylist:hover{
-	background: rgb(85, 85, 85);
+.TinyPlaylist:hover {
+  background: rgb(85, 85, 85);
 }
 
-.TinyPlaylist:hover .TinyPlaylistBtns{
-	opacity: 1;
-	background: rgb(85, 85, 85);
+.TinyPlaylist:hover .TinyPlaylistBtns {
+  opacity: 1;
+  background: rgb(85, 85, 85);
 }
 
-.TinyPlaylistImg{
-	width: 35px;
-	height: 35px;
-	border-radius: var(--standartBorderRadius3);
-	overflow: hidden;
-	margin-right: 8px;
+.TinyPlaylistImg {
+  width: 35px;
+  height: 35px;
+  border-radius: var(--standartBorderRadius3);
+  overflow: hidden;
+  margin-right: 8px;
 }
 
-.TinyPlaylistImg img{
-	width: 100%;
+.TinyPlaylistImg img {
+  width: 100%;
 }
 
 @keyframes scrollFromTop {
-	0%{
-		opacity: 0;
-		transform: translateY(-20px);
-	}
-	100%{
-		opacity: 1;
-		transform: translateY(0px);
-	}
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
 }
 @keyframes scrollFromBottom {
-	0%{
-		opacity: 0;
-		transform: translateY(20px);
-	}
-	100%{
-		opacity: 1;
-		transform: translateY(0px);
-	}
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
 }
 
-.upAndDownBtns button{
-	background: transparent;
-	color:#fff;
-	padding: 5px;
-	border-radius: 6px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+.upAndDownBtns button {
+  background: transparent;
+  color: #fff;
+  padding: 5px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.upAndDownBtns button:hover{
-	background: var(--transparentWhite);
+.upAndDownBtns button:hover {
+  background: var(--transparentWhite);
 }
 
 .leftSideBarContainer::-webkit-scrollbar {
-	width: 0px;
-	height: 0px;
+  width: 0px;
+  height: 0px;
 }
 
-.person{
-	box-sizing: border-box;
-	padding: 5px 10px;
-	border-radius: var(--standartBorderRadius2);
-	margin: 5px 0;
-	display: flex;
-	align-items: center;
-	cursor: pointer;
-	position: relative;
-	user-select: none;
+.person {
+  box-sizing: border-box;
+  padding: 5px 10px;
+  border-radius: var(--standartBorderRadius2);
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  user-select: none;
 }
 
-.sendSongImage{
-	width: 24px;
-	height: 24px;
-	position: absolute;
-	border-radius: 5px;
-	right: 20px;
-	top: 10px;
-	opacity: 0;
-	pointer-events: none;
-	z-index: 1000;
+.person .is-online {
+  margin-left: 10px;
+  /* opacity: 0.6; */
+  font-size: 0.8em;
+  background: var(--blue);
+  padding: 1px 5px;
+  border-radius: var(--standartBorderRadius);
 }
 
-.sendSongImage.sendAnimation{
-	animation: sendSong .6s linear backwards;
+.person .is-not-online {
+  margin-left: 10px;
+  opacity: 0.6;
+  font-size: 0.8em;
+  padding: 1px 3px;
+}
+
+.person {
+}
+
+.sendSongImage {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  border-radius: 5px;
+  right: 20px;
+  top: 10px;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.sendSongImage.sendAnimation {
+  animation: sendSong 0.6s linear backwards;
 }
 
 @keyframes sendSong {
-	0%{
-		right: 20px;
-		top: 10px;
-		opacity: 0;
-	}
-	25%{
-		right: 55px;
-		top: -5px;
-		opacity: 1;
-	}
-	50%{
-		right: 80px;
-		top: -10px;
-		opacity: 1;
-	}
-	75%{
-		right: 110px;
-		top: -5px;
-		opacity: 1;
-	}
-	100%{
-		right: 150px;
-		top: 10px;
-		opacity: 0;
-	}
+  0% {
+    right: 20px;
+    top: 10px;
+    opacity: 0;
+  }
+  25% {
+    right: 55px;
+    top: -5px;
+    opacity: 1;
+  }
+  50% {
+    right: 80px;
+    top: -10px;
+    opacity: 1;
+  }
+  75% {
+    right: 110px;
+    top: -5px;
+    opacity: 1;
+  }
+  100% {
+    right: 150px;
+    top: 10px;
+    opacity: 0;
+  }
 }
 
-.person .onlineCircle{
-	bottom: 1px;
-	left: 30px;
-	border:solid 3px var(--navItemColor);
+.person .onlineCircle {
+  bottom: 1px;
+  left: 30px;
+  border: solid 3px var(--navItemColor);
 }
 
-.FriendsListToShareWith .person svg{
-	width: 25px;
-	height: 25px;
+.FriendsListToShareWith .person svg {
+  width: 25px;
+  height: 25px;
 }
 
 .leftSideBarContainer a {
-	text-decoration: none;
+  text-decoration: none;
 }
 
-.person:hover{
-	background: var(--reallyTransparentWhite);
+.person:hover {
+  background: var(--reallyTransparentWhite);
 }
 
-.person:hover .personBtns{
-	opacity: 1;
-	background: rgb(92, 92, 92);
+.person:hover .personBtns {
+  opacity: 1;
+  background: rgb(92, 92, 92);
 }
 
-.personBtns{
-	position: absolute;
-	display: flex;
-	height: 100%;
-	align-items: center;
-	justify-content: space-around;
-	z-index: 10;
-	opacity: 0;
-	right: 10px;
-	width: calc(100% - 60px);
-	border-radius: var(--standartBorderRadius2);
+.personBtns {
+  position: absolute;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 10;
+  opacity: 0;
+  right: 10px;
+  width: calc(100% - 60px);
+  border-radius: var(--standartBorderRadius2);
 }
 
-.personBtns button{
-	background: rgba(216, 216, 216, 0);
-	height: 30px;
-	width: 40px;
-	display: flex;
-	align-items: center;	
-	justify-content: center;
-	color:rgb(255, 255, 255);
-	border-radius: var(--standartBorderRadius2);
-	z-index: 10;
-	position: relative;
+.personBtns button {
+  background: rgba(216, 216, 216, 0);
+  height: 30px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(255, 255, 255);
+  border-radius: var(--standartBorderRadius2);
+  z-index: 10;
+  position: relative;
 }
 
-
-.personBtns button:hover{
-	background: var(--transparentWhite);
+.personBtns button:hover {
+  background: var(--transparentWhite);
 }
 
-.LeftsideBar .logo{
-	display: flex;
-	align-items: center;
-	justify-content: space-evenly;
-	color:#fff;
+.LeftsideBar .logo {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  color: #fff;
 }
 
-.LeftsideBar .logo img{
-	width: 35px;
-	height: 35px;
+.LeftsideBar .logo img {
+  width: 35px;
+  height: 35px;
 }
 
-.pesronImg{
-	width: 35px;
-	height: 35px;
-	overflow: hidden;
-	border-radius: 30px;
-	margin-right: 7px;
-	display: inline-block;
-	background-position: center center;
-	background-size: cover;
+.pesronImg {
+  width: 35px;
+  height: 35px;
+  overflow: hidden;
+  border-radius: 30px;
+  margin-right: 7px;
+  display: inline-block;
+  background-position: center center;
+  background-size: cover;
 }
 
-.pesronImg img{
-	width: 100%;
+.pesronImg img {
+  width: 100%;
 }
 
-.NavigationPanel{
-	border-radius: var(--standartBorderRadius);
-	background: var(--navItemColor);
-	box-sizing: border-box;
-	padding: 5px 5px;
+.NavigationPanel {
+  border-radius: var(--standartBorderRadius);
+  background: var(--navItemColor);
+  box-sizing: border-box;
+  padding: 5px 5px;
 }
 
-.NavigationPanel a{
-	text-decoration: none;
-	color:rgb(255, 255, 255);
-	
+.NavigationPanel a {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
 }
 
-.NavigationItem{
-	margin: 0px;
-	height: 40px;
-	display: flex;
-	padding: 0px 10px;
-	border-radius: var(--standartBorderRadius2);
-	align-items: center;
+.NavigationItem {
+  margin: 0px;
+  height: 40px;
+  display: flex;
+  padding: 0px 10px;
+  border-radius: var(--standartBorderRadius2);
+  align-items: center;
 }
 
-.NavigationItem.active{
-	background: var(--blue);
+.NavigationItem.active {
+  background: var(--blue);
 }
 
-.NavigationItem h3{
-	margin: 0;
+.NavigationItem h3 {
+  margin: 0;
 }
 
-.NavigationItem .icon{
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin-right: 8px;
+.NavigationItem .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
 }
 
-.NavigationItem svg{
-	width: 22px;
-	height: 22px;
+.NavigationItem svg {
+  width: 22px;
+  height: 22px;
 }
 
-.seeMoreBtn{
-	cursor: pointer;
-	text-align:center;
-	margin:5px 0; 
-	padding: 5px 10px;
-	color:var(--lightBlue);
+.seeMoreBtn {
+  cursor: pointer;
+  text-align: center;
+  margin: 5px 0;
+  padding: 5px 10px;
+  color: var(--lightBlue);
 }
 
-.seeMoreBtn:hover{
-	background: var(--transparentWhite);
-	border-radius: 10px;
-	color:var(--reallyLightBlue);
+.seeMoreBtn:hover {
+  background: var(--transparentWhite);
+  border-radius: 10px;
+  color: var(--reallyLightBlue);
 }
-
-
 
 /* Left side bar little player */
 
-.littlePlayer{
-	padding: 8px 10px;
-	margin: 5px 0;
-	border-radius: var(--standartBorderRadius2);
-	position: relative;
+.littlePlayer {
+  padding: 8px 10px;
+  margin: 5px 0;
+  border-radius: var(--standartBorderRadius2);
+  position: relative;
 }
 
-.littlePlayer:hover{
-	background: var(--leftSideBarColor);
+.littlePlayer:hover {
+  background: var(--leftSideBarColor);
 }
 
-.imgTitleAndAuthor{
-	display: flex;
-	align-items: center;
-	margin-top: 5px;
+.imgTitleAndAuthor {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
 }
 
-.littlePlayer .player .playerUpperSide{
-	flex-direction: row;
-	align-items: flex-start;
-	justify-content: start;
-	width: 100%;
+.littlePlayer .player .playerUpperSide {
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: start;
+  width: 100%;
 }
 
-.littlePlayer .player h2{
-	font-size: .9em;
-	color: var(--themeColor);
-	margin: 0;
+.littlePlayer .player h2 {
+  font-size: 0.9em;
+  color: var(--themeColor);
+  margin: 0;
 }
 
-.littlePlayer .nameAndAuthors{
-	text-align: left;
-	min-width: calc(100% - 40px);
+.littlePlayer .nameAndAuthors {
+  text-align: left;
+  min-width: calc(100% - 40px);
 }
-.littlePlayer .player h3{
-	font-size: 0.7em;
-	font-weight: 600;
-	color: var(--themeColor2);
-	white-space: nowrap;
-	margin: 0;
-}
-
-.littlePlayer .player h3 a{
-	color:#fff;
-	color: var(--themeColor2);
+.littlePlayer .player h3 {
+  font-size: 0.7em;
+  font-weight: 600;
+  color: var(--themeColor2);
+  white-space: nowrap;
+  margin: 0;
 }
 
-.littlePlayer .songCover{
-	min-width: 32px;
-	height: 32px;
-	overflow: hidden;
-	border-radius: var(--standartBorderRadius3);
-	margin-right: 7px;
+.littlePlayer .player h3 a {
+  color: #fff;
+  color: var(--themeColor2);
 }
 
-.littlePlayer .songCover img{
-	width: 100%;
+.littlePlayer .songCover {
+  min-width: 32px;
+  height: 32px;
+  overflow: hidden;
+  border-radius: var(--standartBorderRadius3);
+  margin-right: 7px;
 }
 
-.littlePlayer .controlPanel input[type=range] {
-	height: 4px;
-	background: linear-gradient(to right, var(--themeColor2) var(--inputRange), #fff var(--inputRange));
-	margin-bottom: 5px;
-	padding: 0;
+.littlePlayer .songCover img {
+  width: 100%;
 }
 
-.littlePlayer .controlPanel input[type=range]::-webkit-slider-thumb {
-	height: 10px;
-	width: 10px;
+.littlePlayer .controlPanel input[type="range"] {
+  height: 4px;
+  background: linear-gradient(
+    to right,
+    var(--themeColor2) var(--inputRange),
+    #fff var(--inputRange)
+  );
+  margin-bottom: 5px;
+  padding: 0;
 }
 
-.littlePlayer .controlPanel .startAndEndTime{
-	font-size:.7em;
-	flex-basis: 500;
-	margin-bottom: 0;
+.littlePlayer .controlPanel input[type="range"]::-webkit-slider-thumb {
+  height: 10px;
+  width: 10px;
 }
 
-.littlePlayer .controlPanel .btns{
-	margin: 5px 0;
+.littlePlayer .controlPanel .startAndEndTime {
+  font-size: 0.7em;
+  flex-basis: 500;
+  margin-bottom: 0;
 }
 
-.littlePlayer .controlPanel .btns button{
-	height: 40px;
+.littlePlayer .controlPanel .btns {
+  margin: 5px 0;
 }
 
-.littlePlayer .controlPanel .btns button svg{
-	width: 23px;
-	height: 23px;
+.littlePlayer .controlPanel .btns button {
+  height: 40px;
 }
 
-.littlePlayer .controlPanel .btns .repeatBtn, .littlePlayer .controlPanel .btns .shuffleBtn{
-	width: 30px;
-	height: 30px;
+.littlePlayer .controlPanel .btns button svg {
+  width: 23px;
+  height: 23px;
 }
 
-.littlePlayer .controlPanel .btns .repeatBtn svg, .littlePlayer .controlPanel .btns .shuffleBtn svg{
-	width: 25px;
-	height: 25px;
+.littlePlayer .controlPanel .btns .repeatBtn,
+.littlePlayer .controlPanel .btns .shuffleBtn {
+  width: 30px;
+  height: 30px;
 }
 
-.littlePlayer .controlPanel .btns .repeatBtn span{
-	width: 5px;
-	height: 5px;
-	left: 8px;
-	top: 9px;
+.littlePlayer .controlPanel .btns .repeatBtn svg,
+.littlePlayer .controlPanel .btns .shuffleBtn svg {
+  width: 25px;
+  height: 25px;
 }
 
-.littlePlayer .ColorCircles span{
-	width: 45px;
-	height: 45px;
+.littlePlayer .controlPanel .btns .repeatBtn span {
+  width: 5px;
+  height: 5px;
+  left: 8px;
+  top: 9px;
 }
 
-.littlePlayer:hover .fullScreenBtn{
-	opacity: 1;
-	background: var(--leftSideBarColor);
+.littlePlayer .ColorCircles span {
+  width: 45px;
+  height: 45px;
 }
 
-.fullScreenBtn{
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	transition: .1s opacity;
-	opacity: 0;
-	background: var(--navItemColor);
-	cursor: pointer;
+.littlePlayer:hover .fullScreenBtn {
+  opacity: 1;
+  background: var(--leftSideBarColor);
 }
 
-.fullScreenBtn svg{
-	width: 30px;
-	height: 30px;
+.fullScreenBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  transition: 0.1s opacity;
+  opacity: 0;
+  background: var(--navItemColor);
+  cursor: pointer;
 }
 
-.fullScreenBtn:hover{
-	color: var(--themeColor2);
+.fullScreenBtn svg {
+  width: 30px;
+  height: 30px;
+}
+
+.fullScreenBtn:hover {
+  color: var(--themeColor2);
 }

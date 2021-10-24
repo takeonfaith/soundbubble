@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useSong } from '../contexts/SongContext'
 import { firestore } from '../firebase'
@@ -10,12 +9,12 @@ export const useAddOrDeleteSong = (playlistId, songId) => {
 	const { currentUser } = useAuth()
 	const { currentSong } = useSong()
 	const songData = songId || currentSong
-		useEffect(() => {
-			const response = firestore.collection('playlists').doc(playlistId).onSnapshot(res => {
-				if(res.exists) setPlaylistSongs(res.data().songs)
-			})
-			return () => response()
-		}, [firestore])
+	useEffect(() => {
+		const response = firestore.collection('playlists').doc(playlistId).onSnapshot(res => {
+			if (res.exists) setPlaylistSongs(res.data().songs)
+		})
+		return () => response()
+	}, [firestore])
 
 	useEffect(() => {
 		setIsAdded(playlistSongs.includes(songData))

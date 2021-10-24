@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 
 export const useConditionFunc = (currentUser, fetchFunc, changeCondition, dep) => {
 	useEffect(() => {
-		if(currentUser.uid){
+		if (currentUser.uid) {
 			if (changeCondition) {
 				fetchFunc()
 			}

@@ -1,10 +1,11 @@
 import { firestore } from "../../firebase";
-import { createChat } from "../create/createChat";
-import { findChatURL } from "../find/findChatURL";
-import getUID from "./getUID";
+import { createChat } from "../../shared/lib/create-сhat";
+import { findChatURL } from "../../shared/lib/find-chat-url";
 import { sendMessage } from "./sendMessage";
 
-export default function shareWithFriends(shareList, currentUser, itemId, whatToShare, messageText = "", setShouldCreate = () => null, setFriendChatId = () => null) {
+export default function shareWithFriends({ shareList, currentUser, itemId, whatToShare, messageText = "", setShouldCreate = () => null, setFriendChatId = () => null, setLoading = () => null, setCompleted = () => null }) {
+	setLoading(true)
+	setCompleted(false)
 	//Сделать через функцию sendMessage
 	shareList.map(async userId => {
 		//Сортировка по последнему отправлению
@@ -12,7 +13,7 @@ export default function shareWithFriends(shareList, currentUser, itemId, whatToS
 		firestore.collection('users').doc(currentUser.uid).update({
 			friends: sortedFriends
 		})
-		Promise.resolve(findChatURL([userId], currentUser, ()=>null, setFriendChatId)).then(async chatId => {
+		Promise.resolve(findChatURL([userId], currentUser, () => null, setFriendChatId)).then(async chatId => {
 			let chatData = (await firestore.collection('chats').doc(chatId).get()).data()
 			if (chatData !== undefined) {
 				switch (whatToShare) {
@@ -50,6 +51,9 @@ export default function shareWithFriends(shareList, currentUser, itemId, whatToS
 					}
 				})
 			}
+		}).then(() => {
+			setLoading(false)
+			setCompleted(true)
 		})
 	})
 

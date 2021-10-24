@@ -4,12 +4,12 @@ import { firestore } from '../firebase'
 
 export const useUpdateListenCount = () => {
 	let listenCountTimeOut = useRef()
-	const {currentSongData, currentSongPlaylistSource, songDuration, play} = useSong()
+	const { currentSongData, currentSongPlaylistSource, songDuration, play } = useSong()
 	function updateListenCount() {
-		if(currentSongData.id !== -1){
-			listenCountTimeOut.current = setTimeout(() => {
-				let listens = currentSongData.listens
-				listens++
+		if (currentSongData.id !== -1) {
+			listenCountTimeOut.current = setTimeout(async () => {
+				let listens = (await firestore.collection('songs').doc(currentSongData.id).get()).data().listens
+				++listens
 				firestore.collection('songs').doc(currentSongData.id).update({
 					listens: listens
 				})
@@ -27,7 +27,7 @@ export const useUpdateListenCount = () => {
 				}
 
 				//update authors' listens
-				currentSongData.authors.forEach(async author=>{
+				currentSongData.authors.forEach(async author => {
 					let authorNumberOfListenersPerMonth = (await firestore.collection('users').doc(author.uid).get()).data().numberOfListenersPerMonth
 					++authorNumberOfListenersPerMonth
 					firestore.collection('users').doc(author.uid).update({

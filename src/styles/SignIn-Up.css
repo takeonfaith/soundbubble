@@ -1,387 +1,357 @@
 .In-Up-Container {
-	background: rgb(51, 51, 51);
-	width: 100%;
-	height: 100vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	overflow: hidden;
+  background: rgb(51, 51, 51);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .CentralPlate {
-	margin-top: 20px;
-	border-radius: 20px;
-	max-width: 500px;
-	width: 400px;
-	min-height: 45%;
-	background: rgb(66, 66, 66);
-	padding: 3%;
-	position: relative;
-	display: flex;
-	align-items: flex-start;
-	justify-content: flex-start;
-	flex-direction: column;
-	z-index: 1;
-	overflow: hidden;
+  margin-top: 20px;
+  border-radius: 20px;
+  max-width: 500px;
+  width: 400px;
+  min-height: 45%;
+  background: rgb(66, 66, 66);
+  padding: 3%;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  z-index: 1;
+  overflow: hidden;
 }
 
 .titleAndLogo {
-	width: 100%;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.In-Up-Container form a{
-	width: calc(50% - 5px);
-
+.In-Up-Container form a {
+  width: calc(50% - 5px);
 }
 
 .logo {
-	z-index: 1;
+  z-index: 1;
 }
 
 .logo img {
-	width: 70px;
+  width: 70px;
 }
 
 .CentralPlate h1 {
-	color: rgb(221, 221, 221);
+  color: rgb(221, 221, 221);
 }
 
-.BlurredBg{
-	position: absolute;
-	overflow: hidden;
-	width: 100%;
-	height: 100%;
-	background: transparent;
+.BlurredBg {
+  position: absolute;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  background: transparent;
 }
 
 .BlurredBg .circle {
-	width: 5em;
-	padding: 30%;
-	height: 5em;
-	position: absolute;
-	border-radius: 50%;
-	background: rgba(68, 68, 68, 0.295);
-	filter: blur(10px);
+  width: 5em;
+  padding: 30%;
+  height: 5em;
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(68, 68, 68, 0.295);
+  filter: blur(10px);
 }
 
 @keyframes bgCircle {
-	0% {
-		transform: translate(0, 0);
-	}
+  0% {
+    transform: translate(0, 0);
+  }
 
-	10% {
-		transform: translate(10%, 5%);
-	}
+  10% {
+    transform: translate(10%, 5%);
+  }
 
-	20% {
-		transform: translate(10%, 10%);
-	}
+  20% {
+    transform: translate(10%, 10%);
+  }
 
-	30% {
-		transform: translate(10%, 15%);
-	}
+  30% {
+    transform: translate(10%, 15%);
+  }
 
-	40% {
-		transform: translate(15%, 15%);
-	}
+  40% {
+    transform: translate(15%, 15%);
+  }
 
-	50% {
-		transform: translate(10%, 20%);
-	}
+  50% {
+    transform: translate(10%, 20%);
+  }
 
-	60% {
-		transform: translate(5%, 15%);
-	}
+  60% {
+    transform: translate(5%, 15%);
+  }
 
-	70% {
-		transform: translate(0%, 5%);
-	}
+  70% {
+    transform: translate(0%, 5%);
+  }
 
-	80% {
-		transform: translate(3%, 15%);
-	}
+  80% {
+    transform: translate(3%, 15%);
+  }
 
-	90% {
-		transform: translate(0%, 5%);
-	}
+  90% {
+    transform: translate(0%, 5%);
+  }
 
-	100% {
-		transform: translate(0, 0);
-	}
+  100% {
+    transform: translate(0, 0);
+  }
 }
 
 @keyframes bgCircle2 {
-	0% {
-		transform: translate(0, 0);
-	}
+  0% {
+    transform: translate(0, 0);
+  }
 
-	10% {
-		transform: translate(-10%, 5%);
-	}
+  10% {
+    transform: translate(-10%, 5%);
+  }
 
-	20% {
-		transform: translate(-5%, 10%);
-	}
+  20% {
+    transform: translate(-5%, 10%);
+  }
 
-	30% {
-		transform: translate(0%, 15%);
-	}
+  30% {
+    transform: translate(0%, 15%);
+  }
 
-	40% {
-		transform: translate(5%, 15%);
-	}
+  40% {
+    transform: translate(5%, 15%);
+  }
 
-	50% {
-		transform: translate(10%, 20%);
-	}
+  50% {
+    transform: translate(10%, 20%);
+  }
 
-	60% {
-		transform: translate(15%, 15%);
-	}
+  60% {
+    transform: translate(15%, 15%);
+  }
 
-	70% {
-		transform: translate(10%, 5%);
-	}
+  70% {
+    transform: translate(10%, 5%);
+  }
 
-	80% {
-		transform: translate(5%, 15%);
-	}
+  80% {
+    transform: translate(5%, 15%);
+  }
 
-	90% {
-		transform: translate(0%, 5%);
-	}
+  90% {
+    transform: translate(0%, 5%);
+  }
 
-	100% {
-		transform: translate(0, 0);
-	}
+  100% {
+    transform: translate(0, 0);
+  }
 }
 
 .BlurredBg .circle.circle1 {
-	left: -40%;
-	top: -40%;
-	animation: bgCircle 100s infinite;
+  left: -40%;
+  top: -40%;
+  animation: bgCircle 100s infinite;
 }
 
 .BlurredBg .circle.circle2 {
-	width: 330px;
-	height: 330px;
-	padding: 0;
-	right: 30%;
-	z-index: 0;
-	top: 0;
-	animation-delay: 1s;
-	animation: bgCircle2 70s infinite;
+  width: 330px;
+  height: 330px;
+  padding: 0;
+  right: 30%;
+  z-index: 0;
+  top: 0;
+  animation-delay: 1s;
+  animation: bgCircle2 70s infinite;
 }
 
 .BlurredBg .circle.circle3 {
-	width: 150px;
-	height: 150px;
-	padding: 5%;
-	bottom: 0;
-	left: 30%;
-	animation-delay: 10s;
-	animation: bgCircle 40s infinite;
+  width: 150px;
+  height: 150px;
+  padding: 5%;
+  bottom: 0;
+  left: 30%;
+  animation-delay: 10s;
+  animation: bgCircle 40s infinite;
 }
 
 .BlurredBg .circle.circle4 {
-	width: 50px;
-	height: 50px;
-	padding: 10%;
-	bottom: 0%;
-	right: 0;
-	animation-delay: 6.5s;
-	animation: bgCircle2 50s infinite;
+  width: 50px;
+  height: 50px;
+  padding: 10%;
+  bottom: 0%;
+  right: 0;
+  animation-delay: 6.5s;
+  animation: bgCircle2 50s infinite;
 }
 
 .BlurredBg .circle.circle5 {
-	width: 20px;
-	height: 20px;
-	padding: 5%;
-	bottom: 40%;
-	right: 15%;
-	animation-delay: 6.5s;
+  width: 20px;
+  height: 20px;
+  padding: 5%;
+  bottom: 40%;
+  right: 15%;
+  animation-delay: 6.5s;
 }
 
-.In-Up-Container form {
-	height: 100%;
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
-	width: 100%;
+.In-Up-Container .inner-plate-content {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
 }
 
-form input {
-	width: 100%;
-	outline: none;
-	border: none;
-	border-radius: 10px;
-	height: 40px;
-	background: rgb(77, 77, 77);
-	color: #fff;
-	padding-left: 10px;
-	margin-bottom: 15px;
-	box-sizing: border-box;
+.inner-plate-content input {
+  width: 100%;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  height: 40px;
+  background: rgb(77, 77, 77);
+  color: #fff;
+  padding-left: 10px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
 }
 
 form input::placeholder {
-	color: rgb(155, 155, 155);
-	display: block;
-	margin-left: 10px;
+  color: rgb(155, 155, 155);
+  display: block;
+  margin-left: 10px;
 }
 
-.In-Up-Container button{
-	float: left;
-	width: calc(50% - 5px);
-	height: 40px;
-	font-weight: 700;
-	font-size: .8em;
-	cursor: pointer;
-	transition: .1s;
-	border-radius: 15px;
-	margin-bottom: 10px;
-	color:#fff;
+.In-Up-Container button {
+  float: left;
+  min-width: calc(50% - 5px);
+  width: 100%;
+  height: 40px;
+  font-weight: 700;
+  font-size: 0.8em;
+  cursor: pointer;
+  transition: 0.1s;
+  border-radius: 15px;
+  margin-bottom: 10px;
+  color: #fff;
 }
 
-.In-Up-Container .inAndUpBtns a{
-	width: calc(50% - 5px);
-}
-
-.In-Up-Container .inAndUpBtns a .inBtn{
-	width:100%;
+.In-Up-Container .inAndUpBtns a {
+  min-width: calc(50% - 5px);
 }
 
 .upBtn {
-	background: var(--blue);
+  background: var(--blue);
 }
 
 .inBtn {
-	background-image: var(--pinkAndPurpleGrad);
+  background-image: var(--pinkAndPurpleGrad);
 }
 
-.In-Up-Container button:hover, .downloadPhoto:hover {
-	opacity: 0.8;
-	transform: scale(.99);
+.In-Up-Container button:hover,
+.downloadPhoto:hover {
+  opacity: 0.8;
+  transform: scale(0.99);
 }
 
 .In-Up-Container .inAndUpBtns {
-	width: 100%;
-	display: flex;
-	justify-content: space-between;
-	font-size: 1em;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1em;
+  column-gap: 10px;
 }
 
-.downloadFile input[type = "file"]{
-	display: none;
+.downloadBtnText {
+  z-index: 1;
+  display: flex;
+  align-items: center;
 }
 
-.downloadPhoto{
-	width: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background: var(--purple);
-	padding: 10px 0;
-	box-sizing: border-box;
-	margin-bottom:15px;
-	border-radius: var(--standartBorderRadius);
-	color:#fff;
-	font-weight: bold;
-	cursor: pointer;
-	position: relative;
-	overflow: hidden;
+.photoLoadLine {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--green);
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 0;
+  transition: 0.2s;
 }
 
-.downloadPhoto svg{
-	margin-right: 5px;
+.RadioBtn {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  cursor: pointer;
 }
 
-.downloadBtnText{
-	z-index: 1;
-	display: flex;
-	align-items: center;
+.RadioBtn .radioCircle {
+  width: 18px;
+  height: 18px;
+  display: block;
+  border-radius: 100px;
+  border: 4px solid var(--lightBlue);
+
+  transition: 0.1s;
+  margin-left: 5px;
 }
 
-.photoLoadLine{
-	display: block;
-	height: 100%;
-	width: 0;
-	background: var(--green);
-	position: absolute;
-	left: 0;
-	top: 0;
-	z-index: 0;
-	transition: .2s;
+.RadioBtn .radioLabel {
+  opacity: 0.7;
+  color: #fff;
 }
 
-.RadioBtn{
-	display: flex;
-	align-items: center;
-	margin-right: 10px;
-	cursor: pointer;
+.Alert {
+  width: 100%;
+  padding: 20px;
+  margin: 10px 0;
+  background: var(--red);
+  color: #fff;
+  box-sizing: border-box;
+  border-radius: var(--standartBorderRadius);
 }
-
-.RadioBtn .radioCircle{
-	width: 18px;
-	height: 18px;
-	display: block;
-	border-radius: 100px;
-	border:4px solid var(--lightBlue);
-
-	transition: .1s;
-	margin-left: 5px;
-}
-
-.RadioBtn .radioLabel{
-	opacity: .7;
-	color:#fff;
-}
-
-.Alert{
-	width: 100%;
-	padding: 20px;
-	margin: 10px 0;
-	background: var(--red);
-	color:#fff;
-	box-sizing: border-box;
-	border-radius: var(--standartBorderRadius);
-}
-
-
 
 @media screen and (max-width: 767px) {
-	.CentralPlate {
-		width: 90%;
-		height: 100%;
-		bottom: 0;
-		border-radius: 30px 30px 0px 0px;
-		padding: 20px;
-		background: transparent;
-	}
+  .CentralPlate {
+    width: 90%;
+    height: 100%;
+    bottom: 0;
+    border-radius: 30px 30px 0px 0px;
+    padding: 20px;
+    background: transparent;
+  }
 
-	.In-Up-Container button {
-		font-size: 0.7em;
-	}
-
+  .In-Up-Container button {
+    font-size: 0.7em;
+  }
 }
 
 @media screen and (max-width: 470px) {
-	.inAndUpBtns {
-		width: 100%;
-		display: flex;
-		flex-direction: column;
-		font-size: 1em;
-	}
+  .inAndUpBtns {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    font-size: 1em;
+  }
 
-	.In-Up-Container button {
-		width: 100%;
-		font-size: .8em;
-	}
+  .In-Up-Container button {
+    width: 100%;
+    font-size: 0.8em;
+  }
 
-	.In-Up-Container .inAndUpBtns a{
-		width: 100%;
-	}
+  .In-Up-Container .inAndUpBtns a {
+    width: 100%;
+  }
 }

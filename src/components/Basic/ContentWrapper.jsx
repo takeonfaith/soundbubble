@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useScreen } from "../../contexts/ScreenContext";
 import { useSong } from "../../contexts/SongContext";
+import FullScreenPlayer from "../../features/full-screen-player/ui/full-screen-player";
+
 import { LeftsideBar } from "../../features/leftside-bar/ui/organisms/leftside-bar";
 import { firestore } from "../../firebase";
 import { useMediaMetadata } from "../../hooks/useMediaMetadata";
@@ -14,7 +16,6 @@ import ChatNotificationWindow from "../Windows/chat-notification-window";
 import { ConfirmWindow } from "../Windows/ConfirmWindow";
 import { MessageWindow } from "../Windows/MessageWindow";
 import { ModalWindow } from "../Windows/ModalWindow";
-import FullScreenPlayer from "./FullScreenPlayer";
 
 export const ContentWrapper = () => {
   const {

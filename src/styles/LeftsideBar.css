@@ -20,8 +20,6 @@
   min-height: 40px;
   padding: 0.4px 5px;
   box-sizing: border-box;
-  /* overflow-y: auto;
-	overflow-x: visible; */
   scroll-snap-type: y mandatory;
   transition: 0.2s height;
   position: relative;
@@ -337,10 +335,15 @@
   padding: 0px 10px;
   border-radius: var(--standartBorderRadius2);
   align-items: center;
+  position: relative;
 }
 
 .NavigationItem.active {
   background: var(--blue);
+}
+
+.NavigationItem.active .notification-circle {
+  background: #2742bb;
 }
 
 .NavigationItem h3 {

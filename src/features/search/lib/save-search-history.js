@@ -5,12 +5,13 @@ const saveSearchHistory = (uid, itemId, itemType) => {
 		id: itemId,
 		type: itemType
 	}
+
 	firestore
 		.collection("searchHistory")
 		.doc(uid)
 		.get()
 		.then((res) => {
-			if (res.data().history) {
+			if (res.data()?.history) {
 				if (!res.data().history.find(({ id }) => id === itemId)) {
 					firestore
 						.collection("searchHistory")

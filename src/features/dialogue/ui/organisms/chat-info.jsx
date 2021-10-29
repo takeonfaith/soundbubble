@@ -6,14 +6,14 @@ import { MdModeEdit } from "react-icons/md";
 import { RiVolumeUpLine } from "react-icons/ri";
 import { PersonTiny } from "../../../../components/Basic/PersonTiny";
 import { LoadingCircle } from "../../../../components/Loading/LoadingCircle";
-import { Slider } from "../../../../components/Tools/Slider";
 import { useAuth } from "../../../../contexts/AuthContext";
 import { useModal } from "../../../../contexts/ModalContext";
 import { firestore, storage } from "../../../../firebase";
-import shortWord from "../../../../functions/other/shortWord";
 import { fetchItemList } from "../../../../shared/lib/fetch-item-list";
+import getShortString from "../../../../shared/lib/get-short-string";
 import Button from "../../../../shared/ui/atoms/button";
 import Input from "../../../../shared/ui/atoms/input";
+import { Slider } from "../../../../shared/ui/molecules/slider";
 import LeaveChatButton from "../atoms/leave-chat-button";
 import { AttachmentList } from "../molecules/attachment-list";
 import AddPeopleToChat from "./add-people-to-chat";
@@ -110,7 +110,7 @@ export const ChatInfo = ({ data }) => {
               onClick={() => setContent(<AttachmentList chatId={data.id} />)}
             >
               <ImAttachment />
-              {shortWord("Attachments", 7)}
+              {getShortString("Attachments", 7)}
             </button>
             <button className="chatInfoButton">
               <RiVolumeUpLine />

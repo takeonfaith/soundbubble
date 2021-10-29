@@ -222,7 +222,6 @@
   background: rgb(77, 77, 77);
   color: #fff;
   padding-left: 10px;
-  margin-bottom: 15px;
   box-sizing: border-box;
 }
 
@@ -232,7 +231,7 @@ form input::placeholder {
   margin-left: 10px;
 }
 
-.In-Up-Container button {
+.inAndUpBtns button {
   float: left;
   min-width: calc(50% - 5px);
   width: 100%;
@@ -258,7 +257,7 @@ form input::placeholder {
   background-image: var(--pinkAndPurpleGrad);
 }
 
-.In-Up-Container button:hover,
+.inAndUpBtns button:hover,
 .downloadPhoto:hover {
   opacity: 0.8;
   transform: scale(0.99);
@@ -341,17 +340,17 @@ form input::placeholder {
 @media screen and (max-width: 470px) {
   .inAndUpBtns {
     width: 100%;
-    display: flex;
-    flex-direction: column;
+    /* display: flex;
+    flex-direction: column; */
     font-size: 1em;
   }
 
-  .In-Up-Container button {
+  .inAndUpBtns button {
     width: 100%;
     font-size: 0.8em;
   }
 
-  .In-Up-Container .inAndUpBtns a {
+  .inAndUpBtns a {
     width: 100%;
   }
 }

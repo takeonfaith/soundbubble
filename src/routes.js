@@ -1,4 +1,4 @@
-import { CHAT_ROUTE, HISTORY_ROUTE, HOME_ROUTE, LIBRARY_ROUTE, LOGIN_ROUTE, NOTFOUND_ROUTE, SEARCH_ROUTE, SIGNUP_ROUTE, TEMPLATE_ALBUM, TEMPLATE_AUTHOR, TEMPLATE_CHAT, SETTINGS_ROUTE, LYRICS_EDITING_ROUTE } from "./utils/consts";
+import { CHAT_ROUTE, HISTORY_ROUTE, HOME_ROUTE, LIBRARY_ROUTE, LOGIN_ROUTE, NOTFOUND_ROUTE, SEARCH_ROUTE, SIGNUP_ROUTE, TEMPLATE_ALBUM, TEMPLATE_AUTHOR, TEMPLATE_CHAT, SETTINGS_ROUTE, LYRICS_EDITING_ROUTE } from "./utils/route-consts";
 import { LibraryPage, ChatPage, PageNotFound, AlbumPage, DialoguePage, AuthorPage, LogInPage, HomePage, SearchPage, HistoryPage, SettingsPage, SignUpPage, LyricsEditingPage } from "./pages";
 export const publicRoutes = [
 	{

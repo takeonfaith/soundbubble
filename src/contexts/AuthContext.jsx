@@ -78,6 +78,10 @@ export const AuthProvider = ({ children }) => {
             variantsOfName: findVariantsOfName(name),
           });
 
+        firestore.collection("searchHistory").doc(result.user.uid).set({
+          history: [],
+        });
+
         firestore.collection("history").doc(result.user.uid).set({
           history: [],
         });

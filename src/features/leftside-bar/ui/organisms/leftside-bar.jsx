@@ -1,26 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BiFolderPlus, BiFullscreen } from "react-icons/bi";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { NotificationCircle } from "../../../../components/Basic/NotificationCircle";
-import { Player } from "../../../../components/FullScreenPlayer/Player";
 import { CreatePlaylistPage } from "../../../../components/LibraryPage/CreatePlaylistPage";
 import { FriendsListToShareWith } from "../../../../components/Lists/FriendsListToShareWith";
 import { useAuth } from "../../../../contexts/AuthContext";
 import { useModal } from "../../../../contexts/ModalContext";
 import { useSong } from "../../../../contexts/SongContext";
-import { leftSideBar } from "../../../../data/leftSideBar";
 import normalizeString from "../../../../functions/other/normalizeString";
-import shortWord from "../../../../functions/other/shortWord";
 import Logo from "../../../../images/Logo3.svg";
+import { leftSideBar } from "../../../../shared/data/left-side-bar";
+import getShortString from "../../../../shared/lib/get-short-string";
 import "../../../../styles/LeftsideBar.css";
-import NavigationItem from "../atoms/NavigationItem";
+import { Player } from "../../../full-screen-player/ui/organisms/player";
 
+import LeftsideBarContainer from "../atoms/container";
+import NavigationPanel from "../molecules/navigation-panel";
 import { Person } from "../molecules/Person";
 import { TinyPlaylist } from "../molecules/TinyPlaylist";
 
 export const LeftsideBar = () => {
   const { currentUser } = useAuth();
+  const [userNotifications, setUserNotifications] = useState(0);
   const {
     leftSideBarInputRef,
     setOpenFullScreenPlayer,
@@ -41,49 +43,44 @@ export const LeftsideBar = () => {
     });
     return page === undefined ? -1 : page.id;
   });
+
+  useEffect(() => {
+    setUserNotifications(
+      currentUser.friends.reduce((acc, friend) => {
+        if (friend.status === "requested") return acc + 1;
+        else return acc;
+      }, 0)
+    );
+  }, [JSON.stringify(currentUser.friends)]);
+
   return (
     <div className="LeftsideBar">
       <div className="logo">
         <img loading="lazy" src={Logo} alt="" />
         <h3>Soundbubble</h3>
       </div>
-      <div className="leftSideBarContainer" onClick={() => setCurrentPage(-1)}>
+      <LeftsideBarContainer onClick={() => setCurrentPage(-1)}>
         <Link to={`/authors/${currentUser.uid}`}>
           <div
             className="person"
             style={currentPage === -1 ? { background: "var(--blue)" } : {}}
           >
-            {currentUser.friends.some(
-              (friend) => friend.status === "requested"
-            ) ? (
-              <NotificationCircle />
-            ) : null}
+            <NotificationCircle value={userNotifications} />
             <div
               className="pesronImg"
               style={{ backgroundImage: `url(${currentUser.photoURL})` }}
             ></div>
             <div className="personName">
-              {shortWord(currentUser.displayName, 9)}
+              {getShortString(currentUser.displayName, 11)}
             </div>
           </div>
         </Link>
-      </div>
-      <div className="NavigationPanel">
-        {leftSideBar.map(({ id, title, icon, link }, index) => {
-          return (
-            <NavigationItem
-              key={index}
-              id={id}
-              title={title}
-              icon={icon}
-              link={link}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-            />
-          );
-        })}
-      </div>
-      <div className="leftSideBarContainer friendsAndPlaylists">
+      </LeftsideBarContainer>
+      <NavigationPanel
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
+      <LeftsideBarContainer className="leftSideBarContainer friendsAndPlaylists">
         <span
           style={{
             display: !currentFriendToPlaylistPage ? "block" : "none",
@@ -164,7 +161,7 @@ export const LeftsideBar = () => {
             <FiChevronDown />
           </button>
         </div>
-      </div>
+      </LeftsideBarContainer>
       <div className="leftSideBarContainer">
         {currentSongData.id === -1 ? null : (
           <div className="littlePlayer">

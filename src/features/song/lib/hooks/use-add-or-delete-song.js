@@ -2,7 +2,7 @@ import { useAuth } from "../../../../contexts/AuthContext";
 import { useModal } from "../../../../contexts/ModalContext";
 import { useSong } from "../../../../contexts/SongContext";
 import { deleteSongFromLibrary } from "../../../../functions/other/deleteSongFromLibrary";
-import shortWord from "../../../../functions/other/shortWord";
+import getShortString from "../../../../shared/lib/get-short-string";
 import { addSongToLibrary } from "../add-song-to-library";
 
 const useAddOrDeleteSong = (song) => {
@@ -13,7 +13,7 @@ const useAddOrDeleteSong = (song) => {
 	const addSong = (e) => {
 		addSongToLibrary(e, song, currentUser, setCurrentUser);
 		openBottomMessage(
-			`${shortWord(song.name, 15)} added to your library`
+			`${getShortString(song.name, 15)} added to your library`
 		);
 	}
 
@@ -27,7 +27,7 @@ const useAddOrDeleteSong = (song) => {
 				deleteSongFromLibrary(e, song, currentUser, yourSongs);
 				closeConfirm();
 				openBottomMessage(
-					`${shortWord(song.name, 15)} removed from your library`,
+					`${getShortString(song.name, 15)} removed from your library`,
 					"failure"
 				);
 			}

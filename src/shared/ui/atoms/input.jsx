@@ -6,6 +6,7 @@ import Button from "./button";
 const Wrapper = styled.div`
   width: 100%;
   position: relative;
+  margin: ${({ margin }) => (margin ? "0 0 10px 0" : 0)};
 
   button {
     position: absolute;
@@ -24,7 +25,7 @@ const InputWrapper = styled.input`
   background: var(--leftSideBarColor);
   outline: none;
   color: #fff;
-  font-weight: 600;
+  font-weight: 500;
 `;
 
 const Input = ({
@@ -34,11 +35,12 @@ const Input = ({
   setValue,
   placeholder = "",
   required = false,
+  margin = false,
 }) => {
   return (
     <>
-      <h3>{title}</h3>
-      <Wrapper>
+      {!!title && <h3>{title}</h3>}
+      <Wrapper margin>
         <InputWrapper
           value={value}
           onChange={(e) => setValue(e.target.value)}

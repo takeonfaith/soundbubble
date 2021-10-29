@@ -1,15 +1,17 @@
 import React from "react";
-import { FiShare, FiInfo } from "react-icons/fi";
-import { MdPlaylistAdd, MdKeyboardArrowRight } from "react-icons/md";
 import { BiEditAlt, BiListPlus } from "react-icons/bi";
-import { useModal } from "../../contexts/ModalContext";
-import AddOrDeleteButtonFull from "../FullScreenPlayer/AddOrDeleteSongButton";
-import { AddToPlaylists } from "../FullScreenPlayer/AddToPlaylists";
-import { FriendsListToShareWith } from "../Lists/FriendsListToShareWith";
-import { SongInfo } from "../Info/SongInfo";
+import { FiInfo, FiShare } from "react-icons/fi";
+import { MdKeyboardArrowRight, MdPlaylistAdd } from "react-icons/md";
 import { useAuth } from "../../contexts/AuthContext";
-import { EditSong } from "../AdminAndAuthor/EditSong";
+import { useModal } from "../../contexts/ModalContext";
 import { useSong } from "../../contexts/SongContext";
+import AddOrDeleteButtonFull from "../../features/full-screen-player/ui/molecules/add-or-delete-song-button";
+
+import { AddToPlaylists } from "../../features/full-screen-player/ui/molecules/add-to-playlists";
+import { EditSong } from "../AdminAndAuthor/EditSong";
+import { SongInfo } from "../Info/SongInfo";
+import { FriendsListToShareWith } from "../Lists/FriendsListToShareWith";
+
 const SongItemMoreWindow = ({
   openMoreWindow,
   song,

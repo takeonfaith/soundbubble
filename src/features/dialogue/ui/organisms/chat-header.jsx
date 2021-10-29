@@ -13,7 +13,7 @@ export const ChatHeader = ({ data }) => {
   const { toggleModal, setContent } = useModal();
   const [otherPerson, setOtherPerson] = useState({});
   const [headerColors, setHeaderColors] = useState(
-    data.chatName === "" ? [] : data.imageColors
+    !!data.chatName ? [] : data.imageColors
   );
   async function fetchOtherPerson() {
     const otherPersonId = data.participants.find(
@@ -27,7 +27,7 @@ export const ChatHeader = ({ data }) => {
   }
 
   useEffect(() => {
-    if (data.chatName === "") {
+    if (!data.chatName.length) {
       fetchOtherPerson();
     }
   }, [data.id]);
@@ -43,7 +43,7 @@ export const ChatHeader = ({ data }) => {
       }
     >
       <GoBackBtn />
-      {data.participants.length === 2 ? (
+      {data.chatName.length === 0 ? (
         <Link
           className="chatHeaderImageAndName"
           to={`/authors/${otherPerson.uid}`}

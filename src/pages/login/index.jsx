@@ -5,7 +5,8 @@ import { FullScreenLoading } from "../../components/Loading/FullScreenLoading";
 import { BlurredBg } from "../../components/SignIn-Up/BlurredBg";
 import { TitleAndLogo } from "../../components/SignIn-Up/TitleAndLogo";
 import { useAuth } from "../../contexts/AuthContext";
-import { SIGNUP_ROUTE } from "../../utils/consts";
+import { SIGNUP_ROUTE } from "../../utils/route-consts";
+import Input from "../../shared/ui/atoms/input";
 
 const LogInPage = () => {
   const { login } = useAuth();
@@ -28,18 +29,19 @@ const LogInPage = () => {
         <TitleAndLogo title="Log In" />
         <ErrorPlate errorMessage={errorMessage} />
         <div className="inner-plate-content">
-          <input
+          <Input
             type="email"
-            placeholder="Enter your Email"
-            className="emailInput"
-            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter your email"
+            value={email}
+            setValue={setEmail}
+            margin
           />
-          <input
+          <Input
             type="password"
-            name=""
-            id=""
             placeholder="Enter your password"
-            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            setValue={setPassword}
+            margin
           />
           <div className="inAndUpBtns">
             <button className="upBtn" disabled={loading} onClick={handleSubmit}>

@@ -20,7 +20,7 @@ const useLoadHints = ({
             if (sortedHints.length) setSearchHints(sortedHints.slice(0, 10));
             else {
               Promise.resolve(
-                findSearchHints(normalizeString(transliteWord(searchValue)))
+                findSearchHints(transliteWord(normalizeString(searchValue)))
               ).then((res) => {
                 Promise.all(res).then((hint) => {
                   const sortedHints = hint.sort((a, b) => b.rank - a.rank);

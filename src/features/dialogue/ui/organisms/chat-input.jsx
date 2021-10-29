@@ -9,13 +9,13 @@ import { useSong } from "../../../../contexts/SongContext";
 import { firestore } from "../../../../firebase";
 import { whatToWriteInResponseToItem } from "../../lib/what-to-write-in-response-item";
 import { sendMessage } from "../../../../functions/other/sendMessage";
-import shortWord from "../../../../functions/other/shortWord";
 import useOutsideClick from "../../../../shared/lib/hooks/use-outside-click";
 import SearchBar from "../../../../shared/ui/organisms/search-bar";
 import { AlbumList } from "../../../../components/Lists/AlbumList";
 import { AuthorsList } from "../../../../components/Lists/AuthorsList";
 import { SongList } from "../../../../components/Lists/SongList";
 import { AttachedItemsInChatInput } from "../molecules/attached-items-in-chat-input";
+import getShortString from "../../../../shared/lib/get-short-string";
 
 export const ChatInput = ({
   chatId,
@@ -200,7 +200,7 @@ export const ChatInput = ({
                   {inResponseNames[index]}
                 </h5>
                 <p>
-                  {shortWord(otherMessages[id].message, 35)}
+                  {getShortString(otherMessages[id].message, 35)}
                   <span
                     style={{
                       marginLeft: "5px",

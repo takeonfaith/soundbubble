@@ -83,9 +83,9 @@ const AuthorPage = () => {
                 authorsData={authorsData}
                 headerColors={headerColors}
               />
-              {authorsData.friends && !authorsData.isAuthor ? (
+              {authorsData.friends && !authorsData.isAuthor && (
                 <PersonTinyList data={authorsData} title={"Friends"} />
-              ) : null}
+              )}
               <Playlists
                 authorsData={authorsData}
                 headerColors={headerColors}

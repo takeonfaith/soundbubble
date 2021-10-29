@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { BiShare } from "react-icons/bi";
-import { FiMessageCircle, FiUser } from "react-icons/fi";
+import { FiMessageCircle, FiMusic } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { Hint } from "../../../../components/Basic/Hint";
 import { IsUserOnlineCircle } from "../../../../components/Basic/IsUserOnlineCircle";
 import { useAuth } from "../../../../contexts/AuthContext";
 import { useModal } from "../../../../contexts/ModalContext";
 import { useSong } from "../../../../contexts/SongContext";
+import shareWithManyFriends from "../../../../functions/other/shareWithManyFriends";
 import { createChat } from "../../../../shared/lib/create-сhat";
 import { findChatURL } from "../../../../shared/lib/find-chat-url";
-import shareWithManyFriends from "../../../../functions/other/shareWithManyFriends";
+import getShortString from "../../../../shared/lib/get-short-string";
+import useUserOnline from "../../../../shared/lib/hooks/use-user-online";
+import OnlineCircleAnimation from "../../../../shared/ui/atoms/online-circle-animation";
+import useLastSongListened from "../../../author/lib/hooks/use-last-song-listened";
 
 export const Person = ({ index, friend }) => {
   const { currentUser } = useAuth();
@@ -19,6 +23,9 @@ export const Person = ({ index, friend }) => {
   const [sendAnimation, setSendAnimation] = useState("");
   const { currentSong, currentSongData } = useSong();
   const [loadingSendSong, setLoadingSendSong] = useState(false);
+  const isOnline = useUserOnline(friend.uid);
+  const [song, chooseSongItem] = useLastSongListened(friend);
+
   useEffect(() => {
     findChatURL([friend.uid], currentUser, setShouldCreate, setFriendChatId);
   }, []);
@@ -40,6 +47,7 @@ export const Person = ({ index, friend }) => {
         alt=""
         className={"sendSongImage " + sendAnimation}
       />
+
       <div className="personBtns">
         <Link to={`/chat/${friendChatId}`}>
           <button
@@ -52,24 +60,33 @@ export const Person = ({ index, friend }) => {
             <FiMessageCircle />
           </button>
         </Link>
-        <Link to={`/authors/${friend.uid}`}>
-          <button>
-            <Hint text={"profile"} />
-            <FiUser />
-          </button>
-        </Link>
+
+        <button onClick={chooseSongItem}>
+          <Hint
+            text={
+              isOnline
+                ? getShortString(
+                    `${song?.name} | ${song?.authors[0].displayName}` ||
+                      "No song data",
+                    20
+                  )
+                : "last listened song"
+            }
+          />
+          {isOnline ? <OnlineCircleAnimation /> : <FiMusic />}
+        </button>
+
         <button
           onClick={() => {
             if (!loadingSendSong) {
-              shareWithManyFriends(
-                [friend.uid],
+              shareWithManyFriends({
+                shareList: [friend.uid],
                 currentUser,
-                currentSong,
-                "song",
-                "",
+                itemId: currentSong,
+                whatToShare: "song",
                 setShouldCreate,
-                setFriendChatId
-              );
+                setFriendChatId,
+              });
               setSendAnimation("sendAnimation");
               openBottomMessage(
                 `${currentSongData.name} was sent to ${friend.displayName}`
@@ -81,16 +98,12 @@ export const Person = ({ index, friend }) => {
           <BiShare />
         </button>
       </div>
-      <Link
-        className="pesronImg"
-        style={{ pointerEvents: "none" }}
-        to={`/authors/${friend.uid}`}
-      >
+      <Link className="pesronImg" to={`/authors/${friend.uid}`}>
         <img loading="lazy" src={friend.photoURL} alt="" />
       </Link>
       <IsUserOnlineCircle userUID={friend.uid} />
       <div className="personName" style={{ pointerEvents: "none" }}>
-        {friend.displayName}
+        {getShortString(friend.displayName, 12)}
       </div>
     </div>
   );

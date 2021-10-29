@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useSong } from "../../contexts/SongContext";
-import { SongItem } from "../../features/song/ui/organisms/song-item";
-import shortWord from "../../functions/other/shortWord";
+import { useSong } from "../../../../contexts/SongContext";
+import getShortString from "../../../../shared/lib/get-short-string";
+import { SongItem } from "../../../song/ui/organisms/song-item";
 
 export const Queue = () => {
   const {
@@ -30,7 +30,7 @@ export const Queue = () => {
                 alt=""
               />
             </div>
-            <span>{shortWord(currentSongPlaylistSource.name, 25)}</span>
+            <span>{getShortString(currentSongPlaylistSource.name, 25)}</span>
           </Link>
         </h5>
       </div>

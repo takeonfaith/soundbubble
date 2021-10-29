@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { LyricsParagraph } from "../../../../components/FullScreenPlayer/LyricsParagraph";
 
 const LyricsWrapper = styled.div`
   max-height: 500px;

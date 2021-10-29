@@ -2,7 +2,6 @@ import { useRef, useState } from "react";
 import { FiMoreVertical } from "react-icons/fi";
 import { HiPause, HiPlay } from "react-icons/hi";
 import { Hint } from "../../../../components/Basic/Hint";
-import ColorCircles from "../../../../components/FullScreenPlayer/colorCircles";
 import { SongItemMobileMoreWindow } from "../../../../components/Windows/SongItemMobileMoreWindow";
 import SongItemMoreWindow from "../../../../components/Windows/SongItemMoreWindow";
 import { useAuth } from "../../../../contexts/AuthContext";
@@ -12,9 +11,11 @@ import { useSong } from "../../../../contexts/SongContext";
 import { firestore } from "../../../../firebase";
 import { addSongToHistory } from "../../../../functions/add/addSongToHistory";
 import displayAuthorsStr from "../../../../functions/display/displayAuthorsStr";
-import shortWord from "../../../../functions/other/shortWord";
+import getShortString from "../../../../shared/lib/get-short-string";
 import useOutsideClick from "../../../../shared/lib/hooks/use-outside-click";
 import { AddToListCircle } from "../../../../shared/ui/molecules/add-to-list-circle";
+import ColorCircles from "../../../full-screen-player/ui/atoms/color-circles";
+
 import saveSearchHistory from "../../../search/lib/save-search-history";
 import AddOrDeleteButton from "../molecules/add-or-delete-button";
 import ShowAdditionInfo from "../molecules/show-additional-info";
@@ -113,7 +114,7 @@ export const SongItem = ({
               className="songItemName"
               style={{ display: "flex", alignItems: "center" }}
             >
-              {shortWord(song.name, !isMobile ? 30 : 17)}
+              {getShortString(song.name, !isMobile ? 30 : 17)}
               <span style={{ marginLeft: "10px", fontWeight: "500" }}>
                 <ShowAdditionInfo
                   showListens={showListens}

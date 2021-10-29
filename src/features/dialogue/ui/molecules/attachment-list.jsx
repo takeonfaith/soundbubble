@@ -3,9 +3,9 @@ import { AlbumList } from "../../../../components/Lists/AlbumList";
 import { AuthorsList } from "../../../../components/Lists/AuthorsList";
 import { SongList } from "../../../../components/Lists/SongList";
 import { LoadingCircle } from "../../../../components/Loading/LoadingCircle";
-import { Slider } from "../../../../components/Tools/Slider";
 import { firestore } from "../../../../firebase";
 import { fetchItemList } from "../../../../shared/lib/fetch-item-list";
+import { Slider } from "../../../../shared/ui/molecules/slider";
 export const AttachmentList = ({ chatId }) => {
   const [attachmentList, setAttachmentList] = useState([]);
   const [loading, setLoading] = useState(true);

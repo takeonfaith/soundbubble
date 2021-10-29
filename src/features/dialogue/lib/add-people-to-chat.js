@@ -11,6 +11,13 @@ const addPeopleToChat = async (chatId, people, setLoading, setCompleted) => {
 	firestore.collection('chats').doc(chatId).update({
 		participants: newParticipants
 	})
+
+	people.forEach(({ uid, chats }) => {
+		firestore.collection('users').doc(uid).update({
+			chats: [...chats, chatId]
+		})
+	})
+
 	sendMessage(chatId, chatData, "soundbubble", `${people.map(({ displayName }) => displayName)} entered the chat`)
 	setLoading(false)
 	setCompleted(true)

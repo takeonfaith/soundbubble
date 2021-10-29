@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { useScreen } from "../../contexts/ScreenContext";
 import { useSong } from "../../contexts/SongContext";
-import shortWord from "../../functions/other/shortWord";
+import getShortString from "../../shared/lib/get-short-string";
 import { usePlaylistSongs } from "../../hooks/usePlaylistSongs";
 import { DeletedPlaylist } from "../Playlist/DeletedPlaylist";
 import { AddToListCircle } from "../../shared/ui/molecules/add-to-list-circle";
@@ -75,7 +75,7 @@ export const PlaylistItem = ({
         ) : null}
       </div>
       <h4 style={{ display: "flex", alignItems: "center", margin: "5px 0" }}>
-        {shortWord(playlist.name, isMobile ? 10 : 15)}
+        {getShortString(playlist.name, isMobile ? 10 : 15)}
         <span
           style={{
             fontSize: ".6em",

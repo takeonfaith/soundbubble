@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react';
+import { useRouteMatch } from 'react-router';
 import { useAuth } from '../../../contexts/AuthContext';
 import { firestore } from '../../../firebase';
 
 const useChatNotifications = () => {
 	const [notifications, setNotifications] = useState([]);
 	const { currentUser } = useAuth()
+	const match = useRouteMatch("/chat/:chatId");
+	const chatId = match?.params?.chatId
 
 	useEffect(() => {
+		const tempObj = {}
 		const unsubscribe = firestore
 			.collection("chats")
 			.where("participants", "array-contains", currentUser.uid)
@@ -14,21 +18,26 @@ const useChatNotifications = () => {
 				setNotifications((prev) => {
 					const temp = [...prev];
 					snapshot.docChanges().map(async (doc) => {
-						if (doc.type === "modified" && doc.doc.data().messages.length) {
-							const { id, chatName, chatImage, messages } = doc.doc.data();
-							const lastMessage = messages[messages.length - 1];
-							const shouldPushNotif =
-								lastMessage.sender !== currentUser.uid &&
-								!lastMessage.seenBy.includes(currentUser.uid)
+						const chatData = doc.doc.data()
+						if (chatId !== chatData.id) {
+							if (doc.type === 'added') tempObj[chatData.id] = chatData.messages.length
+							else if (doc.type === "modified" && chatData.messages.length && !!tempObj[chatData.id] && chatData.messages.length !== tempObj[chatData.id]) {
+								const { id, chatName, chatImage, messages } = chatData;
+								const lastMessage = messages[messages.length - 1];
+								const shouldPushNotif =
+									lastMessage.sender !== currentUser.uid &&
+									!lastMessage.seenBy.includes(currentUser.uid)
 
-							if (shouldPushNotif) {
-								temp.push({
-									chatId: id,
-									chatName,
-									chatImage,
-									message: messages[messages.length - 1],
-									userId: messages[messages.length - 1].sender,
-								});
+								if (shouldPushNotif) {
+									temp.push({
+										chatId: id,
+										chatName,
+										chatImage,
+										message: messages[messages.length - 1],
+										userId: messages[messages.length - 1].sender,
+									});
+									tempObj[id] += 1
+								}
 							}
 						}
 					});
@@ -38,7 +47,7 @@ const useChatNotifications = () => {
 		return () => {
 			unsubscribe();
 		};
-	}, []);
+	}, [chatId]);
 
 	useEffect(() => {
 		if (notifications.length) {

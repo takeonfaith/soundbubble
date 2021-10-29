@@ -5,8 +5,8 @@ import { FiMusic, FiUser } from "react-icons/fi";
 import { useAuth } from "../../../../contexts/AuthContext";
 import { SeenByCircle } from "../../../dialogue/ui/atoms/seen-by-circle";
 import { firestore } from "../../../../firebase";
-import shortWord from "../../../../functions/other/shortWord";
 import { TypingAnimation } from "../../../dialogue/ui/atoms/typing-animation";
+import getShortString from "../../../../shared/lib/get-short-string";
 
 export const LastSentMessage = ({
   sender,
@@ -15,6 +15,7 @@ export const LastSentMessage = ({
   showUnseenCircle = false,
   messageLen = 30,
   chatId,
+  typing = false,
 }) => {
   const { currentUser } = useAuth();
   const [lastAttachedItem, setLastAttachedItem] = useState("");
@@ -22,24 +23,9 @@ export const LastSentMessage = ({
   const [lastMessage, setLastMessage] = useState("");
   const messageIcons = [null, <FiMusic />, <BiAlbum />, <FiUser />];
   const [lastIcon, setLastIcon] = useState(0);
-  const [typing, setTyping] = useState(false);
-
-  useEffect(() => {
-    firestore
-      .collection("chats")
-      .where("participants", "array-contains", currentUser.uid)
-      .onSnapshot((snapshot) => {
-        snapshot.docChanges().map(async (doc) => {
-          const chatData = doc.doc.data();
-          if (doc.type === "modified" && chatData.messages.length) {
-            if (chatData.typing.length) setTyping(true);
-            else setTyping(false);
-          }
-        });
-      });
-  }, []);
 
   async function findWhatToWriteUnderName() {
+    setLastMessage("");
     if (message !== undefined) {
       const lastAttachedItem = message;
       setLastMessage((str) => (str += lastAttachedItem.message));
@@ -79,12 +65,12 @@ export const LastSentMessage = ({
 
   useEffect(() => {
     findWhatToWriteUnderName();
-  }, []);
+  }, [message.id]);
   return !typing ? (
     <div className="messageShowOutside">
       <span
         style={
-          message.sender === currentUser.uid || isGroup
+          message.sender === currentUser.uid || (!!sender && isGroup)
             ? { marginRight: "5px" }
             : {}
         }
@@ -94,11 +80,13 @@ export const LastSentMessage = ({
           message.sender === currentUser.uid
             ? "You: "
             : isGroup
-            ? sender?.displayName + ": "
+            ? sender
+              ? sender.displayName + ": "
+              : ""
             : ""
         }`}
       </span>
-      {shortWord(lastMessage, messageLen)}
+      {getShortString(lastMessage, messageLen)}
       {shouldPutDot && lastAttachedItem.length ? <BsDot /> : null}
       {messageIcons[lastIcon]}
       {lastAttachedItem}

@@ -1,12 +1,12 @@
 import React from "react";
 import { FaBackward, FaForward, FaPause, FaPlay } from "react-icons/fa";
 import { TiArrowRepeat, TiArrowShuffle } from "react-icons/ti";
-import { useSong } from "../../contexts/SongContext";
-import displayAuthorsStr from "../../functions/display/displayAuthorsStr";
-import { findLenOfAuthors } from "../../functions/find/findLenOfAuthors";
-import correctTimeDisplay from "../../functions/other/correctTimeDisplay";
-import checkNumber from "../../shared/lib/check-number";
-import ColorCircles from "./colorCircles";
+import { useSong } from "../../../../contexts/SongContext";
+import displayAuthorsStr from "../../../../functions/display/displayAuthorsStr";
+import { findLenOfAuthors } from "../../../../functions/find/findLenOfAuthors";
+import correctTimeDisplay from "../../../../functions/other/correctTimeDisplay";
+import checkNumber from "../../../../shared/lib/check-number";
+import ColorCircles from "../atoms/color-circles";
 export const Player = ({ inputRef, textLimit = 18, linkToAuthors = true }) => {
   const {
     currentSongData,

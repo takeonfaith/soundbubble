@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { LastSentMessage } from "../../features/chats/ui/molecules/last-sent-message";
 import { firestore } from "../../firebase";
-import shortWord from "../../functions/other/shortWord";
 import notifSound from "../../music/notification.mp3";
 
 const ChatNotificationWindowWrapper = styled.div`
@@ -80,6 +79,8 @@ const ChatNotificationWindow = ({
         }, 4500);
       });
   }, []);
+
+  // TODO: добавить возможность включить трек по нажатию на уведомление, если в нем есть трек
 
   return (
     <ChatNotificationWindowWrapper show={show} index={index}>

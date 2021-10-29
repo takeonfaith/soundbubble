@@ -10,16 +10,28 @@ import { amountOfUnseenMessages } from "../../lib/amount-of-unseen-messages";
 
 export const ChatItem = ({ chatData }) => {
   const { currentUser } = useAuth();
-  const { chatName, chatImage, participants, messages } = chatData;
+  const { chatName, chatImage, participants } = chatData;
   const [otherPerson, setOtherPerson] = useState({});
   const [amountOfUnseen, setAmountOfUnseen] = useState(0);
+  const [messages, setMessages] = useState(chatData.messages);
+  const [typing, setTyping] = useState(false);
+
+  useEffect(() => {
+    firestore
+      .collection("chats")
+      .doc(chatData.id)
+      .onSnapshot((snapshot) => {
+        setMessages(snapshot.data().messages);
+        setTyping(!!snapshot.data().typing.length);
+      });
+  }, []);
 
   useEffect(() => {
     setAmountOfUnseen(amountOfUnseenMessages(messages, currentUser));
   }, []);
 
   async function fetchOtherPerson() {
-    if (chatName === "") {
+    if (!chatName) {
       const otherPersonId = participants.find(
         (personId) => personId !== currentUser.uid
       );
@@ -28,11 +40,10 @@ export const ChatItem = ({ chatData }) => {
       ).data();
       setOtherPerson(person);
     } else {
-      const otherPersonId = messages[messages.length - 1].sender;
+      const otherPersonId = messages[messages.length - 1]?.sender;
       const person = (
         await firestore.collection("users").doc(otherPersonId).get()
       ).data();
-      console.log(person, chatName);
       setOtherPerson(person);
     }
   }
@@ -40,13 +51,13 @@ export const ChatItem = ({ chatData }) => {
   useEffect(() => {
     fetchOtherPerson();
   }, []);
-  return chatData && !!otherPerson?.uid ? (
+  return chatData ? (
     <Link to={`/chat/${chatData.id}`}>
       <div className={"ChatItem " + (amountOfUnseen > 0 ? "unseen" : "")}>
         <div className="chatItemImage">
           <img loading="lazy" src={chatImage || otherPerson.photoURL} alt="" />
         </div>
-        <IsUserOnlineCircle userUID={otherPerson.uid} />
+        {!chatName && <IsUserOnlineCircle userUID={otherPerson.uid} />}
         <div style={{ width: "100%" }}>
           <h4
             style={{
@@ -91,6 +102,7 @@ export const ChatItem = ({ chatData }) => {
                   isGroup={chatName.length}
                   message={messages[messages.length - 1]}
                   showUnseenCircle
+                  typing={typing}
                 />
               }
             </p>

@@ -31,6 +31,7 @@ const ChatPage = () => {
       () => setLoading(false)
     );
   }, []);
+
   return (
     <div style={{ animation: "zoomIn .2s forwards", minHeight: "100%" }}>
       <ContentContainer>

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "../../styles/LibraryPage.css";
-import { Slider } from "../../components/Tools/Slider";
 import { SongsPage } from "../../components/LibraryPage/SongsPage";
 import { PlaylistsPage } from "../../components/LibraryPage/PlaylistsPage";
 import { AuthorsPage } from "../../components/LibraryPage/AuthorsPage";
+import { Slider } from "../../shared/ui/molecules/slider";
 
 const LibraryPage = () => {
   const [currentPage, setCurrentPage] = useState(0);

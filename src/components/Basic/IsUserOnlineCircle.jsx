@@ -1,22 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { firestore } from '../../firebase'
+import React from "react";
+import useUserOnline from "../../shared/lib/hooks/use-user-online";
 
-export const IsUserOnlineCircle = ({userUID}) => {
-	const [isOnline, setIsOnline] = useState(false)
-	useEffect(() => {
-		const unsubscribe = firestore.collection('users').doc(userUID)
-		.onSnapshot(doc => {
-			if(userUID !== undefined){
-				const fiveMinutesAgo = new Date().getTime() - 300000
-				const isOnline = doc.data().online > fiveMinutesAgo
-				setIsOnline(isOnline)
-			}
-		 })
-		return () => {
-			unsubscribe()
-		}
-	}, [firestore, userUID])
-	return (
-		isOnline?<div className = "onlineCircle"></div>:null
-	)
-}
+export const IsUserOnlineCircle = ({ userUID, setIsOnline = null }) => {
+  const isOnline = useUserOnline(userUID);
+
+  return isOnline ? <div className="onlineCircle"></div> : null;
+};

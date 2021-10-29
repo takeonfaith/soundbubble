@@ -26,6 +26,7 @@ import addFriend from "../../features/author/lib/add-friend";
 import deleteAuthorFromLibrary from "../../features/author/lib/delete-author-from-library";
 import { deleteFriend } from "../../features/author/lib/delete-friend";
 import { ChatWithFriendButton } from "../../features/author/ui/molecules/chat-with-friend-button";
+import { LastSongListened } from "../../features/author/ui/molecules/last-song-listened";
 import { CustomizeAuthor } from "../../features/author/ui/organisms/customize-author";
 import { addPlaylistToLibrary } from "../../functions/add/addPlaylistToLibrary";
 import { deletePlaylist } from "../../functions/delete/deletePlaylist";
@@ -430,9 +431,14 @@ export const Header = ({ data, headerColors }) => {
               margin: "2px 0 10px 0",
             }}
           >
-            <h1>{data.displayName || data.name}</h1>
+            <>
+              <h1>{data.displayName || data.name}</h1>
+            </>
             {findIfIsVerified()}
             {findIfIsPrivate()}
+            {!!data.displayName && isFriend && (
+              <LastSongListened data={data} loading={false} />
+            )}
             {/* <LastSongListened data = {data} loading = {loading}/> */}
           </div>
         </div>

@@ -6,9 +6,9 @@ import { useSong } from "../../contexts/SongContext";
 import { SongItem } from "../../features/song/ui/organisms/song-item";
 import { firestore } from "../../firebase";
 import shuffleSongs from "../../functions/other/shuffleSongs";
-import { HISTORY_ROUTE } from "../../utils/consts";
+import { HISTORY_ROUTE } from "../../utils/route-consts";
 import SearchBar from "../../shared/ui/organisms/search-bar";
-import { TitleWithMoreBtn } from "../Tools/TitleWithMoreBtn";
+import { TitleWithMoreBtn } from "../../pages/settings/ui/molecules/title-with-more-btn";
 
 export const SongList = ({
   listOfSongs,
@@ -31,11 +31,10 @@ export const SongList = ({
     playSong,
     setCurrentSong,
   } = useSong();
-  const { currentUser, searchValue } = useAuth();
+  const { currentUser } = useAuth();
   const [showMoreSongs, setShowMoreSongs] = useState(false);
   const [localSearchValue, setLocalSearchValue] = useState("");
   const [displaySongs, setDisplaySongs] = useState(listOfSongs);
-  const { currentSong } = useSong();
 
   useEffect(() => {
     setDisplaySongs(listOfSongs);

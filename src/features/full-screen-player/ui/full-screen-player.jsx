@@ -1,15 +1,15 @@
-import "../../app/index.css";
+import "../../../app/index.css";
 import React, { useState, useRef, useEffect } from "react";
 import { BiChevronLeft } from "react-icons/bi";
-import { rightSide } from "../../data/playerRightSide";
-import { Player } from "../FullScreenPlayer/Player";
 import { HiChevronDown } from "react-icons/hi";
-import { useSong } from "../../contexts/SongContext";
+import { useSong } from "../../../contexts/SongContext";
 import { FiMinus } from "react-icons/fi";
 import { useSwipeable } from "react-swipeable";
-import checkNumber from "../../shared/lib/check-number";
-import { useScreen } from "../../contexts/ScreenContext";
-import useOutsideClick from "../../shared/lib/hooks/use-outside-click";
+import checkNumber from "../../../shared/lib/check-number";
+import { useScreen } from "../../../contexts/ScreenContext";
+import useOutsideClick from "../../../shared/lib/hooks/use-outside-click";
+import { Player } from "./organisms/player";
+import { rightSide } from "../../../shared/data/player-right-side";
 
 export default function FullScreenPlayer() {
   const {

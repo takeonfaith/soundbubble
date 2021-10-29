@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../../../contexts/AuthContext";
 import { useSong } from "../../../../contexts/SongContext";
 import { firestore } from "../../../../firebase";
+import { getSongById } from "../../../../shared/api/song-api";
 
-const useLastSongListened = (data, loading) => {
-  const [lastSongId, setLastSongId] = useState(data.lastSongPlayed);
+const useLastSongListened = (data) => {
   const [songData, setSongData] = useState();
   const {
     setCurrentSong,
@@ -17,22 +17,7 @@ const useLastSongListened = (data, loading) => {
   const { currentUser } = useAuth();
 
   function fetchLastSong() {
-    firestore
-      .collection("songs")
-      .doc(lastSongId)
-      .get()
-      .then((doc) => {
-        setSongData(doc.data());
-      });
-  }
-
-  function fetchLastSongId() {
-    firestore
-      .collection("users")
-      .doc(data.uid)
-      .onSnapshot((doc) => {
-        setLastSongId(doc.data().lastSongPlayed);
-      });
+    getSongById(data.lastSongPlayed).then((song) => setSongData(song));
   }
 
   function chooseSongItem() {
@@ -51,15 +36,8 @@ const useLastSongListened = (data, loading) => {
   }
 
   useEffect(() => {
-    fetchLastSong();
-  }, [lastSongId]);
-
-  useEffect(() => {
-    if (!loading) {
-      fetchLastSongId();
-      return () => fetchLastSongId();
-    }
-  }, [firestore]);
+    if (data?.lastSongPlayed) fetchLastSong();
+  }, [data.lastSongPlayed]);
 
   return [songData, chooseSongItem];
 };

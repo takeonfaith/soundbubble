@@ -7,8 +7,9 @@ import { RadioBtn } from "../../components/SignIn-Up/RadioBtn";
 import { TitleAndLogo } from "../../components/SignIn-Up/TitleAndLogo";
 import { useAuth } from "../../contexts/AuthContext";
 import DownloadButton from "../../shared/ui/atoms/download-button";
+import Input from "../../shared/ui/atoms/input";
 import "../../styles/SignIn-Up.css";
-import { LOGIN_ROUTE } from "../../utils/consts";
+import { LOGIN_ROUTE } from "../../utils/route-consts";
 
 const SignUpPage = () => {
   const [currentRoleChoice, setCurrentRoleChoice] = useState(1);
@@ -54,23 +55,26 @@ const SignUpPage = () => {
         {errorMessage && <div className="Alert">{errorMessage}</div>}
 
         <div className="inner-plate-content">
-          <input
+          <Input
             type="email"
-            placeholder="Enter your Email"
-            className="emailInput"
-            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter your email"
+            value={email}
+            setValue={setEmail}
+            margin
           />
-          <input
+          <Input
             type="text"
             placeholder="Enter your name"
-            onChange={(e) => setName(e.target.value)}
+            value={name}
+            setValue={setName}
+            margin
           />
-          <input
+          <Input
             type="password"
-            name=""
-            id=""
-            placeholder="Create a password"
-            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Create password"
+            value={password}
+            setValue={setPassword}
+            margin
           />
           <div
             style={{
@@ -109,7 +113,7 @@ const SignUpPage = () => {
               Sign Up
             </button>
             <Link to={LOGIN_ROUTE}>
-              <button className="inBtn">Already have the account</button>
+              <button className="inBtn">Already registered</button>
             </Link>
           </div>
         </div>

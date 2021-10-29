@@ -6,9 +6,9 @@ import { Hint } from "../../../../components/Basic/Hint";
 import { FriendsListToShareWith } from "../../../../components/Lists/FriendsListToShareWith";
 import { useAuth } from "../../../../contexts/AuthContext";
 import { useModal } from "../../../../contexts/ModalContext";
-import shortWord from "../../../../functions/other/shortWord";
 import { useAddOrDeleteSong } from "../../../../hooks/useAddOrDeleteSong";
 import { usePlaylistSongs } from "../../../../hooks/usePlaylistSongs";
+import getShortString from "../../../../shared/lib/get-short-string";
 
 export const TinyPlaylist = ({ playlist }) => {
   const { toggleModal, setContent } = useModal();
@@ -90,7 +90,7 @@ export const TinyPlaylist = ({ playlist }) => {
         ) : null}
       </div>
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <span>{shortWord(playlist.name, 13)}</span>
+        <span>{getShortString(playlist.name, 13)}</span>
         <span style={{ fontSize: "0.8em", color: "grey", fontWeight: "500" }}>
           {playlist.isAlbum ? "album" : "playlist"}
         </span>

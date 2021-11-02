@@ -25,7 +25,7 @@ export const PersonTiny = ({
         setListOfChosenItems={setChosenArray}
         itemId={data.uid}
       />
-      <div className="pesronImg">
+      <div className="personImg">
         <img loading="lazy" src={data.photoURL} alt="" />
       </div>
       <div className="personName">{data.displayName}</div>

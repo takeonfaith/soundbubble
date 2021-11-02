@@ -3,13 +3,24 @@ import { ImCheckmark } from "react-icons/im";
 import findRightIcon from "../../../../shared/lib/find-right-icon";
 
 const SearcHintItem = (props) => {
-  const { name, author, isVerified, type, index, currentHint, setCurrentHint } =
-    props;
+  const {
+    name,
+    author,
+    isVerified,
+    type,
+    index,
+    currentHint,
+    setCurrentHint,
+    findSomething,
+    setInputFocused,
+  } = props;
   return (
     <div
       className={"search-hint-item" + (currentHint === index ? " current" : "")}
       onClick={() => {
         setCurrentHint(index);
+        setInputFocused(false);
+        findSomething(name);
       }}
     >
       {findRightIcon(type)}

@@ -1,5 +1,4 @@
 import React from "react";
-import { FiSearch } from "react-icons/fi";
 import useLoadHints from "../../lib/hooks/use-load-hints";
 import SearcHintItem from "../atoms/search-hint-item";
 
@@ -11,6 +10,8 @@ export const SearchHints = ({
   setCurrentHint,
   inputFocused,
   defaultSearchMode,
+  findSomething,
+  setInputFocused,
 }) => {
   useLoadHints({
     setCurrentHint,
@@ -37,6 +38,8 @@ export const SearchHints = ({
         key={-1}
         currentHint={currentHint}
         setCurrentHint={setCurrentHint}
+        findSomething={findSomething}
+        setInputFocused={setInputFocused}
       />
       {searchHints.map((hint, index) => {
         return (
@@ -46,6 +49,8 @@ export const SearchHints = ({
             setCurrentHint={setCurrentHint}
             index={index}
             key={hint.uid}
+            findSomething={findSomething}
+            setInputFocused={setInputFocused}
           />
         );
       })}

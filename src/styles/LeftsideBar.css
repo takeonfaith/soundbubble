@@ -188,9 +188,6 @@
   padding: 1px 3px;
 }
 
-.person {
-}
-
 .sendSongImage {
   width: 24px;
   height: 24px;
@@ -301,7 +298,7 @@
   height: 35px;
 }
 
-.pesronImg {
+.personImg {
   width: 35px;
   height: 35px;
   overflow: hidden;
@@ -312,7 +309,7 @@
   background-size: cover;
 }
 
-.pesronImg img {
+.personImg img {
   width: 100%;
 }
 

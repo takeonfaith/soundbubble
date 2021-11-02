@@ -21,6 +21,7 @@ const LeftsideBarContainer = styled.div`
 
   .personName {
     white-space: nowrap;
+    text-overflow: ellipsis;
   }
 `;
 

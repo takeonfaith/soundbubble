@@ -98,7 +98,7 @@ export const Person = ({ index, friend }) => {
           <BiShare />
         </button>
       </div>
-      <Link className="pesronImg" to={`/authors/${friend.uid}`}>
+      <Link className="personImg" to={`/authors/${friend.uid}`}>
         <img loading="lazy" src={friend.photoURL} alt="" />
       </Link>
       <IsUserOnlineCircle userUID={friend.uid} />

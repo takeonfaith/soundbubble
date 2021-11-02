@@ -20,7 +20,7 @@ const useSearch = (
 
   const [inputValue, setInputValue] = useState(value);
 
-  async function findItem(place, defaultList = [], setList) {
+  async function findItem(value, place, defaultList = [], setList) {
     const foundItemTempArray = [];
     let normalizedSearch = normalizeString(value);
     const itemsList = await firestore
@@ -119,44 +119,76 @@ const useSearch = (
       setFoundAnything(false);
     }
   }
-  function findSomething() {
+  function findSomething(str) {
     if (value.length !== 0) {
-      setInputValue(value);
+      const searchText = str ?? value;
+      setInputValue(searchText);
       setLoading(true);
       setFoundAnything(false);
       if (defaultSearchMode === undefined) {
         if (searchMode === 0 || searchMode === 1) {
-          findItem("songs", defaultSongsListValue, setAllFoundSongs);
+          findItem(
+            searchText,
+            "songs",
+            defaultSongsListValue,
+            setAllFoundSongs
+          );
           setResultAuthorList([]);
           setResultPlaylists([]);
         }
         if (searchMode === 0 || searchMode === 2) {
-          findItem("users", defaultAuthorsListValue, setResultAuthorList);
+          findItem(
+            searchText,
+            "users",
+            defaultAuthorsListValue,
+            setResultAuthorList
+          );
           setAllFoundSongs([]);
           setResultPlaylists([]);
         }
         if (searchMode === 0 || searchMode === 3) {
-          findItem("playlists", defaultPlaylistsListValue, setResultPlaylists);
+          findItem(
+            searchText,
+            "playlists",
+            defaultPlaylistsListValue,
+            setResultPlaylists
+          );
           setResultAuthorList([]);
           setAllFoundSongs([]);
         }
       } else {
         switch (defaultSearchMode) {
           case "songs":
-            findItem("songs", defaultSongsListValue, setAllFoundSongs);
+            findItem(
+              searchText,
+              "songs",
+              defaultSongsListValue,
+              setAllFoundSongs
+            );
             break;
           case "playlists":
             findItem(
+              searchText,
               "playlists",
               defaultPlaylistsListValue,
               setResultPlaylists
             );
             break;
           case "authors":
-            findItem("users", defaultAuthorsListValue, setResultAuthorList);
+            findItem(
+              searchText,
+              "users",
+              defaultAuthorsListValue,
+              setResultAuthorList
+            );
             break;
           default:
-            findItem("songs", defaultSongsListValue, setAllFoundSongs);
+            findItem(
+              searchText,
+              "songs",
+              defaultSongsListValue,
+              setAllFoundSongs
+            );
             break;
         }
       }

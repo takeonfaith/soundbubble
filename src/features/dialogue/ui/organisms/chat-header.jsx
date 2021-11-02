@@ -1,41 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { LastSeen } from "../../../../components/Basic/LastSeen";
-import { ChatMoreBtn } from "../molecules/chat-more-button";
-import { useAuth } from "../../../../contexts/AuthContext";
 import { useModal } from "../../../../contexts/ModalContext";
-import { firestore } from "../../../../firebase";
-import { ChatInfo } from "./chat-info";
 import { GoBackBtn } from "../../../../shared/ui/atoms/go-back-button";
+import useChatHeader from "../../lib/hooks/use-chat-header";
+import { ChatMoreBtn } from "../molecules/chat-more-button";
+import { ChatInfo } from "./chat-info";
 
 export const ChatHeader = ({ data }) => {
-  const { currentUser } = useAuth();
   const { toggleModal, setContent } = useModal();
-  const [otherPerson, setOtherPerson] = useState({});
-  const [headerColors, setHeaderColors] = useState(
-    !!data.chatName ? [] : data.imageColors
-  );
-  async function fetchOtherPerson() {
-    const otherPersonId = data.participants.find(
-      (personId) => personId !== currentUser.uid
-    );
-    const person = (
-      await firestore.collection("users").doc(otherPersonId).get()
-    ).data();
-    setOtherPerson(person);
-    setHeaderColors(person.imageColors);
-  }
+  const [otherPerson, headerColors] = useChatHeader(data);
 
-  useEffect(() => {
-    if (!data.chatName.length) {
-      fetchOtherPerson();
-    }
-  }, [data.id]);
   return (
     <div
       className="ChatHeader"
       style={
-        headerColors.length
+        headerColors?.length
           ? {
               background: `linear-gradient(45deg, ${headerColors[0]}, ${headerColors[1]})`,
             }

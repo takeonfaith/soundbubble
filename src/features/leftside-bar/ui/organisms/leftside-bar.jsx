@@ -67,7 +67,7 @@ export const LeftsideBar = () => {
           >
             <NotificationCircle value={userNotifications} />
             <div
-              className="pesronImg"
+              className="personImg"
               style={{ backgroundImage: `url(${currentUser.photoURL})` }}
             ></div>
             <div className="personName">

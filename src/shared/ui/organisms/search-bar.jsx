@@ -6,6 +6,7 @@ import SearchBarButtons from "../../../features/search/ui/molecules/search-bar-b
 import SearchFilters from "../../../features/search/ui/molecules/search-filters";
 import { SearchHints } from "../../../features/search/ui/organisms/search-hints";
 import checkNumber from "../../lib/check-number";
+import useOutsideClick from "../../lib/hooks/use-outside-click";
 
 const SearchBar = ({
   value,
@@ -74,12 +75,14 @@ const SearchBar = ({
     }
   };
 
+  useOutsideClick(inputRef, setInputFocused);
+
   return (
     <div
       style={{ marginTop: "10px", width: "100%" }}
       className="searchBarWrapper"
     >
-      <div className="searchBar">
+      <div className="searchBar" ref={inputRef}>
         <SearchBarButtons
           setInputValue={setInputValue}
           length={value.length}
@@ -88,7 +91,6 @@ const SearchBar = ({
         <input
           type="text"
           onFocus={() => setInputFocused(true)}
-          onBlur={() => setInputFocused(false)}
           style={
             searchHints.length
               ? {
@@ -116,7 +118,6 @@ const SearchBar = ({
               setSearchHints([]);
             }
           }}
-          ref={inputRef}
         />
         <SearchFilters
           defaultSearchMode={defaultSearchMode}
@@ -131,6 +132,8 @@ const SearchBar = ({
           setCurrentHint={setCurrentHint}
           inputFocused={inputFocused}
           defaultSearchMode={defaultSearchMode}
+          findSomething={findSomething}
+          setInputFocused={setInputFocused}
         />
       </div>
       <div className="authorsResult">

@@ -16,7 +16,6 @@ const useAmountOfUnseenMessages = () => {
 				snapshot.docs.map((chat) => {
 					const chatData = chat.data()
 					setAmount(prev => prev + amountOfUnseenMessages(chatData.messages, currentUser))
-					if (amountOfUnseenMessages(chatData.messages, currentUser) !== 0) console.log(chatData, chatData.messages);
 				})
 			});
 		return () => {

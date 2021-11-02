@@ -38,7 +38,6 @@ const AuthorPage = () => {
         }
       })
       .catch((error) => {
-        console.log("Error getting document:", error);
         openBottomMessage("Failed to load author's data", "failure");
       });
   }

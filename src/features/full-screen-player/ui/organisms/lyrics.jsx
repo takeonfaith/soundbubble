@@ -54,7 +54,6 @@ export const Lyrics = () => {
 
   useEffect(() => {
     let tempSongData = currentSongData;
-    // console.log(tempSongData)
     if (tempSongData !== undefined && inputKaraokeTime !== 0) {
       tempSongData.lyrics.forEach((paragraph, index) => {
         paragraph.startTime = karaokeModeratorTimes[index] || "undefined";
@@ -77,8 +76,6 @@ export const Lyrics = () => {
       lyrics: currentSongData.lyrics,
     });
   }
-
-  // console.log(currentSongData)
 
   function addLyricsBlock(indexOfRelativeElement, direction) {
     const tempTimes = karaokeModeratorTimes;

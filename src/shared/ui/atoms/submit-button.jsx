@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { ImCheckmark } from "react-icons/im";
 import styled from "styled-components";
 import { LoadingCircle } from "../../../components/Loading/LoadingCircle";

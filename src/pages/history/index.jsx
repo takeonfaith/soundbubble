@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { ContentContainer } from "../../components/Containers/ContentContainer";
-import { SongList } from "../../components/Lists/SongList";
-import { useAuth } from "../../contexts/AuthContext";
+import { ContentContainer } from "../../shared/ui/atoms/content-container";
+import { SongList } from "../../features/song/ui/templates/song-list";
+import { useAuth } from "../../contexts/auth";
 import { firestore } from "../../firebase";
 import { fetchItemList } from "../../shared/lib/fetch-item-list";
 import { GoBackBtn } from "../../shared/ui/atoms/go-back-button";

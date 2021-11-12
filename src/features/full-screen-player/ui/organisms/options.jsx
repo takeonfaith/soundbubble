@@ -2,7 +2,7 @@ import React from "react";
 import { MdPlaylistAdd } from "react-icons/md";
 import { BiUserCircle } from "react-icons/bi";
 import { FiInfo } from "react-icons/fi";
-import { useSong } from "../../../../contexts/SongContext";
+import { useSong } from "../../../../contexts/song";
 import AddOrDeleteButtonFull from "../molecules/add-or-delete-song-button";
 export const Options = () => {
   const { currentSongData, setRightSideCurrentPage } = useSong();

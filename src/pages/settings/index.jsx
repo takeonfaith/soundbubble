@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { ContentContainer } from "../../components/Containers/ContentContainer";
+import { ContentContainer } from "../../shared/ui/atoms/content-container";
 import SettingsList from "./ui/molecules/settings-list";
 import SettingsSections from "./ui/molecules/settings-sections";
 

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import SearchBar from "../../shared/ui/organisms/search-bar";
-import { ContentContainer } from "../../components/Containers/ContentContainer";
-import { AlbumList } from "../../components/Lists/AlbumList";
-import { AuthorsList } from "../../components/Lists/AuthorsList";
-import { SongList } from "../../components/Lists/SongList";
-import { useAuth } from "../../contexts/AuthContext";
+import { ContentContainer } from "../../shared/ui/atoms/content-container";
+import { AlbumList } from "../../features/album/ui/template/album-list";
+import { AuthorsList } from "../../features/author/ui/templates/authors-list";
+import { SongList } from "../../features/song/ui/templates/song-list";
+import { useAuth } from "../../contexts/auth";
 import SearchHistory from "../../features/search/ui/organisms/search-history";
-import "../../styles/SearchPage.css";
+import "./style.css";
 
 const SearchPage = () => {
   const { searchValue, setSearchValue } = useAuth();

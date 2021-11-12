@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { AiOutlineCloudDownload } from "react-icons/ai";
 import { ImCheckmark } from "react-icons/im";
 import styled from "styled-components";
-import { LoadingCircle } from "../../../components/Loading/LoadingCircle";
-import { useModal } from "../../../contexts/ModalContext";
+import { LoadingCircle } from "../../../features/loading/ui/atoms/loading-circle";
+import { useModal } from "../../../contexts/modal";
 import { storage } from "../../../firebase";
 
 const DownloadButtonWrapper = styled.button`

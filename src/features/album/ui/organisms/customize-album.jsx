@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { ColorExtractor } from "react-color-extractor";
 import { FiXCircle } from "react-icons/fi";
-import { PersonTiny } from "../../../../components/Basic/PersonTiny";
-import { SongList } from "../../../../components/Lists/SongList";
-import { LoadingCircle } from "../../../../components/Loading/LoadingCircle";
-import { RadioBtn } from "../../../../components/SignIn-Up/RadioBtn";
-import { useAuth } from "../../../../contexts/AuthContext";
+import { PersonTiny } from "../../../../entities/user/ui/organisms/person-tiny";
+import { SongList } from "../../../../features/song/ui/templates/song-list";
+import { LoadingCircle } from "../../../loading/ui/atoms/loading-circle";
+import { useAuth } from "../../../../contexts/auth";
 import { firestore } from "../../../../firebase";
-import getUID from "../../../../functions/other/getUID";
+import getUID from "../../../../shared/lib/get-uid";
 import DownloadButton from "../../../../shared/ui/atoms/download-button";
 import Input from "../../../../shared/ui/atoms/input";
+import { RadioBtn } from "../../../../shared/ui/atoms/radio-button";
 import SubmitButton from "../../../../shared/ui/atoms/submit-button";
 import SearchBar from "../../../../shared/ui/organisms/search-bar";
+
 export const CustomizeAlbum = ({ playlist }) => {
   const { currentUser } = useAuth();
   const [playlistName, setPlaylistName] = useState(playlist.name);

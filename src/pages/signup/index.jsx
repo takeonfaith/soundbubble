@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { ColorExtractor } from "react-color-extractor";
 import { Link } from "react-router-dom";
-import { FullScreenLoading } from "../../components/Loading/FullScreenLoading";
-import { BlurredBg } from "../../components/SignIn-Up/BlurredBg";
-import { RadioBtn } from "../../components/SignIn-Up/RadioBtn";
-import { TitleAndLogo } from "../../components/SignIn-Up/TitleAndLogo";
-import { useAuth } from "../../contexts/AuthContext";
+import { FullScreenLoading } from "../../features/loading/ui/atoms/full-screen-loading";
+import { TitleAndLogo } from "../../shared/ui/atoms/title-and-logo";
+import { useAuth } from "../../contexts/auth";
+import { BlurredBg } from "../../shared/ui/atoms/blurred-background";
 import DownloadButton from "../../shared/ui/atoms/download-button";
 import Input from "../../shared/ui/atoms/input";
-import "../../styles/SignIn-Up.css";
-import { LOGIN_ROUTE } from "../../utils/route-consts";
+import { RadioBtn } from "../../shared/ui/atoms/radio-button";
+import "./style.css";
+import { LOGIN_ROUTE } from "../../shared/data/consts";
 
 const SignUpPage = () => {
   const [currentRoleChoice, setCurrentRoleChoice] = useState(1);

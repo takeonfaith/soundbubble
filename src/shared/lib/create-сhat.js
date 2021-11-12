@@ -1,6 +1,6 @@
 
 import { firestore } from "../../firebase"
-import getUID from "../../functions/other/getUID"
+import getUID from "./get-uid"
 
 export const createChat = async (participants, chatUID = getUID(), chatName = "", chatImage = "", admins = [], imageColors = []) => {
 	firestore.collection('chats').doc(chatUID).set({

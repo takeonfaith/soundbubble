@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { BiCheckCircle, BiDownArrow, BiUpArrow } from "react-icons/bi";
 import { FiXCircle } from "react-icons/fi";
-import { useAuth } from "../../../../contexts/AuthContext";
-import { useSong } from "../../../../contexts/SongContext";
+import { useAuth } from "../../../../contexts/auth";
+import { useSong } from "../../../../contexts/song";
 import { firestore } from "../../../../firebase";
 import { Slider } from "../../../../shared/ui/molecules/slider";
 import { LyricsParagraph } from "../molecules/lyrics-paragraph";

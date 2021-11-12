@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { SongList } from "../../../../components/Lists/SongList";
-import { useSong } from "../../../../contexts/SongContext";
+import { SongList } from "../../../../features/song/ui/templates/song-list";
+import { useSong } from "../../../../contexts/song";
+import findIfSongIsNew from "../../../../entities/song/lib/find-if-song-is-new";
 import { firestore } from "../../../../firebase";
-import findIfSongIsNew from "../../../../functions/find/findIfSongIsNew";
 
 export const RecentSongs = () => {
   const { yourAuthors } = useSong();

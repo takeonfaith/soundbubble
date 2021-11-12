@@ -1,5 +1,5 @@
 import { firestore } from "../../../firebase"
-import { sendMessage } from "../../../functions/other/sendMessage"
+import { sendMessage } from "./send-message"
 
 const addPeopleToChat = async (chatId, people, setLoading, setCompleted) => {
 	setLoading(true)

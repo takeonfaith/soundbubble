@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { NotificationCircle } from "../../../../components/Basic/NotificationCircle";
+import { NotificationCircle } from "../../../../shared/ui/atoms/notification-circle";
 
 export default function NavigationItem({
   id,

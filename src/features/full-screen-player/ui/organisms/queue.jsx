@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useSong } from "../../../../contexts/SongContext";
+import { useSong } from "../../../../contexts/song";
+import { SongItem } from "../../../../entities/song/ui/song-item";
 import getShortString from "../../../../shared/lib/get-short-string";
-import { SongItem } from "../../../song/ui/organisms/song-item";
 
 export const Queue = () => {
   const {

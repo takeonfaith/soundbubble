@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import normalizeString from "../../../../functions/other/normalizeString";
+import normalizeString from "../../../../shared/lib/normalize-string";
 import findSearchHints from "../find-search-hints";
 import transliteWord from "../translite-word";
 

@@ -2,23 +2,22 @@ import React, { useEffect, useState } from "react";
 import { BiFolderPlus, BiFullscreen } from "react-icons/bi";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import { NotificationCircle } from "../../../../components/Basic/NotificationCircle";
-import { CreatePlaylistPage } from "../../../../components/LibraryPage/CreatePlaylistPage";
-import { FriendsListToShareWith } from "../../../../components/Lists/FriendsListToShareWith";
-import { useAuth } from "../../../../contexts/AuthContext";
-import { useModal } from "../../../../contexts/ModalContext";
-import { useSong } from "../../../../contexts/SongContext";
-import normalizeString from "../../../../functions/other/normalizeString";
-import Logo from "../../../../images/Logo3.svg";
+import { AddPlaylist } from "../../../../features/author/ui/organisms/add-playlist";
+import { FriendsToShareWith } from "../../../share/ui/organisms/friends-to-share-with";
+import { useAuth } from "../../../../contexts/auth";
+import { useModal } from "../../../../contexts/modal";
+import { useSong } from "../../../../contexts/song";
+import Logo from "../../../../shared/ui/images/Logo3.svg";
 import { leftSideBar } from "../../../../shared/data/left-side-bar";
 import getShortString from "../../../../shared/lib/get-short-string";
-import "../../../../styles/LeftsideBar.css";
+import normalizeString from "../../../../shared/lib/normalize-string";
+import { NotificationCircle } from "../../../../shared/ui/atoms/notification-circle";
+import "../style.css";
 import { Player } from "../../../full-screen-player/ui/organisms/player";
-
 import LeftsideBarContainer from "../atoms/container";
 import NavigationPanel from "../molecules/navigation-panel";
-import { Person } from "../molecules/Person";
-import { TinyPlaylist } from "../molecules/TinyPlaylist";
+import { Person } from "../molecules/person";
+import { TinyPlaylist } from "../molecules/tiny-playlist";
 
 export const LeftsideBar = () => {
   const { currentUser } = useAuth();
@@ -100,7 +99,7 @@ export const LeftsideBar = () => {
                 onClick={() => {
                   toggleModal();
                   setContent(
-                    <FriendsListToShareWith
+                    <FriendsToShareWith
                       item={currentSongData}
                       whatToShare={"song"}
                     />
@@ -139,7 +138,7 @@ export const LeftsideBar = () => {
             className="createPlaylistBtn"
             onClick={() => {
               toggleModal();
-              setContent(<CreatePlaylistPage />);
+              setContent(<AddPlaylist />);
             }}
             style={{ margin: "5px 0" }}
           >

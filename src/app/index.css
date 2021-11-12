@@ -375,33 +375,6 @@ button:active {
   transform: translateY(-50%) scale(1);
 }
 
-/* .SongItem.SongItemLoading .songItemAuthor::after, .SongItem.SongItemLoading .songItemName::after, .SongItem.SongItemLoading .songItemImage::after{
-  content: "";
-  height: 100%;
-  background: var(--reallyTransparentWhite);
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: 10px;
-  animation: loadingWhite 2s infinite;
-}
-
-@keyframes loadingWhite {
-  0%{
-    opacity: 0;
-    width: 0%;
-  }
-  50%{
-    opacity: 1;
-    width: 100%;
-  }
-  100%{
-    opacity: 0;
-    width: 100%;
-  }
-} */
-
 body {
   margin: 0;
   padding: 0;
@@ -543,7 +516,7 @@ body {
   height: 20px;
 }
 
-.FriendsListToShareWith .successMessageSent {
+.FriendsToShareWith .successMessageSent {
   position: absolute;
   top: 0;
   left: 0;
@@ -558,7 +531,7 @@ body {
   font-size: 1.2em;
 }
 
-.FriendsListToShareWith .successMessageSent svg {
+.FriendsToShareWith .successMessageSent svg {
   width: 30px;
   height: 30px;
   margin-right: 5px;
@@ -943,7 +916,7 @@ body {
     width: 100%;
   }
 
-  .FriendsListToShareWith {
+  .FriendsToShareWith {
     display: flex;
     height: 100%;
     flex-direction: column;

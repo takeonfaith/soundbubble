@@ -1,5 +1,5 @@
 import React from "react";
-import { TinyPersonsList } from "../../../../components/Lists/TinyPersonsList";
+import { TinyPersonsList } from "../../../author/ui/templates/tiny-persons-list";
 import DownloadButton from "../../../../shared/ui/atoms/download-button";
 import Input from "../../../../shared/ui/atoms/input";
 import SubmitButton from "../../../../shared/ui/atoms/submit-button";

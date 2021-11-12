@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { LoadingCircle } from "../../../components/Loading/LoadingCircle";
+import { LoadingCircle } from "../../../features/loading/ui/atoms/loading-circle";
 import useSearch from "../../../features/search/lib/hooks/use-search";
 import rankCurrentHint from "../../../features/search/lib/rank-current-hint";
 import SearchBarButtons from "../../../features/search/ui/molecules/search-bar-buttons";

@@ -3,8 +3,8 @@ import { FaFacebookF, FaTelegramPlane, FaVk } from "react-icons/fa";
 import { FiCopy } from "react-icons/fi";
 import { AiFillInstagram } from "react-icons/ai";
 import { ImWhatsapp } from "react-icons/im";
-import { useSong } from "../../../../contexts/SongContext";
-import { FriendsListToShareWith } from "../../../../components/Lists/FriendsListToShareWith";
+import { useSong } from "../../../../contexts/song";
+import { FriendsToShareWith } from "../../../share/ui/organisms/friends-to-share-with";
 export const Share = () => {
   const { currentSongData } = useSong();
   const socialMedia = [
@@ -30,7 +30,7 @@ export const Share = () => {
         })}
       </div>
       <div className="sharePeopleShort">
-        <FriendsListToShareWith item={currentSongData} whatToShare={"song"} />
+        <FriendsToShareWith item={currentSongData} whatToShare={"song"} />
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BiAlbum } from "react-icons/bi";
 import { BsDot } from "react-icons/bs";
 import { FiMusic, FiUser } from "react-icons/fi";
-import { useAuth } from "../../../../contexts/AuthContext";
+import { useAuth } from "../../../../contexts/auth";
 import { SeenByCircle } from "../../../dialogue/ui/atoms/seen-by-circle";
 import { firestore } from "../../../../firebase";
 import { TypingAnimation } from "../../../dialogue/ui/atoms/typing-animation";

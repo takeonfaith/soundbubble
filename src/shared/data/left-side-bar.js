@@ -1,6 +1,6 @@
 import { BiMusic, BiSearch } from "react-icons/bi";
 import { FiHome, FiMessageCircle } from "react-icons/fi";
-import { CHAT_ROUTE, HOME_ROUTE, LIBRARY_ROUTE, SEARCH_ROUTE } from "../../utils/route-consts";
+import { CHAT_ROUTE, HOME_ROUTE, LIBRARY_ROUTE, SEARCH_ROUTE } from "./consts";
 
 export const leftSideBar = [
 	{

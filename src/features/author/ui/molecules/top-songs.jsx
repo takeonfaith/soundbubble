@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { SongList } from "../../../../components/Lists/SongList";
-import findIfSongIsNew from "../../../../functions/find/findIfSongIsNew";
+import { SongList } from "../../../../features/song/ui/templates/song-list";
+import findIfSongIsNew from "../../../../entities/song/lib/find-if-song-is-new";
+
 import { fetchItemList } from "../../../../shared/lib/fetch-item-list";
 
 export const TopSongs = ({ authorId, authorsData, headerColors }) => {

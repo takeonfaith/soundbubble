@@ -1,9 +1,10 @@
 import React, { useRef } from "react";
-import { useSong } from "../../../../contexts/SongContext";
+import { useSong } from "../../../../contexts/song";
 import { Loading } from "../atoms/loading";
 import { BiCheckCircle, BiDownArrow, BiUpArrow } from "react-icons/bi";
 import { FiXCircle } from "react-icons/fi";
-import useOnScreen from "../../../../hooks/useOnScreen";
+import useOnScreen from "../../../../shared/lib/hooks/use-on-screen";
+
 export const LyricsParagraph = ({
   el,
   index,

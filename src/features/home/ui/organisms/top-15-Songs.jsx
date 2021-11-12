@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { SongList } from "../../../../components/Lists/SongList";
-import { LoadingCircle } from "../../../../components/Loading/LoadingCircle";
+import { SongList } from "../../../../features/song/ui/templates/song-list";
+import { LoadingCircle } from "../../../loading/ui/atoms/loading-circle";
 import { firestore } from "../../../../firebase";
 
 export const Top15Songs = () => {

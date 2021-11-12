@@ -1,5 +1,5 @@
 import React from "react";
-import { useSong } from "../../../../contexts/SongContext";
+import { useSong } from "../../../../contexts/song";
 
 export const AuthorsList = ({ listOfAuthors }) => {
   const { displayAuthorsFull } = useSong();

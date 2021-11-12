@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { AuthorsList } from "../../../../components/Lists/AuthorsList";
-import { useAuth } from "../../../../contexts/AuthContext";
-import { useSong } from "../../../../contexts/SongContext";
+import { AuthorsList } from "../../../../features/author/ui/templates/authors-list";
+import { useAuth } from "../../../../contexts/auth";
+import { useSong } from "../../../../contexts/song";
 import findSimilarArtists from "../../../../shared/lib/find-similar-artists";
 
 export const RecommendedAuthors = () => {

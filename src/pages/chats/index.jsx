@@ -1,13 +1,13 @@
+import "./style.css";
 import React, { useEffect, useState } from "react";
 import { FiPlus } from "react-icons/fi";
-import { ContentContainer } from "../../components/Containers/ContentContainer";
-import { LoadingCircle } from "../../components/Loading/LoadingCircle";
-import { useAuth } from "../../contexts/AuthContext";
-import { useModal } from "../../contexts/ModalContext";
+import { useAuth } from "../../contexts/auth";
+import { useModal } from "../../contexts/modal";
 import { ChatItem } from "../../features/chats/ui/organisms/chat-item";
 import { CreateChat } from "../../features/chats/ui/organisms/create-chat";
+import { LoadingCircle } from "../../features/loading/ui/atoms/loading-circle";
 import { fetchItemList } from "../../shared/lib/fetch-item-list";
-import "../../styles/ChatPage.css";
+import { ContentContainer } from "../../shared/ui/atoms/content-container";
 
 const ChatPage = () => {
   const [yourChats, setYourChats] = useState([]);

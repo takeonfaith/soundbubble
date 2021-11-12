@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useRouteMatch } from "react-router";
-import { Header } from "../../components/AuthorPage/Header";
-import { firestore } from "../../firebase";
-import { LoadingCircle } from "../../components/Loading/LoadingCircle";
-import { SongList } from "../../components/Lists/SongList";
 import { useHistory } from "react-router-dom";
-
-import { ContentContainer } from "../../components/Containers/ContentContainer";
+import { LoadingCircle } from "../../features/loading/ui/atoms/loading-circle";
+import { SongList } from "../../features/song/ui/templates/song-list";
+import { Header } from "../../features/template-header/header";
+import { firestore } from "../../firebase";
 import { fetchItemList } from "../../shared/lib/fetch-item-list";
+import { ContentContainer } from "../../shared/ui/atoms/content-container";
+
 const AlbumPage = () => {
   const match = useRouteMatch("/albums/:albumId");
   const [playlistSongs, setPlaylistSongs] = useState([]);

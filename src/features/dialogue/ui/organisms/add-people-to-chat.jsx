@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { TinyPersonsList } from "../../../../components/Lists/TinyPersonsList";
-import { useSong } from "../../../../contexts/SongContext";
-import filterArrayWithArray from "../../../../functions/other/filterArrayWithArray";
+
+import { useSong } from "../../../../contexts/song";
 import filterArrayOfObjectsWithArray from "../../../../shared/lib/filter-array-of-objects-with-array";
 import SubmitButton from "../../../../shared/ui/atoms/submit-button";
 import SearchBar from "../../../../shared/ui/organisms/search-bar";
+import { TinyPersonsList } from "../../../author/ui/templates/tiny-persons-list";
 import addPeopleToChat from "../../lib/add-people-to-chat";
 
 const AddPeopleToChat = ({ chat }) => {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouteMatch } from 'react-router';
-import { useAuth } from '../../../contexts/AuthContext';
+import { useAuth } from '../../../contexts/auth';
 import { firestore } from '../../../firebase';
 
 const useChatNotifications = () => {
@@ -54,7 +54,9 @@ const useChatNotifications = () => {
 			let timeout;
 			timeout = setTimeout(() => {
 				setNotifications((prev) => prev.slice(1, prev.length));
-			}, 4700);
+			}, 6200);
+
+			return () => clearTimeout(timeout)
 		}
 	}, [notifications.length]);
 

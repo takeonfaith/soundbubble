@@ -1,12 +1,13 @@
 import React from "react";
 import { FaBackward, FaForward, FaPause, FaPlay } from "react-icons/fa";
 import { TiArrowRepeat, TiArrowShuffle } from "react-icons/ti";
-import { useSong } from "../../../../contexts/SongContext";
-import displayAuthorsStr from "../../../../functions/display/displayAuthorsStr";
-import { findLenOfAuthors } from "../../../../functions/find/findLenOfAuthors";
-import correctTimeDisplay from "../../../../functions/other/correctTimeDisplay";
+import { useSong } from "../../../../contexts/song";
+
 import checkNumber from "../../../../shared/lib/check-number";
+import displayTime from "../../../../shared/lib/display-time";
+import displayAuthorsStr from "../../../../shared/lib/display-authors-str";
 import ColorCircles from "../atoms/color-circles";
+import { findLenOfAuthors } from "../../lib/find-len-of-authors";
 export const Player = ({ inputRef, textLimit = 18, linkToAuthors = true }) => {
   const {
     currentSongData,
@@ -89,8 +90,8 @@ export const Player = ({ inputRef, textLimit = 18, linkToAuthors = true }) => {
           }}
         />
         <div className="startAndEndTime">
-          <span>{correctTimeDisplay(currentTime)}</span>
-          <span>{correctTimeDisplay(songDuration)}</span>
+          <span>{displayTime(currentTime)}</span>
+          <span>{displayTime(songDuration)}</span>
         </div>
         <div className="btns">
           <button

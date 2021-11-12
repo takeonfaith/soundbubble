@@ -1,9 +1,9 @@
-import { useAuth } from "../../../../contexts/AuthContext";
-import { addSongToLibrary } from "../../../song/lib/add-song-to-library";
-import { deleteSongFromLibrary } from "../../../../functions/other/deleteSongFromLibrary";
+import { useAuth } from "../../../../contexts/auth";
+import { addSongToLibrary } from "../../../../entities/song/lib/add-song-to-library";
+import { deleteSongFromLibrary } from "../../../../entities/song/lib/delete-song-from-library";
 import { FiPlusCircle, FiX } from "react-icons/fi";
-import { useSong } from "../../../../contexts/SongContext";
-import { useModal } from "../../../../contexts/ModalContext";
+import { useSong } from "../../../../contexts/song";
+import { useModal } from "../../../../contexts/modal";
 export default function AddOrDeleteButtonFull({ song }) {
   const { currentUser } = useAuth();
   const { yourSongs } = useSong();

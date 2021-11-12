@@ -2,18 +2,19 @@ import React, { useEffect, useState } from "react";
 import { BiShare } from "react-icons/bi";
 import { FiMessageCircle, FiMusic } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import { Hint } from "../../../../components/Basic/Hint";
-import { IsUserOnlineCircle } from "../../../../components/Basic/IsUserOnlineCircle";
-import { useAuth } from "../../../../contexts/AuthContext";
-import { useModal } from "../../../../contexts/ModalContext";
-import { useSong } from "../../../../contexts/SongContext";
-import shareWithManyFriends from "../../../../functions/other/shareWithManyFriends";
+import { useAuth } from "../../../../contexts/auth";
+import { useModal } from "../../../../contexts/modal";
+import { useSong } from "../../../../contexts/song";
+
 import { createChat } from "../../../../shared/lib/create-сhat";
 import { findChatURL } from "../../../../shared/lib/find-chat-url";
 import getShortString from "../../../../shared/lib/get-short-string";
 import useUserOnline from "../../../../shared/lib/hooks/use-user-online";
+import { Hint } from "../../../../shared/ui/atoms/hint";
+import { IsOnlineCircle } from "../../../../shared/ui/atoms/is-online-circle";
 import OnlineCircleAnimation from "../../../../shared/ui/atoms/online-circle-animation";
 import useLastSongListened from "../../../author/lib/hooks/use-last-song-listened";
+import shareWithFriends from "../../../share/lib/share-with-friends";
 
 export const Person = ({ index, friend }) => {
   const { currentUser } = useAuth();
@@ -79,7 +80,7 @@ export const Person = ({ index, friend }) => {
         <button
           onClick={() => {
             if (!loadingSendSong) {
-              shareWithManyFriends({
+              shareWithFriends({
                 shareList: [friend.uid],
                 currentUser,
                 itemId: currentSong,
@@ -101,7 +102,7 @@ export const Person = ({ index, friend }) => {
       <Link className="personImg" to={`/authors/${friend.uid}`}>
         <img loading="lazy" src={friend.photoURL} alt="" />
       </Link>
-      <IsUserOnlineCircle userUID={friend.uid} />
+      <IsOnlineCircle userUID={friend.uid} />
       <div className="personName" style={{ pointerEvents: "none" }}>
         {getShortString(friend.displayName, 12)}
       </div>

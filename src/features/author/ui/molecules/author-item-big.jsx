@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../../../contexts/AuthContext";
+import { useAuth } from "../../../../contexts/auth";
 
 import { AddToListCircle } from "../../../../shared/ui/molecules/add-to-list-circle";
 import saveSearchHistory from "../../../search/lib/save-search-history";

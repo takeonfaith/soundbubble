@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { LastSeen } from "../../../../components/Basic/LastSeen";
-import { useModal } from "../../../../contexts/ModalContext";
+import { useModal } from "../../../../contexts/modal";
 import { GoBackBtn } from "../../../../shared/ui/atoms/go-back-button";
+import { LastSeen } from "../../../../shared/ui/atoms/last-seen";
 import useChatHeader from "../../lib/hooks/use-chat-header";
 import { ChatMoreBtn } from "../molecules/chat-more-button";
 import { ChatInfo } from "./chat-info";

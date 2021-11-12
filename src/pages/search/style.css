@@ -1,0 +1,195 @@
+.SearchPage {
+  min-height: calc(100vh - 200px);
+  height: 100%;
+  transition: 0.2s background;
+}
+
+.results {
+  z-index: 1;
+}
+.searchBar {
+  width: 100%;
+  z-index: 3;
+  position: relative;
+}
+
+.searchBar input {
+  width: 100%;
+  border: none;
+  background: var(--leftSideBarColor);
+  padding: 14px 45px;
+  box-sizing: border-box;
+  outline: none;
+  color: #fff;
+  font-weight: bold;
+  border-radius: var(--standartBorderRadius);
+}
+
+.authorsWrapper {
+  display: flex;
+  column-gap: 10px;
+}
+
+.authorResult a {
+  text-decoration: none;
+}
+
+.SearchPage .person {
+  font-weight: bold;
+  text-decoration: none;
+  color: #fff;
+}
+
+.SearchPage .person:hover {
+  background: var(--transparentWhite);
+}
+
+.colorfullShadow {
+  position: absolute;
+  width: 90%;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 30%;
+  display: block;
+  top: 0;
+  pointer-events: none;
+  filter: blur(100px);
+  z-index: -1;
+  transition: 0.2s;
+}
+
+.SearchPage .playLists {
+  justify-content: flex-start;
+  background: transparent;
+  padding: 0;
+  height: auto;
+  border-radius: 0;
+  flex-wrap: wrap;
+}
+
+.SearchPage .playLists a {
+  margin-right: 10px;
+  margin-bottom: 10px;
+  text-decoration: none;
+  color: #fff;
+  max-width: 200px;
+}
+
+.SearchPage .playLists a h4,
+.SearchPage .playLists a h5 {
+  margin: 5px 0;
+}
+
+.searchBarElement {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 12px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 44px;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.searchBarElement span {
+  cursor: pointer;
+  pointer-events: all;
+}
+
+.searchBarElement svg {
+  background: transparent;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  justify-content: flex-start;
+  pointer-events: all;
+}
+
+.searchBarElement .GoBackBtn button svg {
+  width: 22px;
+  height: 22px;
+}
+
+.searchFilters {
+  display: flex;
+  align-items: center;
+  margin-top: 7px;
+}
+
+.searchFilters button {
+  background: var(--reallyTransparentWhite);
+  border-radius: var(--standartBorderRadius2);
+  margin-right: 7px;
+  padding: 5px 10px;
+  cursor: pointer;
+  color: #fff;
+}
+
+.search-history {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.search-history-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
+  cursor: pointer;
+  box-sizing: border-box;
+  border-radius: var(--standartBorderRadius3);
+}
+
+.search-history-item:hover {
+  background: var(--leftSideBarColor);
+}
+
+.search-hints {
+  position: absolute;
+  top: 100%;
+  background: var(--leftSideBarColor);
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 0 0 var(--standartBorderRadius) var(--standartBorderRadius);
+}
+
+.search-hint-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 7px;
+  border-radius: var(--standartBorderRadius3);
+  cursor: pointer;
+}
+
+.search-hint-item.current,
+.search-hint-item:hover {
+  background: var(--reallyLightGrey);
+}
+
+.search-hint-item svg {
+  margin-right: 7px;
+}
+
+.search-hint-item-author {
+  margin-left: 15px;
+  position: relative;
+}
+
+.search-hint-item-author::after {
+  position: absolute;
+  display: block;
+  content: "";
+  top: 50%;
+  left: -9px;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 4px;
+  background: rgb(255, 255, 255);
+  border-radius: 100%;
+}

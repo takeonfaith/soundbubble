@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { useScreen } from "../../../../contexts/ScreenContext";
+import { useScreen } from "../../../../contexts/screen";
 import { TypingAnimation } from "../atoms/typing-animation";
 import { DisplayChatMessages } from "../molecules/display-chat-messages";
 
@@ -33,9 +33,7 @@ export const ChatMessagesWindow = ({
       ref={messagesWindowRef}
       onScroll={findTopDate}
       style={{
-        height: !isMobile
-          ? screenHeight - 105 + "px"
-          : screenHeight - 125 + "px",
+        height: screenHeight - 105 + "px",
       }}
     >
       <DisplayChatMessages

@@ -1,5 +1,6 @@
 import { firestore } from "../../firebase"
-import getUID from "../../functions/other/getUID"
+import getUID from "./get-uid"
+
 
 export const findChatURL = async (allParticipants, currentUser, setShouldCreate, setFriendChatId) => {
 	let foundChat = false

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { AddToPlaylistItem } from "../../../../components/Playlist/AddToPlaylistItem";
-import { useAuth } from "../../../../contexts/AuthContext";
-import { useSong } from "../../../../contexts/SongContext";
+import { AddToPlaylistItem } from "../atoms/add-to-playlist-item";
+import { useAuth } from "../../../../contexts/auth";
+import { useSong } from "../../../../contexts/song";
 export const AddToPlaylists = ({ song }) => {
   const { yourPlaylists, currentSongData } = useSong();
   const { currentUser } = useAuth();

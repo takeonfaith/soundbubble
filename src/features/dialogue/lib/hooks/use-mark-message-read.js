@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
-import { useAuth } from '../../../../contexts/AuthContext'
+import { useAuth } from '../../../../contexts/auth'
 import { firestore } from '../../../../firebase'
-import useOnScreen from '../../../../hooks/useOnScreen'
+import useOnScreen from '../../../../shared/lib/hooks/use-on-screen'
 
 const useMarkMessageRead = (chatId, messageData, otherMessages) => {
 	const messageRef = useRef()

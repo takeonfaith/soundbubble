@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useRouteMatch } from "react-router";
 import { useHistory } from "react-router-dom";
-import { AddWindow } from "../../components/AdminAndAuthor/AddWindow";
-import { Header } from "../../components/AuthorPage/Header";
-import { PersonTinyList } from "../../components/AuthorPage/PersonTinyList";
-import { Playlists } from "../../components/AuthorPage/Playlists";
-import { ContentContainer } from "../../components/Containers/ContentContainer";
-import { LoadingCircle } from "../../components/Loading/LoadingCircle";
-import { useAuth } from "../../contexts/AuthContext";
-import { useModal } from "../../contexts/ModalContext";
+import { Header } from "../../features/template-header/header";
+import { useAuth } from "../../contexts/auth";
+import { useModal } from "../../contexts/modal";
 import { FriendRequest } from "../../features/author/ui/molecules/friend-request";
 import { TopSongs } from "../../features/author/ui/molecules/top-songs";
+import { Playlists } from "../../features/author/ui/organisms/playlists";
 import { SimilarArtists } from "../../features/author/ui/organisms/similar-artists";
+import { AddWindow } from "../../features/author/ui/templates/add-window";
+import { PersonTinyList } from "../../features/author/ui/templates/person-tiny-list";
+import { LoadingCircle } from "../../features/loading/ui/atoms/loading-circle";
 import { firestore } from "../../firebase";
-import "../../styles/AuthorPage.css";
+import { ContentContainer } from "../../shared/ui/atoms/content-container";
+import "./style.css";
 
 const AuthorPage = () => {
   const match = useRouteMatch("/authors/:authorId");

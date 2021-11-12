@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import { useAuth } from "../../../../contexts/AuthContext";
-import { useModal } from "../../../../contexts/ModalContext";
-import { useSong } from "../../../../contexts/SongContext";
-import getUID from "../../../../functions/other/getUID";
+import { useAuth } from "../../../../contexts/auth";
+import { useModal } from "../../../../contexts/modal";
+import { useSong } from "../../../../contexts/song";
 import { createChat } from "../../../../shared/lib/create-сhat";
 import { findChatURL } from "../../../../shared/lib/find-chat-url";
+import getUID from "../../../../shared/lib/get-uid";
 
 const useCreateChat = () => {
   const { currentUser } = useAuth();

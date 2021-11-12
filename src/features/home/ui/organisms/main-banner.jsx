@@ -3,9 +3,10 @@ import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { firestore } from "../../../../firebase";
 import checkNumber from "../../../../shared/lib/check-number";
 import { AuthorItemBig } from "../../../author/ui/molecules/author-item-big";
-import { PlaylistItem } from "../../../../components/AuthorPage/PlaylistItem";
-import { LoadingCircle } from "../../../../components/Loading/LoadingCircle";
-import { SongItem } from "../../../song/ui/organisms/song-item";
+import { LoadingCircle } from "../../../loading/ui/atoms/loading-circle";
+
+import { PlaylistItem } from "../../../../entities/playlist/ui/playlist-item";
+import { SongItem } from "../../../../entities/song/ui/song-item";
 export const MainBanner = () => {
   const [bannerColors, setBannerColors] = useState([]);
   const [currentSliderPage, setcurrentSliderPage] = useState(0);

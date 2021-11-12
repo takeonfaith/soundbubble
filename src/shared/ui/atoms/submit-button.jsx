@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { ImCheckmark } from "react-icons/im";
 import styled from "styled-components";
-import { LoadingCircle } from "../../../components/Loading/LoadingCircle";
-import { useModal } from "../../../contexts/ModalContext";
+import { LoadingCircle } from "../../../features/loading/ui/atoms/loading-circle";
+import { useModal } from "../../../contexts/modal";
 
 const SubmitButtonWrapper = styled.button`
   width: 100%;

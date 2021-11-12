@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { AlbumList } from "../../../../components/Lists/AlbumList";
-import { AuthorsList } from "../../../../components/Lists/AuthorsList";
-import { SongList } from "../../../../components/Lists/SongList";
-import { LoadingCircle } from "../../../../components/Loading/LoadingCircle";
+import { AlbumList } from "../../../album/ui/template/album-list";
+import { AuthorsList } from "../../../../features/author/ui/templates/authors-list";
+import { SongList } from "../../../../features/song/ui/templates/song-list";
+import { LoadingCircle } from "../../../loading/ui/atoms/loading-circle";
 import { firestore } from "../../../../firebase";
 import { fetchItemList } from "../../../../shared/lib/fetch-item-list";
 import { Slider } from "../../../../shared/ui/molecules/slider";

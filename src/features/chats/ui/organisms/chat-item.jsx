@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../../../contexts/AuthContext";
+import { useAuth } from "../../../../contexts/auth";
 import { AmountOfUnseenMessages } from "../atoms/amount-of-unseen-messages";
 import { firestore } from "../../../../firebase";
-import displayDate from "../../../../functions/display/displayDate";
-import { IsUserOnlineCircle } from "../../../../components/Basic/IsUserOnlineCircle";
+
 import { LastSentMessage } from "../molecules/last-sent-message";
 import { amountOfUnseenMessages } from "../../lib/amount-of-unseen-messages";
+import { IsOnlineCircle } from "../../../../shared/ui/atoms/is-online-circle";
+import displayDate from "../../../../shared/lib/display-date";
 
 export const ChatItem = ({ chatData }) => {
   const { currentUser } = useAuth();
@@ -57,7 +58,7 @@ export const ChatItem = ({ chatData }) => {
         <div className="chatItemImage">
           <img loading="lazy" src={chatImage || otherPerson.photoURL} alt="" />
         </div>
-        {!chatName && <IsUserOnlineCircle userUID={otherPerson.uid} />}
+        {!chatName && <IsOnlineCircle userUID={otherPerson.uid} />}
         <div style={{ width: "100%" }}>
           <h4
             style={{

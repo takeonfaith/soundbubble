@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { ErrorPlate } from "../../components/MessagePlates/ErrorPlate";
-import { FullScreenLoading } from "../../components/Loading/FullScreenLoading";
-import { BlurredBg } from "../../components/SignIn-Up/BlurredBg";
-import { TitleAndLogo } from "../../components/SignIn-Up/TitleAndLogo";
-import { useAuth } from "../../contexts/AuthContext";
-import { SIGNUP_ROUTE } from "../../utils/route-consts";
+import { TitleAndLogo } from "../../shared/ui/atoms/title-and-logo";
+import { useAuth } from "../../contexts/auth";
+import { FullScreenLoading } from "../../features/loading/ui/atoms/full-screen-loading";
+import { ErrorPlate } from "../../features/login/ui/atoms/error-plate";
+import { SIGNUP_ROUTE } from "../../shared/data/consts";
+import { BlurredBg } from "../../shared/ui/atoms/blurred-background";
 import Input from "../../shared/ui/atoms/input";
 
 const LogInPage = () => {

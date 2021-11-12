@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { BiShare } from "react-icons/bi";
 import { useSwipeable } from "react-swipeable";
-import { useAuth } from "../../../../contexts/AuthContext";
-import { useScreen } from "../../../../contexts/ScreenContext";
-import { AuthorItemBig } from "../../../author/ui/molecules/author-item-big";
-import { SeenByCircle } from "../atoms/seen-by-circle";
-import useMarkMessageRead from "../../lib/hooks/use-mark-message-read";
-import { SongItem } from "../../../song/ui/organisms/song-item";
+import { SongItemLoading } from "../../../song/ui/atoms/song-loading";
+import { useAuth } from "../../../../contexts/auth";
+import { useScreen } from "../../../../contexts/screen";
+import { PlaylistItem } from "../../../../entities/playlist/ui/playlist-item";
+import { SongItem } from "../../../../entities/song/ui/song-item";
 import { firestore } from "../../../../firebase";
-import displayDate from "../../../../functions/display/displayDate";
-import { PlaylistItem } from "../../../../components/AuthorPage/PlaylistItem";
-import { SongItemLoading } from "../../../../components/Loading/SongItemLoading";
+import displayDate from "../../../../shared/lib/display-date";
+import { AuthorItemBig } from "../../../author/ui/molecules/author-item-big";
+import useMarkMessageRead from "../../lib/hooks/use-mark-message-read";
 import { whatToWriteInResponseToItem } from "../../lib/what-to-write-in-response-item";
+import { SeenByCircle } from "../atoms/seen-by-circle";
 
 export const MessageItem = ({
   messageData,

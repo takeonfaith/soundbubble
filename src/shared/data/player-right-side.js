@@ -1,8 +1,8 @@
 import { BiDotsVerticalRounded, BiShare } from 'react-icons/bi';
 import { RiPlayListFill } from 'react-icons/ri';
 import { TiDocumentText } from 'react-icons/ti';
-import { SongInfo } from '../../components/Info/SongInfo';
-import { AuthorsList } from '../../components/Lists/AuthorsList';
+import { SongInfo } from '../../features/song/ui/organisms/song-info';
+import { AuthorsList } from '../../features/author/ui/templates/authors-list';
 import { AddToPlaylists } from '../../features/full-screen-player/ui/molecules/add-to-playlists';
 import { Options } from '../../features/full-screen-player/ui/organisms/options';
 import { Queue } from '../../features/full-screen-player/ui/organisms/queue';

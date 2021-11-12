@@ -1,8 +1,8 @@
 import React from "react";
-import { AlbumList } from "../../../../components/Lists/AlbumList";
-import { AuthorsList } from "../../../../components/Lists/AuthorsList";
-import { SongList } from "../../../../components/Lists/SongList";
-import { useAuth } from "../../../../contexts/AuthContext";
+import { AlbumList } from "../../../album/ui/template/album-list";
+import { AuthorsList } from "../../../../features/author/ui/templates/authors-list";
+import { SongList } from "../../../../features/song/ui/templates/song-list";
+import { useAuth } from "../../../../contexts/auth";
 import useSearchHistory from "../../lib/hooks/use-search-history.jsx";
 
 const SearchHistory = () => {

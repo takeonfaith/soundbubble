@@ -1,5 +1,5 @@
 import React from "react";
-import { Hint } from "../../../../components/Basic/Hint";
+import { Hint } from "../../../../shared/ui/atoms/hint";
 
 const ButtonItem = ({ icon, hint, action }) => {
   return (

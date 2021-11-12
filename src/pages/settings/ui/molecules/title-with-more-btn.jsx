@@ -1,5 +1,5 @@
 import React from "react";
-import { MoreBtn } from "../../../../components/Buttons/MoreBtn";
+import { MoreBtn } from "../../../../shared/ui/atoms/more-button";
 
 export const TitleWithMoreBtn = ({
   title,

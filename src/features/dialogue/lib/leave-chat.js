@@ -1,5 +1,6 @@
 import { firestore } from "../../../firebase"
-import { sendMessage } from "../../../functions/other/sendMessage"
+import { sendMessage } from "./send-message"
+
 
 const leaveChat = async (chatId, user) => {
 	const chatData = (await firestore.collection('chats').doc(chatId).get()).data()

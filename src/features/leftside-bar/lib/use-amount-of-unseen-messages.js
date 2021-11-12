@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useAuth } from '../../../contexts/AuthContext';
+import { useAuth } from '../../../contexts/auth';
 import { firestore } from '../../../firebase';
 import { amountOfUnseenMessages } from '../../chats/lib/amount-of-unseen-messages';
 

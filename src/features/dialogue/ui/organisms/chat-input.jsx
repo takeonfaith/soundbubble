@@ -4,18 +4,19 @@ import { CgMusicNote } from "react-icons/cg";
 import { FiUser, FiX } from "react-icons/fi";
 import { ImAttachment } from "react-icons/im";
 import { MdSend } from "react-icons/md";
-import { useAuth } from "../../../../contexts/AuthContext";
-import { useSong } from "../../../../contexts/SongContext";
+import { useAuth } from "../../../../contexts/auth";
+import { useSong } from "../../../../contexts/song";
 import { firestore } from "../../../../firebase";
 import { whatToWriteInResponseToItem } from "../../lib/what-to-write-in-response-item";
-import { sendMessage } from "../../../../functions/other/sendMessage";
+
 import useOutsideClick from "../../../../shared/lib/hooks/use-outside-click";
 import SearchBar from "../../../../shared/ui/organisms/search-bar";
-import { AlbumList } from "../../../../components/Lists/AlbumList";
-import { AuthorsList } from "../../../../components/Lists/AuthorsList";
-import { SongList } from "../../../../components/Lists/SongList";
+import { AlbumList } from "../../../album/ui/template/album-list";
+import { AuthorsList } from "../../../../features/author/ui/templates/authors-list";
+import { SongList } from "../../../../features/song/ui/templates/song-list";
 import { AttachedItemsInChatInput } from "../molecules/attached-items-in-chat-input";
 import getShortString from "../../../../shared/lib/get-short-string";
+import { sendMessage } from "../../lib/send-message";
 
 export const ChatInput = ({
   chatId,

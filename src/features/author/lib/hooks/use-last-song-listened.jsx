@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../../../../contexts/AuthContext";
-import { useSong } from "../../../../contexts/SongContext";
+import { useAuth } from "../../../../contexts/auth";
+import { useSong } from "../../../../contexts/song";
 import { firestore } from "../../../../firebase";
 import { getSongById } from "../../../../shared/api/song-api";
 

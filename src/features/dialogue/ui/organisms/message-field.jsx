@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRef } from "react";
-import displayDate from "../../../../functions/display/displayDate";
+import displayDate from "../../../../shared/lib/display-date";
 import { MessageItem } from "../molecules/message-item";
 
 export const MessageField = ({

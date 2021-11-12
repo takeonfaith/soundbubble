@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { firestore } from "../../../../firebase";
-import { useAuth } from "../../../../contexts/AuthContext";
-import { SmallImages } from "../../../../components/AuthorPage/SmallImages";
+import { useAuth } from "../../../../contexts/auth";
+import { SmallImages } from "../../../album/ui/atoms/small-images";
 export const TypingAnimation = ({ typingPeople }) => {
   const [typingPeopleData, setTypingPeopleData] = useState([]);
   const { currentUser } = useAuth();

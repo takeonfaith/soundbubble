@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { ContentContainer } from "../../components/Containers/ContentContainer";
+import { ContentContainer } from "../../shared/ui/atoms/content-container";
 import Lyrics from "../../features/lyrics-editing/ui/molecules/lyrics";
 import SongImageAndName from "../../features/lyrics-editing/ui/molecules/song-image-and-name";
 import { firestore } from "../../firebase";

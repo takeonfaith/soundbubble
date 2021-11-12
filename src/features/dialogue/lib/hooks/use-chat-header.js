@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useAuth } from '../../../../contexts/AuthContext';
-import { useModal } from '../../../../contexts/ModalContext';
+import { useAuth } from '../../../../contexts/auth';
+import { useModal } from '../../../../contexts/modal';
 import { firestore } from '../../../../firebase';
 
 const useChatHeader = (data) => {

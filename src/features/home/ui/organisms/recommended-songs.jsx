@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { SongList } from "../../../../components/Lists/SongList";
-import { ImportantMessage } from "../../../../components/MessagePlates/ImportantMessage";
-import { useAuth } from "../../../../contexts/AuthContext";
-import { useSong } from "../../../../contexts/SongContext";
+import { SongList } from "../../../../features/song/ui/templates/song-list";
+import { ImportantMessage } from "../../../../shared/ui/atoms/important-message";
+import { useAuth } from "../../../../contexts/auth";
+import { useSong } from "../../../../contexts/song";
 import { firestore } from "../../../../firebase";
 
 export const RecommendedSongs = () => {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { firestore } from "../../../../firebase";
-import normalizeString from "../../../../functions/other/normalizeString";
+import normalizeString from "../../../../shared/lib/normalize-string";
 import { fetchItemList } from "../../../../shared/lib/fetch-item-list";
 
 const useSearch = (

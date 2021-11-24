@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useRouteMatch } from "react-router";
-import { LoadingCircle } from "../../features/loading/ui/atoms/loading-circle";
 import { useAuth } from "../../contexts/auth";
 import { useRealTimeMessages } from "../../features/dialogue/lib/hooks/use-realtime-messages";
 import { DateOnTop } from "../../features/dialogue/ui/atoms/date-on-top";
 import { ChatHeader } from "../../features/dialogue/ui/organisms/chat-header";
 import { ChatInput } from "../../features/dialogue/ui/organisms/chat-input";
 import { ChatMessagesWindow } from "../../features/dialogue/ui/organisms/chat-messages-window";
+import { LoadingCircle } from "../../features/loading/ui/atoms/loading-circle";
 
 const DialoguePage = () => {
   const match = useRouteMatch("/chat/:chatId");

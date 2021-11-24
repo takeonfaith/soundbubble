@@ -1,140 +1,54 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { ColorExtractor } from "react-color-extractor";
 import { FiXCircle } from "react-icons/fi";
+import { useAuth } from "../../../../contexts/auth";
 import { PersonTiny } from "../../../../entities/user/ui/organisms/person-tiny";
 import { SongList } from "../../../../features/song/ui/templates/song-list";
-import { LoadingCircle } from "../../../loading/ui/atoms/loading-circle";
-import { useAuth } from "../../../../contexts/auth";
-import { firestore } from "../../../../firebase";
-import getUID from "../../../../shared/lib/get-uid";
 import DownloadButton from "../../../../shared/ui/atoms/download-button";
 import Input from "../../../../shared/ui/atoms/input";
 import { RadioBtn } from "../../../../shared/ui/atoms/radio-button";
 import SubmitButton from "../../../../shared/ui/atoms/submit-button";
 import SearchBar from "../../../../shared/ui/organisms/search-bar";
+import { LoadingCircle } from "../../../loading/ui/atoms/loading-circle";
+import useCustomizeAlbum from "../../lib/hooks/use-customize-album";
 
 export const CustomizeAlbum = ({ playlist }) => {
   const { currentUser } = useAuth();
-  const [playlistName, setPlaylistName] = useState(playlist.name);
-  const [playlistCover, setPlaylistCover] = useState(playlist.image);
-  const [authorsInputValue, setAuthorsInputValue] = useState("");
-  const [allAuthors, setAllAuthors] = useState([]);
-  const [chosenAuthors, setChosenAuthors] = useState(playlist.authors);
-  const [releaseDate, setReleaseDate] = useState(playlist.creationDate);
-  const [songsSearch, setSongsSearch] = useState("");
-  const [allSongs, setAllSongs] = useState([]);
-  const [chosenSongs, setChosenSongs] = useState(playlist.songs);
-  const [playlistStatus, setPlaylistStatus] = useState(
-    playlist.isAlbum ? 1 : 0
-  );
-  const [isPlaylistPrivate, setIsPlaylistPrivate] = useState(
-    playlist.isPrivate ? 1 : 0
-  );
-  const [loadingAuthors, setLoadingAuthors] = useState(false);
-  const [loadingSongs, setLoadingSongs] = useState(false);
-  const [imageLocalPath, setImageLocalPath] = useState("");
-  const [imageColors, setImageColors] = useState(playlist.imageColors);
-  const [loading, setLoading] = useState(false);
-  const [completed, setCompleted] = useState(false);
-
-  useEffect(() => {
-    setPlaylistName(playlist.name);
-    setPlaylistCover(playlist.image);
-    setChosenAuthors(playlist.authors);
-  }, [playlist.id]);
-
-  useEffect(() => {
-    if (songsSearch.length === 0) {
-      playlist.songs.map(async (songId) => {
-        const songData = (
-          await firestore.collection("songs").doc(songId).get()
-        ).data();
-        setLoadingSongs(false);
-        setAllSongs((prev) => [...prev, songData]);
-      });
-    }
-  }, [songsSearch]);
-
-  function removeAuthorFromList(data) {
-    const filtered = chosenAuthors.filter((people) => people.uid !== data.uid);
-    return setChosenAuthors(filtered);
-  }
-
-  function addAuthor(data) {
-    if (!chosenAuthors.some((person) => person.uid === data.uid)) {
-      return setChosenAuthors((prev) => [
-        ...prev,
-        {
-          uid: data.uid,
-          displayName: data.displayName,
-          photoURL: data.photoURL,
-        },
-      ]);
-    }
-
-    removeAuthorFromList(data);
-  }
-
-  async function addPlaylistToFirebase(e) {
-    e.preventDefault();
-    const uid = getUID();
-    if (chosenAuthors.length > playlist.authors.length) {
-      const newAuthors = chosenAuthors.filter((author) => {
-        return !playlist.authors.find((a) => a.uid === author.uid);
-      });
-      newAuthors.forEach(async (author) => {
-        const authorRef = await firestore
-          .collection("users")
-          .doc(author.uid)
-          .get();
-        const authorData = authorRef.data();
-        const authorPlaylists = authorData.ownPlaylists;
-        authorPlaylists.push(playlist.id);
-        firestore.collection("users").doc(author.uid).update({
-          ownPlaylists: authorPlaylists,
-        });
-      });
-    } else if (chosenAuthors.length < playlist.authors.length) {
-      const newAuthors = playlist.authors.filter((author) => {
-        return !chosenAuthors.find((a) => a.uid === author.uid);
-      });
-      newAuthors.forEach(async (author) => {
-        const authorRef = await firestore
-          .collection("users")
-          .doc(author.uid)
-          .get();
-        const authorData = authorRef.data();
-        const authorPlaylists = authorData.ownPlaylists;
-        const filteredPlaylists = authorPlaylists.filter(
-          (playlistId) => playlistId !== playlist.id
-        );
-        firestore.collection("users").doc(author.uid).update({
-          ownPlaylists: filteredPlaylists,
-        });
-      });
-    }
-
-    firestore
-      .collection("playlists")
-      .doc(playlist.id)
-      .update({
-        id: playlist.id,
-        name: playlistName,
-        songs: chosenSongs,
-        authors: chosenAuthors,
-        image: playlistCover,
-        listens: playlist.listens,
-        creationDate: releaseDate,
-        subscribers: playlist.subscribers,
-        isAlbum: playlistStatus === 1,
-        imageColors: imageColors,
-        isPrivate: isPlaylistPrivate === 1,
-      })
-      .then(() => {
-        setLoading(false);
-        setCompleted(true);
-      });
-  }
+  const {
+    imageLocalPath,
+    setImageColors,
+    playlistName,
+    setPlaylistName,
+    authorsInputValue,
+    setAuthorsInputValue,
+    setAllAuthors,
+    chosenAuthors,
+    removeAuthorFromList,
+    loadingAuthors,
+    allAuthors,
+    addAuthor,
+    songsSearch,
+    setSongsSearch,
+    setAllSongs,
+    loadingSongs,
+    allSongs,
+    chosenSongs,
+    setChosenSongs,
+    setPlaylistStatus,
+    playlistStatus,
+    isPlaylistPrivate,
+    setIsPlaylistPrivate,
+    setPlaylistCover,
+    releaseDate,
+    setReleaseDate,
+    setImageLocalPath,
+    addPlaylistToFirebase,
+    loading,
+    completed,
+    setCompleted,
+    error,
+    setError,
+  } = useCustomizeAlbum(playlist);
 
   return (
     <div className="AddSong">
@@ -148,13 +62,13 @@ export const CustomizeAlbum = ({ playlist }) => {
         setValue={setPlaylistName}
         placeholder="Enter playlist name"
       />
-      <label>
+      <div>
         <h3>Playlist authors</h3>
         <SearchBar
           value={authorsInputValue}
           setValue={setAuthorsInputValue}
           setResultAuthorList={setAllAuthors}
-          defaultSearchMode={"authors"}
+          defaultSearchMode={"users"}
           inputText={"Search for authors"}
         />
         <div className="chosenAuthorsList">
@@ -197,7 +111,7 @@ export const CustomizeAlbum = ({ playlist }) => {
             })
           )}
         </div>
-      </label>
+      </div>
 
       <label>
         <h3>Search for songs</h3>
@@ -208,16 +122,6 @@ export const CustomizeAlbum = ({ playlist }) => {
           defaultSearchMode={"songs"}
           inputText={"Search for songs"}
         />
-        {/* <div className="chosenAuthorsList">
-            {chosenSongs.map((songId) => {
-              return (
-                <div className="chosenAuthorItem">
-                  <span>{songId}</span>
-                  <FiXCircle onClick={() => removeSongFromList(songId)} />
-                </div>
-              );
-            })}
-          </div> */}
         <div className="authorsResult">
           {loadingSongs ? (
             <div
@@ -304,6 +208,8 @@ export const CustomizeAlbum = ({ playlist }) => {
         completed={completed}
         setCompleted={setCompleted}
         bottomMessage={"Playlist was updated"}
+        errorMessage={error}
+        setErrorMessage={setError}
       />
     </div>
   );

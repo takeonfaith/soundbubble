@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react'
 import { useAuth } from '../../../../contexts/auth'
 import { useSong } from '../../../../contexts/song'
+import sortUserPlaylists from '../../../../features/author/lib/sort-user-playlists'
 import { firestore } from '../../../../firebase'
 
-export const useAddOrDeleteSong = (playlistId, songId) => {
+export const useAddOrDeleteSong = (playlist, songId) => {
 	const [playlistSongs, setPlaylistSongs] = useState([])
 	const [isAdded, setIsAdded] = useState(false)
 	const { currentUser } = useAuth()
 	const { currentSong } = useSong()
 	const songData = songId || currentSong
 	useEffect(() => {
-		const response = firestore.collection('playlists').doc(playlistId).onSnapshot(res => {
+		const response = firestore.collection('playlists').doc(playlist.id).onSnapshot(res => {
 			if (res.exists) setPlaylistSongs(res.data().songs)
 		})
 		return () => response()
@@ -21,10 +22,10 @@ export const useAddOrDeleteSong = (playlistId, songId) => {
 	}, [playlistSongs, songData])
 
 	function addOrDelete() {
-		if (playlistSongs.length > 0 && playlistId !== undefined) {
+		if (playlistSongs.length > 0 && playlist.id !== undefined) {
 			if (playlistSongs.includes(songData)) {
 				const newSongsList = playlistSongs.filter(songNum => songNum !== songData)
-				firestore.collection('playlists').doc(playlistId).update({
+				firestore.collection('playlists').doc(playlist.id).update({
 					songs: newSongsList
 				})
 				return
@@ -32,14 +33,11 @@ export const useAddOrDeleteSong = (playlistId, songId) => {
 
 			const newSongsList = playlistSongs
 			newSongsList.unshift(songData)
-			firestore.collection('playlists').doc(playlistId).update({
+			firestore.collection('playlists').doc(playlist.id).update({
 				songs: newSongsList
 			})
 
-			const sortedPlaylists = [playlistId, ...currentUser.ownPlaylists.filter(id => id !== playlistId)]
-			firestore.collection('users').doc(currentUser.uid).update({
-				ownPlaylists: sortedPlaylists
-			})
+			sortUserPlaylists(playlist, currentUser)
 		}
 	}
 

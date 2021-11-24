@@ -129,10 +129,8 @@ export const LeftsideBar = () => {
             animation: "scrollFromTop .2s forwards",
           }}
         >
-          {yourPlaylists.map((playlist, index) => {
-            if (index <= 2) {
-              return <TinyPlaylist playlist={playlist} key={playlist.id} />;
-            }
+          {yourPlaylists.slice(0, 3).map((playlist, index) => {
+            return <TinyPlaylist playlist={playlist} key={playlist.id} />;
           })}
           <button
             className="createPlaylistBtn"

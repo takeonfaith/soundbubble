@@ -9,6 +9,7 @@ const ColorCircles = ({ play }) => {
       <span className="colorCircle"></span>
       <span className="colorCircle"></span>
       <span className="colorCircle"></span>
+      <span className="colorCircle"></span>
     </div>
   );
 };

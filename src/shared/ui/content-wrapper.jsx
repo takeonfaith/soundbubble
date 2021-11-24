@@ -14,7 +14,9 @@ import { FullBottomSide } from "../../features/mobile/ui/organisms/full-bottom-s
 import { ModalWindow } from "../../features/modal/ui/modal-window";
 import { firestore } from "../../firebase";
 import useChatNotifications from "../lib/hooks/use-chat-notifications";
+import useFriendInviteNotifications from "../lib/hooks/use-friend-invite-notifications";
 import { useMediaMetadata } from "../lib/hooks/use-media-metadata";
+import useUpdateOnlineStatus from "../lib/hooks/use-update-online-status";
 
 export const ContentWrapper = () => {
   const {
@@ -30,28 +32,12 @@ export const ContentWrapper = () => {
     nextSong,
   } = useSong();
   const { isMobile, screenHeight } = useScreen();
-  const { currentUser } = useAuth();
-  const fiveMinutes = 300000; // 10min
   const [notifications, setNotifications] = useChatNotifications();
+  // useFriendInviteNotifications();
 
   useMediaMetadata();
+  useUpdateOnlineStatus();
   const updateListenCount = useUpdateListenCount();
-  useEffect(() => {
-    const interval = setInterval(() => {
-      firestore
-        .collection("users")
-        .doc(currentUser.uid)
-        .update({ online: new Date().getTime() });
-    }, fiveMinutes);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    firestore
-      .collection("users")
-      .doc(currentUser.uid)
-      .update({ online: new Date().getTime() });
-  }, []);
 
   function audioEnded() {
     if (repeatMode === 0) {

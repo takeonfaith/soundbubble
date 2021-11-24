@@ -131,6 +131,7 @@ a {
   --pinkAndPurpleGrad: linear-gradient(45deg, #bd5484, #e96767);
   --purpleAndBlueGrad: linear-gradient(45deg, #7666f5, #4777ff);
   --yellowAndPinkGrad: linear-gradient(135deg, #fbb361 0%, #ff5a91 100%);
+  --yellowAndOrangeGrad: linear-gradient(135deg, #fbb361 0%, #ff7b5a 100%);
   --inputRange: 100%;
   --themeColorTransparent: rgba(65, 141, 255, 0.37);
   --transparentWhite: rgba(255, 255, 255, 0.336);
@@ -445,7 +446,8 @@ body {
 }
 
 .ModalWindow input,
-.ModalWindow .searchBar input {
+.ModalWindow .searchBar input,
+.ModalWindow .searchBar .search-hints {
   background: var(--playlistsColor);
   margin-bottom: 0;
 }

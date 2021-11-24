@@ -91,7 +91,7 @@ export const SongList = ({
         />
       ) : null}
       {showSearch ? (
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div style={{ display: "flex", alignItems: "flex-start" }}>
           <SearchBar
             value={localSearchValue}
             setValue={setLocalSearchValue}

@@ -20,7 +20,14 @@ export const CreateChat = () => {
     handleCreateChat,
     shouldCreate,
     allowedToCreate,
+    errorMessage,
+    setErrorMessage,
   } = useCreateChat();
+
+  // console.log(
+  //   chosenFriends.length > 0 &&
+  //     ((shouldCreate && allowedToCreate) || !shouldCreate)
+  // );
 
   return (
     <div className="CreateChat">
@@ -30,7 +37,7 @@ export const CreateChat = () => {
         setResultAuthorList={setFoundFriends}
         focus
         inputText={"Search for friends"}
-        defaultSearchMode={"authors"}
+        defaultSearchMode={"users"}
       />
       <TinyPersonsList
         listOfPeople={foundFriends}
@@ -62,6 +69,8 @@ export const CreateChat = () => {
           chosenFriends.length > 0 &&
           ((shouldCreate && allowedToCreate) || !shouldCreate)
         }
+        errorMessage={errorMessage}
+        setErrorMessage={setErrorMessage}
       />
     </div>
   );

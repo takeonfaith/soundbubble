@@ -118,7 +118,7 @@
 .searchFilters {
   display: flex;
   align-items: center;
-  margin-top: 7px;
+  padding: 10px 6px 0px 10px;
 }
 
 .searchFilters button {
@@ -157,6 +157,11 @@
   padding: 10px;
   box-sizing: border-box;
   border-radius: 0 0 var(--standartBorderRadius) var(--standartBorderRadius);
+  z-index: 2;
+}
+
+.search-hints h4 {
+  margin: 8px 0;
 }
 
 .search-hint-item {

@@ -87,7 +87,7 @@ export const EditSong = ({ song }) => {
           value={searchValue}
           setValue={setSearchValue}
           setResultAuthorList={setFoundAuthors}
-          defaultSearchMode={"authors"}
+          defaultSearchMode={"users"}
         />
         <div className="songAuthorsList">
           {songAuthors.map((author) => {

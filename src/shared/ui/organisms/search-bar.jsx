@@ -22,10 +22,10 @@ const SearchBar = ({
   defaultPlaylistsListValue,
   background,
 }) => {
-  const [searchMode, setSearchMode] = useState(0);
+  const [searchMode, setSearchMode] = useState("All");
   const [currentHint, setCurrentHint] = useState(-1);
   const [searchHints, setSearchHints] = useState([]);
-  const [inputFocused, setInputFocused] = useState(focus);
+  const [inputFocused, setInputFocused] = useState(false);
   const inputRef = useRef(null);
 
   const { findSomething, loading, foundAnything, inputValue, setInputValue } =
@@ -41,9 +41,9 @@ const SearchBar = ({
       defaultPlaylistsListValue
     );
 
-  useEffect(() => {
-    if (focus) inputRef.current.focus();
-  }, []);
+  // useEffect(() => {
+  //   if (focus) inputRef.current.focus();
+  // }, []);
 
   const handleCurrentHint = (e) => {
     if (inputFocused) {
@@ -123,6 +123,7 @@ const SearchBar = ({
           defaultSearchMode={defaultSearchMode}
           searchMode={searchMode}
           setSearchMode={setSearchMode}
+          searchHintsLen={searchHints.length}
         />
         <SearchHints
           searchValue={value}
@@ -131,7 +132,7 @@ const SearchBar = ({
           setSearchHints={setSearchHints}
           setCurrentHint={setCurrentHint}
           inputFocused={inputFocused}
-          defaultSearchMode={defaultSearchMode}
+          defaultSearchMode={defaultSearchMode || searchMode}
           findSomething={findSomething}
           setInputFocused={setInputFocused}
         />

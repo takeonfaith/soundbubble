@@ -11,21 +11,24 @@ export const TypingAnimation = ({ typingPeople }) => {
       const personData = (
         await firestore.collection("users").doc(personId).get()
       ).data();
-      if (personData.uid !== currentUser.uid)
+      if (personData?.uid !== currentUser.uid)
         setTypingPeopleData((prev) => [...prev, personData]);
     });
   }, [typingPeople]);
-  return typingPeopleData.length > 0 ? (
-    <div className="typingWrapper">
-      <SmallImages
-        imagesList={typingPeopleData.map((person) => person.photoURL)}
-        borderColor={"var(--navItemColor)"}
-      />
-      <div className="TypingAnimation">
-        <span className="typingCircle"></span>
-        <span className="typingCircle"></span>
-        <span className="typingCircle"></span>
+
+  return (
+    typingPeopleData.length > 0 && (
+      <div className="typingWrapper">
+        <SmallImages
+          imagesList={typingPeopleData.map((person) => person?.photoURL)}
+          borderColor={"var(--navItemColor)"}
+        />
+        <div className="TypingAnimation">
+          <span className="typingCircle"></span>
+          <span className="typingCircle"></span>
+          <span className="typingCircle"></span>
+        </div>
       </div>
-    </div>
-  ) : null;
+    )
+  );
 };

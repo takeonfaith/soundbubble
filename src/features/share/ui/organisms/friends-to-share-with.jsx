@@ -34,7 +34,7 @@ export const FriendsToShareWith = ({ item, whatToShare = "song" }) => {
           setValue={setSearchValue}
           setResultAuthorList={setFoundPeople}
           defaultAuthorsListValue={yourFriends}
-          defaultSearchMode={"authors"}
+          defaultSearchMode={"users"}
           inputText={"Search for friends"}
         />
         <div style={{ overflowY: "auto", maxHeight: "100%" }}>

@@ -17,6 +17,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../../../contexts/auth";
 import { useModal } from "../../../../contexts/modal";
 import { useScreen } from "../../../../contexts/screen";
+import { useSong } from "../../../../contexts/song";
 import { addPlaylistToLibrary } from "../../../../entities/playlist/lib/add-playlist-to-library";
 import { deletePlaylist } from "../../../../entities/playlist/lib/delete-playlist";
 import { quitPlaylist } from "../../../../entities/playlist/lib/quit-playlist";
@@ -38,6 +39,7 @@ import { FriendsToShareWith } from "../../../share/ui/organisms/friends-to-share
 const TopButtons = ({ data, headerColors }) => {
   const { currentUser, logout } = useAuth();
   const { isMobile } = useScreen();
+  const { yourSongs } = useSong();
   const [openMoreWindow, setOpenMoreWindow] = useState(false);
   const {
     toggleModal,
@@ -128,7 +130,22 @@ const TopButtons = ({ data, headerColors }) => {
     } else {
       if (currentUser.addedAuthors.includes(data.uid))
         return (
-          <button onClick={() => deleteAuthorFromLibrary(data, currentUser)}>
+          <button
+            onClick={() => {
+              openConfirm(
+                "If you unsubscribe from this author, all his tracks will be removed from your library. Are you sure you want to do this?",
+                "Yes",
+                "No",
+                () => {
+                  deleteAuthorFromLibrary(data, currentUser, yourSongs);
+                  openBottomMessage(
+                    `You unsubscribed from ${data.displayName}`
+                  );
+                  closeConfirm();
+                }
+              );
+            }}
+          >
             <Hint text={"delete author from library"} direction={"bottom"} />
             <CgCheckO />
           </button>

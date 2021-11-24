@@ -96,6 +96,8 @@ const SubmitButton = ({
   setCompleted,
   bottomMessage,
   isActive = true,
+  errorMessage,
+  setErrorMessage,
 }) => {
   const { openBottomMessage } = useModal();
 
@@ -106,7 +108,16 @@ const SubmitButton = ({
         setCompleted(false);
       }, 2000);
     }
-  }, [completed]);
+  }, [bottomMessage, completed, openBottomMessage, setCompleted]);
+
+  useEffect(() => {
+    if (errorMessage) {
+      openBottomMessage(errorMessage, "failure");
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 1000);
+    }
+  }, [errorMessage, setErrorMessage, openBottomMessage]);
 
   return (
     <SubmitButtonWrapper
@@ -114,7 +125,11 @@ const SubmitButton = ({
       className="submit-button"
       completed={completed}
       isActive={isActive}
-      onClick={isActive ? action : () => openBottomMessage("Nope", "failure")}
+      onClick={
+        isActive
+          ? action
+          : () => !!errorMessage && openBottomMessage("Nope", "failure")
+      }
     >
       <div className="inner-button">
         {completed ? (

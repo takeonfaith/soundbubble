@@ -18,7 +18,7 @@ export const TinyPlaylist = ({ playlist }) => {
     playlistSongs,
     setPlaylistSongs
   );
-  const [addFunc, isAdded] = useAddOrDeleteSong(playlist.id);
+  const [addFunc, isAdded] = useAddOrDeleteSong(playlist);
   const { currentUser } = useAuth();
   const history = useHistory();
   return (
@@ -87,7 +87,7 @@ export const TinyPlaylist = ({ playlist }) => {
         ) : null}
       </div>
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <span>{getShortString(playlist.name, 13)}</span>
+        <span>{getShortString(playlist.name, 12)}</span>
         <span style={{ fontSize: "0.8em", color: "grey", fontWeight: "500" }}>
           {playlist.isAlbum ? "album" : "playlist"}
         </span>

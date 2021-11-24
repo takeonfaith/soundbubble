@@ -15,7 +15,7 @@ const AuthorsPage = () => {
           value={searchValue}
           setValue={setSearchValue}
           setResultAuthorList={setDisplayAuthors}
-          defaultSearchMode={"authors"}
+          defaultSearchMode={"users"}
           defaultAuthorsListValue={yourAuthors}
           inputText="Search for authors"
         />

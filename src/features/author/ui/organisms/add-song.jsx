@@ -1,19 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ColorExtractor } from "react-color-extractor";
 import { FiXCircle } from "react-icons/fi";
 import { useAuth } from "../../../../contexts/auth";
+import { useModal } from "../../../../contexts/modal";
 import { PersonTiny } from "../../../../entities/user/ui/organisms/person-tiny";
 import { firestore } from "../../../../firebase";
-import { transformLyricsToArrayOfObjects } from "../../../full-screen-player/lib/transform-lyrics-to-array-of-object";
 import { findVariationsOfName } from "../../../../shared/lib/find-variations-of-name";
 import getUID from "../../../../shared/lib/get-uid";
 import DownloadButton from "../../../../shared/ui/atoms/download-button";
 import Input from "../../../../shared/ui/atoms/input";
 import SubmitButton from "../../../../shared/ui/atoms/submit-button";
 import SearchBar from "../../../../shared/ui/organisms/search-bar";
+import { transformLyricsToArrayOfObjects } from "../../../full-screen-player/lib/transform-lyrics-to-array-of-object";
 import { FullScreenLoading } from "../../../loading/ui/atoms/full-screen-loading";
 
 export const AddSong = () => {
+  const { openBottomMessage } = useModal();
   const { currentUser } = useAuth();
   const [songName, setSongName] = useState("");
   const [songCover, setSongCover] = useState("");
@@ -68,11 +70,11 @@ export const AddSong = () => {
     if (songName.length === 0) setErrorMessage("Song has to have some name");
     else if (chosenAuthors.length === 0)
       setErrorMessage("Song has to have at least 1 author");
+    else if (releaseDate.length === 0)
+      setErrorMessage("You have to set release date for a song");
     else if (songCover.length === 0)
       setErrorMessage("You didn't load song cover");
     else if (songSrc.length === 0) setErrorMessage("You didn't load song file");
-    else if (releaseDate.length === 0)
-      setErrorMessage("You have to set release date for a song");
     else {
       setLoadingSong(true);
       firestore
@@ -158,7 +160,7 @@ export const AddSong = () => {
             value={authorsInputValue}
             setValue={setAuthorsInputValue}
             setResultAuthorList={setAllAuthors}
-            defaultSearchMode={"authors"}
+            defaultSearchMode={"users"}
             inputText={"Search for authors"}
           />
           <div className="chosenAuthorsList">
@@ -249,6 +251,8 @@ export const AddSong = () => {
           completed={completed}
           setCompleted={setCompleted}
           bottomMessage={"Song was uploaded to database"}
+          errorMessage={errorMessage}
+          setErrorMessage={setErrorMessage}
         />
       </div>
     </div>

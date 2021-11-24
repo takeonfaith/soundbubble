@@ -1,5 +1,7 @@
 import React from "react";
+import { FaPause, FaPlay } from "react-icons/fa";
 import styled from "styled-components";
+import { useSong } from "../../../../contexts/song";
 
 const SongImageAndNameWrapper = styled.div`
   width: 100%;
@@ -18,14 +20,24 @@ const SongImageAndNameWrapper = styled.div`
   }
 `;
 
-const SongImageAndName = ({ song }) => {
+const SongImageAndName = ({ song, chooseSongItem, play }) => {
   return (
     <SongImageAndNameWrapper>
       <div
         className="song-image"
         style={{ backgroundImage: `url(${song.cover})` }}
       />
-      <h3>{song.name}</h3>
+      <div>
+        <h3>{song.name}</h3>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            chooseSongItem();
+          }}
+        >
+          {play ? <FaPause /> : <FaPlay />}
+        </button>
+      </div>
     </SongImageAndNameWrapper>
   );
 };

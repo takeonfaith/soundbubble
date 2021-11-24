@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useAuth } from '../../../../contexts/auth'
 import { useSong } from '../../../../contexts/song'
+import sortUserPlaylists from '../../../../features/author/lib/sort-user-playlists'
 import { firestore } from '../../../../firebase'
 
 export const usePlaylistSongs = (playlist, playlistSongs, setPlaylistSongs) => {
@@ -45,6 +46,7 @@ export const usePlaylistSongs = (playlist, playlistSongs, setPlaylistSongs) => {
 					source: source.source
 				}
 			})
+			sortUserPlaylists(playlist, currentUser)
 		}
 	}, [playlistSongs.length])
 

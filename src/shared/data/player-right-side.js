@@ -2,12 +2,13 @@ import { BiDotsVerticalRounded, BiShare } from 'react-icons/bi';
 import { RiPlayListFill } from 'react-icons/ri';
 import { TiDocumentText } from 'react-icons/ti';
 import { SongInfo } from '../../features/song/ui/organisms/song-info';
-import { AuthorsList } from '../../features/author/ui/templates/authors-list';
+
 import { AddToPlaylists } from '../../features/full-screen-player/ui/molecules/add-to-playlists';
 import { Options } from '../../features/full-screen-player/ui/organisms/options';
 import { Queue } from '../../features/full-screen-player/ui/organisms/queue';
 import { Share } from '../../features/full-screen-player/ui/organisms/share';
 import { Lyrics } from '../../features/full-screen-player/ui/organisms/lyrics';
+import { AuthorsList } from '../../features/full-screen-player/ui/atoms/authors-list';
 
 
 export const rightSide = [

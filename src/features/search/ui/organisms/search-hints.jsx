@@ -18,6 +18,7 @@ export const SearchHints = ({
     searchValue,
     inputFocused,
     setSearchHints,
+    defaultSearchMode,
   });
 
   return (
@@ -31,16 +32,21 @@ export const SearchHints = ({
           : { transform: "translateY(-35px)" }
       }
     >
-      <SearcHintItem
-        name={searchValue}
-        type={"search"}
-        index={-1}
-        key={-1}
-        currentHint={currentHint}
-        setCurrentHint={setCurrentHint}
-        findSomething={findSomething}
-        setInputFocused={setInputFocused}
-      />
+      {!searchValue &&
+      (defaultSearchMode === "All" || defaultSearchMode === undefined) ? (
+        <h4>Trending searches</h4>
+      ) : (
+        <SearcHintItem
+          name={searchValue}
+          type={"search"}
+          index={-1}
+          key={-1}
+          currentHint={currentHint}
+          setCurrentHint={setCurrentHint}
+          findSomething={findSomething}
+          setInputFocused={setInputFocused}
+        />
+      )}
       {searchHints.map((hint, index) => {
         return (
           <SearcHintItem

@@ -220,10 +220,14 @@ input[type="range"]::-ms-track {
   transition: 0.2s;
 }
 
+.btns .basic-buttons {
+  display: flex;
+}
+
 .btns button svg {
   color: #fff;
-  width: 30px;
-  height: 30px;
+  width: 27px;
+  height: 27px;
 }
 
 .btns .shuffleBtn,
@@ -433,68 +437,61 @@ input[type="number"] {
   transition: 0.2s;
 }
 
+.ColorCircles span:hover {
+  opacity: 0;
+}
+
 .ColorCircles span {
-  width: 25%;
-  height: 80%;
+  width: 60px;
+  height: 60px;
   display: block;
   z-index: 1;
-  background: var(--themeColorTransparent);
+  background: var(--themeColor2);
   position: absolute;
-
+  border-radius: 100%;
   transition: 0.2s background;
 }
 
 .ColorCircles span:nth-child(1) {
-  animation: rotation 20s infinite linear;
-  animation-delay: 0s;
+  animation: rotation 15s infinite linear;
 }
 .ColorCircles span:nth-child(2) {
-  animation: rotation 20s infinite linear;
-  animation-delay: 4s;
+  animation: rotation 15s infinite linear;
+  opacity: 0.5;
+  width: 70px;
 }
+
 .ColorCircles span:nth-child(3) {
-  animation: rotation 20s infinite linear;
-  animation-delay: 7s;
+  animation: rotation 15s infinite linear;
+  opacity: 0.5;
   box-shadow: 0 0 30px var(--themeColor2);
+  height: 72px;
+}
+
+.ColorCircles span:nth-child(4) {
+  animation: rotation 15s infinite linear;
+  opacity: 0.5;
+  width: 76px;
 }
 
 @keyframes rotation {
   0% {
-    transform: rotate(0deg) scale(1);
-    border-radius: 53% 47% 61% 39% / 50% 43% 57% 50%;
-  }
-  50% {
-    transform: rotate(180deg) scale(0.9);
-    border-radius: 60% 40% 56% 44% / 28% 47% 53% 72%;
-  }
-  100% {
-    transform: rotate(360deg) scale(1);
-    border-radius: 53% 47% 61% 39% / 50% 43% 57% 50%;
-  }
-
-  0% {
     transform: rotate(0deg);
-    border-radius: 41% 59% 56% 44% / 39% 47% 53% 61%;
   }
   33.3% {
     transform: rotate(119.88deg);
-    border-radius: 60% 40% 56% 44% / 39% 62% 38% 61%;
   }
   50% {
     transform: rotate(180deg);
-    border-radius: 60% 40% 69% 31% / 39% 68% 32% 61%;
   }
   66.6% {
     transform: rotate(239.76deg);
-    border-radius: 60% 40% 68% 32% / 28% 47% 53% 72%;
   }
   83.3% {
     transform: rotate(299.88deg);
-    border-radius: 60% 40% 68% 32% / 28% 47% 53% 72%;
   }
   100% {
     transform: rotate(360deg);
-    border-radius: 41% 59% 56% 44% / 39% 47% 53% 61%;
   }
 }
 
@@ -809,8 +806,8 @@ input[type="number"] {
 }
 
 .playingAnimation span {
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
 }
 
 .playingAnimation span:first-child {
@@ -819,9 +816,17 @@ input[type="number"] {
 
 .playingAnimation span:nth-child(2) {
   animation-delay: 0.2s;
+  width: 37px;
 }
 .playingAnimation span:nth-child(3) {
   animation-delay: 0.5s;
+  height: 34px;
+}
+
+.playingAnimation span:nth-child(4) {
+  animation-delay: 0.5s;
+  height: 40px;
+  width: 40px;
 }
 
 @keyframes playing {

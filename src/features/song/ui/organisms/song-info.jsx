@@ -41,7 +41,7 @@ export const SongInfo = ({ song }) => {
         style={{ backgroundImage: `url(${songData.cover})` }}
       ></div>
       <div className="songInfoContent">
-        <h3 style={{ color: songData.imageColors[0] }}>{songData.name}</h3>
+        <h3 style={{ color: songData?.imageColors[0] }}>{songData?.name}</h3>
         <span>{displayAuthors(songData.authors, ", ")}</span>
         <div
           style={{

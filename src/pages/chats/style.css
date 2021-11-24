@@ -281,8 +281,8 @@
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
-  padding: 2px 0;
-  animation: zoomIn 0.5s forwards;
+  padding: 2px 10px;
+  box-sizing: border-box;
   position: relative;
 }
 
@@ -527,6 +527,9 @@
 
 .inResponseArea {
   position: absolute;
+  display: flex;
+  flex-direction: column;
+  row-gap: 2px;
   bottom: 100%;
   height: auto;
   left: 50%;
@@ -544,6 +547,17 @@
 .inResponseArea .responseItem {
   width: fit-content;
   position: relative;
+}
+
+.inResponseArea .AttachedItemsInChatInput {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: 5px;
+}
+
+.inResponseArea .AttachedItemsInChatInput .attachedSongItem > svg {
+  margin-right: 5px;
 }
 
 .removeMessageFromResponse {
@@ -574,7 +588,6 @@
   border-radius: var(--standartBorderRadius3);
   background: var(--lightGrey);
   width: fit-content;
-  margin-bottom: 3px;
   position: relative;
 }
 

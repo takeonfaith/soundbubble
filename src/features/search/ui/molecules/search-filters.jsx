@@ -1,16 +1,23 @@
 import React from "react";
 import SearchFilterItem from "../atoms/search-filter-item";
 
-const SearchFilters = ({ defaultSearchMode, searchMode, setSearchMode }) => {
-  const filters = ["All", "Songs", "Authors", "Playlists"];
+const SearchFilters = ({
+  defaultSearchMode,
+  searchMode,
+  setSearchMode,
+  searchHintsLen,
+}) => {
+  const filters = ["All", "Songs", "Users", "Playlists"];
   return (
     <div
       className="searchFilters"
       style={
-        defaultSearchMode !== undefined
+        !!defaultSearchMode
           ? {
               display: "none",
             }
+          : searchHintsLen
+          ? { background: "var(--leftSideBarColor)" }
           : {}
       }
     >

@@ -162,6 +162,8 @@ const useAddPlaylist = () => {
     setCompleted,
     addPlaylistToFirebase,
     setChosenAuthors,
+    errorMessage,
+    setErrorMessage,
   };
 };
 

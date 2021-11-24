@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react'
 
-const useRenderCount = () => {
+const useRenderCount = (place) => {
 	const count = useRef(1)
 	useEffect(() => { count.current++ })
 
-	return count
+	console.log(place, count.current);
 }
 
 export default useRenderCount

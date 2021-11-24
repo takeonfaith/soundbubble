@@ -33,7 +33,7 @@ const useSearch = (
         const realData = (
           await firestore.collection(itemData.place).doc(itemData.uid).get()
         ).data();
-        if (defaultList !== undefined && defaultList.length) {
+        if (!!defaultList && !!defaultList.length) {
           if (
             defaultList
               .map((song) => song.id || song.uid)
@@ -43,7 +43,7 @@ const useSearch = (
         } else if (!realData.isPrivate) foundItemTempArray.push(realData);
         if (
           defaultSearchMode === undefined &&
-          searchMode === 0 &&
+          searchMode === "All" &&
           foundItemTempArray.length !== 0
         ) {
           setList(foundItemTempArray);
@@ -126,7 +126,7 @@ const useSearch = (
       setLoading(true);
       setFoundAnything(false);
       if (defaultSearchMode === undefined) {
-        if (searchMode === 0 || searchMode === 1) {
+        if (searchMode === "All" || searchMode === "Songs") {
           findItem(
             searchText,
             "songs",
@@ -136,7 +136,7 @@ const useSearch = (
           setResultAuthorList([]);
           setResultPlaylists([]);
         }
-        if (searchMode === 0 || searchMode === 2) {
+        if (searchMode === "All" || searchMode === "Users") {
           findItem(
             searchText,
             "users",
@@ -146,7 +146,7 @@ const useSearch = (
           setAllFoundSongs([]);
           setResultPlaylists([]);
         }
-        if (searchMode === 0 || searchMode === 3) {
+        if (searchMode === "All" || searchMode === "Playlists") {
           findItem(
             searchText,
             "playlists",
@@ -174,7 +174,7 @@ const useSearch = (
               setResultPlaylists
             );
             break;
-          case "authors":
+          case "users":
             findItem(
               searchText,
               "users",

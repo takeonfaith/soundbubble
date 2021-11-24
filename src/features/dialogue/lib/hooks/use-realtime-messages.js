@@ -28,7 +28,7 @@ export const useRealTimeMessages = (chatId, dateRefsArray) => {
 		return () => {
 			unsubscribe()
 		}
-	}, [firestore, chatId])
+	}, [chatId])
 
 
 	return [chatData, messageList, loading, currentDateOnTop, findTopDate]

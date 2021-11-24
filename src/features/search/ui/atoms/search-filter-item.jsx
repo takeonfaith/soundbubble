@@ -3,9 +3,9 @@ import React from "react";
 const SearchFilterItem = ({ text, searchMode, setSearchMode, index }) => {
   return (
     <button
-      onClick={() => setSearchMode(index)}
+      onClick={() => setSearchMode(text)}
       style={
-        searchMode === index
+        searchMode === text
           ? {
               background: "var(--lightBlue)",
             }

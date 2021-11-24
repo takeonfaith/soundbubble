@@ -67,6 +67,7 @@
   cursor: pointer;
   position: relative;
   user-select: none;
+  white-space: nowrap;
 }
 
 .TinyPlaylistBtns {
@@ -489,8 +490,17 @@
 }
 
 .littlePlayer .ColorCircles span {
-  width: 45px;
-  height: 45px;
+  width: 39px;
+  height: 39px;
+}
+.littlePlayer .ColorCircles span:nth-child(2) {
+  height: 46px;
+}
+.littlePlayer .ColorCircles span:nth-child(3) {
+  height: 49px;
+}
+.littlePlayer .ColorCircles span:nth-child(4) {
+  width: 51px;
 }
 
 .littlePlayer:hover .fullScreenBtn {

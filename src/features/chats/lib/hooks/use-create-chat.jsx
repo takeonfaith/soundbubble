@@ -29,10 +29,12 @@ const useCreateChat = () => {
   }, [chosenFriends]);
 
   useEffect(() => {
-    if (chatName.length === 0 || chosenFriends.length === 0) {
-      setAllowedToCreate(false);
-    } else setAllowedToCreate(true);
-    setErrorMessage("");
+    if (chosenFriends.length) {
+      if (chosenFriends.length > 1) {
+        if (chatName.length) setAllowedToCreate(true);
+        else setAllowedToCreate(false);
+      } else setAllowedToCreate(true);
+    } else setAllowedToCreate(false);
   }, [chosenFriends.length, chatName]);
 
   const handleCreateChat = () => {
@@ -68,6 +70,8 @@ const useCreateChat = () => {
     handleCreateChat,
     shouldCreate,
     allowedToCreate,
+    errorMessage,
+    setErrorMessage,
   };
 };
 

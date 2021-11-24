@@ -54,6 +54,8 @@ export const AddPlaylist = () => {
     setCompleted,
     addPlaylistToFirebase,
     setChosenAuthors,
+    errorMessage,
+    setErrorMessage,
   } = useAddPlaylist();
 
   return (
@@ -76,50 +78,75 @@ export const AddPlaylist = () => {
             value={authorsInputValue}
             setValue={setAuthorsInputValue}
             setResultAuthorList={setAllAuthors}
-            defaultSearchMode={"authors"}
+            defaultSearchMode={"users"}
             defaultAuthorsListValue={yourFriends}
             inputText={"Search for authors"}
           />
-          <TinyPersonsList
-            listOfPeople={allAuthors}
-            restriction={3}
-            chosenArray={chosenAuthors}
-            setChosenArray={setChosenAuthors}
-          />
-        </label>
-
-        <label>
-          <h3>Search for songs</h3>
-          <SearchBar
-            value={songsSearch}
-            setValue={setSongsSearch}
-            setAllFoundSongs={setAllSongs}
-            defaultSearchMode={"songs"}
-            inputText={"Search for songs"}
-          />
           <div className="chosenAuthorsList">
-            {chosenSongs.map((songId) => {
+            {chosenAuthors.map((author) => {
               return (
                 <div className="chosenAuthorItem">
-                  <span>{songId}</span>
-                  <FiXCircle onClick={() => removeSongFromList(songId)} />
+                  <span>{author.displayName}</span>
+                  <FiXCircle
+                    onClick={() =>
+                      author.uid === currentUser.uid
+                        ? null
+                        : removeAuthorFromList(author)
+                    }
+                  />
                 </div>
               );
             })}
           </div>
           <div className="authorsResult">
-            {allSongs.map((data, index) => {
+            {allAuthors.map((data, index) => {
               return (
-                <SongItem
-                  song={data}
-                  localIndex={index}
-                  listOfChosenSongs={chosenSongs}
-                  setListOfSongs={setChosenSongs}
+                <PersonTiny
+                  data={data}
+                  onClick={() => addAuthor(data)}
+                  style={
+                    chosenAuthors.includes(data.uid)
+                      ? { background: "var(--green)" }
+                      : {}
+                  }
+                  key={index}
                 />
               );
             })}
           </div>
         </label>
+
+        <h3>Search for songs</h3>
+        <SearchBar
+          value={songsSearch}
+          setValue={setSongsSearch}
+          setAllFoundSongs={setAllSongs}
+          defaultSearchMode={"songs"}
+          inputText={"Search for songs"}
+        />
+        <div className="chosenAuthorsList">
+          {chosenSongs.map((songId) => {
+            const songName = allSongs.find((song) => song.id === songId).name;
+            return (
+              <div className="chosenAuthorItem">
+                <span>{songName}</span>
+                <FiXCircle onClick={() => removeSongFromList(songId)} />
+              </div>
+            );
+          })}
+        </div>
+        <div className="authorsResult">
+          {allSongs.map((data, index) => {
+            return (
+              <SongItem
+                song={data}
+                localIndex={index}
+                listOfChosenSongs={chosenSongs}
+                setListOfSongs={setChosenSongs}
+              />
+            );
+          })}
+        </div>
 
         {currentUser.isAdmin || currentUser.isAuthor ? (
           <div
@@ -187,6 +214,8 @@ export const AddPlaylist = () => {
           completed={completed}
           setCompleted={setCompleted}
           bottomMessage={"Playlist was uploaded to database"}
+          errorMessage={errorMessage}
+          setErrorMessage={setErrorMessage}
         />
       </div>
     </div>

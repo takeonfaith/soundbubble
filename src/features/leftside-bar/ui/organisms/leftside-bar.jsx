@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { BiFolderPlus, BiFullscreen } from "react-icons/bi";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { Link } from "react-router-dom";
@@ -18,8 +18,9 @@ import LeftsideBarContainer from "../atoms/container";
 import NavigationPanel from "../molecules/navigation-panel";
 import { Person } from "../molecules/person";
 import { TinyPlaylist } from "../molecules/tiny-playlist";
+import useRenderCount from "../../../../shared/lib/hooks/use-render-count";
 
-export const LeftsideBar = () => {
+export const LeftsideBar = memo(() => {
   const { currentUser } = useAuth();
   const [userNotifications, setUserNotifications] = useState(0);
   const {
@@ -175,4 +176,4 @@ export const LeftsideBar = () => {
       </div>
     </div>
   );
-};
+});

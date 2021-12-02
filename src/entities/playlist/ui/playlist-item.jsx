@@ -49,11 +49,12 @@ export const PlaylistItem = memo(
           className="playlistItem"
           style={
             playlist.image
-              ? { backgroundImage: `url(${playlist.image})` }
+              ? { background: playlist.imageColors[0] }
               : { background: "var(--yellowAndPinkGrad)" }
           }
         >
-          {!playlist.image ? (
+          <img src={playlist.image} alt="" loading="lazy" />
+          {!playlist.image && (
             <BiAlbum
               style={{
                 position: "absolute",
@@ -64,7 +65,7 @@ export const PlaylistItem = memo(
                 height: "60px",
               }}
             />
-          ) : null}
+          )}
           {!isMobile ? (
             <button onClick={playSongsInPlaylist}>
               {currentSongPlaylistSource.name === playlist.name && play ? (

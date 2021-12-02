@@ -10,9 +10,12 @@ export const useRealTimeMessages = (chatId, dateRefsArray) => {
 	const [loading, setLoading] = useState(true)
 	const [currentDateOnTop, setCurrentDateOnTop] = useState("")
 	function findTopDate(e) {
+		console.log(dateRefsArray);
 		dateRefsArray.forEach(ref => {
+			console.log(ref.current.innerHTML);
 			if (ref.current !== null) {
-				if (ref.current.offsetTop - 70 <= e.target.scrollTop) setCurrentDateOnTop(ref.current.innerHTML)
+				// console.log(ref.current.innerHTML, 'offset', ref.current.offsetTop, 'scrollTop', e.target.scrollTop, ref.current.offsetTop - 20 <= e.target.scrollTop);
+				if (ref.current.offsetTop - 20 <= e.target.scrollTop) setCurrentDateOnTop(ref.current.innerHTML)
 			}
 		})
 	}
@@ -22,7 +25,7 @@ export const useRealTimeMessages = (chatId, dateRefsArray) => {
 			.onSnapshot(snapshot => {
 				setChatData(snapshot.data())
 				setMessageList(snapshot.data()?.messages)
-				setCurrentDateOnTop(snapshot.data()?.messages.length ? snapshot.data().messages[0].sentTime : new Date().toString())
+				setCurrentDateOnTop(snapshot.data()?.messages.length ? snapshot.data().messages[snapshot.data().messages.length - 1].sentTime : new Date().toString())
 				setLoading(false)
 			})
 		return () => {

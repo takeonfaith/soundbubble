@@ -36,7 +36,7 @@ const ImageAndName = memo(
             <HiPause />
             <ColorCircles play={play} />
           </div>
-          <img src={song.cover} alt="" />
+          <img src={song.cover} alt="" loading="lazy" />
         </div>
         <div className="songItemNameAndAuthor">
           <div

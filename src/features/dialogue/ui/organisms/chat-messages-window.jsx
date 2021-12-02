@@ -23,7 +23,8 @@ export const ChatMessagesWindow = memo(
     const { currentUser } = useAuth();
     const isNotSeenIndex = useMemo(() => {
       return messageList.findIndex(
-        (message) => !message.seenBy.includes(currentUser.uid)
+        (message) =>
+          !!message.seenBy && !message.seenBy.includes(currentUser.uid)
       );
     }, []);
 

@@ -32,8 +32,10 @@ export const AuthorItemBig = ({
       <div>
         <div
           className="AuthorItemBigImage"
-          style={{ backgroundImage: `url(${data.photoURL})` }}
-        ></div>
+          style={{ background: data.imageColors && data.imageColors[0] }}
+        >
+          <img src={data.photoURL} alt="" loading="lazy" />
+        </div>
         <h3>{data.displayName}</h3>
       </div>
     </Link>

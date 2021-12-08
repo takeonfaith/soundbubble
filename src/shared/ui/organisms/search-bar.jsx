@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { LoadingCircle } from "../../../features/loading/ui/atoms/loading-circle";
 import useSearch from "../../../features/search/lib/hooks/use-search";
 import rankCurrentHint from "../../../features/search/lib/rank-current-hint";

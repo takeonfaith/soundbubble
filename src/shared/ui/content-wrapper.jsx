@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { ContentRouter } from "../../app/routers/content-router";
-import { useAuth } from "../../contexts/auth";
 import { useScreen } from "../../contexts/screen";
 import { useSong } from "../../contexts/song";
 import { useUpdateListenCount } from "../../entities/song/lib/hooks/use-update-listen-count";
@@ -12,9 +11,7 @@ import "../../features/full-screen-player/ui/style.css";
 import { LeftsideBar } from "../../features/leftside-bar/ui/organisms/leftside-bar";
 import { FullBottomSide } from "../../features/mobile/ui/organisms/full-bottom-side";
 import { ModalWindow } from "../../features/modal/ui/modal-window";
-import { firestore } from "../../firebase";
 import useChatNotifications from "../lib/hooks/use-chat-notifications";
-import useFriendInviteNotifications from "../lib/hooks/use-friend-invite-notifications";
 import { useMediaMetadata } from "../lib/hooks/use-media-metadata";
 import useUpdateOnlineStatus from "../lib/hooks/use-update-online-status";
 

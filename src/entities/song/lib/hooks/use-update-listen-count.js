@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useSong } from '../../../../contexts/song'
 import { firestore } from '../../../../firebase'
 
@@ -43,7 +43,7 @@ export const useUpdateListenCount = () => {
 		if (play) {
 			updateListenCount()
 		}
-	}, [play, currentSongData.id])
+	}, [play, currentSongData.id, songDuration])
 
 	return updateListenCount
 }

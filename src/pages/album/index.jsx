@@ -89,6 +89,7 @@ const AlbumPage = () => {
               }}
               showSearch
               defaultSearchMode={"songs"}
+              displayIfEmpty={"No songs"}
             />
           </ContentContainer>
         </>

@@ -186,9 +186,11 @@ export const SongList = ({
           }
         })}
       </div>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        {listOfSongs.length === 0 ? displayIfEmpty : null}
-      </div>
+      {listOfSongs.length === 0 && !!displayIfEmpty && (
+        <h4 style={{ display: "flex", justifyContent: "center" }}>
+          {displayIfEmpty}
+        </h4>
+      )}
     </div>
   );
 };

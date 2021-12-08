@@ -3,12 +3,10 @@ import { useAuth } from "../../../contexts/auth";
 import { useSong } from "../../../contexts/song";
 import Playlists from "../../../features/library/ui/organisms/playlists";
 import { SongList } from "../../../features/song/ui/templates/song-list";
-import useRenderCount from "../../../shared/lib/hooks/use-render-count";
 
 const SongsPage = memo(() => {
   const { yourSongs } = useSong();
   const { currentUser } = useAuth();
-  useRenderCount("library/songs");
 
   return (
     <div className="SongsPage">

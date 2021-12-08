@@ -10,11 +10,8 @@ export const useRealTimeMessages = (chatId, dateRefsArray) => {
 	const [loading, setLoading] = useState(true)
 	const [currentDateOnTop, setCurrentDateOnTop] = useState("")
 	function findTopDate(e) {
-		console.log(dateRefsArray);
 		dateRefsArray.forEach(ref => {
-			console.log(ref.current.innerHTML);
 			if (ref.current !== null) {
-				// console.log(ref.current.innerHTML, 'offset', ref.current.offsetTop, 'scrollTop', e.target.scrollTop, ref.current.offsetTop - 20 <= e.target.scrollTop);
 				if (ref.current.offsetTop - 20 <= e.target.scrollTop) setCurrentDateOnTop(ref.current.innerHTML)
 			}
 		})

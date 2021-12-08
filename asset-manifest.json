@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/soundbubble/static/css/main.5958a5c4.chunk.css",
-    "main.js": "/soundbubble/static/js/main.d4aed275.chunk.js",
-    "main.js.map": "/soundbubble/static/js/main.d4aed275.chunk.js.map",
+    "main.css": "/soundbubble/static/css/main.e525062b.chunk.css",
+    "main.js": "/soundbubble/static/js/main.6b940d70.chunk.js",
+    "main.js.map": "/soundbubble/static/js/main.6b940d70.chunk.js.map",
     "runtime-main.js": "/soundbubble/static/js/runtime-main.d9ddaadd.js",
     "runtime-main.js.map": "/soundbubble/static/js/runtime-main.d9ddaadd.js.map",
     "static/js/2.d8e05b73.chunk.js": "/soundbubble/static/js/2.d8e05b73.chunk.js",
     "static/js/2.d8e05b73.chunk.js.map": "/soundbubble/static/js/2.d8e05b73.chunk.js.map",
     "index.html": "/soundbubble/index.html",
-    "static/css/main.5958a5c4.chunk.css.map": "/soundbubble/static/css/main.5958a5c4.chunk.css.map",
+    "static/css/main.e525062b.chunk.css.map": "/soundbubble/static/css/main.e525062b.chunk.css.map",
     "static/js/2.d8e05b73.chunk.js.LICENSE.txt": "/soundbubble/static/js/2.d8e05b73.chunk.js.LICENSE.txt",
     "static/media/Logo3.fc53f4ac.svg": "/soundbubble/static/media/Logo3.fc53f4ac.svg",
     "static/media/notification.cdade1f4.mp3": "/soundbubble/static/media/notification.cdade1f4.mp3",
@@ -17,7 +17,7 @@
   "entrypoints": [
     "static/js/runtime-main.d9ddaadd.js",
     "static/js/2.d8e05b73.chunk.js",
-    "static/css/main.5958a5c4.chunk.css",
-    "static/js/main.d4aed275.chunk.js"
+    "static/css/main.e525062b.chunk.css",
+    "static/js/main.6b940d70.chunk.js"
   ]
 }

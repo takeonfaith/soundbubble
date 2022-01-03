@@ -1,7 +1,7 @@
 {
   "homepage": "https://takeonfaith.github.io/soundbubble",
   "name": "soundbubble",
-  "version": "1.1.0",
+  "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@mebtte/react-media-session": "^1.1.1",
@@ -17,12 +17,14 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-swipeable": "^6.1.2",
+    "react-virtuoso": "^2.2.7",
+    "styled-components": "^5.3.1",
     "use-deep-compare-effect": "^1.6.1",
     "web-vitals": "^1.1.1"
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "npm run build&&gh-pages -d build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

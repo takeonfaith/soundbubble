@@ -1,0 +1,656 @@
+.Header {
+  width: 100%;
+  height: 360px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 65px;
+  box-sizing: border-box;
+  position: relative;
+  animation: zoomIn 0.3s ease-out;
+  z-index: -1;
+  overflow: hidden;
+  top: 0;
+  margin-bottom: -20px;
+}
+
+.songItemMenuWindowItem {
+  cursor: pointer;
+  user-select: none;
+}
+
+.headerBtns {
+  top: 30px;
+  right: 30px;
+  display: flex;
+  justify-content: flex-end;
+  padding: 2px;
+  box-sizing: border-box;
+  position: absolute;
+  background: rgb(155, 65, 76);
+  border-radius: var(--standartBorderRadius);
+  filter: brightness(0.9);
+}
+
+.headerBtns button {
+  height: 30px;
+  width: 45px;
+  border-radius: var(--standartBorderRadius2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: transparent;
+  margin: 2px;
+  position: relative;
+}
+
+.headerBtns button:hover {
+  background: var(--transparentWhite);
+}
+
+.headerBtns button svg {
+  width: 17px;
+  height: 17px;
+}
+
+.Header .headerAuthorsImage {
+  /* background: var(--yellowAndPinkGrad); */
+  width: 180px;
+  height: 180px;
+  border-radius: var(--standartBorderRadius0);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  display: inline-block;
+  background-position: center center;
+  background-size: cover;
+}
+
+@keyframes floatingBorderRadius {
+  0% {
+    border-radius: 41% 59% 56% 44% / 39% 47% 53% 61%;
+  }
+  33.3% {
+    border-radius: 60% 40% 56% 44% / 39% 62% 38% 61%;
+  }
+  50% {
+    border-radius: 60% 40% 69% 31% / 39% 68% 32% 61%;
+  }
+  66.6% {
+    border-radius: 60% 40% 68% 32% / 28% 47% 53% 72%;
+  }
+  83.3% {
+    border-radius: 60% 40% 56% 44% / 28% 47% 53% 72%;
+  }
+  100% {
+    border-radius: 41% 59% 56% 44% / 39% 47% 53% 61%;
+  }
+}
+
+.headerImageAndNameContainer {
+  display: flex;
+  align-items: center;
+}
+
+.Header .headerAuthorsImage img {
+  width: 100%;
+  transform: scale(1.1);
+}
+
+.headerAuthorInfo {
+  width: 50%;
+}
+
+.headerAuthorsName {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.headerAuthorsName h5 {
+  margin: 0;
+  opacity: 0.5;
+  font-weight: 600;
+}
+
+.headerAuthorsName h1 {
+  margin: 0;
+}
+
+.headerAuthorsName svg {
+  margin-left: 10px;
+  width: 20px;
+  height: 20px;
+}
+
+.headerListenersAndSubs {
+  display: flex;
+  justify-content: flex-start;
+  min-width: 200px;
+  max-width: 350px;
+  margin-top: 10px;
+}
+
+.headerListenersAndSubsItem {
+  display: flex;
+  align-items: center;
+  min-width: 100px;
+  font-weight: bold;
+  position: relative;
+}
+
+.headerListenersAndSubsItem::after {
+  content: "";
+  position: absolute;
+  display: block;
+  height: 100%;
+  width: 1.5px;
+  background: rgba(255, 255, 255, 0.493);
+  top: 0;
+  right: 30%;
+}
+
+.headerListenersAndSubsItem:last-child::after {
+  display: none;
+}
+
+.headerListenersAndSubsItem svg {
+  margin: 0 7px;
+}
+
+.TopSongs {
+  width: 100%;
+  /* overflow-y: auto; */
+  padding: 5px 0;
+}
+
+/* .topSongsWrapper{
+	max-height: 400px;
+	overflow-y: auto;
+} */
+
+.topSongItem {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.topSongItem .SongItem {
+  margin: 0;
+  width: 100%;
+}
+
+.topSongItem h3 {
+  margin: 0;
+  width: 15px;
+  margin-right: 8px;
+}
+
+.AuthorPage {
+  box-sizing: border-box;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.content-background {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  filter: brightness(0.25);
+  z-index: -1;
+  background: linear-gradient(0deg, black, #de5c78);
+}
+
+.AuthorPage .playLists {
+  border-radius: 0;
+  padding: 0;
+  background: transparent;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  height: auto;
+}
+
+.playlistsWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 520px;
+  overflow-y: auto;
+}
+
+.AuthorPage .playlistsWrapper a {
+  margin-right: 10px;
+  margin-bottom: 10px;
+  text-decoration: none;
+  color: #fff;
+  max-width: 200px;
+}
+
+.AuthorPage .playlistsWrapper h4,
+.AuthorPage .playlistsWrapper h5 {
+  margin: 5px 0;
+}
+
+.playlistItem h5 {
+  font-weight: 600;
+  opacity: 0.5;
+}
+
+.AuthorPage .playlistsWrapper .playlistItem {
+  margin: 0;
+}
+
+/* .AuthorPage .playlistsWrapper .playlistItem */
+
+.topTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.TopSongs .topTitle h2 {
+  margin-bottom: 5px;
+}
+
+.topTitle .MoreBtn button {
+  transition: 0.1s background;
+  background: rgb(71 102 243 / 57%);
+  color: #9cbbff;
+  padding: 5px 20px;
+  border-radius: var(--standartBorderRadius3);
+  font-weight: 600;
+}
+
+.headerAuthors {
+  margin-left: 4px;
+}
+
+.headerAuthors a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.headerAuthorsImagesAndNames {
+  display: flex;
+  align-items: center;
+  height: 40px;
+}
+
+.artistsWrapper {
+  display: flex;
+}
+
+.AuthorItemBig {
+  width: 180px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  color: #fff;
+  text-decoration: none;
+  padding: 5px;
+  border-radius: var(--standartBorderRadius0);
+  transition: background 0.2s;
+}
+
+.AuthorItemBig h3 {
+  margin-bottom: 0;
+}
+
+.AuthorItemBigImage {
+  width: 180px;
+  height: 180px;
+  border-radius: 100px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-radius 0.2s;
+  background-position: center center;
+  background-size: cover;
+}
+
+.AuthorItemBigImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.AddSong {
+  width: 100%;
+  margin-top: 20px;
+  position: relative;
+}
+
+.AddSong .openAddSongWindowBtn {
+  width: 100%;
+  height: 50px;
+  background: var(--green);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--standartBorderRadius2);
+}
+
+.AddSong .openAddSongWindowBtn svg {
+  width: 40px;
+  height: 40px;
+  transition: 0.1s;
+}
+
+.addSongWindow {
+  margin-top: 10px;
+  display: none;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: var(--standartBorderRadius);
+  background: var(--playlistsColor);
+}
+
+.addSongWindow form {
+  width: 100%;
+}
+
+.addSongWindow form h3 {
+  margin: 10px 0;
+}
+
+.chosenAuthorsList {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 0px;
+}
+
+.chosenAuthorItem {
+  align-items: center;
+  display: flex;
+  background: var(--lightBlue);
+  padding: 5px 10px;
+  border-radius: var(--standartBorderRadius2);
+  width: fit-content;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+.chosenAuthorItem svg {
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.addSongWindow .downloadFile .downloadPhoto {
+  margin-bottom: 0px;
+  margin-top: 10px;
+}
+
+.addSongWindow label textarea {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 10px;
+  resize: none;
+  max-height: 500px;
+  height: 300px;
+  overflow-y: auto;
+  border-radius: var(--standartBorderRadius2);
+  background: var(--leftSideBarColor);
+  border: none;
+  outline: none;
+  padding: 20px;
+  color: #fff;
+}
+
+.addSongBtn {
+  font-weight: bold;
+  width: 100%;
+  margin: 10px auto;
+  padding: 10px 30px;
+  background: var(--purpleAndBlueGrad);
+  color: #fff;
+  border-radius: var(--standartBorderRadius2);
+}
+
+.FriendRequestItem {
+  width: 100%;
+  padding: 5px 15px;
+  border-radius: var(--standartBorderRadius2);
+  background: var(--reallyLightGrey);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  margin: 10px 0;
+}
+
+.friendRequestImageAndName {
+  display: flex;
+  align-items: center;
+}
+
+.FriendRequestItem .requestImage {
+  width: 35px;
+  height: 35px;
+  overflow: hidden;
+  border-radius: 100px;
+  margin-right: 7px;
+}
+
+.FriendRequestItem .requestImage img {
+  width: 100%;
+}
+
+.FriendRequestItem .requestButtons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.FriendRequestItem .requestButtons button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: var(--standartBorderRadius3);
+  background: var(--transparentWhite);
+  margin-left: 7px;
+}
+
+.PersonTinyList {
+  width: 100%;
+}
+
+.personTinyListWrapper {
+  display: flex;
+  align-items: center;
+  overflow-y: auto;
+}
+
+.personTinyListWrapper::-webkit-scrollbar {
+  height: 0;
+  width: 0;
+}
+
+.PersonTinyVerticalItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  text-align: center;
+  padding: 10px 15px;
+  border-radius: var(--standartBorderRadius3);
+  cursor: pointer;
+}
+
+.PersonTinyVerticalItem:hover {
+  background: var(--transparentWhite);
+}
+
+.PersonTinyVerticalItem .personTinyImage {
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  border-radius: 100px;
+  margin-bottom: 5px;
+}
+
+.PersonTinyVerticalItem .personTinyImage img {
+  width: 100%;
+}
+
+.PersonTinyVerticalItem .personTinyName {
+  font-size: 0.8em;
+  font-weight: 600;
+}
+
+.ChatWithFriendButton {
+  padding: 5px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--blue);
+  color: #fff;
+  margin-top: 20px;
+  border-radius: var(--standartBorderRadius3);
+  width: 100%;
+}
+
+.ChatWithFriendButton svg {
+  margin-right: 4px;
+  width: 17px;
+  height: 17px;
+}
+
+.AlbumPage {
+  box-sizing: border-box;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.customizeAlbumBtn {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--transparentWhite);
+  color: #fff;
+  border-radius: var(--standartBorderRadius3);
+  margin-left: 10px;
+}
+
+.customizeAlbumBtn svg {
+  margin: 0;
+  width: 14px;
+  height: 14px;
+}
+
+.LastSongListened {
+  width: fit-content;
+  color: rgba(255, 255, 255, 0.705);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.LastSongListened svg {
+  margin-right: 5px;
+}
+
+.LastSongListened:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 1000px) {
+  .Header {
+    flex-direction: column;
+    min-height: 430px;
+    height: fit-content;
+    padding: 30px;
+    text-align: center;
+  }
+
+  .Header .headerBtns {
+    width: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .Header .headerAuthorsImage {
+    margin-right: 0;
+  }
+
+  .Header .headerAuthorInfo {
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+
+  .Header .headerAuthorsName {
+    align-items: center;
+  }
+
+  .Header .headerAuthorsName h5 {
+    text-align: center;
+  }
+
+  .Header .headerAuthorsName {
+    position: relative;
+  }
+
+  .customizeAlbumBtn svg {
+    position: relative;
+  }
+  .Header .headerAuthorsName svg {
+    position: absolute;
+    right: -30px;
+  }
+
+  .Header .headerListenersAndSubs {
+    display: none;
+  }
+
+  .Header .headerListenersAndSubsItem {
+    min-width: auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .Header .headerListenersAndSubsItem::after {
+    right: 0%;
+  }
+
+  .artistsWrapper {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .AuthorItemBig {
+    width: 140px;
+  }
+
+  .AuthorItemBigImage {
+    width: 140px;
+    height: 140px;
+  }
+}

@@ -22,6 +22,7 @@ export const useAddOrDeleteSong = (playlist, songId) => {
 	}, [playlistSongs, songData])
 
 	function addOrDelete() {
+		console.log(playlistSongs, playlist);
 		if (playlistSongs.length > 0 && playlist.id !== undefined) {
 			if (playlistSongs.includes(songData)) {
 				const newSongsList = playlistSongs.filter(songNum => songNum !== songData)

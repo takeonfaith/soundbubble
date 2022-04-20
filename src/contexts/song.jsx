@@ -487,7 +487,9 @@ export const SongProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    document.title = `${currentSongData.name} - Soundbubble` || "Soundbubble";
+    document.title = currentSongData.name
+      ? `${currentSongData.name} - Soundbubble`
+      : "Soundbubble";
   }, [currentSongData.name]);
   return (
     <SongContext.Provider

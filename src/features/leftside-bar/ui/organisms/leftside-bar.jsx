@@ -2,23 +2,22 @@ import React, { memo, useEffect, useState } from "react";
 import { BiFolderPlus, BiFullscreen } from "react-icons/bi";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import { AddPlaylist } from "../../../../features/author/ui/organisms/add-playlist";
-import { FriendsToShareWith } from "../../../share/ui/organisms/friends-to-share-with";
 import { useAuth } from "../../../../contexts/auth";
 import { useModal } from "../../../../contexts/modal";
 import { useSong } from "../../../../contexts/song";
-import Logo from "../../../../shared/ui/images/Logo3.svg";
+import { AddPlaylist } from "../../../../features/author/ui/organisms/add-playlist";
 import { leftSideBar } from "../../../../shared/data/left-side-bar";
 import getShortString from "../../../../shared/lib/get-short-string";
 import normalizeString from "../../../../shared/lib/normalize-string";
 import { NotificationCircle } from "../../../../shared/ui/atoms/notification-circle";
-import "../style.css";
+import Logo from "../../../../shared/ui/images/Logo3.svg";
 import { Player } from "../../../full-screen-player/ui/organisms/player";
+import { FriendsToShareWith } from "../../../share/ui/organisms/friends-to-share-with";
 import LeftsideBarContainer from "../atoms/container";
 import NavigationPanel from "../molecules/navigation-panel";
 import { Person } from "../molecules/person";
 import { TinyPlaylist } from "../molecules/tiny-playlist";
-import useRenderCount from "../../../../shared/lib/hooks/use-render-count";
+import "../style.css";
 
 export const LeftsideBar = memo(() => {
   const { currentUser } = useAuth();

@@ -4,7 +4,7 @@ import { useAddOrDeleteSong } from "../../../../entities/playlist/lib/hooks/use-
 import { Hint } from "../../../../shared/ui/atoms/hint";
 
 export const AddToPlaylistItem = ({ playlist, song }) => {
-  const [addFunc, isAdded] = useAddOrDeleteSong(playlist.id, song.id);
+  const [addFunc, isAdded] = useAddOrDeleteSong(playlist, song.id);
   return (
     <div className="songItemMenuWindowItem" onClick={addFunc}>
       {!isAdded ? (

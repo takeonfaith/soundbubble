@@ -1,9 +1,7 @@
-import React, { memo, useEffect, useMemo, useState } from "react";
-import { useRef } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import displayDate from "../../../../shared/lib/display-date";
-import { MessageItem } from "../molecules/message-item";
 import NewMessagesPlateWrapper from "../atoms/new-messages-plate";
-import { useAuth } from "../../../../contexts/auth";
+import { MessageItem } from "../molecules/message-item";
 
 export const MessageField = memo(
   ({
@@ -26,21 +24,24 @@ export const MessageField = memo(
 
     const dateRef = useRef(null);
     useEffect(() => {
-      if (index === messageList.length - 1) setShowPhoto(true);
-      else if (messageList[index + 1].sender !== messageList[index].sender)
-        setShowPhoto(true);
-      else if (
-        displayDate(messageList[index + 1].sentTime) !==
-        displayDate(messageList[index].sentTime)
-      )
-        setShowPhoto(true);
+      // console.log(messageList);
+      if (!!messageList.length) {
+        if (index === messageList.length - 1) setShowPhoto(true);
+        else if (messageList[index + 1]?.sender !== messageList[index]?.sender)
+          setShowPhoto(true);
+        else if (
+          displayDate(messageList[index + 1]?.sentTime) !==
+          displayDate(messageList[index]?.sentTime)
+        )
+          setShowPhoto(true);
 
-      if (index === 0) setShowDate(true);
-      else if (
-        displayDate(messageList[index].sentTime) !==
-        displayDate(messageList[index - 1].sentTime)
-      ) {
-        setShowDate(true);
+        if (index === 0) setShowDate(true);
+        else if (
+          displayDate(messageList[index]?.sentTime) !==
+          displayDate(messageList[index - 1]?.sentTime)
+        ) {
+          setShowDate(true);
+        }
       }
     }, [messageList.length]);
 

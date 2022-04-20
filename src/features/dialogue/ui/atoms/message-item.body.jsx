@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useAuth } from "../../../../contexts/auth";
 import { useScreen } from "../../../../contexts/screen";
 import { PlaylistItem } from "../../../../entities/playlist/ui/playlist-item";
@@ -27,7 +27,6 @@ const MessageItemBody = ({
 
   const { screenHeight } = useScreen();
   const messageSentTime = useMemo(() => displayDate(sentTime, 2), []);
-  const { currentUser } = useAuth();
 
   return (
     <div className="messageItemBody">

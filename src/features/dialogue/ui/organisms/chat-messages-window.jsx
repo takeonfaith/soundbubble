@@ -39,19 +39,19 @@ export const ChatMessagesWindow = memo(
         }}
         data={messageList}
         totalCount={messageList.length}
-        initialTopMostItemIndex={
-          isNotSeenIndex !== -1
-            ? isNotSeenIndex - 10
-            : messageList?.length > 20
-            ? messageList?.length - 1
-            : 0
-        }
+        // initialTopMostItemIndex={
+        //   isNotSeenIndex !== -1
+        //     ? isNotSeenIndex - 10
+        //     : messageList?.length > 20
+        //     ? messageList?.length - 1
+        //     : 0
+        // }
         components={{
           Footer: () => {
             return <TypingAnimation typingPeople={chatData.typing} />;
           },
         }}
-        followOutput
+        followOutput="smooth"
         itemContent={(index, message) => {
           return message.sender !== "soundbubble" ? (
             <MessageField

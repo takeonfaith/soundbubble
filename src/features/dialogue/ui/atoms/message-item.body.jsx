@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useAuth } from "../../../../contexts/auth";
 import { useScreen } from "../../../../contexts/screen";
 import { PlaylistItem } from "../../../../entities/playlist/ui/playlist-item";
 import { SongItem } from "../../../../entities/song/ui/song-item";
 import displayDate from "../../../../shared/lib/display-date";
+import { fetchItemList } from "../../../../shared/lib/fetch-item-list";
 import { AuthorItemBig } from "../../../author/ui/molecules/author-item-big";
-import { whatToWriteInResponseToItem } from "../../lib/what-to-write-in-response-item";
+import { LoadingCircle } from "../../../loading/ui/atoms/loading-circle";
 import ResponseItem from "./response-item";
 
 const MessageItemBody = ({
@@ -26,7 +26,53 @@ const MessageItemBody = ({
   } = messageData;
 
   const { screenHeight } = useScreen();
-  const messageSentTime = useMemo(() => displayDate(sentTime, 2), []);
+  const messageSentTime = useMemo(() => displayDate(sentTime, 2), [sentTime]);
+  const [finalSongs, setFinalSongs] = useState(attachedData.songs);
+  const [finalUsers, setFinalUsers] = useState(attachedData.users);
+  const [finalPlaylists, setFinalPlaylists] = useState(attachedData.playlists);
+
+  useEffect(() => {
+    attachedSongs.forEach((songId) => {
+      if (!attachedData.songs[songId]) {
+        fetchItemList([songId], "songs", setFinalSongs, (songs) => ({
+          ...finalSongs,
+          ...songs.reduce((acc, song) => (acc = { [song.id]: song }), {}),
+        }));
+      }
+    });
+    attachedAlbums.forEach((playlistId) => {
+      if (!attachedData.playlists[playlistId]) {
+        fetchItemList(
+          [playlistId],
+          "playlists",
+          setFinalPlaylists,
+          (playlists) => ({
+            ...finalSongs,
+            ...playlists.reduce(
+              (acc, playlist) => (acc = { [playlist.id]: playlist }),
+              {}
+            ),
+          })
+        );
+      }
+    });
+    attachedAuthors.forEach((authorId) => {
+      if (!attachedData.users[authorId]) {
+        fetchItemList([authorId], "users", setFinalUsers, (users) => ({
+          ...finalSongs,
+          ...users.reduce((acc, user) => (acc = { [user.uid]: user }), {}),
+        }));
+      }
+    });
+  }, [
+    attachedAlbums,
+    attachedAuthors,
+    attachedData.playlists,
+    attachedData.songs,
+    attachedData.users,
+    attachedSongs,
+    finalSongs,
+  ]);
 
   return (
     <div className="messageItemBody">
@@ -56,10 +102,10 @@ const MessageItemBody = ({
       <div>
         <p>{message}</p>
         {attachedSongs.map((songId, key) => {
-          if (attachedData.songs[songId])
+          if (finalSongs[songId])
             return (
               <SongItem
-                song={attachedData.songs[songId]}
+                song={finalSongs[songId]}
                 localIndex={key}
                 key={key}
                 position={screenHeight}
@@ -67,19 +113,14 @@ const MessageItemBody = ({
             );
         })}
         {attachedAlbums.map((albumId, index) => {
-          if (attachedData.playlists[albumId])
+          if (finalPlaylists[albumId])
             return (
-              <PlaylistItem
-                playlist={attachedData.playlists[albumId]}
-                key={index}
-              />
+              <PlaylistItem playlist={finalPlaylists[albumId]} key={index} />
             );
         })}
         {attachedAuthors.map((authorId, index) => {
-          if (attachedData.users[authorId])
-            return (
-              <AuthorItemBig data={attachedData.users[authorId]} key={index} />
-            );
+          if (finalUsers[authorId])
+            return <AuthorItemBig data={finalUsers[authorId]} key={index} />;
         })}
       </div>
     </div>
